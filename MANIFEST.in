@@ -1,0 +1,6 @@
+include pandoctools/*
+include pandoctools/bat/*
+include pandoctools/sh/*
+include pandoctools/matplotlib/*
+include versioneer.py
+include pandoctools/_version.py

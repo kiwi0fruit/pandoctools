@@ -1,0 +1,4 @@
+#!/bin/sh
+if [ "${conda_env}" != "" ]; then
+    source activate "${conda_env}"
+fi

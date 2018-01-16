@@ -1,0 +1,5 @@
+#!/bin/sh
+if [ "${conda_env}" != "" ] && [ "${PYTHONPATH}" != "" ]; then
+	python_path="${PYTHONPATH}/envs/${conda_env}"
+	PATH="${python_path}:${python_path}/Scripts:${python_path}/Library/bin:$PATH"
+fi
