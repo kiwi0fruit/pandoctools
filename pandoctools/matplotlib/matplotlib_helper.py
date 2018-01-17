@@ -15,7 +15,7 @@ sugartex.ready()
 options = dict()
 
 
-class MatplotlibHelper:
+class MPLHelp:
     """
     Helper for Matplotlib with Atom/Hydrogen, Knotr/Stitch.
     Can export plots with unicode to SVG via Poppler.
@@ -38,16 +38,14 @@ class MatplotlibHelper:
         rarely used in serif docs.
     """
     def __init__(self,
-                 knotr: bool=False,
+                 knitty: bool=False,
                  delay: bool=False,
-                 temp: str='__temp',
                  # poppler: str=r'C:\Program Files (x86)\poppler\bin',  # http://blog.alivate.com.au/poppler-windows/
                  font_dir: str='../Fonts/MathJaxTeX',
                  font_size: float=12.8  # 12.8pt ~ 17px
                  ):
         self.options = options
-        options['knotr'] = knotr
-        options['temp'] = temp
+        options['knitty'] = knitty
         # options['poppler'] = poppler
         options['font_dir'] = font_dir
         self.mpl_params = {
@@ -106,8 +104,8 @@ def img(plot, name: str = None, qt: bool = False) -> str:
     else:
         url = name + ".svg"
 
-    if not options['knotr']:  # noinspection PyTypeChecker
+    if not options['knitty']:  # noinspection PyTypeChecker
         display(Markdown('![]({})'.format(base64_url)))  # display(SVG(name_svg)) was buggy in Hydrogen.
-    if not options['knotr'] and qt:
+    if not options['knitty'] and qt:
         plot.show()
-    return url if options['knotr'] else ""
+    return url if options['knitty'] else ""

@@ -1,1 +1,1 @@
-from .matplotlib import GR, MatplotlibHelper, sugartex, stex, img
+from .matplotlib_helper import GR, MPLHelp, stex, img
