@@ -1,7 +1,10 @@
 # %%
-from pandoctools.feather import FeatherHelp
+from pandoctools.feather import FeatherHelper
 
-f = FeatherHelp('feather')
+f = FeatherHelper(dir='feather')
+# dir=r"%USERPROFILE%\feather\document"
+# dir="feather" same as
+# dir="./feather" (default)
 
 
 # %%

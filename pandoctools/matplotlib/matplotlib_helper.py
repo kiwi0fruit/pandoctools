@@ -15,7 +15,7 @@ sugartex.ready()
 options = dict()
 
 
-class MPLHelp:
+class MPLHelper:
     """
     Helper for Matplotlib with Atom/Hydrogen, Knotr/Stitch.
     Can export plots with unicode to SVG via Poppler.
