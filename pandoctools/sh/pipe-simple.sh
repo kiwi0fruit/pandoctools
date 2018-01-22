@@ -1,1 +1,2 @@
-cat-md "${inputs[@]}" | pandoc "${reader_args[@]}" "${writer_args[@]}"
+cat-md "${inputs[@]}" | \
+pandoc "${reader_args[@]}" "${writer_args[@]}"

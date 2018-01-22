@@ -1,6 +1,6 @@
 """
 Allow Panflute to be run as a command line script
-(so it can be used as a Pandoctools filter)
+(so it can be used in Pandoctools shell scripts)
 
 Code taken from Panflute:
 BSD 3-clause "New" or "Revised" License
@@ -45,16 +45,17 @@ import re
 
 
 @click.command(help="Filters should have basename only (may be with or without .py extension). " +
-               "Search preserves directories order (except for --data-dir and --sys-path).")
+               "Search preserves directories order (except for --data-dir and `sys.path`).")
 @click.argument('filters', nargs=-1)
 @click.option('--dir', '-d', 'dirs', multiple=True,
               help="Search filters in provided directories: `-d dir1 -d dir2`.")
 @click.option('--data-dir', is_flag=True, default=False,
               help="Search filters in default user data directory listed in `pandoc --version` " +
                    "(in it's `filters` subfolder actually). It's appended to the search list.")
-@click.option('--sys-path', is_flag=True, default=False,
-              help="Search filters in python's `sys.path`. It's appended to the search list.")
-def main(filters, dirs, data_dir, sys_path):
+@click.option('--no-sys-path', is_flag=True, default=False,
+              help="Disable search filters in python's `sys.path` (current working directory removed) " +
+              "that is appended to the search list.")
+def main(filters, dirs, data_dir, no_sys_path):
     doc = load()
     filters = list(filters)
     dirs = list(dirs)
@@ -70,7 +71,7 @@ def main(filters, dirs, data_dir, sys_path):
         if verbose:
             msg = "panflute: will run the following filters:"
             debug(msg, ' '.join(filters))
-        doc = autorun_filters(filters, doc, dirs, data_dir, sys_path, verbose)
+        doc = autorun_filters(filters, doc, dirs, data_dir, not no_sys_path, verbose)
     elif verbose:
         debug("panflute: no filters found in metadata")
 
@@ -87,7 +88,7 @@ def autorun_filters(filters: list, doc, search_path: list, data_dir: bool, sys_p
         else:
             raise Exception('Failed to extract default user data directory from `pandoc --version`.')
     if sys_path:
-        search_path += sys.path
+        search_path += [dir for dir in sys.path if (dir != '')]
 
     filenames = OrderedDict()
 
