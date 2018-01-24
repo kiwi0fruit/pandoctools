@@ -10,9 +10,11 @@ esac
 case "${out_ext}" in
     "" | md)
         to=markdown
+        t="$to"
         ;;
     *)
         to="${out_ext}"
+        t="$to"
 esac
 
 reader_args=(-f "${from}")

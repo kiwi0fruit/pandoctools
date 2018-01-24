@@ -16,9 +16,11 @@ if        "%out_ext%"=="" (
 
 ) else if "%out_ext%"=="md" (
     set to=markdown
+    set t=%to%
 
 ) else (
     set to=%out_ext%
+    set t=%to%
 )
 
 

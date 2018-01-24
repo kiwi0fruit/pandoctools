@@ -1,3 +1,3 @@
 @echo off
-%run% cat-md %inputs% | ^
-%run% pandoc %reader_args% %writer_args%
+%r% cat-md %inputs% | ^
+%r% pandoc %reader_args% %writer_args%

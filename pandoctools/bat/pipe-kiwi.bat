@@ -1,9 +1,9 @@
 @echo off
-%run% cat-md %inputs% | ^
-%run% pre-knitty %input_file% | ^
-%run% pre-sugartex | ^
-%run% cat-md %all_inputs% | ^
-%run% pandoc %reader_args% -t json | ^
-%run% knitty %input_file% %reader_args% %writer_args% | ^
-%run% sugartex --kiwi | ^
-%run% pandoc -f json %writer_args%
+%r% cat-md %inputs% | ^
+%r% pre-knitty %input_file% | ^
+%r% pre-sugartex | ^
+%r% cat-md %all_inputs% | ^
+%r% pandoc %reader_args% -t json | ^
+%r% knitty %input_file% %reader_args% %writer_args% | ^
+%r% sugartex --kiwi | ^
+%r% pandoc -f json %writer_args%

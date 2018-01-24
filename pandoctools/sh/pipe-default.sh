@@ -12,5 +12,5 @@ pre-sugartex | \
 cat-md "${all_inputs[@]}" | \
 pandoc "${reader_args[@]}" -t json | \
 knitty "${input_file}" "${reader_args[@]}" "${writer_args[@]}" | \
-sugartex | \
+sugartex $t | \
 pandoc -f json "${writer_args[@]}"
