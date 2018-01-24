@@ -13,6 +13,7 @@ if        "%in_ext%"=="" (
 
 if        "%out_ext%"=="" (
     set to=markdown
+    set t=%to%
 
 ) else if "%out_ext%"=="md" (
     set to=markdown
