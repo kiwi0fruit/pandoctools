@@ -3,8 +3,8 @@
 # scripts="${scripts%/*}"
 # (or use `scripts` var predefined in pandoctools)
 
-# `panfl sugartex_panfl` = `sugartex`
-# `panfl sugartex_kiwi` = `sugartex kiwi`
+# `panfl sugartex_panfl -t $t` = `sugartex`
+# `panfl sugartex_kiwi -t $t` = `sugartex kiwi`
 
 cat-md "${inputs[@]}" | \
 pre-knitty "${input_file}" | \
