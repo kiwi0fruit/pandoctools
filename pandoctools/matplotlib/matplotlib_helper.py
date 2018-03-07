@@ -41,7 +41,7 @@ class MPLHelper:
                  knitty: bool=False,
                  delay: bool=False,
                  # poppler: str=r'C:\Program Files (x86)\poppler\bin',  # http://blog.alivate.com.au/poppler-windows/
-                 font_dir: str='../Fonts/MathJaxTeX',
+                 font_dir: str=None,
                  font_size: float=12.8  # 12.8pt ~ 17px
                  ):
         self.options = options
@@ -52,16 +52,16 @@ class MPLHelper:
             "text.usetex": False,
             "font.size": font_size,
             "font.family": "serif",
-            "font.serif": "Times New Roman",
+            "font.serif": "Libertinus Serif",
             "font.cursive": "Comic Sans MS",
             "font.monospace": "Consolas",
             "mathtext.fontset": "custom",  # cm
-            "mathtext.cal": "MathJax_Caligraphic",
-            "mathtext.tt": "Consolas",  # MathJax_Typewriter
-            "mathtext.rm": "MathJax_Main",
-            "mathtext.it": "MathJax_Math:italic",
-            "mathtext.bf": "MathJax_Main:bold",
-            "mathtext.sf": "MathJax_Math:bold:italic"  # CMU Serif
+            "mathtext.cal": "MJ_Cal",
+            "mathtext.tt": "Consolas",
+            "mathtext.rm": "MJ",
+            "mathtext.it": "MJ_Mat:italic",
+            "mathtext.bf": "MJ:bold",
+            "mathtext.sf": "MJ_Mat:bold:italic"  # CMU Serif
         }
         if not delay:
             self.tune()
@@ -69,10 +69,11 @@ class MPLHelper:
     def tune(self):
         mpl.use('Qt5Agg')
         mpl.rc('text.latex', unicode=True)
-        font_dirs = [options['font_dir'], ]
-        font_files = font_manager.findSystemFonts(fontpaths=font_dirs)
-        font_list = font_manager.createFontList(font_files)
-        font_manager.fontManager.ttflist.extend(font_list)
+        if options['font_dir'] is not None:
+            font_dirs = [options['font_dir'], ]
+            font_files = font_manager.findSystemFonts(fontpaths=font_dirs)
+            font_list = font_manager.createFontList(font_files)
+            font_manager.fontManager.ttflist.extend(font_list)
         mpl.rcParams.update(self.mpl_params)
 
 
@@ -91,6 +92,8 @@ def img(plot, name: str = None, qt: bool = False) -> str:
             svg = f.getvalue()
     else:
         plot.savefig(name + ".svg")
+        # plot.savefig(name + ".pdf")
+        # plot.savefig(name + ".png", dpi=300)
         with open(name + ".svg", "rb") as f:
             svg = f.read()
 
