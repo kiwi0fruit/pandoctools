@@ -6,8 +6,7 @@
 :: %call% activate-default
 :: %call% deactivate-default
 :: %call% activate-pseudo
-%import% defaults
 %call% activate-default
-%import% args-default
-%import% pipe-default
+%import% Args-Default
+%import% Pipe-Default
 %call% deactivate-default

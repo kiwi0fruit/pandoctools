@@ -1,8 +1,8 @@
 @echo off
-%r% cat-md %inputs% | ^
+%r% cat-md stdin | ^
 %r% pre-knitty %input_file% | ^
 %r% pre-sugartex | ^
-%r% cat-md %all_inputs% | ^
+%r% cat-md %inputs% | ^
 %r% pandoc %reader_args% -t json | ^
 %r% knitty %input_file% %reader_args% %writer_args% | ^
 %r% sugartex --kiwi | ^

@@ -1,3 +1,6 @@
+# Predefined:
+# config, user_config, in_ext, out_ext, input_file
+
 # ;; jumps to esac
 case "${in_ext}" in
     "" | md)
@@ -10,15 +13,12 @@ esac
 case "${out_ext}" in
     "" | md)
         to=markdown
-        t="$to"
         ;;
     *)
         to="${out_ext}"
-        t="$to"
 esac
 
+# stdin from previous operations + Meta-Default.yaml:
+inputs=("stdin" "${config}/Meta-Default.yaml")
 reader_args=(-f "${from}")
 writer_args=(-t "${to}" --standalone --self-contained)
-inputs="stdin"
-# stdin from previous operations + meta-default.yaml:
-all_inputs=("stdin" "${config}/meta-default.yaml")

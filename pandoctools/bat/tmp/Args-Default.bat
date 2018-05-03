@@ -1,4 +1,6 @@
 @echo off
+:: Predefined:
+:: config, user_config, in_ext, out_ext, input_file
 
 if        "%in_ext%"=="" (
     set from=markdown
@@ -25,8 +27,7 @@ if        "%out_ext%"=="" (
 )
 
 
+:: stdin from previous operations + Meta-Default.yaml:
+set inputs=stdin "%config%\Meta-Default.yaml"
 set reader_args=-f "%from%"
 set writer_args=-t "%to%" --standalone --self-contained
-set inputs=stdin
-:: stdin from previous operations + meta-default.yaml:
-set all_inputs=stdin "%config%\meta-default.yaml"

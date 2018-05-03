@@ -5,8 +5,7 @@
 # . "$source" activate-default
 # . "$source" deactivate-default
 # . "$source" activate-pseudo
-. "$import" defaults
 . "$source" activate-default
-. "$import" args-default
-. "$import" pipe-default
+. "$import" Args-Default.sh
+. "$import" Pipe-Default.sh
 . "$source" deactivate-default
