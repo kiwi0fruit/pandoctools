@@ -4,7 +4,6 @@ from IPython.display import display, Markdown  # Image, SVG
 import io
 import base64
 from sugartex import sugartex, stex
-import re
 import matplotlib as mpl
 from matplotlib import font_manager
 
@@ -12,7 +11,7 @@ from matplotlib import font_manager
 GR = (1 + 5**0.5) / 2
 sugartex.mpl_hack()
 sugartex.ready()
-options = dict()
+options = {}
 
 
 class MPLHelper:
@@ -40,7 +39,8 @@ class MPLHelper:
     def __init__(self,
                  knitty: bool=False,
                  delay: bool=False,
-                 # poppler: str=r'C:\Program Files (x86)\poppler\bin',  # http://blog.alivate.com.au/poppler-windows/
+                 # poppler: str=r'C:\Program Files (x86)\poppler\bin',
+                 # http://blog.alivate.com.au/poppler-windows/
                  font_dir: str=None,
                  font_size: float=12.8  # 12.8pt ~ 17px
                  ):
@@ -77,10 +77,19 @@ class MPLHelper:
         mpl.rcParams.update(self.mpl_params)
 
 
-def img(plot, name: str = None, qt: bool = False) -> str:
+def img(plot,
+        name: str=None,
+        ext: str='svg',
+        dpi: int=300,
+        hide: bool=False,
+        qt: bool=False,
+        ) -> str:
     """
     :param: plot: matplotlib.pyplot
-    :param: name: File name to store image
+    :param: name: File name to store image (without extension)
+    :param: ext: File extension
+    :param: dpi: DPI for PNG
+    :param: hide: Whether to show Hydrogen and Qt plots at all
     :param: qt: Whether to show interactive plot via Qt
         Presumably mpl.use('Qt5Agg') was called
     :return: url: Image URL if STITCH is True
@@ -88,27 +97,39 @@ def img(plot, name: str = None, qt: bool = False) -> str:
     """
     if name is None:
         with io.BytesIO() as f:
-            plot.savefig(f, format='svg')
-            svg = f.getvalue()
+            plot.savefig(f, format=ext)
+            image = f.getvalue()
     else:
-        plot.savefig(name + ".svg")
-        # plot.savefig(name + ".pdf")
-        # plot.savefig(name + ".png", dpi=300)
-        with open(name + ".svg", "rb") as f:
-            svg = f.read()
+        file_name = name + "." + ext
+        if ext.upper() == 'PNG':
+            plot.savefig(file_name, dpi=dpi)
+        else:
+            plot.savefig(file_name)
+        with open(file_name, "rb") as f:
+            image = f.read()
 
     # plot.savefig(name + ".pdf")  # was useful with external LaTeX renderer instead of matplotlib's
     # call([os.path.join(options['poppler'], "pdftocairo"), "-svg", name + ".pdf", name + ".svg"],
     #      cwd=os.getcwd())
 
-    base64_url = 'data:image/svg+xml;base64,' + base64.b64encode(svg).decode("utf-8")
+    base64_url = 'data:image/{};base64,' + base64.b64encode(image).decode("utf-8")
+    if ext.upper() == 'PNG':
+        base64_url = base64_url.format('png')
+    elif ext.upper() == 'SVG':
+        base64_url = base64_url.format('svg+xml')
+    else:
+        raise ValueError('{} extension is not supported by matplotlib helper.'.format(ext))
+
     if name is None:
         url = base64_url
     else:
-        url = name + ".svg"
+        url = name + "." + ext
 
-    if not options['knitty']:  # noinspection PyTypeChecker
+    if options['knitty']:
+        hide = True
+
+    if not hide:  # noinspection PyTypeChecker
         display(Markdown('![]({})'.format(base64_url)))  # display(SVG(name_svg)) was buggy in Hydrogen.
-    if not options['knitty'] and qt:
+    if (not hide) and qt:
         plot.show()
     return url if options['knitty'] else ""
