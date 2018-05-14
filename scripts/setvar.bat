@@ -1,3 +1,5 @@
+::Usage with Pandoctools: %setvar% varname cmd
+
 :: setvar varname cmd
 :: Set VARNAME to the output of CMD
 :: Triple escape pipes, eg:

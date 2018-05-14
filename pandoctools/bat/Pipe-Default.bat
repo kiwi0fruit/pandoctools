@@ -16,6 +16,6 @@
 %r% cat-md %inputs% | ^
 %r% pandoc %reader_args% -t json | ^
 %r% knitty %input_file% %reader_args% %writer_args% | ^
-%r% sugartex %t% | ^
-%r% pandoc-crossref %t% | ^
+%r% sugartex %to% | ^
+%r% pandoc-crossref %to% | ^
 %r% pandoc -f json %writer_args%

@@ -1,5 +1,5 @@
 # Predefined:
-# config, user_config, in_ext, out_ext, input_file
+# core_config, user_config, in_ext, out_ext, input_file
 
 # ;; jumps to esac
 case "${in_ext}" in
@@ -19,6 +19,6 @@ case "${out_ext}" in
 esac
 
 # stdin from previous operations + Meta-Default.yaml:
-inputs=("stdin" "${config}/Meta-Default.yaml")
+inputs=("stdin" "${core_config}/Meta-Default.yaml")
 reader_args=(-f "${from}")
 writer_args=(-t "${to}" --standalone --self-contained)

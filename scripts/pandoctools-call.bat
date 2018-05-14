@@ -1,3 +1,11 @@
+:: Usage in Pandoctools profiles:
+::   %call% script
+:: General usage:
+::   pandoctools-call script
+
+:: Calls script ONLY from %PATH%
+:: In order to call script from CWD use: call .\script
+
 @echo off
 set "full_path="
 set "all_but_first="

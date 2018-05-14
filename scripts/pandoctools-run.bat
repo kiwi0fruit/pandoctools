@@ -1,3 +1,11 @@
+:: Usage in Pandoctools profiles:
+::   %r% program
+:: General usage:
+::   pandoctools-run program
+
+:: Runs program ONLY from %PATH%
+:: In order to run program from CWD use: .\program
+
 @echo off
 set "full_path="
 set "all_but_first="

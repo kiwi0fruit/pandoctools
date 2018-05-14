@@ -1,5 +1,6 @@
+. "$import" CLI-Default
 . "$source" activate-default
-. "$import" Args-Default.sh
-inputs=("stdin" "${config}/Meta-Kiwi.yaml")
-. "$import" Pipe-Kiwi.sh
+. "$import" Args-Default
+inputs=("stdin" "${core_config}/Meta-Kiwi.yaml")
+. "$import" Pipe-Kiwi
 . "$source" deactivate-default
