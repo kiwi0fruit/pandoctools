@@ -1,5 +1,14 @@
-# Predefined:
-# core_config, user_config, in_ext, out_ext, input_file
+# May use predefined variables:
+#   ${core_config}
+#   ${user_config}
+#   ${in_ext}
+#   ${out_ext}
+#   ${input_file}
+# May be useful:
+#   scripts="$(which panfl)"
+#   scripts="${scripts%/*}"
+# or use predefined $scripts var (conda env bin folder).
+
 
 # ;; jumps to esac
 case "${in_ext}" in

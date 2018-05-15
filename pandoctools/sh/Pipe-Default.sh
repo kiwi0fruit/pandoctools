@@ -1,13 +1,5 @@
-# May be useful:
-# scripts="$(which panfl)"
-# scripts="${scripts%/*}"
-# (or use `scripts` var predefined in pandoctools)
-
 # `panfl sugartex_panfl -t $t` = `sugartex`
 # `panfl sugartex_kiwi -t $t` = `sugartex kiwi`
-
-# Predefined:
-# config, user_config, in_ext, out_ext, input_file
 
 cat-md stdin | \
 pre-knitty "${input_file}" | \
