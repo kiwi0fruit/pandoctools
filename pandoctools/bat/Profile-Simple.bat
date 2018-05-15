@@ -1,5 +1,5 @@
 @echo off
-%import% CLI-Default
-%call% activate-pseudo
+%import% Defaults
+%call% pdt-pseudo-activate
 %import% Args-Default
 %import% Pipe-Simple

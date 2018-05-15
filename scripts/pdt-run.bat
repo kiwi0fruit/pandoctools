@@ -1,7 +1,8 @@
 :: Usage in Pandoctools profiles:
 ::   %r% program
+::   (%r% contains absolute path)
 :: General usage:
-::   pandoctools-run program
+::   pdt-run program
 
 :: Runs program ONLY from %PATH%
 :: In order to run program from CWD use: .\program

@@ -1,6 +1,6 @@
-. "$import" CLI-Default
-. "$source" activate-default
+. "$import" Defaults
+. "$source" pdt-activate
 . "$import" Args-Default
 inputs=("stdin" "${core_config}/Meta-Kiwi.yaml")
 . "$import" Pipe-Kiwi
-. "$source" deactivate-default
+. "$source" pdt-deactivate

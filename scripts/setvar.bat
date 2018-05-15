@@ -1,11 +1,12 @@
-::Usage with Pandoctools: %setvar% varname cmd
-
-:: setvar varname cmd
-:: Set VARNAME to the output of CMD
+:: Usage with Pandoctools:
+::   %call% setvar varname cmd
+:: Usage:
+::   call setvar varname cmd
+:: Sets VARNAME to the output of CMD
 :: Triple escape pipes, eg:
 :: setvar x  dir c:\ ^^^| sort
 :: https://stackoverflow.com/a/25954264/9071377
-:: -----------------------------
+
 
 @echo off
 SETLOCAL
