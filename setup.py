@@ -38,11 +38,11 @@ setup(
     # keywords='sample setuptools development',
     packages=find_packages(exclude=['docs', 'tests']),
 
-    install_requires=['click', 'panflute'],
+    install_requires=['click', 'panflute', 'knitty', 'sugartex', 'matplotlib'],
 
     include_package_data=True,
     package_data={
-        'pandoctools': ['matplotlib/*.py', 'bat/*', 'sh/*'],
+        'pandoctools': ['matplotlib/*.py', 'feather/*.py', 'bat/*', 'sh/*'],
     },
     entry_points={
         'console_scripts': [
@@ -51,4 +51,7 @@ setup(
             'panfl=pandoctools.panfl:main',
         ],
     },
+    scripts = [
+        'scripts/*',
+    ],
 )
