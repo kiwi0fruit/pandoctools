@@ -6,8 +6,8 @@
 # . "$source" pdt-deactivate
 # . "$source" pdt-pseudo-activate
 
-. "$import" Defaults
-. "$source" pdt-activate
+. "$source" pdt-defaults
+. "$source" pdt-conda-activate
 . "$import" Args-Default
 . "$import" Pipe-Default
-. "$source" pdt-deactivate
+. "$source" pdt-conda-deactivate

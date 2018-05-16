@@ -1,8 +1,8 @@
 :: Usage in Pandoctools profiles:
-::   %call% script
-::   (%call% contains absolute path)
+::   %source% script
+::   (%source% contains absolute path)
 :: General usage:
-::   pdt-call script
+::   pdt-source script
 
 :: Calls script ONLY from %PATH%
 :: In order to call script from CWD use: call .\script

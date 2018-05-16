@@ -3,7 +3,7 @@ Predefined:
 
 * pdt_GUI
 * import
-* call
+* source
 * core_config
 * user_config
 * in_ext
@@ -18,4 +18,4 @@ Predefined if in Atom package mode:
 
 * conda_env
 * env_path
-* python_path
+* python_root
