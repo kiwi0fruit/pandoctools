@@ -1,9 +1,0 @@
-#!/bin/sh
-# Deactivates conda environment if defaults were predefined.
-# Uses predefined variables:
-#   ${conda_env}
-#   $source
-
-if [ "${conda_env}" != "" ]; then
-    . "$source" deactivate
-fi

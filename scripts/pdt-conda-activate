@@ -1,9 +1,0 @@
-#!/bin/sh
-# Activates conda environment from predefined defaults.
-# Uses predefined variable:
-#   ${conda_env}
-#   $source
-
-if [ "${conda_env}" != "" ]; then
-    . "$source" activate "${conda_env}"
-fi

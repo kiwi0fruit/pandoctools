@@ -5,12 +5,16 @@
 # Uses predefined variable:
 #   $import
 #   ${pdt_GUI} (TRUE if in Atom package mode)
-#   ${conda_env} (predefined if in Atom package mode)
-#   ${env_path} (predefined if in Atom package mode)
-#   ${python_root} (predefined if in Atom package mode)
+#   ${env_path} (always autocalculated by python app)
+#   ${python_root_auto} (autocalculated by python app if python/envs/env_name else "")
+#   ${python_root} (predefined if differs from autocalculated)
 
 if [ "${pdt_GUI}" != "TRUE" ]; then
     . "$import" CLI-Defaults
+fi
+
+if [ "${python_root}" == "" ]; then
+    python_root="${python_root_auto}"
 fi
 
 if [ "${python_root}" != "" ]; then

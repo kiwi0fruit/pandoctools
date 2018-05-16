@@ -2,7 +2,7 @@
 ::   %source% script
 ::   (%source% contains absolute path)
 :: General usage:
-::   pdt-source script
+::   call path-source script
 
 :: Calls script ONLY from %PATH%
 :: In order to call script from CWD use: call .\script

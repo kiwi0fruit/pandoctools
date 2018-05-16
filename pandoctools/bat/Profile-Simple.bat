@@ -1,5 +1,5 @@
 @echo off
-%source% pdt-defaults
-%source% pdt-pseudo-activate
+%source% pandoctools-defaults
+%source% pseudoactivate "%env_path%"
 %import% Args-Default
 %import% Pipe-Simple

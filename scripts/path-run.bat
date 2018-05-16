@@ -2,7 +2,7 @@
 ::   %r% program
 ::   (%r% contains absolute path)
 :: General usage:
-::   pdt-run program
+::   call path-run program
 
 :: Runs program ONLY from %PATH%
 :: In order to run program from CWD use: .\program
