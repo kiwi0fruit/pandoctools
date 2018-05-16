@@ -52,6 +52,12 @@ setup(
         ],
     },
     scripts = [
-        'scripts/*',
+        'scripts/html_indent_fix.py',
+        'scripts/pandoctools-import',
+        'scripts/pandoctools-import.bat',
+        'scripts/path-run.bat',
+        'scripts/path-source',
+        'scripts/path-source.bat',
+        'scripts/setvar.bat',
     ],
 )

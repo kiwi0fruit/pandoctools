@@ -1,5 +1,0 @@
-#!/bin/sh
-# Simply adds conda environment to PATH.
-# First arg is provided env path.
-
-PATH="$1/bin:$PATH"
