@@ -47,6 +47,8 @@ import re
 @click.command(help="Filters should have basename only (may be with or without .py extension). " +
                "Search preserves directories order (except for --data-dir and `sys.path`).")
 @click.argument('filters', nargs=-1)
+@click.option('-w', '-t', '--write', '--to', type=str, default='html',
+              help='Pandoc writer option.')
 @click.option('--dir', '-d', 'dirs', multiple=True,
               help="Search filters in provided directories: `-d dir1 -d dir2`.")
 @click.option('--data-dir', is_flag=True, default=False,
@@ -55,7 +57,9 @@ import re
 @click.option('--no-sys-path', is_flag=True, default=False,
               help="Disable search filters in python's `sys.path` (current working directory removed) " +
               "that is appended to the search list.")
-def main(filters, dirs, data_dir, no_sys_path):
+def main(filters, to, dirs, data_dir, no_sys_path):
+    if len(sys.argv) > 1:
+        sys.argv[1] = to
     doc = load()
     filters = list(filters)
     dirs = list(dirs)
