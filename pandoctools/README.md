@@ -11,5 +11,4 @@
 * input_file
 * scripts
 * env_path
-* python_root
-* python_root_auto
+* root_env_auto

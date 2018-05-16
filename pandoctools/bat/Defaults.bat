@@ -1,1 +1,0 @@
-set "python_root="

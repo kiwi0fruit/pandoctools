@@ -3,16 +3,22 @@
 # Uses predefined variable:
 #   $import
 #   ${env_path} (always autocalculated by python app)
-#   ${python_root_auto} (autocalculated by python app if python/envs/env_name else "")
-#   ${python_root} (predefined if differs from autocalculated)
+#   ${root_env_auto} (autocalculated by python app if python/envs/env_name else "")
+#   ${root_env} (predefined if differs from autocalculated)
 
-. "$import" Defaults
-
-if [ "${python_root}" == "" ]; then
-    python_root="${python_root_auto}"
+root_env=""
+if [ -f "${user_config}/Defaults.ini" ]; then
+    source "${user_config}/Defaults.ini"
+else
+    source "${core_config}/Defaults.ini"
 fi
 
-if [ "${python_root}" != "" ]; then
-    PYTHONPATH="${python_root}"
-    PATH="${python_root}/bin:$PATH"
+
+if [ "${root_env}" == "" ]; then
+    root_env="${root_env_auto}"
+fi
+
+if [ "${root_env}" != "" ]; then
+    PYTHONPATH="${root_env}"
+    PATH="${root_env}/bin:$PATH"
 fi
