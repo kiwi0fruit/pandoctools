@@ -9,7 +9,7 @@
 ::   %out_ext_full% (extended output file extension like "r.ipynb")
 ::   %input_file% (input file name with extension)
 :: May be useful:
-::   %call% setvar scripts %r% where $PATH:panfl.exe
+::   %source% setvar scripts %r% where $PATH:panfl.exe
 ::   set scripts=%scripts:~0,-10%
 :: or use predefined %scripts% var (conda environment Scripts folder).
 

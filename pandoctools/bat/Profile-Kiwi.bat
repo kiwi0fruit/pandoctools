@@ -1,5 +1,4 @@
 @echo off
-
 %source% pandoctools-defaults
 %source% activate "%env_path%"
 %import% Args-Default
