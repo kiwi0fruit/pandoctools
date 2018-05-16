@@ -21,7 +21,11 @@ for /f "delims=" %%x in ("%defs%") do (
 
 if "%root_env%"=="" (
     set root_env=%root_env_auto%
+) else (
+    set root_env=%root_env:%=%
 )
+:: `set x=%x:%=%` removes double quotes from string
+
 
 if NOT "%root_env%"=="" (
     set PYTHONPATH=%root_env%
