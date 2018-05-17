@@ -10,5 +10,5 @@ knitty "${input_file}" "${reader_args[@]}" "${writer_args[@]}" | \
 pandoc-crossref "$to" | \
 pandoc -f json "${writer_args[@]}"
 
-# `panfl sugartex_panfl -to $t` = `sugartex`
-# `panfl sugartex_kiwi -to $t` = `sugartex --kiwi`
+# `panfl sugartex_panfl -t $to` = `sugartex`
+# `panfl sugartex_kiwi -t $to` = `sugartex --kiwi`
