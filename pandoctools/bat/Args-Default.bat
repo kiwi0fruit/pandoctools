@@ -11,7 +11,7 @@
 :: Exports vars:
 ::   %reader_args%
 ::   %writer_args%
-::   %stdin_plus%
+::   %stdin_plus2%
 ::   %to%
 ::   %pipe%
 :: May be useful:
@@ -34,7 +34,7 @@ set reader_args=-f "%_from%"
 
 set _jupymd=markdown-bracketed_spans-fenced_divs-link_attributes-simple_tables-multiline_tables-grid_tables-pipe_tables-fenced_code_attributes-markdown_in_html_blocks-table_captions-smart
 %setpath% _meta  Meta-%meta_prof%.yaml
-set stdin_plus=stdin "%_meta%"
+set stdin_plus2=stdin "%_meta%"
 set pipe=Default
 set "to="
 
@@ -50,7 +50,7 @@ if        "%out_ext%"=="" (
     set pipe=ipynb
     
     %setpath% _meta2  Meta-ipynb-R.yaml
-    set stdin_plus=stdin "%_meta%" "%_meta2%"
+    set stdin_plus2=stdin "%_meta%" "%_meta2%"
 
 ) else if "%out_ext%"=="ipynb" (
     set _to=%_jupymd%
@@ -58,7 +58,7 @@ if        "%out_ext%"=="" (
     set pipe=ipynb
 
     %setpath% _meta2  Meta-ipynb-py3.yaml
-    set stdin_plus=stdin "%_meta%" "%_meta2%"
+    set stdin_plus2=stdin "%_meta%" "%_meta2%"
 
 ) else (
     set _to=%out_ext%

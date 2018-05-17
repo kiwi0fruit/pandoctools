@@ -1,9 +1,9 @@
 @echo off
 
-%r% cat-md stdin | ^
+%r% cat-md %stdin_plus1% | ^
 %r% pre-knitty %input_file% | ^
 %r% pre-sugartex | ^
-%r% cat-md %stdin_plus% | ^
+%r% cat-md %stdin_plus2% | ^
 %r% pandoc %reader_args% -t json | ^
 %r% knitty %input_file% %reader_args% %writer_args% | ^
 %r% %sugartex% | ^

@@ -1,5 +1,3 @@
-
-
 PATH="${env_path}/bin:$PATH"
 
 meta_prof=Default
