@@ -7,8 +7,8 @@ cat-md "${stdin_plus[@]}" | \
 pandoc "${reader_args[@]}" -t json | \
 knitty "${input_file}" "${reader_args[@]}" "${writer_args[@]}" --to-ipynb | \
 "${sugartex[@]}" | \
-pandoc-crossref "$t" | \
+pandoc-crossref "$to" | \
 pandoc -f json "${writer_args[@]}"
 
-# `panfl sugartex_panfl -t $t` = `sugartex`
-# `panfl sugartex_kiwi -t $t` = `sugartex --kiwi`
+# `panfl sugartex_panfl -to $t` = `sugartex`
+# `panfl sugartex_kiwi -to $t` = `sugartex --kiwi`
