@@ -6,8 +6,8 @@
 #   ${core_config} (<...>/site-packages/pandoctools/sh)
 #   ${user_config} ($HOME/.pandoc/pandoctools)
 
-if [ -f "${user_config}/$1.sh" ]; then
-    echo "${user_config}/$1.sh"
+if [ -f "${user_config}/$1" ]; then
+    echo "${user_config}/$1"
 else
-    echo "${core_config}/$1.sh"
+    echo "${core_config}/$1"
 fi
