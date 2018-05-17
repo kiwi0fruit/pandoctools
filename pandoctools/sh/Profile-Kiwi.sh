@@ -1,5 +1,11 @@
+
+
 . "$source" activate "${env_path}"
+
+meta_prof=Kiwi
 . "$import" Args-Default
-inputs=("stdin" "${core_config}/Meta-Kiwi.yaml")
-. "$import" Pipe-Kiwi
+
+sugartex=(sugartex --kiwi)
+. "$import" "Pipe-$pipe"
+
 . "$source" deactivate

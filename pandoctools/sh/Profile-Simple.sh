@@ -1,3 +1,9 @@
+
+
 PATH="${env_path}/bin:$PATH"
+
+meta_prof=Default
 . "$import" Args-Default
-. "$import" Pipe-Simple
+
+cat-md stdin | \
+pandoc "${reader_args[@]}" "${writer_args[@]}"

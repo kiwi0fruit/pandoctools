@@ -5,6 +5,11 @@
 ::   %env_path%
 
 %source% activate "%env_path%"
+
+set meta_prof=Default
 %import% Args-Default
-%import% Pipe-Default
+
+set sugartex=sugartex
+%import% Pipe-%pipe%
+
 %source% deactivate

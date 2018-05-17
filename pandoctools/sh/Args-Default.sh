@@ -24,18 +24,37 @@ else
 fi
 
 
+jupymd="markdown-bracketed_spans-fenced_divs-link_attributes-simple_tables-multiline_tables-grid_tables-pipe_tables-fenced_code_attributes-markdown_in_html_blocks-table_captions-smart"
+meta="${core_config}\Meta-${meta_prof}.yaml"
+stdin_plus=""
+t=""
+pipe="Default"
+
 if   [ "${out_ext}" == "" ]; then
     to=markdown
 
-elif [ "${out_ext_full: -2}" == "md" ]; then
+elif [ "${out_ext}" == "md" ]; then
     to=markdown
+
+elif [ "${out_ext_full: -7}" == "r.ipynb" ]; then
+    to="$jupymd"
+    t=markdown
+    stdin_plus=("stdin" "$meta" "${core_config}/Meta-ipynb-R.yaml")
+    pipe="ipynb"
+
+elif [ "${out_ext}" == "ipynb" ]; then
+    to="$jupymd"
+    t=markdown
+    stdin_plus=("stdin" "$meta" "${core_config}/Meta-ipynb-py3.yaml")
+    pipe="ipynb"
 
 else
     to="${out_ext}"
 fi
 
+if [ "${stdin_plus}" == "" ]; then; stdin_plus=("stdin" "$meta")
+if [ "$t" == "" ]; then; t="$to"
 
-# stdin from previous operations + Meta-Default.yaml:
-inputs=("stdin" "${core_config}/Meta-Default.yaml")
+
 reader_args=(-f "${from}")
 writer_args=(-t "${to}" --standalone --self-contained)

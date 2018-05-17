@@ -1,4 +1,9 @@
 @echo off
+
 set PATH=%env_path%;%env_path%\Scripts;%env_path%\Library\bin;%PATH%
+
+set meta_prof=Default
 %import% Args-Default
-%import% Pipe-Simple
+
+%r% cat-md stdin | ^
+%r% pandoc %reader_args% %writer_args%
