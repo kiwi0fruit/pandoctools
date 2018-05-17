@@ -1,6 +1,6 @@
 #!/bin/sh
 # Usage in Pandoctools profiles (for Meta-Default.yaml):
-#   source "$getpath" Meta-Default.yaml
+#   source "$resolve" Meta-Default.yaml
 
 # Uses predefined absolute path variables:
 #   ${core_config} (<...>/site-packages/pandoctools/sh)

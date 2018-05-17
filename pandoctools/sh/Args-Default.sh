@@ -32,7 +32,7 @@ reader_args=(-f "${_from}")
 
 
 _jupymd="markdown-bracketed_spans-fenced_divs-link_attributes-simple_tables-multiline_tables-grid_tables-pipe_tables-fenced_code_attributes-markdown_in_html_blocks-table_captions-smart"
-_meta="$(source "$getpath" Meta-${meta_prof}.yaml)"
+_meta="$(. "$resolve" Meta-${meta_prof}.yaml)"
 stdin_plus2=("stdin" "${_meta}")
 pipe="Default"
 to=""
@@ -46,13 +46,13 @@ elif [ "${out_ext}" == "md" ]; then
 elif [ "${out_ext_full: -7}" == "r.ipynb" ]; then
     _to="${_jupymd}"
     to=markdown
-    stdin_plus2=("stdin" "${_meta}" "$(source "$getpath" Meta-ipynb-R.yaml)")
+    stdin_plus2=("stdin" "${_meta}" "$(. "$resolve" Meta-ipynb-R.yaml)")
     pipe="ipynb"
 
 elif [ "${out_ext}" == "ipynb" ]; then
     _to="${_jupymd}"
     to=markdown
-    stdin_plus2=("stdin" "${_meta}" "$(source "$getpath" Meta-ipynb-py3.yaml)")
+    stdin_plus2=("stdin" "${_meta}" "$(. "$resolve" Meta-ipynb-py3.yaml)")
     pipe="ipynb"
 
 else

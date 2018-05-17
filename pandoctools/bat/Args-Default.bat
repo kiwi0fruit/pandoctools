@@ -33,7 +33,7 @@ set reader_args=-f "%_from%"
 
 
 set _jupymd=markdown-bracketed_spans-fenced_divs-link_attributes-simple_tables-multiline_tables-grid_tables-pipe_tables-fenced_code_attributes-markdown_in_html_blocks-table_captions-smart
-%setpath% _meta  Meta-%meta_prof%.yaml
+%set_resolve% _meta Meta-%meta_prof%.yaml
 set stdin_plus2=stdin "%_meta%"
 set pipe=Default
 set "to="
@@ -49,7 +49,7 @@ if        "%out_ext%"=="" (
     set to=markdown
     set pipe=ipynb
     
-    %setpath% _meta2  Meta-ipynb-R.yaml
+    %set_resolve% _meta2 Meta-ipynb-R.yaml
     set stdin_plus2=stdin "%_meta%" "%_meta2%"
 
 ) else if "%out_ext%"=="ipynb" (
@@ -57,7 +57,7 @@ if        "%out_ext%"=="" (
     set to=markdown
     set pipe=ipynb
 
-    %setpath% _meta2  Meta-ipynb-py3.yaml
+    %set_resolve% _meta2 Meta-ipynb-py3.yaml
     set stdin_plus2=stdin "%_meta%" "%_meta2%"
 
 ) else (
