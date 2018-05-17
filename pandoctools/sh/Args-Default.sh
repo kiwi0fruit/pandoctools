@@ -33,9 +33,9 @@ reader_args=(-f "${_from}")
 
 _jupymd="markdown-bracketed_spans-fenced_divs-link_attributes-simple_tables-multiline_tables-grid_tables-pipe_tables-fenced_code_attributes-markdown_in_html_blocks-table_captions-smart"
 _meta="$(source "$getpath" Meta-${meta_prof}.yaml)"
-stdin_plus=""
-to=""
+stdin_plus=("stdin" "${_meta}")
 pipe="Default"
+to=""
 
 if   [ "${out_ext}" == "" ]; then
     _to=markdown
@@ -59,6 +59,5 @@ else
     _to="${out_ext}"
 fi
 
-if [ "${stdin_plus}" == "" ]; then; stdin_plus=("stdin" "${_meta}")
 if [ "$to" == "" ]; then; to="${_to}"
 writer_args=(-t "${_to}" --standalone --self-contained)

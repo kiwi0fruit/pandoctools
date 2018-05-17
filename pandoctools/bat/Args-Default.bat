@@ -34,9 +34,9 @@ set reader_args=-f "%_from%"
 
 set _jupymd=markdown-bracketed_spans-fenced_divs-link_attributes-simple_tables-multiline_tables-grid_tables-pipe_tables-fenced_code_attributes-markdown_in_html_blocks-table_captions-smart
 %setpath% _meta  Meta-%meta_prof%.yaml
-set "stdin_plus="
-set "to="
+set stdin_plus=stdin "%_meta%"
 set pipe=Default
+set "to="
 
 if        "%out_ext%"=="" (
     set _to=markdown
@@ -64,6 +64,5 @@ if        "%out_ext%"=="" (
     set _to=%out_ext%
 )
 
-if "%stdin_plus%" == "" set stdin_plus=stdin "%_meta%"
 if "%to%" == "" set to=%_to%
 set writer_args=-t "%_to%" --standalone --self-contained
