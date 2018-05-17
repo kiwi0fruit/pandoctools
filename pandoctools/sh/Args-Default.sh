@@ -7,6 +7,12 @@
 #   ${out_ext} (output file extension like "md" or ".r.ipynb")
 #   ${out_ext_full} (extended output file extension like "r.ipynb")
 #   ${input_file} (input file name with extension)
+# Exports vars:
+#   ${reader_args}
+#   ${writer_args}
+#   ${stdin_plus}
+#   $to
+#   $pipe
 # May be useful:
 #   scripts="$(which panfl)"
 #   scripts="${scripts%/*}"
@@ -14,47 +20,45 @@
 
 
 if   [ "${in_ext}" == "" ]; then
-    from=markdown
+    _from=markdown
 
 elif [ "${in_ext}" == "md" ]; then
-    from=markdown
+    _from=markdown
 
 else
-    from="${in_ext}"
+    _from="${in_ext}"
 fi
+reader_args=(-f "${_from}")
 
 
-jupymd="markdown-bracketed_spans-fenced_divs-link_attributes-simple_tables-multiline_tables-grid_tables-pipe_tables-fenced_code_attributes-markdown_in_html_blocks-table_captions-smart"
-meta="${core_config}\Meta-${meta_prof}.yaml"
+_jupymd="markdown-bracketed_spans-fenced_divs-link_attributes-simple_tables-multiline_tables-grid_tables-pipe_tables-fenced_code_attributes-markdown_in_html_blocks-table_captions-smart"
+_meta="$(source "$getpath" Meta-${meta_prof}.yaml)"
 stdin_plus=""
-t=""
+to=""
 pipe="Default"
 
 if   [ "${out_ext}" == "" ]; then
-    to=markdown
+    _to=markdown
 
 elif [ "${out_ext}" == "md" ]; then
-    to=markdown
+    _to=markdown
 
 elif [ "${out_ext_full: -7}" == "r.ipynb" ]; then
-    to="$jupymd"
-    t=markdown
-    stdin_plus=("stdin" "$meta" "${core_config}/Meta-ipynb-R.yaml")
+    _to="${_jupymd}"
+    to=markdown
+    stdin_plus=("stdin" "${_meta}" "$(source "$getpath" Meta-ipynb-R.yaml)")
     pipe="ipynb"
 
 elif [ "${out_ext}" == "ipynb" ]; then
-    to="$jupymd"
-    t=markdown
-    stdin_plus=("stdin" "$meta" "${core_config}/Meta-ipynb-py3.yaml")
+    _to="${_jupymd}"
+    to=markdown
+    stdin_plus=("stdin" "${_meta}" "$(source "$getpath" Meta-ipynb-py3.yaml)")
     pipe="ipynb"
 
 else
-    to="${out_ext}"
+    _to="${out_ext}"
 fi
 
-if [ "${stdin_plus}" == "" ]; then; stdin_plus=("stdin" "$meta")
-if [ "$t" == "" ]; then; t="$to"
-
-
-reader_args=(-f "${from}")
-writer_args=(-t "${to}" --standalone --self-contained)
+if [ "${stdin_plus}" == "" ]; then; stdin_plus=("stdin" "${_meta}")
+if [ "$to" == "" ]; then; to="${_to}"
+writer_args=(-t "${_to}" --standalone --self-contained)

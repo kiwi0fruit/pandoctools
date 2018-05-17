@@ -55,6 +55,8 @@ setup(
         'scripts/html_indent_fix.py',
         'scripts/pandoctools-import',
         'scripts/pandoctools-import.bat',
+        'scripts/pandoctools-getpath',
+        'scripts/pandoctools-setpath.bat',
         'scripts/path-run.bat',
         'scripts/path-source',
         'scripts/path-source.bat',

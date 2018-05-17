@@ -8,6 +8,12 @@
 ::   %out_ext% (output file extension like "md")
 ::   %out_ext_full% (extended output file extension like "r.ipynb")
 ::   %input_file% (input file name with extension)
+:: Exports vars:
+::   %reader_args%
+::   %writer_args%
+::   %stdin_plus%
+::   %to%
+::   %pipe%
 :: May be useful:
 ::   %source% setvar scripts %r% where $PATH:panfl.exe
 ::   set scripts=%scripts:~0,-10%
@@ -15,47 +21,49 @@
 
 
 if        "%in_ext%"=="" (
-    set from=markdown
+    set _from=markdown
 
 ) else if "%in_ext%"=="md" (
-    set from=markdown
+    set _from=markdown
 
 ) else (
-    set from=%in_ext%
+    set _from=%in_ext%
 )
+set reader_args=-f "%_from%"
 
 
-set jupymd=markdown-bracketed_spans-fenced_divs-link_attributes-simple_tables-multiline_tables-grid_tables-pipe_tables-fenced_code_attributes-markdown_in_html_blocks-table_captions-smart
-set meta=%core_config%\Meta-%meta_prof%.yaml
+set _jupymd=markdown-bracketed_spans-fenced_divs-link_attributes-simple_tables-multiline_tables-grid_tables-pipe_tables-fenced_code_attributes-markdown_in_html_blocks-table_captions-smart
+%setpath% _meta  Meta-%meta_prof%.yaml
 set "stdin_plus="
-set "t="
+set "to="
 set pipe=Default
 
 if        "%out_ext%"=="" (
-    set to=markdown
+    set _to=markdown
 
 ) else if "%out_ext%"=="md" (
-    set to=markdown
+    set _to=markdown
 
 ) else if "%out_ext_full:~-7%"=="r.ipynb" (
-    set to=%jupymd%
-    set t=markdown
-    set stdin_plus=stdin "%meta%" "%core_config%\Meta-ipynb-R.yaml"
+    set _to=%_jupymd%
+    set to=markdown
     set pipe=ipynb
+    
+    %setpath% _meta2  Meta-ipynb-R.yaml
+    set stdin_plus=stdin "%_meta%" "%_meta2%"
 
 ) else if "%out_ext%"=="ipynb" (
-    set to=%jupymd%
-    set t=markdown
-    set stdin_plus=stdin "%meta%" "%core_config%\Meta-ipynb-py3.yaml"
+    set _to=%_jupymd%
+    set to=markdown
     set pipe=ipynb
 
+    %setpath% _meta2  Meta-ipynb-py3.yaml
+    set stdin_plus=stdin "%_meta%" "%_meta2%"
+
 ) else (
-    set to=%out_ext%
+    set _to=%out_ext%
 )
 
-if "%stdin_plus%" == "" set stdin_plus=stdin "%meta%"
-if "%t%" == "" set t=%to%
-
-
-set reader_args=-f "%from%"
-set writer_args=-t "%to%" --standalone --self-contained
+if "%stdin_plus%" == "" set stdin_plus=stdin "%_meta%"
+if "%to%" == "" set to=%_to%
+set writer_args=-t "%_to%" --standalone --self-contained

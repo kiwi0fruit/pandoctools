@@ -7,7 +7,7 @@
 %r% pandoc %reader_args% -t json | ^
 %r% knitty %input_file% %reader_args% %writer_args% --to-ipynb | ^
 %r% %sugartex% | ^
-%r% pandoc-crossref %t% | ^
+%r% pandoc-crossref %to% | ^
 %r% pandoc -f json %writer_args% | ^
 %r% knotedown --match=in --nomagic > "%input_file%.%out_ext_full%"
 
