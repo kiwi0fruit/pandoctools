@@ -2,11 +2,11 @@
 
 %source% activate "%env_path%"
 
-set meta_prof=Kiwi
+set meta_profile=Kiwi
 %import% Args-Default
 
-set sugartex=sugartex --kiwi
-set stdin_plus1=stdin
+set stex=--kiwi
+set inputs=stdin
 %import% Pipe-%pipe%
 
 %source% deactivate

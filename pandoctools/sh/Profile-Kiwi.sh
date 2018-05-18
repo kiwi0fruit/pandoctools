@@ -1,10 +1,10 @@
 . "$source" activate "${env_path}"
 
-meta_prof=Kiwi
+meta_profile=Kiwi
 . "$import" Args-Default
 
-sugartex=(sugartex --kiwi)
-stdin_plus1=(stdin)
+stex="--kiwi"
+inputs=(stdin)
 . "$import" "Pipe-$pipe"
 
 . "$source" deactivate

@@ -5,11 +5,11 @@
 
 . "$source" activate "${env_path}"
 
-meta_prof=Default
+meta_profile=Default
 . "$import" Args-Default
 
-sugartex=(sugartex)
-stdin_plus1=(stdin)
+stex="$to"
+inputs=(stdin)
 . "$import" "Pipe-$pipe"
 
 . "$source" deactivate

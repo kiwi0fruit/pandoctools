@@ -1,6 +1,6 @@
 PATH="${env_path}/bin:$PATH"
 
-meta_prof=Default
+meta_profile=Default
 . "$import" Args-Default
 
 cat-md stdin | \

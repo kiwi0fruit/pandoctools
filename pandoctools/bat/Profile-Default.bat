@@ -6,11 +6,11 @@
 
 %source% activate "%env_path%"
 
-set meta_prof=Default
+set meta_profile=Default
 %import% Args-Default
 
-set sugartex=sugartex
-set stdin_plus1=stdin
+set stex=%to%
+set inputs=stdin
 %import% Pipe-%pipe%
 
 %source% deactivate

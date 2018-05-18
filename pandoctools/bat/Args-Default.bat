@@ -1,7 +1,8 @@
 @echo off
 :: May use predefined variables:
-::   %core_config% (folder)
-::   %user_config% (folder)
+::   %meta_profile% (metadata profile name)
+::   %set_resolve% (sets var to a resolved path to a file.
+::                  Searches in %core_config% and %user_config% folders.)
 ::   %in_ext% (input file extension like "md")
 ::   %in_ext_full% (extended input file extension like "py.md" -
 ::                  everything after first dot)
@@ -11,7 +12,7 @@
 :: Exports vars:
 ::   %reader_args%
 ::   %writer_args%
-::   %stdin_plus2%
+::   %stdin_plus%
 ::   %to%
 ::   %pipe%
 :: May be useful:
@@ -33,8 +34,8 @@ set reader_args=-f "%_from%"
 
 
 set _jupymd=markdown-bracketed_spans-fenced_divs-link_attributes-simple_tables-multiline_tables-grid_tables-pipe_tables-fenced_code_attributes-markdown_in_html_blocks-table_captions-smart
-%set_resolve% _meta Meta-%meta_prof%.yaml
-set stdin_plus2=stdin "%_meta%"
+%set_resolve% _meta Meta-%meta_profile%.yaml
+set stdin_plus=stdin "%_meta%"
 set pipe=Default
 set "to="
 
@@ -50,7 +51,7 @@ if        "%out_ext%"=="" (
     set pipe=ipynb
     
     %set_resolve% _meta2 Meta-ipynb-R.yaml
-    set stdin_plus2=stdin "%_meta%" "%_meta2%"
+    set stdin_plus=stdin "%_meta%" "%_meta2%"
 
 ) else if "%out_ext%"=="ipynb" (
     set _to=%_jupymd%
@@ -58,7 +59,7 @@ if        "%out_ext%"=="" (
     set pipe=ipynb
 
     %set_resolve% _meta2 Meta-ipynb-py3.yaml
-    set stdin_plus2=stdin "%_meta%" "%_meta2%"
+    set stdin_plus=stdin "%_meta%" "%_meta2%"
 
 ) else (
     set _to=%out_ext%

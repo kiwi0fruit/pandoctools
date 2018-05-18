@@ -1,6 +1,7 @@
 # May use predefined variables:
-#   ${core_config} (folder)
-#   ${user_config} (folder)
+#   ${meta_profile} (metadata profile name)
+#   ${resolve} (echoes resolved path to a file.
+#               Searches in ${core_config} and ${user_config} folders.)
 #   ${in_ext} (input file extension like "md")
 #   ${in_ext_full} (extended input file extension like "py.md" -
 #                   everything starting first dot)
@@ -10,7 +11,7 @@
 # Exports vars:
 #   ${reader_args}
 #   ${writer_args}
-#   ${stdin_plus2}
+#   ${stdin_plus}
 #   $to
 #   $pipe
 # May be useful:
@@ -32,8 +33,8 @@ reader_args=(-f "${_from}")
 
 
 _jupymd="markdown-bracketed_spans-fenced_divs-link_attributes-simple_tables-multiline_tables-grid_tables-pipe_tables-fenced_code_attributes-markdown_in_html_blocks-table_captions-smart"
-_meta="$(. "$resolve" Meta-${meta_prof}.yaml)"
-stdin_plus2=("stdin" "${_meta}")
+_meta="$(. "$resolve" Meta-${meta_profile}.yaml)"
+stdin_plus=("stdin" "${_meta}")
 pipe="Default"
 to=""
 
@@ -46,13 +47,13 @@ elif [ "${out_ext}" == "md" ]; then
 elif [ "${out_ext_full: -7}" == "r.ipynb" ]; then
     _to="${_jupymd}"
     to=markdown
-    stdin_plus2=("stdin" "${_meta}" "$(. "$resolve" Meta-ipynb-R.yaml)")
+    stdin_plus=("stdin" "${_meta}" "$(. "$resolve" Meta-ipynb-R.yaml)")
     pipe="ipynb"
 
 elif [ "${out_ext}" == "ipynb" ]; then
     _to="${_jupymd}"
     to=markdown
-    stdin_plus2=("stdin" "${_meta}" "$(. "$resolve" Meta-ipynb-py3.yaml)")
+    stdin_plus=("stdin" "${_meta}" "$(. "$resolve" Meta-ipynb-py3.yaml)")
     pipe="ipynb"
 
 else
