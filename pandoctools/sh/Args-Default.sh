@@ -1,7 +1,8 @@
 # May use predefined variables:
-#   ${meta} (metadata profile name)
-#   ${resolve} (echoes resolved path to a file.
-#               Searches in ${core_config} and ${user_config} folders.)
+#   $meta (metadata profile name)
+#   $resolve (echoes resolved path to a file.
+#             Searches in <...>/site-packages/pandoctools/sh
+#             and $HOME/.pandoc/pandoctools folders)
 #   ${in_ext} (input file extension like "md")
 #   ${in_ext_full} (extended input file extension like "py.md" -
 #                   everything starting first dot)
