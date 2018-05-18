@@ -1,10 +1,6 @@
 . "$source" activate "${env_path}"
-
-meta_profile=Kiwi
+meta=Kiwi
 . "$import" Args-Default
-
-stex="--kiwi"
-inputs=(stdin)
+stex="--kiwi"; inputs=(stdin)
 . "$import" "Pipe-$pipe"
-
 . "$source" deactivate

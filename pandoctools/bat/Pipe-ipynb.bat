@@ -1,5 +1,4 @@
 @echo off
-
 %r% cat-md %inputs% | ^
 %r% pre-knitty %input_file% | ^
 %r% pre-sugartex | ^
@@ -10,5 +9,4 @@
 %r% pandoc-crossref %to% | ^
 %r% pandoc -f json %writer_args% | ^
 %r% knotedown --match=in --nomagic > "%input_file%.%out_ext_full%"
-
 %r% jupyter nbconvert --to notebook --execute "%input_file%.%out_ext_full%"

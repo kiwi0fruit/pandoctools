@@ -8,5 +8,5 @@ sugartex "$stex" | \
 pandoc-crossref "$to" | \
 pandoc -f json "${writer_args[@]}"
 
-# `panfl sugartex_panfl -t $to` = `sugartex`
-# `panfl sugartex_kiwi -t $to` = `sugartex --kiwi`
+# panfl sugartex_panfl -t $to == sugartex $to == sugartex
+# panfl sugartex_kiwi -t $to == sugartex --kiwi

@@ -1,5 +1,4 @@
 @echo off
-
 %r% cat-md %inputs% | ^
 %r% pre-knitty %input_file% | ^
 %r% pre-sugartex | ^
@@ -10,5 +9,5 @@
 %r% pandoc-crossref %to% | ^
 %r% pandoc -f json %writer_args%
 
-:: `panfl sugartex -t %to%` = `sugartex`
-:: `panfl sugartex_kiwi -t %to%` = `sugartex --kiwi`
+:: panfl sugartex -t %to% == sugartex %to% == sugartex 
+:: panfl sugartex_kiwi -t %to% == sugartex --kiwi

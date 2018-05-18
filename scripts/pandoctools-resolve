@@ -1,13 +1,13 @@
 #!/bin/sh
 # Usage in Pandoctools profiles (for Meta-Default.yaml):
-#   source "$resolve" Meta-Default.yaml
+#   x="$(. "$resolve" Meta-Default.yaml)"
 
 # Uses predefined absolute path variables:
-#   ${core_config} (<...>/site-packages/pandoctools/sh)
-#   ${user_config} ($HOME/.pandoc/pandoctools)
+#   ${_core_config} (<...>/site-packages/pandoctools/sh)
+#   ${_user_config} ($HOME/.pandoc/pandoctools)
 
-if [ -f "${user_config}/$1" ]; then
-    echo "${user_config}/$1"
+if [ -f "${_user_config}/$1" ]; then
+    echo "${_user_config}/$1"
 else
-    echo "${core_config}/$1"
+    echo "${_core_config}/$1"
 fi

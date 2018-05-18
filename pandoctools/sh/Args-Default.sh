@@ -1,5 +1,5 @@
 # May use predefined variables:
-#   ${meta_profile} (metadata profile name)
+#   ${meta} (metadata profile name)
 #   ${resolve} (echoes resolved path to a file.
 #               Searches in ${core_config} and ${user_config} folders.)
 #   ${in_ext} (input file extension like "md")
@@ -33,7 +33,7 @@ reader_args=(-f "${_from}")
 
 
 _jupymd="markdown-bracketed_spans-fenced_divs-link_attributes-simple_tables-multiline_tables-grid_tables-pipe_tables-fenced_code_attributes-markdown_in_html_blocks-table_captions-smart"
-_meta="$(. "$resolve" Meta-${meta_profile}.yaml)"
+_meta="$(. "$resolve" Meta-$meta.yaml)"
 stdin_plus=("stdin" "${_meta}")
 pipe="Default"
 to=""

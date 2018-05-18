@@ -2,11 +2,11 @@
 ::   %import% Profile-Default
 
 :: Uses predefined absolute path variables:
-::   %core_config% (<...>\site-packages\pandoctools\bat)
-::   %user_config% (%APPDATA%\pandoc\pandoctools)
+::   %_core_config% (<...>\site-packages\pandoctools\bat)
+::   %_user_config% (%APPDATA%\pandoc\pandoctools)
 
-if exist "%user_config%\%~1.bat" (
-    call "%user_config%\%~1.bat"
+if exist "%_user_config%\%~1.bat" (
+    call "%_user_config%\%~1.bat"
 ) else (
-    call "%core_config%\%~1.bat"
+    call "%_core_config%\%~1.bat"
 )
