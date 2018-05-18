@@ -2,8 +2,8 @@
 :: May use predefined variables:
 ::   %meta% (metadata profile name)
 ::   %set_resolve% (sets var to a resolved path to a file.
-::                  Searches in <...>\site-packages\pandoctools\bat
-::                  and %APPDATA%\pandoc\pandoctools folders)
+::                  Searches in %APPDATA%\pandoc\pandoctools
+::                  then in <...>\site-packages\pandoctools\bat folders)
 ::   %in_ext% (input file extension like "md")
 ::   %in_ext_full% (extended input file extension like "py.md" -
 ::                  everything after first dot)

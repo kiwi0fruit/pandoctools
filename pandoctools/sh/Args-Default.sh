@@ -1,12 +1,12 @@
 # May use predefined variables:
 #   $meta (metadata profile name)
 #   $resolve (echoes resolved path to a file.
-#             Searches in <...>/site-packages/pandoctools/sh
-#             and $HOME/.pandoc/pandoctools folders)
+#             Searches in $HOME/.pandoc/pandoctools
+#             then in <...>/site-packages/pandoctools/sh folders)
 #   ${in_ext} (input file extension like "md")
 #   ${in_ext_full} (extended input file extension like "py.md" -
 #                   everything starting first dot)
-#   ${out_ext} (output file extension like "md" or ".r.ipynb")
+#   ${out_ext} (output file extension like "md")
 #   ${out_ext_full} (extended output file extension like "r.ipynb")
 #   ${input_file} (input file name with extension)
 # Exports vars:
