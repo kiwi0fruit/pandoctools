@@ -1,7 +1,17 @@
 import sys
 import os
+from os.path import join, dirname, abspath
 import click
 import re
+
+if os.name == 'nt':
+    pandoctools_user_data = r"%APPDATA%\pandoc\pandoctools"
+    pandoctools_user = join(os.environ["APPDATA"], "pandoc", "pandoctools")
+    pandoctools_core = join(dirname(abspath(__file__)), "bat")
+else:
+    pandoctools_user_data = "$HOME/.pandoc/pandoctools"
+    pandoctools_user = join(os.environ["HOME"], ".pandoc", "pandoctools")
+    pandoctools_core = join(dirname(abspath(__file__)), "sh")
 
 
 def cat_md():
@@ -21,17 +31,29 @@ def cat_md():
     sys.stdout.write('\n\n'.join(sources_list))
 
 
-@click.argument('profile_script', type=str)
-@click.argument('input_file', type=str)
-@click.argument('out_ext', type=str, default=None, required=False)
-@click.option('-c', '--config', type=str, default=None,
-              help="Directory with Pandoctools shell scripts configs that override defaults. " +
-              "Recommended to be write allowed only as administrator. Special options: " +
-              "`none` (no folder), `pandoc` (`%APPDATA%\\pandoc\\pandoctools` or `$HOME/.pandoc/pandoctools`). " +
-              "When not set pandoctools try to read `PANDOCTOOLSDATA` environment variable.")
-def pandoctools(profile_script, input_file, out_ext, data_dir):
-    config = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config')
-    # TODO: set env args: input_file, in_ext, out_ext, config (pandoctools\config), pandoc_data_dir (~/.pandoc), user_config (--config), scripts (Python\Scripts)
-    # TODO: --list -l - список переменных, которые задаются пандоктулзом и дефолтным скриптом.
-    # TODO: --bash -b - использовать баш в винде (на свой страх и риск) тут задается путь к башу. Если вместу путя 'default', то пытаться найти его (но только в ПЭТХ, но не в текущей папке).
-    # TODO: see `scripts`, `bat`, `sh` folders, `./cli` file. 
+@click.command(
+    help="Pandoctools is a Pandoc profile manager that stores CLI filter pipelines.\n" +
+         "Profiles first are read from user data: {} then from python module: {}\n".format(pandoctools_user_data,
+                                                                                           pandoctools_core) +
+         "Profiles read from stdin and write to stdout (at least something). " +
+         "May be (?) for security concerns the user data folder should be set to write-allowed only as administrator."
+)
+@click.argument('input_file', type=str, default=None, required=False)
+@click.option('-p', '--profile', type=str, default="Default",
+              help='Pandoctools profile name or file path.')
+@click.option('-o', '--out', type=str, default=None,
+              help='Output file path like "./out/doc.html"\n' +
+                   'or input file path transformation like "./out/*.html", "*.r.ipynb"\n' +
+                   'If not provided the output document is written to stdout. ' +
+                   'Same is when additional extension postfix provided but input file name is not provided.')
+@click.option('-t', '--to', type=str, default=None,
+              help='Extension like "html" or "r.ipynb" that governs output format.')
+@click.option('--stdin', is_flag=True, default=False,
+              help='Read document form stdin. INPUT_FILE only gives a file path.')
+def pandoctools(input_file, profile, out, to, stdin):
+    """
+    if stdout == 'no stdout <path>' then the profile wrote output file to disc
+    and told us about it.
+    """
+    os.environ['_user_config'] = pandoctools_user
+    os.environ['_core_config'] = pandoctools_core
