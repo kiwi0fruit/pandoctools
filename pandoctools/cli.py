@@ -47,13 +47,15 @@ def cat_md():
                    'If not provided the output document is written to stdout. ' +
                    'Same is when additional extension postfix provided but input file name is not provided.')
 @click.option('-t', '--to', type=str, default=None,
-              help='Extension like "html" or "r.ipynb" that governs output format.')
+              help='Extension like "html" or "r.ipynb" that governs output format. ')
 @click.option('--stdin', is_flag=True, default=False,
               help='Read document form stdin. INPUT_FILE only gives a file path.')
 def pandoctools(input_file, profile, out, to, stdin):
     """
     if stdout == 'no stdout <path>' then the profile wrote output file to disc
-    and told us about it.
+    and told us about it this way.
     """
     os.environ['_user_config'] = pandoctools_user
     os.environ['_core_config'] = pandoctools_core
+    if not stdin:
+        input("Press Enter to continue...")

@@ -8,7 +8,8 @@
 #                   everything starting first dot)
 #   ${out_ext} (output file extension like "md")
 #   ${out_ext_full} (extended output file extension like "r.ipynb")
-#   ${input_file} (input file name with extension)
+#   ${input_file} (input file path with extension)
+#   ${output_file} (output file path with extension)
 # Exports vars:
 #   ${reader_args}
 #   ${writer_args}

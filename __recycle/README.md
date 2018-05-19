@@ -7,6 +7,7 @@
 * env_path
 * scripts
 * input_file
+* output_file
 * in_ext
 * in_ext_full
 * out_ext
