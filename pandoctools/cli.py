@@ -31,23 +31,29 @@ def cat_md():
     sys.stdout.write('\n\n'.join(sources_list))
 
 
-@click.command(
-    help="Pandoctools is a Pandoc profile manager that stores CLI filter pipelines.\n" +
-         "Profiles are searched in user data: {} then in python module: {}\n".format(pandoctools_user_data,
-                                                                                     pandoctools_core) +
-         "Profiles read from stdin and write to stdout (usually). " +
-         "May be (?) for security concerns the user data folder should be set to write-allowed only as administrator."
-)
+help_str = """Pandoctools is a Pandoc profile manager that stores CLI filter pipelines.
+Profiles are searched in user data: {} then in python module: {}
+Profiles read from stdin and write to stdout (usually).
+Some options can be set in document metadata:
+---
+pandoctools:
+  prof: Default
+  out: *.html
+...
+May be (?) for security concerns the user data folder should be set to write-allowed only as administrator.
+""".format(pandoctools_user_data, pandoctools_core)
+
+
+@click.command(help=help_str)
 @click.argument('input_file', type=str, default=None, required=False)
-@click.option('-p', '--profile', type=str, default="Default",
-              help='Pandoctools profile name or file path.')
+@click.option('-p', '--prof', type=str, default=None, help='Pandoctools profile name or file path.')
 @click.option('-o', '--out', type=str, default=None,
               help='Output file path like "./out/doc.html"\n' +
                    'or input file path transformation like "*.html", "./out/*.r.ipynb"\n' +
-                   'In --std mode only full extension like "r.ipynb" is considered.')
-@click.option('--std', is_flag=True, default=False,
-              help='Read document form stdin and write to stdout. INPUT_FILE only gives a file path. If --std was \n' +
-                   'set but stdout = \'\' then the profile always writes output file to disc with this extension.')
+                   'In --std mode only full extension is considered: "doc.r.ipynb" to "r.ipynb".')
+@click.option('-s', '--std', is_flag=True, default=False,
+              help="Read document form stdin and write to stdout. INPUT_FILE only gives a file path. If --std was \n" +
+                   "set but stdout = '' then the profile always writes output file to disc when this extension.")
 def pandoctools(input_file, profile, out, std):
     """
     """
