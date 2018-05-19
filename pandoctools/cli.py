@@ -33,9 +33,9 @@ def cat_md():
 
 @click.command(
     help="Pandoctools is a Pandoc profile manager that stores CLI filter pipelines.\n" +
-         "Profiles first are read from user data: {} then from python module: {}\n".format(pandoctools_user_data,
-                                                                                           pandoctools_core) +
-         "Profiles read from stdin and write to stdout (at least something). " +
+         "Profiles are searched in user data: {} then in python module: {}\n".format(pandoctools_user_data,
+                                                                                     pandoctools_core) +
+         "Profiles read from stdin and write to stdout (usually). " +
          "May be (?) for security concerns the user data folder should be set to write-allowed only as administrator."
 )
 @click.argument('input_file', type=str, default=None, required=False)
@@ -43,19 +43,16 @@ def cat_md():
               help='Pandoctools profile name or file path.')
 @click.option('-o', '--out', type=str, default=None,
               help='Output file path like "./out/doc.html"\n' +
-                   'or input file path transformation like "./out/*.html", "*.r.ipynb"\n' +
-                   'If not provided the output document is written to stdout. ' +
-                   'Same is when additional extension postfix provided but input file name is not provided.')
-@click.option('-t', '--to', type=str, default=None,
-              help='Extension like "html" or "r.ipynb" that governs output format. ')
-@click.option('--stdin', is_flag=True, default=False,
-              help='Read document form stdin. INPUT_FILE only gives a file path.')
-def pandoctools(input_file, profile, out, to, stdin):
+                   'or input file path transformation like "*.html", "./out/*.r.ipynb"\n' +
+                   'In --std mode only full extension like "r.ipynb" is considered.')
+@click.option('--std', is_flag=True, default=False,
+              help='Read document form stdin and write to stdout. INPUT_FILE only gives a file path. If --std was \n' +
+                   'set but stdout = \'\' then the profile always writes output file to disc with this extension.')
+def pandoctools(input_file, profile, out, std):
     """
-    if stdout == 'no stdout <path>' then the profile wrote output file to disc
-    and told us about it this way.
     """
     os.environ['_user_config'] = pandoctools_user
     os.environ['_core_config'] = pandoctools_core
-    if not stdin:
+
+    if not std:
         input("Press Enter to continue...")
