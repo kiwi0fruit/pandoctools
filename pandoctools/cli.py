@@ -3,6 +3,7 @@ import os
 from os.path import join, dirname, abspath
 import click
 import re
+import yaml
 
 
 def cat_md():
@@ -22,11 +23,20 @@ def cat_md():
     sys.stdout.write('\n\n'.join(sources_list))
 
 if os.name == 'nt':
-    pandoctools_user = r"%APPDATA%\pandoc\pandoctools"
+    pandoctools_user_data = r"%APPDATA%\pandoc\pandoctools"
     pandoctools_core = join(dirname(abspath(__file__)), "bat")
 else:
-    pandoctools_user = "$HOME/.pandoc/pandoctools"
+    pandoctools_user_data = "$HOME/.pandoc/pandoctools"
     pandoctools_core = join(dirname(abspath(__file__)), "sh")
+
+
+def get_output_file(input_file: str, out: str):
+    return ""
+
+
+def get_extensions(file: str):
+    return "", ""
+
 
 help_str = """Pandoctools is a Pandoc profile manager that stores CLI filter pipelines.
 (default INPUT_FILE is "Untitled").
@@ -42,7 +52,7 @@ pandoctools:\n
 ...
 
 May be (?) for security concerns the user data folder should be set to write-allowed only as administrator.
-""".format(pandoctools_user, pandoctools_core)
+""".format(pandoctools_user_data, pandoctools_core)
 
 
 @click.command(help=help_str)
@@ -60,23 +70,14 @@ May be (?) for security concerns the user data folder should be set to write-all
 def pandoctools(input_file, profile, out, std):
     """
     Sets environment variables:
-    ---------------------------
-    scripts
-    import
-    source
-    r (win)
-    set_resolve (win)
-    resolve (unix)
-    env_path
-    _core_config
-    _user_config
-    input_file
-    output_file
-    in_ext
-    in_ext_full
-    out_ext
-    out_ext_full
+    * scripts, import, source
+    * r (win), set_resolve (win), resolve (unix)
+    * env_path, _core_config, _user_config
+    * input_file, output_file
+    * in_ext, in_ext_full
+    * out_ext, out_ext_full
     """
+    # Set other environment vars:
     env_path = dirname(sys.executable)
     if os.name == 'nt':
         pandoctools_user = join(os.environ["APPDATA"], "pandoc", "pandoctools")
@@ -96,7 +97,30 @@ def pandoctools(input_file, profile, out, std):
     os.environ['_core_config'] = pandoctools_core
     os.environ['scripts'] = scripts_bin
     os.environ['env_path'] = env_path
-    # input_file output_file in_ext in_ext_full out_ext out_ext_full
+
+    # Read metadata:
+    if (not std) and (input_file is not None):
+        with open(input_file, 'r') as file:
+            doc = file.read()
+    else:
+        doc = sys.stdin.read()
+    m = re.search(r'(?:^|\n)---\n(.+)(?:---|\.\.\.)(?:\n|$)', doc, re.DOTALL)
+    metadata = yaml.load(m.group(1)) if m else {}
+
+    # Set input_file, profile, out:
+    pandoctools_meta = metadata.get('pandoctools', None)
+    if not isinstance(pandoctools_meta, dict):
+        pandoctools_meta = {}
+    profile = pandoctools_meta.get('profile', 'Default') if (profile is None) else profile
+    out = pandoctools_meta.get('out', '*.html') if (out is None) else out
+    input_file = "untitled" if (input_file is None) else input_file
+    output_file = get_output_file(input_file, out)
+
+    # Set other environment vars:
+    os.environ['input_file'] = input_file
+    os.environ['output_file'] = output_file
+    os.environ['in_ext'], os.environ['in_ext_full'] = get_extensions(input_file)
+    os.environ['out_ext'], os.environ['out_ext_full'] = get_extensions(output_file)
 
     if not std:
         input("Press Enter to continue...")
