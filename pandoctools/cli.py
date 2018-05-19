@@ -32,28 +32,34 @@ def cat_md():
 
 
 help_str = """Pandoctools is a Pandoc profile manager that stores CLI filter pipelines.
-Profiles are searched in user data: {} then in python module: {}
+
+Not providing INPUT_FILE is the same as setting --std flag (default name is "Untitled").
+
+Profiles are searched in user data: "{}" then in python module: "{}".
 Profiles read from stdin and write to stdout (usually).
-Some options can be set in document metadata:
----
-pandoctools:
-  prof: Default
-  out: *.html
+
+Some options can be set in document metadata:\n
+---\n
+pandoctools:\n
+  prof: Default\n
+  out: *.html\n
 ...
+
 May be (?) for security concerns the user data folder should be set to write-allowed only as administrator.
 """.format(pandoctools_user_data, pandoctools_core)
 
 
 @click.command(help=help_str)
 @click.argument('input_file', type=str, default=None, required=False)
-@click.option('-p', '--prof', type=str, default=None, help='Pandoctools profile name or file path.')
+@click.option('-p', '--prof', type=str, default=None,
+              help='Pandoctools profile name or file path (default is "Default").')
 @click.option('-o', '--out', type=str, default=None,
-              help='Output file path like "./out/doc.html"\n' +
-                   'or input file path transformation like "*.html", "./out/*.r.ipynb"\n' +
-                   'In --std mode only full extension is considered: "doc.r.ipynb" to "r.ipynb".')
+              help='Output file path like "./out/doc.html" ' +
+                   'or input file path transformation like "*.html", "./out/*.r.ipynb" (default is "*.html").\n' +
+                   'In --std mode only full extension is considered: "doc.r.ipynb" > "r.ipynb".')
 @click.option('-s', '--std', is_flag=True, default=False,
-              help="Read document form stdin and write to stdout. INPUT_FILE only gives a file path. If --std was \n" +
-                   "set but stdout = '' then the profile always writes output file to disc when this extension.")
+              help="Read document form stdin and write to stdout. INPUT_FILE only gives a file path. If --std was " +
+                   "set but stdout = '' then the profile always writes output file to disc with that options.")
 def pandoctools(input_file, profile, out, std):
     """
     """
