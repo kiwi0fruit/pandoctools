@@ -6,30 +6,6 @@ import re
 import yaml
 
 
-def cat_md():
-    """
-    Joins markdown files with "\n\n" separator and writes to stdout.
-    If file is 'stdin' then reads it from stdin.
-    """
-    sources_list, stdin = [], None
-    for file in sys.argv[1:]:
-        if file == 'stdin':
-            if stdin is None:
-                stdin = sys.stdin.read()
-            sources_list.append(stdin)
-        else:
-            with open(file, "r", encoding="utf-8") as f:
-                sources_list.append(f.read())
-    sys.stdout.write('\n\n'.join(sources_list))
-
-if os.name == 'nt':
-    pandoctools_user_data = r"%APPDATA%\pandoc\pandoctools"
-    pandoctools_core = join(dirname(abspath(__file__)), "bat")
-else:
-    pandoctools_user_data = "$HOME/.pandoc/pandoctools"
-    pandoctools_core = join(dirname(abspath(__file__)), "sh")
-
-
 def get_output_file(input_file: str, out: str):
     return ""
 
@@ -37,6 +13,12 @@ def get_output_file(input_file: str, out: str):
 def get_extensions(file: str):
     return "", ""
 
+if os.name == 'nt':
+    pandoctools_user_data = r"%APPDATA%\pandoc\pandoctools"
+    pandoctools_core = join(dirname(abspath(__file__)), "bat")
+else:
+    pandoctools_user_data = "$HOME/.pandoc/pandoctools"
+    pandoctools_core = join(dirname(abspath(__file__)), "sh")
 
 help_str = """Pandoctools is a Pandoc profile manager that stores CLI filter pipelines.
 (default INPUT_FILE is "Untitled").
@@ -49,8 +31,9 @@ Some options can be set in document metadata:\n
 pandoctools:\n
   prof: Default\n
   out: *.html\n
-...
-
+  std: False\n
+...\n
+Note that "std: True" does not work.\n
 May be (?) for security concerns the user data folder should be set to write-allowed only as administrator.
 """.format(pandoctools_user_data, pandoctools_core)
 
@@ -98,25 +81,26 @@ def pandoctools(input_file, profile, out, std):
     os.environ['scripts'] = scripts_bin
     os.environ['env_path'] = env_path
 
-    # Read metadata:
     if (not std) and (input_file is not None):
         with open(input_file, 'r') as file:
             doc = file.read()
     else:
         doc = sys.stdin.read()
-    m = re.search(r'(?:^|\n)---\n(.+)(?:---|\.\.\.)(?:\n|$)', doc, re.DOTALL)
-    metadata = yaml.load(m.group(1)) if m else {}
 
-    # Set input_file, profile, out:
-    pandoctools_meta = metadata.get('pandoctools', None)
-    if not isinstance(pandoctools_meta, dict):
-        pandoctools_meta = {}
-    profile = pandoctools_meta.get('profile', 'Default') if (profile is None) else profile
-    out = pandoctools_meta.get('out', '*.html') if (out is None) else out
     input_file = "untitled" if (input_file is None) else input_file
-    output_file = get_output_file(input_file, out)
+    if (profile is None) or (out is None) or std:
+        # Read metadata:
+        m = re.search(r'(?:^|\n)---\n(.+)(?:---|\.\.\.)(?:\n|$)', doc, re.DOTALL)
+        metadata = yaml.load(m.group(1)) if m else {}
+        pandoctools_meta = metadata.get('pandoctools', None)
+        if not isinstance(pandoctools_meta, dict):
+            pandoctools_meta = {}
+        profile = pandoctools_meta.get('profile', 'Default') if (profile is None) else profile
+        out = pandoctools_meta.get('out', '*.html') if (out is None) else out
+        std = False if (pandoctools_meta.get('std', '').upper() == 'FALSE') else std
 
     # Set other environment vars:
+    output_file = get_output_file(input_file, out)
     os.environ['input_file'] = input_file
     os.environ['output_file'] = output_file
     os.environ['in_ext'], os.environ['in_ext_full'] = get_extensions(input_file)

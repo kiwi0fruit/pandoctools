@@ -46,7 +46,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'cat-md=pandoctools.cli:cat_md',
+            'cat-md=pandoctools.cat_md:cat_md',
             'pandoctools=pandoctools.cli:pandoctools',
             'panfl=pandoctools.panfl:main',
         ],
