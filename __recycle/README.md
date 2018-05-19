@@ -1,11 +1,12 @@
 # Predefined in python app:
 
+* scripts
 * import
 * source
+* r (win)
 * set_resolve (win)
 * resolve (unix)
 * env_path
-* scripts
 * input_file
 * output_file
 * in_ext
