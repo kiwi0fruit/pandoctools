@@ -111,9 +111,7 @@ Some options can be set in document metadata:\n
 pandoctools:\n
   prof: Default\n
   out: *.html\n
-  std: False\n
 ...\n
-Note that "std: True" does not work.\n
 May be (?) for security concerns the user data folder should be set to write-allowed only as administrator.
 """.format(pandoctools_user_data, pandoctools_core)
 
@@ -170,7 +168,7 @@ def pandoctools(input_file, profile, out, std, debug):
         doc = sys.stdin.read()
     input_file = "untitled" if (input_file is None) else input_file
 
-    if (profile is None) or (out is None) or std:
+    if (profile is None) or (out is None):
         # Read metadata:
         m = re.search(r'(?:^|\n)---\n(.+)(?:---|\.\.\.)(?:\n|$)', doc, re.DOTALL)
         metadata = yaml.load(m.group(1)) if m else {}
@@ -180,7 +178,6 @@ def pandoctools(input_file, profile, out, std, debug):
         # Mod options if needed:
         profile = pandoctools_meta.get('profile', 'Default') if (profile is None) else profile
         out = pandoctools_meta.get('out', '*.html') if (out is None) else out
-        std = False if (pandoctools_meta.get('std', '').upper() == 'FALSE') else std
 
     # Set other environment vars:
     output_file = get_output_file(input_file, out)
@@ -221,15 +218,13 @@ def pandoctools(input_file, profile, out, std, debug):
 
     proc = run(profile_path, stdout=PIPE, input=doc, encoding='utf8')
 
-    if debug:
-        print('stdout, stderr:')
-        print(proc.stdout)
-        print(proc.stderr)
-
     if not std:
-        input("Press Enter to continue...")
-        print(proc.stdout)
+        if (proc.stdout is not None) and (proc.stdout != ""):
+            print(proc.stdout, file=open(output_file, 'w', encoding="utf-8"))
+        if proc.stderr is not None:
+            print(proc.stderr, file=sys.stderr)
         input("Press Enter to continue...")
     else:
-        print(proc.stdout)
-        # TODO
+        sys.stdout.write(proc.stdout)
+        if proc.stderr is not None:
+            sys.stderr.write(proc.stderr)
