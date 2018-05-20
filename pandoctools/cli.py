@@ -61,7 +61,8 @@ def read_ini(ini: str, folder1: str, folder2: str):
         ini_path = ini
 
     config = configparser.ConfigParser()
-    https://stackoverflow.com/questions/8884188/how-to-read-and-write-ini-file-with-python3
+    config.read(ini_path)
+    return config
 
 
 def user_yes_no_query(message):
@@ -192,11 +193,16 @@ def pandoctools(input_file, profile, out, std, debug):
         for var in vars_:
             print('{}: {}'.format(var, os.environ.get(var)))
 
-    # TODO: read root env from ini, modfy path
+    # https://stackoverflow.com/questions/8884188/how-to-read-and-write-ini-file-with-python3
+    config = read_ini('Defaults', pandoctools_user, pandoctools_core)
+    root_env = config.get('Default', 'root_env')
+    # проверить что абсолютный и что папка существует.
+    print(root_env)
+    # TODO: modfy $PATH
 
-    proc = run(profile_path, stdout=PIPE, input=doc, encoding='utf8')
-    print(proc.stdout)
-    print(proc.stderr)
+    # proc = run(profile_path, stdout=PIPE, input=doc, encoding='utf8')
+    # print(proc.stdout)
+    # print(proc.stderr)
 
     if not std:
         input("Press Enter to continue...")
