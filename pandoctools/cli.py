@@ -67,12 +67,14 @@ def read_ini(ini: str, dir1: str, dir2: str):
 
 def guess_root_env(env_path: str):
     """
-    Checks if python root env is "../../"
-    ("<...>/root_python/envs/the_env").
+    Checks if python root env in default location:
+    env_path =? "<...>/root_python/envs/env_name"
     """
-    # TODO
-    if True
-        return ""
+    up1 = p.dirname(env_path)
+    up2 = p.dirname(up1)
+    python_bin = p.join(up2, 'python.exe' if (os.name == 'nt') else 'bin/python')
+    if (p.basename(up1) == 'envs') and p.isfile(python_bin):
+        return up2
     else:
         return None
 
@@ -162,7 +164,7 @@ def pandoctools(input_file, profile, out, std, debug):
 
     # Read document and mod input_file if needed:
     if (not std) and (input_file is not None):
-        with open(input_file, 'r') as file:
+        with open(input_file, 'r', encoding="utf-8") as file:
             doc = file.read()
     else:
         doc = sys.stdin.read()
@@ -188,6 +190,8 @@ def pandoctools(input_file, profile, out, std, debug):
     os.environ['out_ext'], os.environ['out_ext_full'] = get_extensions(output_file)
 
     profile_path = get_profile_path(profile, pandoctools_user, pandoctools_core)
+
+    # Run profile confirmation:
     if not std:
         with open(profile_path, 'r') as file:
             print('\nOut: {}\nProfile code:\n'.format(out))
@@ -197,24 +201,35 @@ def pandoctools(input_file, profile, out, std, debug):
         if not user_yes_no_query(message):
             return None
 
+    # Find python root env and modify PATH:
+    #   https://stackoverflow.com/questions/8884188/how-to-read-and-write-ini-file-with-python3
+    config = read_ini('Defaults', pandoctools_user, pandoctools_core)
+    root_env = config.get('Default', 'root_env')
+    root_env = root_env if p.isabs(root_env) and p.isdir(root_env) else guess_root_env(env_path)
+    if root_env is not None:
+        os.environ["PATH"] = (r"{py};{py}\Scripts;{py}\Library\bin;"
+                              if (os.name == 'nt') else
+                              "{py}/bin:").format(py=root_env) + os.environ["PATH"]
+
     if debug:
         vars_ = ['scripts', 'import', 'source', 'r', 'set_resolve', 'resolve',
                  'env_path', '_core_config', '_user_config', 'input_file', 'output_file',
                  'in_ext', 'in_ext_full', 'out_ext', 'out_ext_full']
         for var in vars_:
             print('{}: {}'.format(var, os.environ.get(var)))
+        print(os.environ["PATH"])
 
-    # https://stackoverflow.com/questions/8884188/how-to-read-and-write-ini-file-with-python3
-    config = read_ini('Defaults', pandoctools_user, pandoctools_core)
-    root_env = config.get('Default', 'root_env')
-    root_env = root_env if p.isabs(root_env) and p.isdir(root_env) else guess_root_env(env_path)
+    proc = run(profile_path, stdout=PIPE, input=doc, encoding='utf8')
 
-    print(root_env)
-    # TODO: modfy $PATH
-
-    # proc = run(profile_path, stdout=PIPE, input=doc, encoding='utf8')
-    # print(proc.stdout)
-    # print(proc.stderr)
+    if debug:
+        print('stdout, stderr:')
+        print(proc.stdout)
+        print(proc.stderr)
 
     if not std:
         input("Press Enter to continue...")
+        print(proc.stdout)
+        input("Press Enter to continue...")
+    else:
+        print(proc.stdout)
+        # TODO
