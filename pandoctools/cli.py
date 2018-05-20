@@ -5,6 +5,7 @@ import click
 import re
 import yaml
 from subprocess import run, PIPE
+import configparser
 
 
 def get_output_file(input_file: str, out: str) -> str:
@@ -26,7 +27,7 @@ def get_extensions(file_path: str):
 def get_profile_path(profile: str, folder1: str, folder2: str):
     """
     Find profile path by profile name/profile path.
-    In profile name is given (not profile path) then search in folder1, then in folder.
+    In profile name is given (not profile path) then search in folder1, then in folder2.
     """
     if p.splitext(p.basename(profile))[0] == profile:
         ext = 'bat' if (os.name == 'nt') else 'sh'
@@ -40,6 +41,27 @@ def get_profile_path(profile: str, folder1: str, folder2: str):
             raise ValueError("Profile '{}' not found.".format(profile))
     else:
         return profile
+
+
+def read_ini(ini: str, folder1: str, folder2: str):
+    """
+    Find ini file path by ini name/ini path.
+    If ini name is given (not ini path) then search in folder1, then in folder2.
+    """
+    if p.splitext(p.basename(ini))[0] == ini:
+        ini1 = p.join(folder1, '{}.ini'.format(ini))
+        ini2 = p.join(folder2, '{}.ini'.format(ini))
+        if p.isfile(ini1):
+            ini_path = ini1
+        elif p.isfile(ini2):
+            ini_path = ini2
+        else:
+            raise ValueError("INI '{}' not found.".format(ini))
+    else:
+        ini_path = ini
+
+    config = configparser.ConfigParser()
+    https://stackoverflow.com/questions/8884188/how-to-read-and-write-ini-file-with-python3
 
 
 def user_yes_no_query(message):
@@ -155,6 +177,7 @@ def pandoctools(input_file, profile, out, std, debug):
     profile_path = get_profile_path(profile, pandoctools_user, pandoctools_core)
     if not std:
         with open(profile_path, 'r') as file:
+            print('\nOut: {}'.format(out))
             print('Profile code:\n')
             print(file.read())
         message = ("Type 'y/yes' to continue with:\n    Profile: {}\n    Profile path: {}\n\n" +
@@ -168,6 +191,8 @@ def pandoctools(input_file, profile, out, std, debug):
                  'in_ext', 'in_ext_full', 'out_ext', 'out_ext_full']
         for var in vars_:
             print('{}: {}'.format(var, os.environ.get(var)))
+
+    # TODO: read root env from ini, modfy path
 
     proc = run(profile_path, stdout=PIPE, input=doc, encoding='utf8')
     print(proc.stdout)

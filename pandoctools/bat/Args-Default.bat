@@ -1,4 +1,6 @@
 @echo off
+chcp 65001 > NUL
+set PYTHONIOENCODING=utf-8
 :: May use predefined variables:
 ::   %meta% (metadata profile name)
 ::   %set_resolve% (sets var to a resolved path to a file.
