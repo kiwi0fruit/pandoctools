@@ -24,45 +24,57 @@ def get_extensions(file_path: str):
     return ext, ext_full
 
 
-def get_profile_path(profile: str, folder1: str, folder2: str):
+def get_profile_path(profile: str, dir1: str, dir2: str):
     """
     Find profile path by profile name/profile path.
     In profile name is given (not profile path) then search in folder1, then in folder2.
     """
     if p.splitext(p.basename(profile))[0] == profile:
         ext = 'bat' if (os.name == 'nt') else 'sh'
-        profile1 = p.join(folder1, 'Profile-{}.{}'.format(profile, ext))
-        profile2 = p.join(folder2, 'Profile-{}.{}'.format(profile, ext))
+        profile1 = p.join(dir1, 'Profile-{}.{}'.format(profile, ext))
+        profile2 = p.join(dir2, 'Profile-{}.{}'.format(profile, ext))
         if p.isfile(profile1):
             return profile1
         elif p.isfile(profile2):
             return profile2
         else:
-            raise ValueError("Profile '{}' not found.".format(profile))
+            raise ValueError("Profile '{}' was not found.".format(profile))
     else:
         return profile
 
 
-def read_ini(ini: str, folder1: str, folder2: str):
+def read_ini(ini: str, dir1: str, dir2: str):
     """
-    Find ini file path by ini name/ini path.
+    Read ini file by ini name/ini path.
     If ini name is given (not ini path) then search in folder1, then in folder2.
     """
     if p.splitext(p.basename(ini))[0] == ini:
-        ini1 = p.join(folder1, '{}.ini'.format(ini))
-        ini2 = p.join(folder2, '{}.ini'.format(ini))
+        ini1 = p.join(dir1, '{}.ini'.format(ini))
+        ini2 = p.join(dir2, '{}.ini'.format(ini))
         if p.isfile(ini1):
             ini_path = ini1
         elif p.isfile(ini2):
             ini_path = ini2
         else:
-            raise ValueError("INI '{}' not found.".format(ini))
+            raise ValueError("INI '{}' was not found.".format(ini))
     else:
         ini_path = ini
 
     config = configparser.ConfigParser()
     config.read(ini_path)
     return config
+
+
+def guess_root_env(env_path: str):
+    """
+    Checks if python root env is "../../"
+    ("<...>/root_python/envs/the_env").
+    """
+    # TODO
+    if True
+        return ""
+    else:
+        return None
 
 
 def user_yes_no_query(message):
@@ -178,8 +190,7 @@ def pandoctools(input_file, profile, out, std, debug):
     profile_path = get_profile_path(profile, pandoctools_user, pandoctools_core)
     if not std:
         with open(profile_path, 'r') as file:
-            print('\nOut: {}'.format(out))
-            print('Profile code:\n')
+            print('\nOut: {}\nProfile code:\n'.format(out))
             print(file.read())
         message = ("Type 'y/yes' to continue with:\n    Profile: {}\n    Profile path: {}\n\n" +
                    "Or type 'n/no' to exit. Then press Enter.").format(profile, profile_path)
@@ -196,7 +207,8 @@ def pandoctools(input_file, profile, out, std, debug):
     # https://stackoverflow.com/questions/8884188/how-to-read-and-write-ini-file-with-python3
     config = read_ini('Defaults', pandoctools_user, pandoctools_core)
     root_env = config.get('Default', 'root_env')
-    # проверить что абсолютный и что папка существует.
+    root_env = root_env if p.isabs(root_env) and p.isdir(root_env) else guess_root_env(env_path)
+
     print(root_env)
     # TODO: modfy $PATH
 
