@@ -17,7 +17,7 @@ def get_output_file(input_file: str, out: str) -> str:
 
 def get_extensions(file_path: str):
     """Get extension and full extension like 'tag.gz'."""
-    ext = p.splitext(file_path)[1]
+    ext = p.splitext(file_path)[1][1:]
     match = re.search(r'[.](.*)', p.basename(file_path))
     ext_full = match.group(1) if match else ""
     return ext, ext_full
@@ -93,7 +93,8 @@ May be (?) for security concerns the user data folder should be set to write-all
               help="Read document form stdin and write to stdout in a silent mode. " +
                    "INPUT_FILE only gives a file path. If --std was set but stdout = '' " +
                    "then the profile always writes output file to disc with these options.")
-def pandoctools(input_file, profile, out, std):
+@click.option('--debug', is_flag=True, default=False, help="Debug mode.")
+def pandoctools(input_file, profile, out, std, debug):
     """
     Sets environment variables:
     * scripts, import, source
@@ -156,10 +157,17 @@ def pandoctools(input_file, profile, out, std):
         with open(profile_path, 'r') as file:
             print('Profile code:\n')
             print(file.read())
-        message = ("Type 'y/yes' to continue with:\n    Profile: {}\n    Profile path: {}\n" +
+        message = ("Type 'y/yes' to continue with:\n    Profile: {}\n    Profile path: {}\n\n" +
                    "Or type 'n/no' to exit. Then press Enter.").format(profile, profile_path)
         if not user_yes_no_query(message):
             return None
+
+    if debug:
+        vars_ = ['scripts', 'import', 'source', 'r', 'set_resolve', 'resolve',
+                 'env_path', '_core_config', '_user_config', 'input_file', 'output_file',
+                 'in_ext', 'in_ext_full', 'out_ext', 'out_ext_full']
+        for var in vars_:
+            print('{}: {}'.format(var, os.environ.get(var)))
 
     proc = run(profile_path, stdout=PIPE, input=doc, encoding='utf8')
     print(proc.stdout)
