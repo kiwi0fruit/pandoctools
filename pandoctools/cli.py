@@ -164,12 +164,15 @@ def pandoctools(input_file, profile, out, std, debug):
     os.environ['env_path'] = env_path
 
     # Read document and mod input_file if needed:
-    if (not std) and (input_file is not None):
-        with open(input_file, 'r', encoding="utf-8") as file:
-            doc = file.read()
-    else:
+    if std:
         input_stream = io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8')
         doc = input_stream.read()  # doc = sys.stdin.read()
+    else:
+        if input_file is not None:
+            with open(input_file, 'r', encoding="utf-8") as file:
+                doc = file.read()
+        else:
+            raise ValueError('Input file was not provided.')
     input_file = "untitled" if (input_file is None) else input_file
 
     if (profile is None) or (out is None):
