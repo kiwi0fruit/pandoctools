@@ -76,7 +76,7 @@ def guess_root_env(env_path: str):
     if (p.basename(up1) == 'envs') and p.isfile(python_bin):
         return up2
     else:
-        return None
+        return ""
 
 
 def user_yes_no_query(message):
@@ -146,6 +146,7 @@ def pandoctools(input_file, profile, out, std, debug):
         scripts_bin = p.join(env_path, "Scripts")
         os.environ['import'] = r'call "{}\pandoctools-import.bat"'.format(scripts_bin)
         os.environ['source'] = r'call "{}\path-source.bat"'.format(scripts_bin)
+        os.environ['pyprepPATH'] = r'call "{}\path-pyprep.bat"'.format(scripts_bin)
         os.environ['r'] = r'call "{}\path-run.bat"'.format(scripts_bin)
         os.environ['set_resolve'] = r'call "{}\pandoctools-resolve.bat"'.format(scripts_bin)
     else:
@@ -153,6 +154,7 @@ def pandoctools(input_file, profile, out, std, debug):
         scripts_bin = p.join(env_path, "bin")
         os.environ['import'] = p.join(scripts_bin, 'pandoctools-import')
         os.environ['source'] = p.join(scripts_bin, 'path-source')
+        os.environ['pyprepPATH'] = p.join(scripts_bin, 'path-pyprep')
         os.environ['resolve'] = p.join(scripts_bin, 'pandoctools-resolve')
 
     os.environ['_user_config'] = pandoctools_user
@@ -185,6 +187,7 @@ def pandoctools(input_file, profile, out, std, debug):
     os.environ['output_file'] = output_file
     os.environ['in_ext'], os.environ['in_ext_full'] = get_extensions(input_file)
     os.environ['out_ext'], os.environ['out_ext_full'] = get_extensions(output_file)
+    os.environ['PYTHONIOENCODING'] = 'utf-8'
 
     profile_path = get_profile_path(profile, pandoctools_user, pandoctools_core)
 
@@ -202,14 +205,10 @@ def pandoctools(input_file, profile, out, std, debug):
     #   https://stackoverflow.com/questions/8884188/how-to-read-and-write-ini-file-with-python3
     config = read_ini('Defaults', pandoctools_user, pandoctools_core)
     root_env = config.get('Default', 'root_env')
-    root_env = root_env if p.isabs(root_env) and p.isdir(root_env) else guess_root_env(env_path)
-    if root_env is not None:
-        os.environ["PATH"] = (r"{py};{py}\Scripts;{py}\Library\bin;"
-                              if (os.name == 'nt') else
-                              "{py}/bin:").format(py=root_env) + os.environ["PATH"]
+    os.environ["root_env"] = root_env if p.isabs(root_env) and p.isdir(root_env) else guess_root_env(env_path)
 
     if debug:
-        vars_ = ['scripts', 'import', 'source', 'r', 'set_resolve', 'resolve',
+        vars_ = ['scripts', 'import', 'source', 'pyprepPATH', 'r', 'set_resolve', 'resolve',
                  'env_path', '_core_config', '_user_config', 'input_file', 'output_file',
                  'in_ext', 'in_ext_full', 'out_ext', 'out_ext_full']
         for var in vars_:

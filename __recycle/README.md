@@ -6,6 +6,7 @@
 * r (win)
 * set_resolve (win)
 * resolve (unix)
+* pyprepPATH
 * env_path
 * input_file
 * output_file

@@ -60,6 +60,8 @@ setup(
         'scripts/path-run.bat',
         'scripts/path-source',
         'scripts/path-source.bat',
+        'scripts/path-pyprep',
+        'scripts/path-pyprep.bat',
         'scripts/setvar.bat',
     ],
 )

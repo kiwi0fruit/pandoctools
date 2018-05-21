@@ -1,3 +1,4 @@
+. "$pyprepPATH" "${root_env}"
 . "$source" activate "${env_path}"
 meta=Kiwi
 . "$import" Args-Default

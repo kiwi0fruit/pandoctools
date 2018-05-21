@@ -1,4 +1,5 @@
-@echo off
+@echo off && chcp 65001 > NUL
+%pyprepPATH% "%root_env%"
 %source% activate "%env_path%"
 set meta=Default
 %import% Args-Default
