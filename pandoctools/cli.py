@@ -119,20 +119,25 @@ def user_yes_no_query(message: str):
 
 def user_file_query():
     import pyperclip
+    yes = {'yes', 'y'}
+    no = {'no', 'n'}
 
     def message(filepath):
-        msg = "Type 'y/yes' to use '{}' as input file (from clipboard).".format(filepath)
+        print("Type 'y/yes' to use clipboard paste as input file:")
         try:
-            print(msg)
+            print(filepath)
         except UnicodeEncodeError:
-            print(msg.encode('utf-8'))
+            print(filepath.encode('utf-8'))
+        print("Type 'n/no' to exit and ENTER to reload clipboard paste.")
         return filepath
 
     file_path = message(pyperclip.paste())
     while True:
         answer = input().lower()
-        if answer in {'yes', 'y'}:
+        if answer in yes:
             return file_path
+        elif answer in no:
+            return None
         else:
             file_path = message(pyperclip.paste())
 
@@ -222,6 +227,8 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
         if input_file is None:
             print('Input file was not provided.')
             input_file = user_file_query()
+            if input_file is None:
+                return None
         with open(input_file, 'r', encoding="utf-8") as file:
             doc = file.read()
     input_file = "untitled" if (input_file is None) else input_file
