@@ -96,13 +96,14 @@ def user_yes_no_query(message: str):
 
 def user_file_query():
     import pyperclip
-    def message(file_path):
-        msg = "Type 'y/yes' to use '{}' as input file (from clipboard).".format(file_path)
+
+    def message(filepath):
+        msg = "Type 'y/yes' to use '{}' as input file (from clipboard).".format(filepath)
         try:
             print(msg)
         except UnicodeEncodeError:
             print(msg.encode('utf-8'))
-        return file_path
+        return filepath
 
     file_path = message(pyperclip.paste())
     while True:
