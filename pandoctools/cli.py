@@ -6,6 +6,7 @@ import re
 import yaml
 from subprocess import run, PIPE
 import configparser
+import io
 
 
 def get_output_file(input_file: str, out: str) -> str:
@@ -167,7 +168,8 @@ def pandoctools(input_file, profile, out, std, debug):
         with open(input_file, 'r', encoding="utf-8") as file:
             doc = file.read()
     else:
-        doc = sys.stdin.read()
+        input_stream = io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8')
+        doc = input_stream.read()  # doc = sys.stdin.read()
     input_file = "untitled" if (input_file is None) else input_file
 
     if (profile is None) or (out is None):
@@ -221,16 +223,20 @@ def pandoctools(input_file, profile, out, std, debug):
 
     proc = run(profile_path, stdout=PIPE, input=doc, encoding='utf8')
 
+    if proc.stderr is not None:
+        error_stream = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
+        error_stream.write(proc.stderr)  # sys.stderr.write(proc.stderr)
     if not std:
         if (proc.stdout is not None) and (proc.stdout != ""):
             print(proc.stdout, file=open(output_file, 'w', encoding="utf-8"))
-            print('Pandoctools wrote profile\'s stdout to "{}".'.format(output_file))
+            print('Pandoctools wrote profile\'s stdout to:')
         else:
-            print('Profile\'s stdout is empty. Presumably profile wrote to "{}".'.format(output_file))
-        if proc.stderr is not None:
-            print(proc.stderr, file=sys.stderr)
+            print('Profile\'s stdout is empty. Presumably profile wrote to:')
+        try:
+            print('    ' + output_file)
+        except UnicodeEncodeError:
+            print(('    ' + output_file).encode('utf-8'))
         input("Press Enter to continue...")
     else:
-        sys.stdout.write(proc.stdout)
-        if proc.stderr is not None:
-            sys.stderr.write(proc.stderr)
+        output_stream = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+        output_stream.write(proc.stdout)  # sys.stdout.write(proc.stdout)
