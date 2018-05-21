@@ -150,6 +150,7 @@ def pandoctools(input_file, profile, out, std, debug):
         os.environ['pyprepPATH'] = r'call "{}\path-pyprep.bat"'.format(scripts_bin)
         os.environ['r'] = r'call "{}\path-run.bat"'.format(scripts_bin)
         os.environ['set_resolve'] = r'call "{}\pandoctools-resolve.bat"'.format(scripts_bin)
+        os.environ['setUTF8'] = 'chcp 65001 > NUL'
     else:
         pandoctools_user = p.join(os.environ["HOME"], ".pandoc", "pandoctools")
         scripts_bin = p.join(env_path, "bin")

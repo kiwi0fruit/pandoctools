@@ -1,4 +1,4 @@
-@echo off && chcp 65001 > NUL
+@echo off && %setUTF8%
 %pyprepPATH% "%env_path%"
 set meta=Default
 %import% Args-Default

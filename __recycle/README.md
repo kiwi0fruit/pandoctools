@@ -7,6 +7,7 @@
 * set_resolve (win)
 * resolve (unix)
 * pyprepPATH
+* setUTF8 (win)
 * env_path
 * input_file
 * output_file
