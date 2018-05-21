@@ -39,7 +39,7 @@ import os
 import sys
 from collections import OrderedDict
 
-from panflute import load, dump, debug, run_pandoc
+from panflute import load, dump, debug
 import click
 import re
 
@@ -84,13 +84,10 @@ def main(filters, to, dirs, data_dir, no_sys_path):
 
 def autorun_filters(filters: list, doc, search_path: list, data_dir: bool, sys_path: bool, verbose):
     if data_dir:
-        # Extract Pandoc's --data-dir
-        pandoc_info = run_pandoc(args=['--version'])
-        m = re.search(r'Default user data directory: (.*[^\r])\r?\n', pandoc_info)
-        if m:
-            search_path.append(os.path.join(m.group(1), 'filters'))
+        if os.name == 'nt':
+            search_path.append(os.path.join(os.environ["APPDATA"], "pandoc", "filters"))
         else:
-            raise Exception('Failed to extract default user data directory from `pandoc --version`.')
+            search_path.append(os.path.join(os.environ["HOME"], ".pandoc", "filters"))
     if sys_path:
         search_path += [dir for dir in sys.path if (dir != '')]
 
