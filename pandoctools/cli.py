@@ -80,7 +80,7 @@ def guess_root_env(env_path: str):
         return ""
 
 
-def user_yes_no_query(message):
+def user_yes_no_query(message: str):
     yes = {'yes', 'y'}
     no = {'no', 'n'}
     print(message)
@@ -92,6 +92,25 @@ def user_yes_no_query(message):
             return False
         else:
             print("Please respond with 'y' or 'n'.")
+
+
+def user_file_query():
+    import pyperclip
+    def message(file_path):
+        msg = "Type 'y/yes' to use '{}' as input file (from clipboard).".format(file_path)
+        try:
+            print(msg)
+        except UnicodeEncodeError:
+            print(msg.encode('utf-8'))
+        return file_path
+
+    file_path = message(pyperclip.paste())
+    while True:
+        answer = input().lower()
+        if answer in {'yes', 'y'}:
+            return file_path
+        else:
+            file_path = message(pyperclip.paste())
 
 
 if os.name == 'nt':
@@ -169,11 +188,11 @@ def pandoctools(input_file, profile, out, std, debug):
         input_stream = io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8')
         doc = input_stream.read()  # doc = sys.stdin.read()
     else:
-        if input_file is not None:
-            with open(input_file, 'r', encoding="utf-8") as file:
-                doc = file.read()
-        else:
-            raise ValueError('Input file was not provided.')
+        if input_file is None:
+            print('Input file was not provided.')
+            input_file = user_file_query()
+        with open(input_file, 'r', encoding="utf-8") as file:
+            doc = file.read()
     input_file = "untitled" if (input_file is None) else input_file
 
     if (profile is None) or (out is None):
