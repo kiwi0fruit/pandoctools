@@ -210,7 +210,7 @@ def pandoctools(input_file, profile, out, std, debug):
     if debug:
         vars_ = ['scripts', 'import', 'source', 'pyprepPATH', 'r', 'set_resolve', 'resolve',
                  'env_path', '_core_config', '_user_config', 'input_file', 'output_file',
-                 'in_ext', 'in_ext_full', 'out_ext', 'out_ext_full']
+                 'root_env', 'in_ext', 'in_ext_full', 'out_ext', 'out_ext_full']
         for var in vars_:
             print('{}: {}'.format(var, os.environ.get(var)))
         print(os.environ["PATH"])
