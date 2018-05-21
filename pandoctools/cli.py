@@ -194,14 +194,18 @@ def pandoctools(input_file, profile, out, std, debug):
     # Run profile confirmation:
     if not std:
         with open(profile_path, 'r') as file:
-            print('\nOut: {}\nProfile code:\n'.format(out))
-            print(file.read())
-        message = ("Type 'y/yes' to continue with:\n    Profile: {}\n    Profile path: {}\n\n" +
-                   "Or type 'n/no' to exit. Then press Enter.").format(profile, profile_path)
+            print('Profile code:\n{}\n'.format(file.read()))
+        message = ("Type 'y/yes' to continue with:\n" +
+                   "    Profile: {}\n" +
+                   "    Profile path: {}\n\n" +
+                   "    Out: {}\n" +
+                   "    Out path: {}\n\n" +
+                   "Or type 'n/no' to exit. Then press Enter.").format(profile, profile_path,
+                                                                       out, output_file)
         if not user_yes_no_query(message):
             return None
 
-    # Find python root env and modify PATH:
+    # Find python root env:
     #   https://stackoverflow.com/questions/8884188/how-to-read-and-write-ini-file-with-python3
     config = read_ini('Defaults', pandoctools_user, pandoctools_core)
     root_env = config.get('Default', 'root_env')
@@ -220,6 +224,9 @@ def pandoctools(input_file, profile, out, std, debug):
     if not std:
         if (proc.stdout is not None) and (proc.stdout != ""):
             print(proc.stdout, file=open(output_file, 'w', encoding="utf-8"))
+            print('Pandoctools wrote profile\'s stdout to "{}".'.format(output_file))
+        else:
+            print('Profile\'s stdout is empty. Presumably profile wrote to "{}".'.format(output_file))
         if proc.stderr is not None:
             print(proc.stderr, file=sys.stderr)
         input("Press Enter to continue...")
