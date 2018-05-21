@@ -17,6 +17,7 @@
 * out_ext_full
 * _core_config
 * _user_config
+* PYTHONIOENCODING (win)
 
 # TODO
 

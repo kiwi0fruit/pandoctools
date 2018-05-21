@@ -170,14 +170,19 @@ def pandoctools(input_file, profile, out, std, debug):
         os.environ['pyprepPATH'] = r'call "{}\path-pyprep.bat"'.format(scripts_bin)
         os.environ['r'] = r'call "{}\path-run.bat"'.format(scripts_bin)
         os.environ['set_resolve'] = r'call "{}\pandoctools-resolve.bat"'.format(scripts_bin)
+        os.environ['resolve'] = ""
         os.environ['setUTF8'] = 'chcp 65001 > NUL'
+        os.environ['PYTHONIOENCODING'] = 'utf-8'
     else:
         pandoctools_user = p.join(os.environ["HOME"], ".pandoc", "pandoctools")
         scripts_bin = p.join(env_path, "bin")
         os.environ['import'] = p.join(scripts_bin, 'pandoctools-import')
         os.environ['source'] = p.join(scripts_bin, 'path-source')
         os.environ['pyprepPATH'] = p.join(scripts_bin, 'path-pyprep')
+        os.environ['r'] = ""
+        os.environ['set_resolve'] = ""
         os.environ['resolve'] = p.join(scripts_bin, 'pandoctools-resolve')
+        os.environ['setUTF8'] = ""
 
     os.environ['_user_config'] = pandoctools_user
     os.environ['_core_config'] = pandoctools_core
@@ -213,7 +218,6 @@ def pandoctools(input_file, profile, out, std, debug):
     os.environ['output_file'] = output_file
     os.environ['in_ext'], os.environ['in_ext_full'] = get_extensions(input_file)
     os.environ['out_ext'], os.environ['out_ext_full'] = get_extensions(output_file)
-    os.environ['PYTHONIOENCODING'] = 'utf-8'
 
     profile_path = get_profile_path(profile, pandoctools_user, pandoctools_core)
 
