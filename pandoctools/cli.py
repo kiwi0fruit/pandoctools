@@ -9,12 +9,31 @@ import configparser
 import io
 
 
-def get_output_file(input_file: str, out: str) -> str:
-    """Make output file path from input file path and out pattern."""
-    out = out.replace('*', p.basename(input_file))
-    if not p.isabs(out):
-        out = p.normpath(p.join(p.dirname(input_file), out))
-    return out
+def expand_pattern(pattern: str,  target_file: str,  cwd: bool) -> str:
+    """
+    Make file path from pattern and target file path:
+      - If (target = c/d/doc.md) then (* = doc.md) and (<*> = doc)
+      - If (target = c/d/doc.md.html) then (* = doc.md.html) and (<*> = doc.md)
+    Pattern can be a simple relative path - it would be relative to input file dir
+    (or relative to CWD if cwd=True).
+      - ./doc2.md     + dir/doc.md      -> dir/doc2.md
+      - doc2.md       + dir/doc.md      -> dir/doc2.md
+      - doc2.md       + dir/doc.md      -> doc2.md (cwd=True)
+      - C:/*.md       + dir/doc.md      -> C:/doc.md.md
+      - ./*.md        + dir/doc.md      -> dir/doc.md.md
+      - *.md          + dir/doc.md      -> dir/doc.md.md
+      - ./out/<*>.pdf + dir/doc.md      -> dir/out/doc.pdf
+      - out/*.md      + dir/doc.md      -> dir/out/doc.md.md
+      - ../*.md       + dir2/dir/doc.md -> dir2/doc.md.md
+      - ../out/*.md   + dir2/dir/doc.md -> dir2/out/doc.md.md
+      - ../doc2.md    + dir2/dir/doc.md -> dir2/doc2.md
+      - ../*.md       + dir2/dir/doc.md -> ../doc.md.md (cwd=True)
+    """
+    target_name = p.basename(target_file)
+    file_path = pattern.replace('<*>', p.splitext(target_name)[0]).replace('*', target_name)
+    if not p.isabs(file_path) and not cwd:
+        file_path = p.normpath(p.join(p.dirname(target_file), file_path))
+    return file_path
 
 
 def get_extensions(file_path: str):
@@ -25,7 +44,11 @@ def get_extensions(file_path: str):
     return ext, ext_full
 
 
-def get_profile_path(profile: str, dir1: str, dir2: str):
+def get_profile_path(profile: str,
+                     dir1: str,
+                     dir2: str,
+                     input_file: str,
+                     cwd: bool) -> str:
     """
     Find profile path by profile name/profile path.
     In profile name is given (not profile path) then search in folder1, then in folder2.
@@ -41,10 +64,10 @@ def get_profile_path(profile: str, dir1: str, dir2: str):
         else:
             raise ValueError("Profile '{}' was not found.".format(profile))
     else:
-        return profile
+        return expand_pattern(profile, input_file, cwd)
 
 
-def read_ini(ini: str, dir1: str, dir2: str):
+def read_ini(ini: str,  dir1: str,  dir2: str):
     """
     Read ini file by ini name/ini path.
     If ini name is given (not ini path) then search in folder1, then in folder2.
@@ -145,12 +168,14 @@ May be (?) for security concerns the user data folder should be set to write-all
               help='Output file path like "./out/doc.html" ' +
                    'or input file path transformation like "*.html", "./out/*.r.ipynb" (default is "*.html").\n' +
                    'In --std mode only full extension is considered: "doc.r.ipynb" > "r.ipynb".')
-@click.option('-s', '--std', is_flag=True, default=False,
+@click.option('--std', is_flag=True, default=False,
               help="Read document form stdin and write to stdout in a silent mode. " +
                    "INPUT_FILE only gives a file path. If --std was set but stdout = '' " +
                    "then the profile always writes output file to disc with these options.")
 @click.option('--debug', is_flag=True, default=False, help="Debug mode.")
-def pandoctools(input_file, profile, out, std, debug):
+@click.option('--cwd', is_flag=True, default=False,
+              help="Use real CWD in profile and out options (instead of input file dir).")
+def pandoctools(input_file, profile, out, std, debug, cwd):
     """
     Sets environment variables:
     * scripts, import, source
@@ -213,13 +238,13 @@ def pandoctools(input_file, profile, out, std, debug):
         out = pandoctools_meta.get('out', '*.html') if (out is None) else out
 
     # Set other environment vars:
-    output_file = get_output_file(input_file, out)
+    output_file = expand_pattern(out, input_file, cwd)
     os.environ['input_file'] = input_file
     os.environ['output_file'] = output_file
     os.environ['in_ext'], os.environ['in_ext_full'] = get_extensions(input_file)
     os.environ['out_ext'], os.environ['out_ext_full'] = get_extensions(output_file)
 
-    profile_path = get_profile_path(profile, pandoctools_user, pandoctools_core)
+    profile_path = get_profile_path(profile, pandoctools_user, pandoctools_core, input_file, cwd)
 
     # Run profile confirmation:
     if not std:
