@@ -20,4 +20,4 @@
 
 # TODO
 
-* replace getting pandoc user data folder from running pandoc with biult-in paths.
+* LANG='C.UTF-8'

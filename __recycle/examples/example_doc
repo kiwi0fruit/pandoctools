@@ -1,5 +1,0 @@
-#!/bin/sh
-. activate-conda
-. args-kiwi
-. pipe-kiwi
-. deactivate-conda
