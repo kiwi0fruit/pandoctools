@@ -6,7 +6,7 @@
 ::   %_user_config% (%APPDATA%\pandoc\pandoctools)
 
 if exist "%_user_config%\%~2" (
-    set %~1=%_user_config%\%~2
+    set "%~1=%_user_config%\%~2"
 ) else (
-    set %~1=%_core_config%\%~2
+    set "%~1=%_core_config%\%~2"
 )

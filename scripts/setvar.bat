@@ -12,12 +12,12 @@
 SETLOCAL
 
 :: Get command from argument
-for /F "tokens=1,*" %%a in ("%*") do set cmd=%%b
+for /F "tokens=1,*" %%a in ("%*") do set "cmd=%%b"
 
 :: Get output and set var
 for /F "usebackq delims=" %%a in (`%cmd%`) do (
      ENDLOCAL
-     set %1=%%a
+     set "%1=%%a"
 )
 
 :: Show results

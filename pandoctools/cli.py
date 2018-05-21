@@ -194,7 +194,7 @@ def pandoctools(input_file, profile, out, std, debug):
     # Run profile confirmation:
     if not std:
         with open(profile_path, 'r') as file:
-            print('Profile code:\n{}\n'.format(file.read()))
+            print('\nProfile code:\n\n{}\n'.format(file.read()))
         message = ("Type 'y/yes' to continue with:\n" +
                    "    Profile: {}\n" +
                    "    Profile path: {}\n\n" +

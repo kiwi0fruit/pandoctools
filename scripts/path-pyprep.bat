@@ -1,4 +1,5 @@
 @echo off
-if NOT "%~1"=="" (
-    set PATH=%~1;%~1\Scripts;%~1\Library\bin;%PATH%
+set "_pypath=%~1"
+if NOT "%_pypath%"=="" (
+    set "PATH=%_pypath%;%_pypath%\Scripts;%_pypath%\Library\bin;%PATH%"
 )
