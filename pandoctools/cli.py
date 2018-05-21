@@ -19,7 +19,7 @@ def get_output_file(input_file: str, out: str) -> str:
 def get_extensions(file_path: str):
     """Get extension and full extension like 'tag.gz'."""
     ext = p.splitext(file_path)[1][1:]
-    match = re.search(r'[.](.*)', p.basename(file_path))
+    match = re.search(r'[.]([.0-9a-zA-Z]*)$', p.basename(file_path))
     ext_full = match.group(1) if match else ""
     return ext, ext_full
 

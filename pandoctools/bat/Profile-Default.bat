@@ -4,5 +4,5 @@
 set meta=Default
 %import% Args-Default
 set "stex=%to%" && set "inputs=stdin"
-%import% Pipe-%pipe%
+%import% "Pipe-%pipe%"
 %source% deactivate

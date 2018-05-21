@@ -4,5 +4,5 @@
 set meta=Kiwi
 %import% Args-Default
 set "stex=--kiwi" && set "inputs=stdin"
-%import% Pipe-%pipe%
+%import% "Pipe-%pipe%"
 %source% deactivate
