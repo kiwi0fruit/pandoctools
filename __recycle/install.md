@@ -15,6 +15,12 @@
   * [4.6 Pandoctools Atom Package](#46-pandoctools-atom-package)
 
 
+## Recommended install
+
+1. [Knitty](https://github.com/kiwi0fruit/pandoctools/blob/master/knitty.md): Knitty is another CLI for Stitch/Knotr: reproducible report generation tool via Jupyter, Pandoc and Markdown. Insert python code (or other Jupyter kernel code) to the Markdown document and have code's results in the output document.
+2. [SugarTeX](https://github.com/kiwi0fruit/pandoctools/blob/master/sugartex.md): SugarTeX is a more readable LaTeX language extension and transcompiler to LaTeX.
+
+  
 ## 1. Install Pandoc
 
 Pandoctools needs installed [**Pandoc**](https://github.com/jgm/pandoc/releases). It needs Pandoc to be available from command prompt. Check: `pandoc --help`. It should work if you installed it with default settings.

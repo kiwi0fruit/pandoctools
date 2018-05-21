@@ -1,4 +1,6 @@
-# Predefined in python app:
+# Pandoctools python module API
+
+## Predefined in python app:
 
 * scripts
 * import
