@@ -11,7 +11,7 @@ with open(p.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 
-def folder_shortcut(shortcut_name, target_path, sc):
+def mk_desktop_dir_shortcut(shortcut_name, target_path):
     if os.name == 'nt':
         from win32com.client import Dispatch
         import winshell
@@ -22,40 +22,46 @@ def folder_shortcut(shortcut_name, target_path, sc):
         shortcut.Targetpath = target_path
         shortcut.WorkingDirectory = target_path
         shortcut.save()
-    else:
-        # sc.create_desktop_shortcut(target_path)
+    elif os.name != 'darwin':
         import subprocess
-        desktop = subprocess.check_output(['xdg-user-dir', 'DESKTOP']).decode('utf-8').replace('\n', '')
-        # dir_ = p.join(desktop, shortcut_name)
-        # if not p.exists(dir_):
-        #     os.makedirs(dir_)
-        os.symlink(target_path, p.join(desktop, shortcut_name))
+        desktop = subprocess.check_output([
+            'xdg-user-dir',
+            'DESKTOP'
+        ]).decode('utf-8').replace('\n', '')
+        shortcut_path = p.join(desktop, shortcut_name)
+        if p.exists(shortcut_path):
+            os.remove(shortcut_path)
+        os.symlink(target_path, shortcut_path)
 
 
 class PostInstallCommand(install):
     """Post-installation for installation mode."""
     def run(self):
+        import traceback
         from shortcut import ShortCutter
         from pandoctools import pandoctools_user, pandoctools_bin
-        
-        if os.name == 'nt':
-            import sys
-            pandoctools_core = p.join(p.dirname(sys.executable), 'Lib', 'site-packages', 'pandoctools', 'bat')
-            if not p.exists(pandoctools_bin):
-                open(pandoctools_bin, 'a').close()
-        else:
-            import site
-            pandoctools_core = p.join(site.getsitepackages()[0], 'pandoctools', 'sh')
+        try:
+            if os.name == 'nt':
+                import sys
+                pandoctools_core = p.join(p.dirname(sys.executable), 'Lib',
+                                          'site-packages', 'pandoctools', 'bat')
+                if not p.exists(pandoctools_bin):
+                    open(pandoctools_bin, 'a').close()
+            else:
+                import site
+                pandoctools_core = p.join(site.getsitepackages()[0], 'pandoctools', 'sh')
 
-        if not p.isdir(pandoctools_user):
-            os.makedirs(pandoctools_user)
-        if not p.isdir(pandoctools_core):
-            os.makedirs(pandoctools_core)
+            if not p.isdir(pandoctools_user):
+                os.makedirs(pandoctools_user)
+            if not p.isdir(pandoctools_core):
+                os.makedirs(pandoctools_core)
 
-        sc = ShortCutter()
-        sc.create_desktop_shortcut(pandoctools_bin)
-        folder_shortcut('Pandoctools User Data', pandoctools_user, sc)
-        folder_shortcut('Pandoctools Core Data', pandoctools_core, sc)
+            sc = ShortCutter()
+            sc.create_desktop_shortcut(pandoctools_bin)
+            mk_desktop_dir_shortcut('Pandoctools User Data', pandoctools_user)
+            mk_desktop_dir_shortcut('Pandoctools Core Data', pandoctools_core)
+        except:
+            traceback.print_exc()
         install.run(self)
 
 
