@@ -27,12 +27,10 @@ class PostInstallCommand(install):
         if not path.exists(pandoctools_core):
             os.makedirs(pandoctools_core)
 
-        print(pandoctools_user, pandoctools_core, pandoctools_bin, file=open('D:\\log.txt', "w"))
-        
         s = ShortCutter()
         # s.create_desktop_shortcut(pandoctools_user)
         # s.create_desktop_shortcut(pandoctools_core)
-        s.create_desktop_shortcut(pandoctools_bin)
+        s.create_desktop_shortcut('pandoctools')
         install.run(self)
 
 
