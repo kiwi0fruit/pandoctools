@@ -27,7 +27,7 @@ class PostInstallCommand(install):
 setup(
     name='pandoctools',
     version=versioneer.get_version(),
-    cmdclass=versioneer.get_cmdclass(),
+    cmdclass={**versioneer.get_cmdclass(), **{'install': PostInstallCommand}},
 
     description='Pandoc profile manager (stores any CLI filter pipelines), CLI wrapper for Panflute, other helpers.',
     long_description=long_description,
@@ -81,7 +81,4 @@ setup(
         'scripts/path-pyprep.bat',
         'scripts/setvar.bat',
     ],
-    cmdclass={
-        'install': PostInstallCommand,
-    },
 )
