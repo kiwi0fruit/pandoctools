@@ -118,11 +118,10 @@ def user_yes_no_query(message: str):
 
 
 def user_file_query():
-    import pyperclip
     yes = {'yes', 'y'}
     no = {'no', 'n'}
 
-    def message(filepath):
+    def win_message(filepath):
         print("Type 'y/yes' to use clipboard paste as input file:")
         try:
             print(filepath)
@@ -131,15 +130,28 @@ def user_file_query():
         print("Type 'n/no' to exit and ENTER to reload clipboard paste.")
         return filepath
 
-    file_path = message(pyperclip.paste())
-    while True:
-        answer = input().lower()
-        if answer in yes:
-            return file_path
-        elif answer in no:
+    unix_message = "Please type input file path (or type '/' to exit):"
+
+    if os.name == 'nt':
+        import pyperclip
+        file_path = win_message(pyperclip.paste())
+        while True:
+            answer = input().lower()
+            if answer in yes:
+                return file_path
+            elif answer in no:
+                return None
+            else:
+                file_path = win_message(pyperclip.paste())
+    else:
+        print(unix_message)
+        file_path = input()
+        while (file_path is None) or (file_path == ''):
+            file_path = input()
+        if file_path == '/':
             return None
         else:
-            file_path = message(pyperclip.paste())
+            return file_path
 
 
 if os.name == 'nt':
