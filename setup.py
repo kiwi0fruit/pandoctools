@@ -28,9 +28,9 @@ class PostInstallCommand(install):
             os.makedirs(pandoctools_core)
 
         s = ShortCutter()
-        # s.create_desktop_shortcut(pandoctools_user)
+        s.create_desktop_shortcut(pandoctools_user)
         # s.create_desktop_shortcut(pandoctools_core)
-        s.create_desktop_shortcut('python')
+        # s.create_desktop_shortcut('python')
         install.run(self)
 
 
