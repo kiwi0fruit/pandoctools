@@ -38,7 +38,9 @@ setup(
     # keywords='sample setuptools development',
     packages=find_packages(exclude=['docs', 'tests']),
 
-    install_requires=['click', 'pyyaml', 'pyperclip', 'panflute', 'knitty', 'sugartex', 'matplotlib', 'feather-format', 'shortcut'],
+    install_requires=['click', 'pyyaml', 'pyperclip', 'panflute', 'knitty',
+                      'sugartex', 'matplotlib', 'feather-format', 'shortcut',
+                      'notebook', 'jupyter'],
 
     include_package_data=True,
     package_data={
