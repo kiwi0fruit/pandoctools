@@ -42,7 +42,7 @@ class PostInstallCommand(install):
             pandoctools_core = p.join(site.getsitepackages()[0], 'pandoctools', 'bat')
         else:
             pandoctools_core = p.join(site.getsitepackages()[0], 'pandoctools', 'sh')
-
+        print(pandoctools_user, pandoctools_core, pandoctools_bin, file=open('D:\\log.txt', "w"))
         if not p.exists(pandoctools_user):
             os.makedirs(pandoctools_user)
         if not p.exists(pandoctools_core):
