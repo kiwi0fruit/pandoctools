@@ -45,6 +45,8 @@ def desktop_dir_shortcut(shortcut_name, target_path):
 class PostInstallCommand(install):
     """Post-installation for installation mode."""
     def run(self):
+        error_log = ""
+
         # Set pandoctools_core:
         if os.name == 'nt':
             import sys
@@ -62,8 +64,7 @@ class PostInstallCommand(install):
             desktop_dir_shortcut('Pandoctools User Data', pandoctools_user)
             desktop_dir_shortcut('Pandoctools Core Data', pandoctools_core)
         except:
-            print('WARNING: Failed to create desktop shortcuts.')
-            traceback.print_exc()
+            error_log += 'WARNING: Failed to create desktop shortcuts.\n' + ''.join(traceback.format_exception())
 
         # Write INI:
         config = configparser.ConfigParser()
@@ -77,8 +78,11 @@ class PostInstallCommand(install):
             with open(config_file, 'w') as f:
                 config.write(f)
         except:
-            print('WARNING: Failed to create ini file:\n{}\n\n{}'.format(config_file, config_str))
-            traceback.print_exc()
+            error_log += 'WARNING: Failed to create ini file.\n' + ''.join(traceback.format_exception())
+            error_log += 'File:\n{}\n\n{}'.format(config_file, config_str)
+
+        if error_log != "":
+            print(error_log, file=open(p.join(pandoctools_core, 'install_error_log.txt'), 'w', encoding="utf-8"))
 
         install.run(self)
 
