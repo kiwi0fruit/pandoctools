@@ -26,10 +26,10 @@ def folder_shortcut(shortcut_name, target_path, sc):
         # sc.create_desktop_shortcut(target_path)
         import subprocess
         desktop = subprocess.check_output(['xdg-user-dir', 'DESKTOP']).decode('utf-8').replace('\n', '')
-        dir_ = p.join(desktop, shortcut_name)
-        if not p.exists(dir_):
-            os.makedirs(dir_)
-        os.symlink(dir_, target_path)
+        # dir_ = p.join(desktop, shortcut_name)
+        # if not p.exists(dir_):
+        #     os.makedirs(dir_)
+        os.symlink(target_path, p.join(desktop, shortcut_name))
 
 
 class PostInstallCommand(install):
