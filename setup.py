@@ -11,7 +11,7 @@ with open(p.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 
-def mk_desktop_dir_shortcut(shortcut_name, target_path):
+def desktop_dir_shortcut(shortcut_name, target_path):
     if os.name == 'nt':
         from win32com.client import Dispatch
         import winshell
@@ -58,11 +58,13 @@ class PostInstallCommand(install):
 
             sc = ShortCutter()
             sc.create_desktop_shortcut(pandoctools_bin)
-            mk_desktop_dir_shortcut('Pandoctools User Data', pandoctools_user)
-            mk_desktop_dir_shortcut('Pandoctools Core Data', pandoctools_core)
+            desktop_dir_shortcut('Pandoctools User Data', pandoctools_user)
+            desktop_dir_shortcut('Pandoctools Core Data', pandoctools_core)
+
+            install.run(self)
         except:
+            print('WARNING: Failed to create shortcuts.')
             traceback.print_exc()
-        install.run(self)
 
 
 setup(
@@ -96,7 +98,10 @@ setup(
 
     install_requires=['click', 'pyyaml', 'pyperclip', 'panflute', 'knitty',
                       'sugartex', 'matplotlib', 'feather-format', 'shortcut',
-                      'notebook', 'jupyter', 'winshell;platform_system=="Windows"', 'pywin32;platform_system=="Windows"'],
+                      'notebook', 'jupyter',
+                      'winshell;platform_system=="Windows"',
+                      'pywin32;platform_system=="Windows"',
+                      'qtpy;platform_system=="Linux"'],
 
     include_package_data=True,
     package_data={
