@@ -2,15 +2,25 @@ from setuptools import setup, find_packages
 from setuptools.command.install import install
 from os import path
 import os
-import versioneer
 import site
-import sys
+from win32com.client import Dispatch
+import winshell
+import versioneer
 
 
 here = path.abspath(path.dirname(__file__))
 
 with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
+
+
+def folder_shortcut(shortcut_name, target_path):
+    shell = Dispatch('WScript.Shell')
+    shortcut_file = os.path.join(winshell.desktop(), shortcut_name + '.lnk')
+    shortcut = shell.CreateShortCut(shortcut_file)
+    shortcut.Targetpath = target_path
+    shortcut.WorkingDirectory = target_path
+    shortcut.save()
 
 
 class PostInstallCommand(install):
@@ -29,18 +39,11 @@ class PostInstallCommand(install):
             os.makedirs(pandoctools_core)
 
         s = ShortCutter()
+        # os.symlink(source,dest)
         # s.create_desktop_shortcut(pandoctools_user)
         # s.create_desktop_shortcut(pandoctools_core)
         # s.create_desktop_shortcut('explorer "D:\Share"')
-        desktop = get_special_folder_path("CSIDL_DESKTOPDIRECTORY")
-        shortcut = os.path.join(desktop, "MyModule.lnk")
-        create_shortcut(
-            r'D:\User\Python\Miniconda3_x64\envs\research_py36\python.exe',
-            "",
-            shortcut, 
-            "",
-            datadir)
-        file_created(shortcut)
+        folder_shortcut('Pandoctools User Data', pandoctools_user)
         install.run(self)
 
 
