@@ -25,7 +25,7 @@ def folder_shortcut(shortcut_name, target_path, sc):
     else:
         # sc.create_desktop_shortcut(target_path)
         import subprocess
-        desktop = subprocess.check_output(['xdg-user-dir', 'DESKTOP'])
+        desktop = subprocess.check_output(['xdg-user-dir', 'DESKTOP']).decode('utf-8')
         dir_ = p.join(desktop, shortcut_name)
         if not p.exists(dir_):
             os.makedirs(dir_)
@@ -53,7 +53,7 @@ class PostInstallCommand(install):
             os.makedirs(pandoctools_core)
 
         sc = ShortCutter()
-        sc.create_desktop_shortcut(pandoctools_bin)
+        # sc.create_desktop_shortcut(pandoctools_bin)
         folder_shortcut('Pandoctools User Data', pandoctools_user, sc)
         folder_shortcut('Pandoctools Core Data', pandoctools_core, sc)
         install.run(self)
