@@ -142,6 +142,7 @@ def user_file_query():
             file_path = message(pyperclip.paste())
 
 
+env_path = p.dirname(sys.executable)
 if os.name == 'nt':
     pandoctools_user_data = r"%APPDATA%\pandoc\pandoctools"
     pandoctools_user = p.join(os.environ["APPDATA"], "pandoc", "pandoctools")
@@ -154,6 +155,7 @@ else:
     pandoctools_core = p.join(p.dirname(p.abspath(__file__)), "sh")
     scripts_bin = p.join(env_path, "bin")
     pandoctools_bin = p.join(scripts_bin, "pandoctools")
+
 
 help_str = """Pandoctools is a Pandoc profile manager that stores CLI filter pipelines.
 (default INPUT_FILE is "Untitled").
@@ -197,7 +199,6 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
     * out_ext, out_ext_full
     """
     # Set environment vars:
-    env_path = p.dirname(sys.executable)
     if os.name == 'nt':
         os.environ['import'] = r'call "{}\pandoctools-import.bat"'.format(scripts_bin)
         os.environ['source'] = r'call "{}\path-source.bat"'.format(scripts_bin)
