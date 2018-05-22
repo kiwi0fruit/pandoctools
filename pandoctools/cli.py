@@ -144,10 +144,16 @@ def user_file_query():
 
 if os.name == 'nt':
     pandoctools_user_data = r"%APPDATA%\pandoc\pandoctools"
+    pandoctools_user = p.join(os.environ["APPDATA"], "pandoc", "pandoctools")
     pandoctools_core = p.join(p.dirname(p.abspath(__file__)), "bat")
+    scripts_bin = p.join(env_path, "Scripts")
+    pandoctools_bin = p.join(scripts_bin, "pandoctools.exe")
 else:
     pandoctools_user_data = "$HOME/.pandoc/pandoctools"
+    pandoctools_user = p.join(os.environ["HOME"], ".pandoc", "pandoctools")
     pandoctools_core = p.join(p.dirname(p.abspath(__file__)), "sh")
+    scripts_bin = p.join(env_path, "bin")
+    pandoctools_bin = p.join(scripts_bin, "pandoctools")
 
 help_str = """Pandoctools is a Pandoc profile manager that stores CLI filter pipelines.
 (default INPUT_FILE is "Untitled").
@@ -193,8 +199,6 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
     # Set environment vars:
     env_path = p.dirname(sys.executable)
     if os.name == 'nt':
-        pandoctools_user = p.join(os.environ["APPDATA"], "pandoc", "pandoctools")
-        scripts_bin = p.join(env_path, "Scripts")
         os.environ['import'] = r'call "{}\pandoctools-import.bat"'.format(scripts_bin)
         os.environ['source'] = r'call "{}\path-source.bat"'.format(scripts_bin)
         os.environ['pyprepPATH'] = r'call "{}\path-pyprep.bat"'.format(scripts_bin)
@@ -204,8 +208,6 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
         os.environ['setUTF8'] = 'chcp 65001 > NUL'
         os.environ['PYTHONIOENCODING'] = 'utf-8'
     else:
-        pandoctools_user = p.join(os.environ["HOME"], ".pandoc", "pandoctools")
-        scripts_bin = p.join(env_path, "bin")
         os.environ['import'] = p.join(scripts_bin, 'pandoctools-import')
         os.environ['source'] = p.join(scripts_bin, 'path-source')
         os.environ['pyprepPATH'] = p.join(scripts_bin, 'path-pyprep')

@@ -1,4 +1,5 @@
 from setuptools import setup, find_packages
+from setuptools.command.install import install
 from os import path
 
 import versioneer
@@ -8,6 +9,20 @@ here = path.abspath(path.dirname(__file__))
 
 with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
+
+
+class PostInstallCommand(install):
+    """Post-installation for installation mode."""
+    def run(self):
+        from shortcut import ShortCutter
+        from pandoctools import pandoctools_user, pandoctools_core, pandoctools_bin
+
+        s = ShortCutter()
+        s.create_desktop_shortcut(pandoctools_user)
+        s.create_desktop_shortcut(pandoctools_core)
+        s.create_desktop_shortcut(pandoctools_bin)
+        install.run(self)
+
 
 setup(
     name='pandoctools',
@@ -66,4 +81,7 @@ setup(
         'scripts/path-pyprep.bat',
         'scripts/setvar.bat',
     ],
+    cmdclass={
+        'install': PostInstallCommand,
+    },
 )
