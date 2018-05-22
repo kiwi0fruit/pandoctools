@@ -2,6 +2,10 @@ from setuptools import setup, find_packages
 from setuptools.command.install import install
 from os import path as p
 import os
+import configparser
+import traceback
+from shortcut import ShortCutter
+from pandoctools import pandoctools_user, pandoctools_bin
 import versioneer
 
 
@@ -12,10 +16,11 @@ with open(p.join(here, 'README.rst'), encoding='utf-8') as f:
 
 
 def desktop_dir_shortcut(shortcut_name, target_path):
+    if not p.isdir(target_path):
+        os.makedirs(target_path)
     if os.name == 'nt':
         from win32com.client import Dispatch
         import winshell
-    
         shell = Dispatch('WScript.Shell')
         shortcut_file = p.join(winshell.desktop(), shortcut_name + '.lnk')
         shortcut = shell.CreateShortCut(shortcut_file)
@@ -32,38 +37,41 @@ def desktop_dir_shortcut(shortcut_name, target_path):
         if p.exists(shortcut_path):
             os.remove(shortcut_path)
         os.symlink(target_path, shortcut_path)
+    else:
+        print('WARNING: "{}" folder shortcut was not implemented for macOS.')
 
 
 class PostInstallCommand(install):
     """Post-installation for installation mode."""
     def run(self):
-        import traceback
-        from shortcut import ShortCutter
-        from pandoctools import pandoctools_user, pandoctools_bin
-        try:
-            if os.name == 'nt':
-                import sys
-                pandoctools_core = p.join(p.dirname(sys.executable), 'Lib', 'site-packages', 'pandoctools', 'bat')
-            else:
-                import site
-                pandoctools_core = p.join(site.getsitepackages()[0], 'pandoctools', 'sh')
+        # Set pandoctools_core:
+        if os.name == 'nt':
+            import sys
+            pandoctools_core = p.join(p.dirname(sys.executable), 'Lib', 'site-packages', 'pandoctools', 'bat')
+        else:
+            import site
+            pandoctools_core = p.join(site.getsitepackages()[0], 'pandoctools', 'sh')
 
-            if not p.isdir(pandoctools_user):
-                os.makedirs(pandoctools_user)
-            if not p.isdir(pandoctools_core):
-                os.makedirs(pandoctools_core)
+        # Create shortcuts:
+        try:
+            sc = ShortCutter()
             if not p.exists(pandoctools_bin):
                 open(pandoctools_bin, 'a').close()
-
-            sc = ShortCutter()
             sc.create_desktop_shortcut(pandoctools_bin)
             desktop_dir_shortcut('Pandoctools User Data', pandoctools_user)
             desktop_dir_shortcut('Pandoctools Core Data', pandoctools_core)
-
-            install.run(self)
         except:
             print('WARNING: Failed to create shortcuts.')
             traceback.print_exc()
+
+        # Write INI:
+        config = configparser.ConfigParser()
+        config['Default']['root_env'] = ''
+        config['Default']['pandoctools'] = pandoctools_bin
+        with open(p.join(pandoctools_user, 'Defaults.ini'), 'w') as config_file:
+            config.write(config_file)
+
+        install.run(self)
 
 
 setup(
