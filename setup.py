@@ -43,10 +43,7 @@ class PostInstallCommand(install):
         try:
             if os.name == 'nt':
                 import sys
-                pandoctools_core = p.join(p.dirname(sys.executable), 'Lib',
-                                          'site-packages', 'pandoctools', 'bat')
-                if not p.exists(pandoctools_bin):
-                    open(pandoctools_bin, 'a').close()
+                pandoctools_core = p.join(p.dirname(sys.executable), 'Lib', 'site-packages', 'pandoctools', 'bat')
             else:
                 import site
                 pandoctools_core = p.join(site.getsitepackages()[0], 'pandoctools', 'sh')
@@ -55,9 +52,11 @@ class PostInstallCommand(install):
                 os.makedirs(pandoctools_user)
             if not p.isdir(pandoctools_core):
                 os.makedirs(pandoctools_core)
+            if not p.exists(pandoctools_bin):
+                open(pandoctools_bin, 'a').close()
 
             sc = ShortCutter()
-            sc.create_desktop_shortcut('pandoctools')
+            sc.create_desktop_shortcut(pandoctools_bin)
             desktop_dir_shortcut('Pandoctools User Data', pandoctools_user)
             desktop_dir_shortcut('Pandoctools Core Data', pandoctools_core)
 
