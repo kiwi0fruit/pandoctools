@@ -18,7 +18,7 @@ class PostInstallCommand(install):
         from pandoctools import pandoctools_user, pandoctools_core, pandoctools_bin
 
         # s = ShortCutter()
-        print(pandoctools_user, pandoctools_core, pandoctools_bin, file='D:\\log.txt')
+        print(pandoctools_user + pandoctools_core + pandoctools_bin, file='D:\\log.txt')
         s.create_desktop_shortcut(pandoctools_user)
         s.create_desktop_shortcut(pandoctools_core)
         s.create_desktop_shortcut(pandoctools_bin)
