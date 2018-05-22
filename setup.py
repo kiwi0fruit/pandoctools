@@ -28,6 +28,7 @@ def desktop_dir_shortcut(shortcut_name, target_path):
         shortcut.Targetpath = target_path
         shortcut.WorkingDirectory = target_path
         shortcut.save()
+        return ""
     elif os.name != 'darwin':
         import subprocess
         desktop = subprocess.check_output([
@@ -38,8 +39,9 @@ def desktop_dir_shortcut(shortcut_name, target_path):
         if p.exists(shortcut_path):
             os.remove(shortcut_path)
         os.symlink(target_path, shortcut_path)
+        return ""
     else:
-        print('WARNING: "{}" folder shortcut was not implemented for macOS.')
+        return 'WARNING: "{}" folder shortcut was not implemented for macOS.'
 
 
 class PostInstallCommand(install):
@@ -61,8 +63,8 @@ class PostInstallCommand(install):
         try:
             sc = ShortCutter()
             sc.create_desktop_shortcut(pandoctools_bin)
-            desktop_dir_shortcut('Pandoctools User Data', pandoctools_user)
-            desktop_dir_shortcut('Pandoctools Core Data', pandoctools_core)
+            error_log += desktop_dir_shortcut('Pandoctools User Data', pandoctools_user)
+            error_log += desktop_dir_shortcut('Pandoctools Core Data', pandoctools_core)
         except:
             error_log += 'WARNING: Failed to create desktop shortcuts.\n\n' + ''.join(traceback.format_exc())
 
