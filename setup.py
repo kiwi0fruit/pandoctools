@@ -27,11 +27,10 @@ class PostInstallCommand(install):
         if not path.exists(pandoctools_core):
             os.makedirs(pandoctools_core)
 
-        os.symlink(pandoctools_user, 'D:\\')
         s = ShortCutter()
         # s.create_desktop_shortcut(pandoctools_user)
         # s.create_desktop_shortcut(pandoctools_core)
-        # s.create_desktop_shortcut('python')
+        s.create_desktop_shortcut('explorer "D:\Share"')
         install.run(self)
 
 
