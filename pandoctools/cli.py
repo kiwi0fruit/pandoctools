@@ -211,30 +211,6 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
     * in_ext, in_ext_full
     * out_ext, out_ext_full
     """
-    # Set environment vars:
-    if os.name == 'nt':
-        os.environ['import'] = r'call "{}\pandoctools-import.bat"'.format(scripts_bin)
-        os.environ['source'] = r'call "{}\path-source.bat"'.format(scripts_bin)
-        os.environ['pyprepPATH'] = r'call "{}\path-pyprep.bat"'.format(scripts_bin)
-        os.environ['r'] = r'call "{}\path-run.bat"'.format(scripts_bin)
-        os.environ['set_resolve'] = r'call "{}\pandoctools-resolve.bat"'.format(scripts_bin)
-        os.environ['resolve'] = ""
-        os.environ['setUTF8'] = 'chcp 65001 > NUL'
-        os.environ['PYTHONIOENCODING'] = 'utf-8'
-    else:
-        os.environ['import'] = p.join(scripts_bin, 'pandoctools-import')
-        os.environ['source'] = p.join(scripts_bin, 'path-source')
-        os.environ['pyprepPATH'] = p.join(scripts_bin, 'path-pyprep')
-        os.environ['r'] = ""
-        os.environ['set_resolve'] = ""
-        os.environ['resolve'] = p.join(scripts_bin, 'pandoctools-resolve')
-        os.environ['setUTF8'] = ""
-
-    os.environ['_user_config'] = pandoctools_user
-    os.environ['_core_config'] = pandoctools_core
-    os.environ['scripts'] = scripts_bin
-    os.environ['env_path'] = env_path
-
     # Read document and mod input_file if needed:
     if std:
         input_stream = io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8')
@@ -245,7 +221,7 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
             input_file = user_file_query()
             if input_file is None:
                 return None
-        with open(input_file, 'r', encoding="utf-8") as file:
+        with open(p.expandvars(input_file), 'r', encoding="utf-8") as file:
             doc = file.read()
     input_file = "untitled" if (input_file is None) else input_file
 
@@ -260,13 +236,12 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
         profile = pandoctools_meta.get('profile', 'Default') if (profile is None) else profile
         out = pandoctools_meta.get('out', '*.html') if (out is None) else out
 
-    # Set other environment vars:
+    # Expand environment vars:
+    input_file = p.expandvars(input_file)
+    profile = p.expandvars(profile)
+    out = p.expandvars(out)
+    
     output_file = expand_pattern(out, input_file, cwd)
-    os.environ['input_file'] = input_file
-    os.environ['output_file'] = output_file
-    os.environ['in_ext'], os.environ['in_ext_full'] = get_extensions(input_file)
-    os.environ['out_ext'], os.environ['out_ext_full'] = get_extensions(output_file)
-
     profile_path = get_profile_path(profile, pandoctools_user, pandoctools_core, input_file, cwd)
 
     # Run profile confirmation:
@@ -283,24 +258,87 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
         if not user_yes_no_query(message):
             return None
 
-    # Find python root env:
-    #   https://stackoverflow.com/questions/8884188/how-to-read-and-write-ini-file-with-python3
-    config = read_ini('Defaults', pandoctools_user, pandoctools_core)
-    root_env = config.get('Default', 'root_env')
-    os.environ["root_env"] = root_env if p.isabs(root_env) and p.isdir(root_env) else guess_root_env(env_path)
+    # Find python root env and bash on Windows:
+    if os.name == 'nt':
+        _pandoctools_core = p.normpath(p.join(pandoctools_core, '..', 'sh'))
+        config = read_ini('Defaults', pandoctools_user, _pandoctools_core)
+        win_bash = p.expandvars(config.get('Default', 'win_bash', fallback=''))
+        if p.exists(win_bash) and not p.isdir(win_bash):
+            pandoctools_core = _pandoctools_core
+        else:
+            win_bash = None
+            config = read_ini('Defaults', pandoctools_user, pandoctools_core)
+    else:
+        win_bash = None
+        config = read_ini('Defaults', pandoctools_user, pandoctools_core)
+
+    root_env = p.expandvars(config.get('Default', 'root_env', fallback=''))
+    root_env = root_env if p.isabs(root_env) and p.isdir(root_env) else guess_root_env(env_path)
+
+    # Set environment vars:
+    if os.name == 'nt':
+        os.environ['PYTHONIOENCODING'] = 'utf-8'
+        os.environ['LANG'] = 'C.UTF-8'
+    if (os.name == 'nt') and (win_bash is None):
+        os.environ['import'] = r'call "{}\pandoctools-import.bat"'.format(scripts_bin)
+        os.environ['source'] = r'call "{}\path-source.bat"'.format(scripts_bin)
+        os.environ['pyprepPATH'] = r'call "{}\path-pyprep.bat"'.format(scripts_bin)
+        os.environ['r'] = r'call "{}\path-run.bat"'.format(scripts_bin)
+        os.environ['set_resolve'] = r'call "{}\pandoctools-resolve.bat"'.format(scripts_bin)
+        os.environ['resolve'] = ''
+        os.environ['setUTF8'] = 'chcp 65001 > NUL'
+    else:
+        os.environ['import'] = p.join(scripts_bin, 'pandoctools-import')
+        os.environ['source'] = p.join(scripts_bin, 'path-source')
+        os.environ['pyprepPATH'] = p.join(scripts_bin, 'path-pyprep') if (os.name != 'nt') else p.join(scripts_bin, 'path-pyprep-win')
+        os.environ['r'] = ''
+        os.environ['set_resolve'] = ''
+        os.environ['resolve'] = p.join(scripts_bin, 'pandoctools-resolve')
+        os.environ['setUTF8'] = ''
+
+    os.environ['_user_config'] = pandoctools_user
+    os.environ['_core_config'] = pandoctools_core
+    os.environ['scripts'] = scripts_bin
+    os.environ['env_path'] = env_path
+    os.environ['input_file'] = input_file
+    os.environ['output_file'] = output_file
+    os.environ['in_ext'], os.environ['in_ext_full'] = get_extensions(input_file)
+    os.environ['out_ext'], os.environ['out_ext_full'] = get_extensions(output_file)
+    # os.environ['profile_path'] = profile_path
+    os.environ['root_env'] = root_env
 
     if debug:
         vars_ = ['scripts', 'import', 'source', 'pyprepPATH', 'r', 'set_resolve', 'resolve',
-                 'env_path', '_core_config', '_user_config', 'input_file', 'output_file',
-                 'root_env', 'in_ext', 'in_ext_full', 'out_ext', 'out_ext_full', 'PYTHONIOENCODING']
+                 'env_path', '_core_config', '_user_config', 'input_file', 'output_file',  # 'profile_path',
+                 'root_env', 'in_ext', 'in_ext_full', 'out_ext', 'out_ext_full', 'PYTHONIOENCODING', 'LANG']
         for var in vars_:
             print('{}: {}'.format(var, os.environ.get(var)))
         print(os.environ["PATH"])
 
-    proc = run(profile_path, stdout=PIPE, input=doc, encoding='utf8')
+    error_stream = None
+    if os.name == 'nt':
+        if win_bash is None:
+            proc = run(profile_path, stdout=PIPE, input=doc, encoding='utf8')
+        else:
+            # convert win-paths to unix-paths:
+            import re
+            vars = ["import", "source", "scripts", "resolve", "pyprepPATH", "env_path", "input_file",  # "profile_path",
+                    "output_file", "_core_config", "_user_config", "root_env"]
+            args = [win_bash, p.join(scripts_bin, 'pandoctools-cygpath')] + ['${{{}}}'.format(var) for var in vars]
+            cygpath = run(args, stdout=PIPE, input=doc, encoding='utf8')
+            if cygpath.stderr is not None:
+                error_stream = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
+                error_stream.write(cygpath.stderr)
+            cygpaths = [path for path in re.split(r'\r?\n', cygpath.stdout) if path != '']
+            for i, var in enumerate(vars):
+                os.environ['root_env'] = cygpaths[i]
+            # run pandoctools:
+            proc = run([win_bash, profile_path], stdout=PIPE, input=doc, encoding='utf8')
+    else:
+        proc = run(['bash', profile_path], stdout=PIPE, input=doc, encoding='utf8')
 
     if proc.stderr is not None:
-        error_stream = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
+        error_stream = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8') if (error_stream is None) error_stream
         error_stream.write(proc.stderr)  # sys.stderr.write(proc.stderr)
     if not std:
         if (proc.stdout is not None) and (proc.stdout != ""):

@@ -9,7 +9,6 @@
 * set_resolve (win)
 * resolve (unix)
 * pyprepPATH
-* setUTF8 (win)
 * env_path
 * input_file
 * output_file
@@ -19,8 +18,7 @@
 * out_ext_full
 * _core_config
 * _user_config
+* root_env
+* setUTF8 (win)
 * PYTHONIOENCODING (win)
-
-# TODO
-
-* LANG='C.UTF-8'
+* LANG (win)

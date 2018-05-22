@@ -146,7 +146,9 @@ setup(
         'scripts/path-source',
         'scripts/path-source.bat',
         'scripts/path-pyprep',
+        'scripts/path-pyprep-win',
         'scripts/path-pyprep.bat',
         'scripts/setvar.bat',
+        'scripts/pandoctools-cygpath',
     ],
 )
