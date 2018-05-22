@@ -4,6 +4,7 @@ from os import path
 import os
 import versioneer
 import site
+import sys
 
 
 here = path.abspath(path.dirname(__file__))
@@ -31,8 +32,8 @@ class PostInstallCommand(install):
         # s.create_desktop_shortcut(pandoctools_user)
         # s.create_desktop_shortcut(pandoctools_core)
         # s.create_desktop_shortcut('explorer "D:\Share"')
-        # desktop = get_special_folder_path("CSIDL_DESKTOPDIRECTORY")
-        shortcut = os.path.join(r'C:\Users\User\Desktop', "MyModule.lnk")
+        desktop = get_special_folder_path("CSIDL_DESKTOPDIRECTORY")
+        shortcut = os.path.join(desktop, "MyModule.lnk")
         create_shortcut(
             r'D:\User\Python\Miniconda3_x64\envs\research_py36\python.exe',
             "",
