@@ -1,5 +1,5 @@
 from .panfl import main as panfl, autorun_filters  # noqa
-from .cli import pandoctools_user, pandoctools_core_ as pandoctools_core, pandoctools_bin  # noqa
+from .cli import pandoctools_user, pandoctools_bin  # noqa
 
 from ._version import get_versions
 __version__ = get_versions()['version']

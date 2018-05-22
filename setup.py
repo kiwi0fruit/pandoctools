@@ -1,9 +1,9 @@
 from setuptools import setup, find_packages
 from setuptools.command.install import install
 from os import path
-import sys
-
+import os
 import versioneer
+import site
 
 
 here = path.abspath(path.dirname(__file__))
@@ -16,10 +16,14 @@ class PostInstallCommand(install):
     """Post-installation for installation mode."""
     def run(self):
         from shortcut import ShortCutter
-        from pandoctools import pandoctools_user, pandoctools_core, pandoctools_bin
-
+        from pandoctools import pandoctools_user, pandoctools_bin
+        
+        if os.name == 'nt':
+            pandoctools_core = path.join(site.getsitepackages()[0], 'pandoctools', 'bat')
+        else:
+            pandoctools_core = path.join(site.getsitepackages()[0], 'pandoctools', 'sh')
         s = ShortCutter()
-        print(pandoctools_user, pandoctools_core, pandoctools_bin, sys.version[0:3], file=open('D:\\log.txt', "w"))
+        print(pandoctools_user, pandoctools_core, pandoctools_bin, file=open('D:\\log.txt', "w"))
         s.create_desktop_shortcut(pandoctools_user)
         s.create_desktop_shortcut(pandoctools_core)
         s.create_desktop_shortcut(pandoctools_bin)
