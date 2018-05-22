@@ -51,7 +51,7 @@ class PostInstallCommand(install):
             os.makedirs(pandoctools_core)
 
         sc = ShortCutter()
-        # sc.create_desktop_shortcut(pandoctools_bin)
+        sc.create_desktop_shortcut(r'D:\User\Python\Miniconda3_x64\envs\research_py36\python.exe')
         folder_shortcut('Pandoctools User Data', pandoctools_user, sc)
         folder_shortcut('Pandoctools Core Data', pandoctools_core, sc)
         install.run(self)
