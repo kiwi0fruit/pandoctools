@@ -101,7 +101,7 @@ setup(
                       'notebook', 'jupyter',
                       'winshell;platform_system=="Windows"',
                       'pywin32;platform_system=="Windows"',
-                      'qtpy;platform_system=="Linux"'],
+                      'pyqt;platform_system=="Linux"'],
 
     include_package_data=True,
     package_data={
