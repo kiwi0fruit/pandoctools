@@ -1,6 +1,7 @@
 from setuptools import setup, find_packages
 from setuptools.command.install import install
 from os import path
+import sys
 
 import versioneer
 
@@ -17,8 +18,8 @@ class PostInstallCommand(install):
         from shortcut import ShortCutter
         from pandoctools import pandoctools_user, pandoctools_core, pandoctools_bin
 
-        # s = ShortCutter()
-        print(pandoctools_user + pandoctools_core + pandoctools_bin, file=open('D:\\log.txt', "w"))
+        s = ShortCutter()
+        print(pandoctools_user, pandoctools_core, pandoctools_bin, sys.version[0:3], file=open('D:\\log.txt', "w"))
         s.create_desktop_shortcut(pandoctools_user)
         s.create_desktop_shortcut(pandoctools_core)
         s.create_desktop_shortcut(pandoctools_bin)

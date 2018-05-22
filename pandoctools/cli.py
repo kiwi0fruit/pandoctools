@@ -142,19 +142,22 @@ def user_file_query():
             file_path = message(pyperclip.paste())
 
 
-env_path = p.dirname(sys.executable)
 if os.name == 'nt':
     pandoctools_user_data = r"%APPDATA%\pandoc\pandoctools"
     pandoctools_user = p.join(os.environ["APPDATA"], "pandoc", "pandoctools")
-    pandoctools_core = p.join(p.dirname(p.abspath(__file__)), "bat")
+    env_path = p.dirname(sys.executable)
     scripts_bin = p.join(env_path, "Scripts")
     pandoctools_bin = p.join(scripts_bin, "pandoctools.exe")
+    pandoctools_core = p.join(p.dirname(p.abspath(__file__)), 'bat')
+    pandoctools_core_ = path.join(env_path, 'Lib', 'site-packages', 'pandoctools', 'bat')
 else:
     pandoctools_user_data = "$HOME/.pandoc/pandoctools"
     pandoctools_user = p.join(os.environ["HOME"], ".pandoc", "pandoctools")
-    pandoctools_core = p.join(p.dirname(p.abspath(__file__)), "sh")
-    scripts_bin = p.join(env_path, "bin")
+    scripts_bin = p.dirname(sys.executable)
+    env_path = p.join(scripts_bin, "..")
     pandoctools_bin = p.join(scripts_bin, "pandoctools")
+    pandoctools_core = p.join(p.dirname(p.abspath(__file__)), 'sh')
+    pandoctools_core_ = path.join(env_path, 'lib', 'python' + sys.version[0:3], 'site-packages', 'pandoctools', 'sh')
 
 
 help_str = """Pandoctools is a Pandoc profile manager that stores CLI filter pipelines.
