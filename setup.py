@@ -6,7 +6,7 @@ import site
 import versioneer
 
 
-here = p.abspath(path.dirname(__file__))
+here = p.abspath(p.dirname(__file__))
 
 with open(p.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
