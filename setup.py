@@ -2,7 +2,6 @@ from setuptools import setup, find_packages
 from setuptools.command.install import install
 from os import path as p
 import os
-import site
 import versioneer
 
 
@@ -12,7 +11,7 @@ with open(p.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 
-def folder_shortcut(shortcut_name, target_path):
+def folder_shortcut(shortcut_name, target_path, sc):
     if os.name == 'nt':
         from win32com.client import Dispatch
         import winshell
@@ -24,6 +23,7 @@ def folder_shortcut(shortcut_name, target_path):
         shortcut.WorkingDirectory = target_path
         shortcut.save()
     else:
+        # sc.create_desktop_shortcut(target_path)
         import subprocess
         desktop = subprocess.check_output(['xdg-user-dir', 'DESKTOP'])
         dir_ = p.join(desktop, shortcut_name)
@@ -39,21 +39,21 @@ class PostInstallCommand(install):
         from pandoctools import pandoctools_user, pandoctools_bin
         
         if os.name == 'nt':
-            pandoctools_core = p.join(site.getsitepackages()[0], 'pandoctools', 'bat')
+            import sys
+            pandoctools_core = p.join(p.dirname(sys.executable), 'Lib', 'site-packages', 'pandoctools', 'bat')
         else:
+            import site
             pandoctools_core = p.join(site.getsitepackages()[0], 'pandoctools', 'sh')
-        print(pandoctools_user, pandoctools_core, pandoctools_bin, file=open('D:\\log.txt', "w"))
+
         if not p.exists(pandoctools_user):
             os.makedirs(pandoctools_user)
         if not p.exists(pandoctools_core):
             os.makedirs(pandoctools_core)
 
-        s = ShortCutter()
-        # s.create_desktop_shortcut(pandoctools_user)
-        # s.create_desktop_shortcut(pandoctools_core)
-        # s.create_desktop_shortcut('explorer "D:\Share"')
-        folder_shortcut('Pandoctools User Data', pandoctools_user)
-        folder_shortcut('Pandoctools Core Data', pandoctools_core)
+        sc = ShortCutter()
+        # sc.create_desktop_shortcut(pandoctools_bin)
+        folder_shortcut('Pandoctools User Data', pandoctools_user, sc)
+        folder_shortcut('Pandoctools Core Data', pandoctools_core, sc)
         install.run(self)
 
 
