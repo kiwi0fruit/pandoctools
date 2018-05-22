@@ -66,8 +66,8 @@ class PostInstallCommand(install):
 
         # Write INI:
         config = configparser.ConfigParser()
-        config['Default']['root_env'] = ''
-        config['Default']['pandoctools'] = pandoctools_bin
+        config['Default'] = {'root_env': '',
+                             'pandoctools': pandoctools_bin}
         with open(p.join(pandoctools_user, 'Defaults.ini'), 'w') as config_file:
             config.write(config_file)
 
