@@ -7,6 +7,7 @@ import traceback
 from shortcut import ShortCutter
 from pandoctools import pandoctools_user, pandoctools_bin
 import versioneer
+import io
 
 
 here = p.abspath(p.dirname(__file__))
@@ -53,23 +54,31 @@ class PostInstallCommand(install):
             pandoctools_core = p.join(site.getsitepackages()[0], 'pandoctools', 'sh')
 
         # Create shortcuts:
+        if not p.exists(pandoctools_bin):
+            open(pandoctools_bin, 'a').close()
         try:
             sc = ShortCutter()
-            if not p.exists(pandoctools_bin):
-                open(pandoctools_bin, 'a').close()
             sc.create_desktop_shortcut(pandoctools_bin)
             desktop_dir_shortcut('Pandoctools User Data', pandoctools_user)
             desktop_dir_shortcut('Pandoctools Core Data', pandoctools_core)
         except:
-            print('WARNING: Failed to create shortcuts.')
+            print('WARNING: Failed to create desktop shortcuts.')
             traceback.print_exc()
 
         # Write INI:
         config = configparser.ConfigParser()
         config['Default'] = {'root_env': '',
                              'pandoctools': pandoctools_bin}
-        with open(p.join(pandoctools_user, 'Defaults.ini'), 'w') as config_file:
-            config.write(config_file)
+        config_file = p.join(pandoctools_user, 'Defaults.ini')
+        with io.StringIO() as f:
+            config.write(f)
+            config_str = f.getvalue()
+        try:
+            with open(config_file, 'w') as f:
+                config.write(f)
+        except:
+            print('WARNING: Failed to create ini file:\n{}\n\n{}'.format(config_file, config_str))
+            traceback.print_exc()
 
         install.run(self)
 
