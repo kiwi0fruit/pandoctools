@@ -17,6 +17,6 @@ call activale myenv
 Install:
 
 ```
-conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.0,<2.1" pyperclip matplotlib feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters pypandoc click psutil nbformat pandoc-attributes six pyyaml
+conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.0,<2.1" pyperclip matplotlib feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters pypandoc click psutil nbformat pandoc-attributes six pyyaml pywin32
 pip install git+https://github.com/kiwi0fruit/pandoctools.git
 ```
