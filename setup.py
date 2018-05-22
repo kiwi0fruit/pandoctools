@@ -30,7 +30,16 @@ class PostInstallCommand(install):
         s = ShortCutter()
         # s.create_desktop_shortcut(pandoctools_user)
         # s.create_desktop_shortcut(pandoctools_core)
-        s.create_desktop_shortcut('explorer "D:\Share"')
+        # s.create_desktop_shortcut('explorer "D:\Share"')
+        desktop = get_special_folder_path("CSIDL_DESKTOPDIRECTORY")
+        shortcut = os.path.join(desktop, "MyModule.lnk")
+        create_shortcut(
+            r'D:\User\Python\Miniconda3_x64\envs\research_py36\python.exe',
+            "",
+            shortcut, 
+            "",
+            datadir)
+        file_created(shortcut)
         install.run(self)
 
 
