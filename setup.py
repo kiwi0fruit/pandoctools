@@ -90,12 +90,11 @@ class PostInstallCommand(install):
         if 'root_env' not in default_sect:
             default_sect['root_env'] = ''
         if 'win_bash' not in default_sect:
-            git_bash = '%PROGRAMFILES%\Git\bin\bash.exe'
+            git_bash = r'%PROGRAMFILES%\Git\bin\bash.exe'
             if p.exists(p.expandvars(git_bash)):
                 default_sect['win_bash'] = git_bash
             else:
                 default_sect['win_bash'] = ''
-            print(p.expandvars(git_bash), file=open(r'D:\log.txt', 'w'))
 
         config['Default'] = default_sect
         with io.StringIO() as f:
