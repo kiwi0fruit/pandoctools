@@ -125,7 +125,7 @@ def user_file_query():
     no = {'no', 'n'}
 
     def message(filepath):
-        print("Type 'y/yes'+ENTER to use clipboard paste as input file:")
+        print("Type 'y/yes'+ENTER to use clipboard paste as input file (Pandoctools strips double quotes):")
         try:
             print(filepath)
         except UnicodeEncodeError:
