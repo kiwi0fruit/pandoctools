@@ -80,12 +80,12 @@ class PostInstallCommand(install):
         if p.exists(config_file):
             config.read(config_file)
             try:
-                default_sect = dict(c.items('Defaults'))
+                default_sect = dict(config.items('Defaults'))
             except configparser.NoSectionError:
                 default_sect = {}
         else:
             default_sect = {}
-        
+
         default_sect['pandoctools'] = pandoctools_bin
         if 'root_env' not in default_sect:
             default_sect['root_env'] = ''
@@ -95,6 +95,7 @@ class PostInstallCommand(install):
                 default_sect['win_bash'] = git_bash
             else:
                 default_sect['win_bash'] = ''
+            print(default_sect['win_bash'], file=r'D:\log.txt')
 
         config['Default'] = default_sect
         with io.StringIO() as f:
