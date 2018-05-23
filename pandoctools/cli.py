@@ -315,15 +315,15 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
     # convert win-paths to unix-paths if needed:
     if (os.name == 'nt') and (win_bash is not None):
         import re
-        vars = ["import", "source", "scripts", "resolve", "pyprepPATH",
+        vars_ = ["import", "source", "scripts", "resolve", "pyprepPATH",
                 "env_path", "input_file", "output_file", "_core_config",
                 "_user_config", "root_env"]
-        vars = [var for var in vars if env_vars[var] != '']
-        args = [win_bash, p.join(scripts_bin, 'pandoctools-cygpath')] + [env_vars[var] for var in vars]
+        vars_ = [var for var in vars_ if env_vars[var] != '']
+        args = [win_bash, p.join(scripts_bin, 'pandoctools-cygpath')] + [env_vars[var] for var in vars_]
 
         cygpath = run(args, stdout=PIPE, input=doc, encoding='utf8')
         cygpaths = re.split(r'\r?\n', cygpath.stdout.strip())
-        for i, var in enumerate(vars):
+        for i, var in enumerate(vars_):
             env_vars[var] = cygpaths[i]
 
         if cygpath.stderr is not None:
