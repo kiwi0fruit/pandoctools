@@ -60,7 +60,7 @@ elif [ "${out_ext}" == "ipynb" ]; then
     pipe="ipynb"
 
 elif [ "${out_ext}" == "docx" ]; then
-    writer_args=("${writer_args[@]}" --reference-doc="$(. "$resolve" Template-$prof.docx)")
+    writer_args=("${writer_args[@]}" --reference-doc="$(. "$resolve" Template-$prof.docx)" -o "${output_file}")
 fi
 
 if [ "$to" == "" ]; then

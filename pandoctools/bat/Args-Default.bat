@@ -67,7 +67,7 @@ if        "%out_ext%"=="" (
 
 ) else if "%out_ext%"=="docx" (
     %set_resolve% _temp "Template-%prof%.docx"
-    set writer_args=%writer_args% --reference-doc="%_temp%"
+    set writer_args=%writer_args% --reference-doc="%_temp%" -o "%output_file%"
 )
 
 if "%to%" == "" set "to=%_to%"
