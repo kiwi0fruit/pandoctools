@@ -6,7 +6,7 @@ Pandoc profile manager (stores any CLI filter pipelines), CLI wrapper for Panflu
 
 ## Install
 
-Windows:
+### Windows:
 
 * Install [Miniconda](https://conda.io/miniconda.html)
 * Install [Git together with Bash](https://git-scm.com/downloads)  
