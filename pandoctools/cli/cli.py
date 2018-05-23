@@ -347,15 +347,13 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
         print(dict(os.environ))
 
     # run pandoctools:
-    # bash = win_bash if (os.name == 'nt') else 'bash'
+    bash = win_bash if (os.name == 'nt') else 'bash'
     if (os.name == 'nt') and (win_bash is None):
         for key, val in env_vars.items():
             os.environ[key] = val
         proc = subprocess.run(profile_path, stdout=PIPE, input=doc, encoding='utf-8')
-    elif os.name == 'nt':
-        proc = subprocess.run([win_bash, profile_path], stdout=PIPE, input=doc, encoding='utf-8', env={**dict(os.environ), **env_vars})
     else:
-        proc = subprocess.run(['bash', profile_path], stdout=PIPE, input=doc, encoding='utf-8')
+        proc = subprocess.run([bash, profile_path], stdout=PIPE, input=doc, encoding='utf-8', env={**dict(os.environ), **env_vars})
 
     if proc.stderr is not None:
         # error_stream = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
