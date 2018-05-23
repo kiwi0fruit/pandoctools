@@ -266,6 +266,9 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
         config = read_ini('Defaults', pandoctools_user, _pandoctools_core)
         win_bash = p.expandvars(config.get('Default', 'win_bash', fallback=''))
         if p.exists(win_bash) and not p.isdir(win_bash):
+            # here we implicitly use the fact that
+            # ini from core sh folder (_pandoctools_core)
+            # has path to git's bash
             pandoctools_core = _pandoctools_core
         else:
             win_bash = None

@@ -52,10 +52,15 @@ class PostInstallCommand(install):
         # Set pandoctools_core:
         if os.name == 'nt':
             import sys
-            pandoctools_core = p.join(p.dirname(sys.executable), 'Lib', 'site-packages', 'pandoctools', 'bat')
+            _pdt = p.join(p.dirname(sys.executable), 'Lib', 'site-packages', 'pandoctools')
+            pandoctools_core = p.join(_pdt, 'bat')
+            _pandoctools_core = p.join(_pdt, 'sh')
+            bash_append = ' (Bash)'
         else:
             import site
             pandoctools_core = p.join(site.getsitepackages()[0], 'pandoctools', 'sh')
+            _pandoctools_core = pandoctools_core
+            bash_append = ''
 
         # Create shortcuts:
         if not p.exists(pandoctools_bin):
@@ -65,6 +70,7 @@ class PostInstallCommand(install):
             sc.create_desktop_shortcut(pandoctools_bin)
             error_log += desktop_dir_shortcut('Pandoctools User Data', pandoctools_user)
             error_log += desktop_dir_shortcut('Pandoctools Core Data', pandoctools_core)
+            error_log += desktop_dir_shortcut('Pandoctools Core Data' + bash_append, _pandoctools_core)
         except:
             error_log += 'WARNING: Failed to create desktop shortcuts.\n\n' + ''.join(traceback.format_exc())
 
@@ -84,7 +90,11 @@ class PostInstallCommand(install):
         if 'root_env' not in default_sect:
             default_sect['root_env'] = ''
         if 'win_bash' not in default_sect:
-            default_sect['win_bash'] = '%PROGRAMFILES%\Git\bin\bash.exe'
+            git_bash = '%PROGRAMFILES%\Git\bin\bash.exe'
+            if p.exists(p.expandvars(git_bash)):
+                default_sect['win_bash'] = git_bash
+            else:
+                default_sect['win_bash'] = ''
 
         config['Default'] = default_sect
         with io.StringIO() as f:
