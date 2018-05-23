@@ -43,3 +43,4 @@ pip install git+https://github.com/kiwi0fruit/pandoctools.git
 ```
 * Install [pandoc-crossref v0.3.0.1](https://github.com/lierdakil/pandoc-crossref/releases/tag/v0.3.0.1) to  
   `<miniconda-path>/envs/myenv/bin`.
+* If there be problems with the desktop shortcut then delete the shortcut and install pandoctools again.
