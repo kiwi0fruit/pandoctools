@@ -80,7 +80,7 @@ class PostInstallCommand(install):
         if p.exists(config_file):
             config.read(config_file)
             try:
-                default_sect = dict(config.items('Defaults'))
+                default_sect = dict(config.items('Default'))
             except configparser.NoSectionError:
                 default_sect = {}
         else:
