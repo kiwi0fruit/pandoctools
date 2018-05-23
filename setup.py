@@ -34,7 +34,7 @@ def desktop_dir_shortcut(shortcut_name, target_path):
         desktop = subprocess.check_output([
             'xdg-user-dir',
             'DESKTOP'
-        ]).decode('utf-8').replace('\n', '')
+        ]).decode('utf-8').strip()
         shortcut_path = p.join(desktop, shortcut_name)
         if p.exists(shortcut_path):
             os.remove(shortcut_path)
