@@ -119,40 +119,40 @@ def user_yes_no_query(message: str):
 
 
 def user_file_query():
+    import pyperclip
+    
     yes = {'yes', 'y'}
     no = {'no', 'n'}
 
-    def win_message(filepath):
-        print("Type 'y/yes' to use clipboard paste as input file:")
+    def message(filepath):
+        print("Type 'y/yes'+ENTER to use clipboard paste as input file:")
         try:
             print(filepath)
         except UnicodeEncodeError:
             print(filepath.encode('utf-8'))
-        print("Type 'n/no' to exit and ENTER to reload clipboard paste.")
+        print("Type 'n/no'+ENTER to exit.\nType '/'+ENTER to type input file manually.\nType ENTER to reload clipboard paste.")
         return filepath
 
-    unix_message = "Please type input file path (or type '/' to exit):"
+    message2 = "Please type input file path (or type '/' to exit):"
 
-    if os.name == 'nt':
-        import pyperclip
-        file_path = win_message(pyperclip.paste())
-        while True:
-            answer = input().lower()
-            if answer in yes:
-                return file_path
-            elif answer in no:
-                return None
-            else:
-                file_path = win_message(pyperclip.paste())
-    else:
-        print(unix_message)
-        file_path = input()
-        while (file_path is None) or (file_path == ''):
-            file_path = input()
-        if file_path == '/':
+    file_path = message(pyperclip.paste())
+    while True:
+        answer = input().lower()
+        if answer in yes:
+            return file_path.strip('"').strip()
+        elif answer in no:
             return None
+        elif answer == '/':
+            print(message2)
+            file_path = input()
+            while (file_path is None) or (file_path == ''):
+                file_path = input()
+                if file_path == '/':
+                    return None
+                else:
+                    return file_path.strip('"').strip()
         else:
-            return file_path
+            file_path = message(pyperclip.paste())
 
 
 if os.name == 'nt':
