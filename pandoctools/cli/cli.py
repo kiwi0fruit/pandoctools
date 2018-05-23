@@ -34,7 +34,7 @@ def expand_pattern(pattern: str,  target_file: str,  cwd: bool) -> str:
     file_path = pattern.replace('<*>', p.splitext(target_name)[0]).replace('*', target_name)
     if not p.isabs(file_path) and not cwd:
         file_path = p.normpath(p.join(p.dirname(target_file), file_path))
-    return file_path
+    return p.abspath(file_path)
 
 
 def get_extensions(file_path: str) -> str:
@@ -240,8 +240,8 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
         profile = pandoctools_meta.get('profile', 'Default') if (profile is None) else profile
         out = pandoctools_meta.get('out', '*.html') if (out is None) else out
 
-    # Expand environment vars:
-    input_file = p.expandvars(input_file)
+    # Expand environment vars and get abs path:
+    input_file = p.abspath(p.expandvars(input_file))
     profile = p.expandvars(profile)
     out = p.expandvars(out)
 
