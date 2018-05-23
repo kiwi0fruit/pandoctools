@@ -76,7 +76,7 @@ class PostInstallCommand(install):
 
         # Write INI:
         config_file = p.join(pandoctools_user, 'Defaults.ini')
-        config = configparser.ConfigParser()
+        config = configparser.ConfigParser(interpolation=None)
         if p.exists(config_file):
             config.read(config_file)
             try:
@@ -92,7 +92,7 @@ class PostInstallCommand(install):
         if 'win_bash' not in default_sect:
             git_bash = r'%PROGRAMFILES%\Git\bin\bash.exe'
             if p.exists(p.expandvars(git_bash)):
-                default_sect['win_bash'] = git_bash.replace('%', r'\%')
+                default_sect['win_bash'] = git_bash
             else:
                 default_sect['win_bash'] = ''
 
