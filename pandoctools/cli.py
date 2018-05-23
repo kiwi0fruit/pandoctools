@@ -45,8 +45,8 @@ def get_extensions(file_path: str) -> str:
 
 
 def get_profile_path(profile: str,
-                     dir1: str,
-                     dir2: str,
+                     user_dir: str,
+                     core_dir: str,
                      input_file: str,
                      cwd: bool) -> str:
     """
@@ -54,9 +54,9 @@ def get_profile_path(profile: str,
     In profile name is given (not profile path) then search in folder1, then in folder2.
     """
     if p.splitext(p.basename(profile))[0] == profile:
-        ext = 'bat' if (os.name == 'nt') else 'sh'
-        profile1 = p.join(dir1, 'Profile-{}.{}'.format(profile, ext))
-        profile2 = p.join(dir2, 'Profile-{}.{}'.format(profile, ext))
+        ext = core_dir[-3:]
+        profile1 = p.join(user_dir, 'Profile-{}.{}'.format(profile, ext))
+        profile2 = p.join(core_dir, 'Profile-{}.{}'.format(profile, ext))
         if p.isfile(profile1):
             return profile1
         elif p.isfile(profile2):
@@ -243,7 +243,27 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
     input_file = p.expandvars(input_file)
     profile = p.expandvars(profile)
     out = p.expandvars(out)
-    
+
+    # Find python root env and bash on Windows:
+    if os.name == 'nt':
+        config = read_ini('Defaults', pandoctools_user, _pandoctools_core)
+        win_bash = p.expandvars(config.get('Default', 'win_bash', fallback=''))
+        if p.exists(win_bash) and not p.isdir(win_bash) and (profile[-4:] != '.bat'):
+            # here we implicitly use the fact that
+            # ini from core sh folder (_pandoctools_core)
+            # has path to git's bash
+            pandoctools_core = _pandoctools_core
+        else:
+            win_bash = None
+            config = read_ini('Defaults', pandoctools_user, pandoctools_core)
+    else:
+        win_bash = None
+        config = read_ini('Defaults', pandoctools_user, pandoctools_core)
+
+    root_env = p.expandvars(config.get('Default', 'root_env', fallback=''))
+    root_env = root_env if p.isabs(root_env) and p.isdir(root_env) else guess_root_env(env_path)
+
+    # Expand custom patterns:
     output_file = expand_pattern(out, input_file, cwd)
     profile_path = get_profile_path(profile, pandoctools_user, pandoctools_core, input_file, cwd)
 
@@ -261,24 +281,7 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
         if not user_yes_no_query(message):
             return None
 
-    # Find python root env and bash on Windows:
-    if os.name == 'nt':
-        config = read_ini('Defaults', pandoctools_user, _pandoctools_core)
-        win_bash = p.expandvars(config.get('Default', 'win_bash', fallback=''))
-        if p.exists(win_bash) and not p.isdir(win_bash):
-            # here we implicitly use the fact that
-            # ini from core sh folder (_pandoctools_core)
-            # has path to git's bash
-            pandoctools_core = _pandoctools_core
-        else:
-            win_bash = None
-            config = read_ini('Defaults', pandoctools_user, pandoctools_core)
-    else:
-        win_bash = None
-        config = read_ini('Defaults', pandoctools_user, pandoctools_core)
 
-    root_env = p.expandvars(config.get('Default', 'root_env', fallback=''))
-    root_env = root_env if p.isabs(root_env) and p.isdir(root_env) else guess_root_env(env_path)
 
     # Set environment vars to dict:
     env_vars = {}
