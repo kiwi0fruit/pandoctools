@@ -335,31 +335,27 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
             # error_stream.write(cygpath.stderr)
             print(cygpath.stderr, file=sys.stderr)
 
-    # write env vars to 'os.environ':
-    for key, val in env_vars.items():
-        os.environ[key] = val
-
     # debug env vars:
     if debug:
         vars_ = ['scripts', 'import', 'source', 'pyprepPATH', 'r', 'set_resolve', 'resolve',
                  'env_path', '_core_config', '_user_config', 'input_file', 'output_file',
                  'root_env', 'in_ext', 'in_ext_full', 'out_ext', 'out_ext_full', 'PYTHONIOENCODING', 'LANG', 'setUTF8']
         for var in vars_:
-            print('{}: {}'.format(var, os.environ.get(var)))
-        print('win_bash: ', win_bash)
-        print(os.environ["PATH"])
+            print('{}: {}'.format(var, env_vars.get(var)))
+        print('win_bash: ', win_bash, '\n')
+        print(os.environ["PATH"], '\n')
+        print(dict(os.environ))
 
     # run pandoctools:
-    if os.name == 'nt':
-        if win_bash is None:
-            args = profile_path
-        else:
-            args = [win_bash, profile_path]
+    # bash = win_bash if (os.name == 'nt') else 'bash'
+    if (os.name == 'nt') and (win_bash is None):
+        for key, val in env_vars.items():
+            os.environ[key] = val
+        proc = subprocess.run(profile_path, stdout=PIPE, input=doc, encoding='utf-8')
+    elif os.name == 'nt':
+        proc = subprocess.run([win_bash, profile_path], stdout=PIPE, input=doc, encoding='utf-8', env={**dict(os.environ), **env_vars})
     else:
-        args = ['bash', profile_path]
-    proc = subprocess.run(args, stdout=PIPE, input=doc, encoding='utf-8', env=env_vars)
-    
-    # communicate() returns a tuple (stdout_data, stderr_data)
+        proc = subprocess.run(['bash', profile_path], stdout=PIPE, input=doc, encoding='utf-8')
 
     if proc.stderr is not None:
         # error_stream = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')

@@ -62,5 +62,7 @@ else
     _to="${out_ext}"
 fi
 
-if [ "$to" == "" ]; then; to="${_to}"
+if [ "$to" == "" ]; then
+    to="${_to}"
+fi
 writer_args=(-t "${_to}" --standalone --self-contained)
