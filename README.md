@@ -13,7 +13,7 @@ Pandoc profile manager (stores any CLI filter pipelines), CLI wrapper for Panflu
   Git is needed for writing text conversion profiles in cross-platform bash language instead of Windows-only batch language (that is supported by Pandoctools anyway).
 
 ```
-conda install conda>=4.5.4
+conda install "conda>=4.5.4"
 conda create -n myenv python=3
 call activale myenv
 
@@ -32,7 +32,7 @@ pip install git+https://github.com/kiwi0fruit/pandoctools.git
 * Install Git: `sudo apt-get install git`
 
 ```
-conda install conda>=4.5.4
+conda install "conda>=4.5.4"
 conda create -n myenv python=3
 source activate myenv
 
