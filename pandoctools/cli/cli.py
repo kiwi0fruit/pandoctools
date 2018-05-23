@@ -130,7 +130,7 @@ def user_file_query():
             print(filepath)
         except UnicodeEncodeError:
             print(filepath.encode('utf-8'))
-        print("Type 'n/no'+ENTER to exit.\nType '/'+ENTER to type input file manually.\nType ENTER to reload clipboard paste.")
+        print("\nType 'n/no'+ENTER to exit.\nType '/'+ENTER to type input file manually.\nType ENTER to reload clipboard paste.")
         return filepath
 
     message2 = "Please type input file path (or type '/' to exit):"
@@ -221,7 +221,7 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
         doc = input_stream.read()  # doc = sys.stdin.read()
     else:
         if input_file is None:
-            print('Input file was not provided.')
+            print('Input file was not provided.\n')
             input_file = user_file_query()
             if input_file is None:
                 return None
