@@ -4,7 +4,8 @@ from os import path as p
 import click
 import re
 import yaml
-from subprocess import run, PIPE
+import subprocess
+from subprocess import PIPE
 import configparser
 import io
 
@@ -54,7 +55,7 @@ def get_profile_path(profile: str,
     In profile name is given (not profile path) then search in folder1, then in folder2.
     """
     if p.splitext(p.basename(profile))[0] == profile:
-        ext = core_dir[-3:]
+        ext = p.basename(core_dir)[-3:]
         profile1 = p.join(user_dir, 'Profile-{}.{}'.format(profile, ext))
         profile2 = p.join(core_dir, 'Profile-{}.{}'.format(profile, ext))
         if p.isfile(profile1):
@@ -62,7 +63,7 @@ def get_profile_path(profile: str,
         elif p.isfile(profile2):
             return profile2
         else:
-            raise ValueError("Profile '{}' was not found.".format(profile))
+            raise ValueError("Profile '{}' was not found in\n{}\nand\n{}".format(profile, user_dir, core_dir))
     else:
         return expand_pattern(profile, input_file, cwd)
 
@@ -324,7 +325,7 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
         vars_ = [var for var in vars_ if env_vars[var] != '']
         args = [win_bash, p.join(scripts_bin, 'pandoctools-cygpath')] + [env_vars[var] for var in vars_]
 
-        cygpath = run(args, stdout=PIPE, input=doc, encoding='utf-8')
+        cygpath = subprocess.run(args, stdout=PIPE, input=doc, encoding='utf-8')
         cygpaths = re.split(r'\r?\n', cygpath.stdout.strip())
         for i, var in enumerate(vars_):
             env_vars[var] = cygpaths[i]
@@ -356,7 +357,9 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
             args = [win_bash, profile_path]
     else:
         args = ['bash', profile_path]
-    proc = run(args, stdout=PIPE, input=doc, encoding='utf-8')
+    proc = subprocess.run(args, stdout=PIPE, input=doc, encoding='utf-8', env=env_vars)
+    
+    # communicate() returns a tuple (stdout_data, stderr_data)
 
     if proc.stderr is not None:
         # error_stream = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
