@@ -20,7 +20,7 @@ Windows:
 
 Install [Miniconda](https://conda.io/miniconda.html).
 ```
-conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.0,<2.1" matplotlib feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future shutilwhich pywin32 pyperclip
+conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.0,<2.1" matplotlib feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future shutilwhich cython pywin32 pyperclip
 pip install panflute knitty sugartex winshell
 pip install git+https://github.com/kiwi0fruit/pandoctools.git
 ```
@@ -31,7 +31,7 @@ Then install [pandoc-crossref v0.3.0.1](https://github.com/lierdakil/pandoc-cros
 
 Install [Miniconda](https://conda.io/miniconda.html).
 ```
-conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.0,<2.1" matplotlib feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future shutilwhich
+conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.0,<2.1" matplotlib feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future shutilwhich cython
 pip install panflute knitty sugartex
 pip install git+https://github.com/kiwi0fruit/pandoctools.git
 ```

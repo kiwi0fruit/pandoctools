@@ -168,7 +168,7 @@ else:
     pandoctools_user_data = "$HOME/.pandoc/pandoctools"
     pandoctools_user = p.join(os.environ["HOME"], ".pandoc", "pandoctools")
     scripts_bin = p.dirname(sys.executable)
-    env_path = p.join(scripts_bin, "..")
+    env_path = p.normpath(p.join(scripts_bin, ".."))
     pandoctools_bin = p.join(scripts_bin, "pandoctools")
     pandoctools_core = p.normpath(p.join(p.dirname(p.abspath(__file__)), '..', 'sh'))
     _pandoctools_core = pandoctools_core
