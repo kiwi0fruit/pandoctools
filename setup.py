@@ -93,6 +93,7 @@ class PostInstallCommand(install):
             git_bash = r'%PROGRAMFILES%\Git\bin\bash.exe'
             if p.exists(p.expandvars(git_bash)):
                 default_sect['win_bash'] = git_bash
+                pandoctools_core = _pandoctools_core
             else:
                 default_sect['win_bash'] = ''
 
