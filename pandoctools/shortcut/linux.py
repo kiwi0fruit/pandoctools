@@ -25,7 +25,7 @@ class ShortCutterLinux(ShortCutter):
         with open(shortcut_file_path, "w") as shortcut:
             shortcut.write("[Desktop Entry]\n")
             shortcut.write("Name={}\n".format(target_name))
-            shortcut.write("Exec={}\n".format(target_path))
+            shortcut.write("Exec={} %F\n".format(target_path))
             shortcut.write("Terminal=true\n")
             shortcut.write("Type=Application\n")
 
