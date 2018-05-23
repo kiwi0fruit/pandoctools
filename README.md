@@ -29,7 +29,7 @@ pip install git+https://github.com/kiwi0fruit/pandoctools.git
 ### Unix:
 
 * Install [Miniconda](https://conda.io/miniconda.html)
-* Install Git: `sudo apt-get install git`
+* Install Git. On Ubuntu/Debian: `sudo apt-get install git` Fedora/CentOS and macOS also have such one-liners.
 
 ```
 conda install "conda>=4.5.4"
