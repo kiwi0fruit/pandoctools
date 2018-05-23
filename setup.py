@@ -68,6 +68,7 @@ class PostInstallCommand(install):
         try:
             sc = ShortCutter()
             sc.create_desktop_shortcut(pandoctools_bin)
+            sc.create_menu_shortcut(pandoctools_bin)
             error_log += desktop_dir_shortcut('Pandoctools User Data', pandoctools_user)
             error_log += desktop_dir_shortcut('Pandoctools Core Data', pandoctools_core)
             error_log += desktop_dir_shortcut('Pandoctools Core Data' + bash_append, _pandoctools_core)
