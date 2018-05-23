@@ -5,7 +5,7 @@ import os
 import configparser
 import traceback
 from pandoctools.shortcut import ShortCutter
-from pandoctools import pandoctools_user, pandoctools_bin
+from pandoctools.cli import pandoctools_user, pandoctools_bin
 import versioneer
 import io
 
@@ -156,7 +156,7 @@ setup(
     entry_points={
         'console_scripts': [
             'cat-md=pandoctools.cat_md.cat_md:cat_md',
-            'pandoctools=pandoctools.cli:pandoctools',
+            'pandoctools=pandoctools.cli.cli:pandoctools',
             'panfl=pandoctools.panfl.panfl:main',
         ],
     },
