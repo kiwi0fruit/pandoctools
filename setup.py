@@ -69,10 +69,24 @@ class PostInstallCommand(install):
             error_log += 'WARNING: Failed to create desktop shortcuts.\n\n' + ''.join(traceback.format_exc())
 
         # Write INI:
-        config = configparser.ConfigParser()
-        config['Default'] = {'root_env': '',
-                             'pandoctools': pandoctools_bin}
         config_file = p.join(pandoctools_user, 'Defaults.ini')
+        config = configparser.ConfigParser()
+        if p.exists(config_file):
+            config.read(config_file)
+            try:
+                default_sect = dict(c.items('Defaults'))
+            except configparser.NoSectionError:
+                default_sect = {}
+        else:
+            default_sect = {}
+        
+        default_sect['pandoctools'] = pandoctools_bin
+        if 'root_env' not in default_sect:
+            default_sect['root_env'] = ''
+        if 'win_bash' not in default_sect:
+            default_sect['win_bash'] = '%PROGRAMFILES%\Git\bin\bash.exe'
+
+        config['Default'] = default_sect
         with io.StringIO() as f:
             config.write(f)
             config_str = f.getvalue()
