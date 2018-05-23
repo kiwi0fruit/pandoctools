@@ -4,7 +4,7 @@ from os import path as p
 import os
 import configparser
 import traceback
-from shortcut import ShortCutter
+from pandoctools.shortcut import ShortCutter
 from pandoctools import pandoctools_user, pandoctools_bin
 import versioneer
 import io
@@ -144,7 +144,7 @@ setup(
     packages=find_packages(exclude=['docs', 'tests']),
 
     install_requires=['click', 'pyyaml', 'panflute', 'knitty',
-                      'sugartex', 'matplotlib', 'feather-format', 'shortcut',
+                      'sugartex', 'matplotlib', 'feather-format',  # 'shortcut',
                       'notebook', 'jupyter', 'pyperclip;platform_system=="Windows"', 
                       'winshell;platform_system=="Windows"',
                       'pywin32;platform_system=="Windows"'],
