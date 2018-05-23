@@ -1,6 +1,6 @@
 . "$pyprepPATH" "${root_env}"
 . "$source" activate "${env_path}"
-meta=Kiwi
+prof=Kiwi
 . "$import" Args-Default
 stex="--kiwi"; inputs=(stdin)
 writer_args=("${writer_args[@]}" --toc)

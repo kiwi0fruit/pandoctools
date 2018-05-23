@@ -1,5 +1,5 @@
 # May use predefined variables:
-#   $meta (metadata profile name)
+#   $prof (profile name)
 #   $resolve (echoes resolved path to a file.
 #             Searches in $HOME/.pandoc/pandoctools
 #             then in <...>/site-packages/pandoctools/sh folders)
@@ -35,10 +35,11 @@ reader_args=(-f "${_from}")
 
 
 _jupymd="markdown-bracketed_spans-fenced_divs-link_attributes-simple_tables-multiline_tables-grid_tables-pipe_tables-fenced_code_attributes-markdown_in_html_blocks-table_captions-smart"
-_meta="$(. "$resolve" Meta-$meta.yaml)"
-stdin_plus=("stdin" "${_meta}")
+stdin_plus=("stdin" "$(. "$resolve" Meta-$prof.yaml)")
 pipe="Default"
 to=""
+_to="${out_ext}"
+writer_args=(--standalone --self-contained)
 
 if   [ "${out_ext}" == "" ]; then
     _to=markdown
@@ -49,20 +50,20 @@ elif [ "${out_ext}" == "md" ]; then
 elif [ "${out_ext_full: -7}" == "r.ipynb" ]; then
     _to="${_jupymd}"
     to=markdown
-    stdin_plus=("stdin" "${_meta}" "$(. "$resolve" Meta-ipynb-R.yaml)")
+    stdin_plus=("${stdin_plus[@]}" "$(. "$resolve" Meta-ipynb-R.yaml)")
     pipe="ipynb"
 
 elif [ "${out_ext}" == "ipynb" ]; then
     _to="${_jupymd}"
     to=markdown
-    stdin_plus=("stdin" "${_meta}" "$(. "$resolve" Meta-ipynb-py3.yaml)")
+    stdin_plus=("${stdin_plus[@]}" "$(. "$resolve" Meta-ipynb-py3.yaml)")
     pipe="ipynb"
 
-else
-    _to="${out_ext}"
+elif [ "${out_ext}" == "docx" ]; then
+    writer_args=("${writer_args[@]}" --reference-doc="$(. "$resolve" Template-$prof.docx)")
 fi
 
 if [ "$to" == "" ]; then
     to="${_to}"
 fi
-writer_args=(-t "${_to}" --standalone --self-contained)
+writer_args=("${writer_args[@]}" -t "${_to}")

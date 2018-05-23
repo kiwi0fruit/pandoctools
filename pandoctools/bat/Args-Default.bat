@@ -1,6 +1,6 @@
 @echo off
 :: May use predefined variables:
-::   %meta% (metadata profile name)
+::   %prof% (profile name)
 ::   %set_resolve% (sets var to a resolved path to a file.
 ::                  Searches in %APPDATA%\pandoc\pandoctools
 ::                  then in <...>\site-packages\pandoctools\bat folders)
@@ -40,6 +40,8 @@ set "_jupymd=markdown-bracketed_spans-fenced_divs-link_attributes-simple_tables-
 set stdin_plus=stdin "%_meta%"
 set pipe=Default
 set "to="
+set "_to=%out_ext%"
+set writer_args=--standalone --self-contained
 
 if        "%out_ext%"=="" (
     set _to=markdown
@@ -52,20 +54,21 @@ if        "%out_ext%"=="" (
     set to=markdown
     set pipe=ipynb
     
-    %set_resolve% _meta2 Meta-ipynb-R.yaml
-    set stdin_plus=stdin "%_meta%" "%_meta2%"
+    %set_resolve% _meta Meta-ipynb-R.yaml
+    set stdin_plus=%stdin_plus% "%_meta%"
 
 ) else if "%out_ext%"=="ipynb" (
     set "_to=%_jupymd%"
     set to=markdown
     set pipe=ipynb
 
-    %set_resolve% _meta2 Meta-ipynb-py3.yaml
-    set stdin_plus=stdin "%_meta%" "%_meta2%"
+    %set_resolve% _meta Meta-ipynb-py3.yaml
+    set stdin_plus=%stdin_plus% "%_meta%"
 
-) else (
-    set "_to=%out_ext%"
+) else if "%out_ext%"=="docx" (
+    %set_resolve% _temp "Template-%prof%.docx"
+    set writer_args=%writer_args% --reference-doc="%_temp%"
 )
 
 if "%to%" == "" set "to=%_to%"
-set writer_args=-t "%_to%" --standalone --self-contained
+set writer_args=%writer_args% -t "%_to%"
