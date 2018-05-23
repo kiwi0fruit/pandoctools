@@ -17,21 +17,21 @@ def expand_pattern(pattern: str,  target_file: str,  cwd: bool) -> str:
       - If (target = c/d/doc.md.html) then (* = doc.md.html) and (<*> = doc.md)
     Pattern can be a simple relative path - it would be relative to input file dir
     (or relative to CWD if cwd=True).
-      - ./doc2.md     + dir/doc.md      -> dir/doc2.md
-      - doc2.md       + dir/doc.md      -> dir/doc2.md
-      - doc2.md       + dir/doc.md      -> doc2.md (cwd=True)
-      - C:/*.md       + dir/doc.md      -> C:/doc.md.md
-      - ./*.md        + dir/doc.md      -> dir/doc.md.md
-      - *.md          + dir/doc.md      -> dir/doc.md.md
-      - ./out/<*>.pdf + dir/doc.md      -> dir/out/doc.pdf
-      - out/*.md      + dir/doc.md      -> dir/out/doc.md.md
-      - ../*.md       + dir2/dir/doc.md -> dir2/doc.md.md
-      - ../out/*.md   + dir2/dir/doc.md -> dir2/out/doc.md.md
-      - ../doc2.md    + dir2/dir/doc.md -> dir2/doc2.md
-      - ../*.md       + dir2/dir/doc.md -> ../doc.md.md (cwd=True)
+      - ./doc2.md      + dir/doc.md      -> dir/doc2.md
+      - doc2.md        + dir/doc.md      -> dir/doc2.md
+      - doc2.md        + dir/doc.md      -> doc2.md (cwd=True)
+      - C:/*.*.md      + dir/doc.md      -> C:/doc.md.md
+      - ./*.pdf        + dir/doc.md      -> dir/doc.pdf
+      - *.*.md         + dir/doc.md      -> dir/doc.md.md
+      - ./out/*.pdf    + dir/doc.md      -> dir/out/doc.pdf
+      - out/*.*.md     + dir/doc.md      -> dir/out/doc.md.md
+      - ../*.*.md      + dir2/dir/doc.md -> dir2/doc.md.md
+      - ../out/*.md.md + dir2/dir/doc.md -> dir2/out/doc.md.md
+      - ../doc2.md     + dir2/dir/doc.md -> dir2/doc2.md
+      - ../*.*.md      + dir2/dir/doc.md -> ../doc.md.md (cwd=True)
     """
     target_name = p.basename(target_file)
-    file_path = pattern.replace('<*>', p.splitext(target_name)[0]).replace('*', target_name)
+    file_path = pattern.replace('*.*', target_name).replace('*', p.splitext(target_name)[0])
     if not p.isabs(file_path) and not cwd:
         file_path = p.normpath(p.join(p.dirname(target_file), file_path))
     return p.abspath(file_path)
@@ -348,12 +348,16 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
 
     # run pandoctools:
     bash = win_bash if (os.name == 'nt') else 'bash'
+    bash_cwd = None if cwd else p.dirname(input_file)
     if (os.name == 'nt') and (win_bash is None):
         for key, val in env_vars.items():
             os.environ[key] = val
-        proc = subprocess.run(profile_path, stdout=PIPE, input=doc, encoding='utf-8')
+        proc = subprocess.run(profile_path, stdout=PIPE, input=doc,
+                              encoding='utf-8', cwd=bash_cwd)
     else:
-        proc = subprocess.run([bash, profile_path], stdout=PIPE, input=doc, encoding='utf-8', env={**dict(os.environ), **env_vars})
+        proc = subprocess.run([bash, profile_path], stdout=PIPE, input=doc,
+                               encoding='utf-8', cwd=bash_cwd,
+                               env={**dict(os.environ), **env_vars})
 
     if proc.stderr is not None:
         # error_stream = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
