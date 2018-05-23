@@ -95,7 +95,7 @@ class PostInstallCommand(install):
                 default_sect['win_bash'] = git_bash
             else:
                 default_sect['win_bash'] = ''
-            print(default_sect['win_bash'], file=open(r'D:\log.txt', 'w'))
+            print(p.expandvars(git_bash), file=open(r'D:\log.txt', 'w'))
 
         config['Default'] = default_sect
         with io.StringIO() as f:
