@@ -84,7 +84,7 @@ def read_ini(ini: str,  dir1: str,  dir2: str):
     else:
         ini_path = ini
 
-    config = configparser.ConfigParser()
+    config = configparser.ConfigParser(interpolation=None)
     config.read(ini_path)
     return config
 
@@ -252,6 +252,7 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
             # here we implicitly use the fact that
             # ini from core sh folder (_pandoctools_core)
             # has path to git's bash
+            global pandoctools_core
             pandoctools_core = _pandoctools_core
         else:
             win_bash = None
@@ -295,7 +296,7 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
         env_vars['r'] = r'call "{}\path-run.bat"'.format(scripts_bin)
         env_vars['set_resolve'] = r'call "{}\pandoctools-resolve.bat"'.format(scripts_bin)
         env_vars['resolve'] = ''
-        env_vars['setUTF8'] = 'chcp 65001 > NUL'
+        env_vars['setUTF8'] = 'chcp 65001 > NUL && set "PYTHONIOENCODING=utf-8"'
     else:
         env_vars['import'] = p.join(scripts_bin, 'pandoctools-import')
         env_vars['source'] = p.join(scripts_bin, 'path-source')
@@ -323,12 +324,14 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
         vars_ = [var for var in vars_ if env_vars[var] != '']
         args = [win_bash, p.join(scripts_bin, 'pandoctools-cygpath')] + [env_vars[var] for var in vars_]
 
-        cygpath = run(args, stdout=PIPE, input=doc, encoding='utf8')
+        cygpath = run(args, stdout=PIPE, input=doc, encoding='utf-8')
         cygpaths = re.split(r'\r?\n', cygpath.stdout.strip())
         for i, var in enumerate(vars_):
             env_vars[var] = cygpaths[i]
 
         if cygpath.stderr is not None:
+            # error_stream = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
+            # error_stream.write(cygpath.stderr)
             print(cygpath.stderr, file=sys.stderr)
 
     # write env vars to 'os.environ':
@@ -339,9 +342,10 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
     if debug:
         vars_ = ['scripts', 'import', 'source', 'pyprepPATH', 'r', 'set_resolve', 'resolve',
                  'env_path', '_core_config', '_user_config', 'input_file', 'output_file',
-                 'root_env', 'in_ext', 'in_ext_full', 'out_ext', 'out_ext_full', 'PYTHONIOENCODING', 'LANG']
+                 'root_env', 'in_ext', 'in_ext_full', 'out_ext', 'out_ext_full', 'PYTHONIOENCODING', 'LANG', 'setUTF8']
         for var in vars_:
             print('{}: {}'.format(var, os.environ.get(var)))
+        print('win_bash: ', win_bash)
         print(os.environ["PATH"])
 
     # run pandoctools:
@@ -352,15 +356,18 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
             args = [win_bash, profile_path]
     else:
         args = ['bash', profile_path]
-    proc = run(args, stdout=PIPE, input=doc, encoding='utf8')
-    
+    proc = run(args, stdout=PIPE, input=doc, encoding='utf-8')
+
     if proc.stderr is not None:
+        # error_stream = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
+        # error_stream.write(proc.stderr)
         print(proc.stderr, file=sys.stderr)
 
     # forward output:
+    stdout = proc.stdout if (proc.stdout is not None) else ""
     if not std:
-        if (proc.stdout is not None) and (proc.stdout != ""):
-            print(proc.stdout, file=open(output_file, 'w', encoding="utf-8"))
+        if stdout != "":
+            print(stdout, file=open(output_file, 'w', encoding="utf-8"))
             print('Pandoctools wrote profile\'s stdout to:')
         else:
             print('Profile\'s stdout is empty. Presumably profile wrote to:')
@@ -371,4 +378,4 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
         input("Press Enter to continue...")
     else:
         output_stream = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
-        output_stream.write(proc.stdout)  # sys.stdout.write(proc.stdout)
+        output_stream.write(stdout)  # sys.stdout.write(proc.stdout)
