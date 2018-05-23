@@ -160,7 +160,9 @@ if os.name == 'nt':
     env_path = p.dirname(sys.executable)
     scripts_bin = p.join(env_path, "Scripts")
     pandoctools_bin = p.join(scripts_bin, "pandoctools.exe")
-    pandoctools_core = p.join(p.dirname(p.abspath(__file__)), 'bat')
+    _pdt = p.dirname(p.abspath(__file__))
+    pandoctools_core = p.join(_pdt, 'bat')
+    _pandoctools_core = p.join(_pdt, 'sh')
 else:
     pandoctools_user_data = "$HOME/.pandoc/pandoctools"
     pandoctools_user = p.join(os.environ["HOME"], ".pandoc", "pandoctools")
@@ -260,7 +262,6 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
 
     # Find python root env and bash on Windows:
     if os.name == 'nt':
-        _pandoctools_core = p.normpath(p.join(pandoctools_core, '..', 'sh'))
         config = read_ini('Defaults', pandoctools_user, _pandoctools_core)
         win_bash = p.expandvars(config.get('Default', 'win_bash', fallback=''))
         if p.exists(win_bash) and not p.isdir(win_bash):
