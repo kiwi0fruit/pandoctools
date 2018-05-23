@@ -170,6 +170,7 @@ else:
     env_path = p.join(scripts_bin, "..")
     pandoctools_bin = p.join(scripts_bin, "pandoctools")
     pandoctools_core = p.join(p.dirname(p.abspath(__file__)), 'sh')
+    _pandoctools_core = pandoctools_core
 
 
 help_str = """Pandoctools is a Pandoc profile manager that stores CLI filter pipelines.
