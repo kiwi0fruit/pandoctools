@@ -161,7 +161,7 @@ if os.name == 'nt':
     env_path = p.dirname(sys.executable)
     scripts_bin = p.join(env_path, "Scripts")
     pandoctools_bin = p.join(scripts_bin, "pandoctools.exe")
-    _pdt = p.dirname(p.abspath(__file__))
+    _pdt = p.normpath(p.join(p.dirname(p.abspath(__file__)), '..'))
     pandoctools_core = p.join(_pdt, 'bat')
     _pandoctools_core = p.join(_pdt, 'sh')
 else:
@@ -170,7 +170,7 @@ else:
     scripts_bin = p.dirname(sys.executable)
     env_path = p.join(scripts_bin, "..")
     pandoctools_bin = p.join(scripts_bin, "pandoctools")
-    pandoctools_core = p.join(p.dirname(p.abspath(__file__)), 'sh')
+    pandoctools_core = p.normpath(p.join(p.dirname(p.abspath(__file__)), '..', 'sh'))
     _pandoctools_core = pandoctools_core
 
 
