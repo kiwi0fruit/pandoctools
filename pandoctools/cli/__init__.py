@@ -1,1 +1,1 @@
-from .cli import pandoctools_user, pandoctools_bin  # noqa
+from .cli import pandoctools_user, pandoctools_bin, pandoctools  # noqa
