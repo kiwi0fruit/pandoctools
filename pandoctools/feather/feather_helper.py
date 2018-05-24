@@ -26,7 +26,11 @@ _cwd = ""
 
 
 def name(name_: str):
-    global _cwd
+    global _cwd, _dir
+    if _dir == "":
+        _dir = p.join('.', 'feather')
+        if not p.isdir(_dir):
+            os.makedirs(_dir)
     _cwd = p.join(_dir, name_)
     if not p.isdir(_cwd):
         os.makedirs(_cwd)
@@ -38,9 +42,6 @@ def setdir(dir_: str):
     if not p.isdir(_dir):
         os.makedirs(_dir)
     name('default')
-
-
-setdir(p.join('.', 'feather'))
 
 
 class FeatherHelperError(Exception):
