@@ -152,7 +152,7 @@ setup(
 
     include_package_data=True,
     package_data={
-        'pandoctools': ['matplotlib/*.py', 'feather/*.py', 'bat/*', 'sh/*'],
+        'pandoctools': ['bat/*', 'sh/*'],
     },
     entry_points={
         'console_scripts': [
