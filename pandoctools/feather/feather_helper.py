@@ -2,7 +2,7 @@
 Usage example in Atom/Hydrogen:
 
 # %%
-from pandoctools.feather import FeatherHelper as fh
+from pandoctools import feather as fh  # Feather Helper
 # fh.setdir(r"%USERPROFILE%\feather\mydoc")
 
 # %%
