@@ -7,15 +7,17 @@ Glueing part of pandoctools is a profile manager of text processing pipelines. I
 # Notable parts of Pandoctools
 
 * [**Pandoctools CLI app**](https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/cli): TODO
-* [**Knitty**](https://github.com/kiwi0fruit/knitty) (dependence): Knitty is another CLI for Stitch/Knotr: reproducible report generation tool via Jupyter, Pandoc and Markdown. Insert python code (or other Jupyter kernel code) to the Markdown document and have code's results in the output document.
+* [**Knitty**](https://github.com/kiwi0fruit/knitty) (dependence): Knitty is another CLI for Stitch/Knotr: reproducible report generation tool via Jupyter, Pandoc and Markdown. Insert python code (or other Jupyter kernel code) to the Markdown document and have code's results in the output document. Can even export to Jupyter ipynb notebooks.
 * [**SugarTeX**](https://github.com/kiwi0fruit/sugartex) (dependence): SugarTeX is a more readable LaTeX language extension and transcompiler to LaTeX.
 * [**panfl**](https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/panfl) allows [Panflute](https://github.com/sergiocorreia/panflute) to be run as a command line script so it can be used in Pandoctools shell scripts.
 * [**cat-md**](https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/cat_md) is a simple CLI tool that concatenates input files with stdin input (joins them with double new lines) and prints to stdout.
 * [**Feather Helper**](https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/feather) helps to cache 2D numpy arrays and pandas dataframes.
 * [**Matplotlib Helper**](https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/matplotlib) is my custom helper to tune Matplotlib experience.
 
-Pandoctools is a tools for converting markdown document. But we also need tools for writing markdown and deploying python/Hupyter code blocks. And the best one for it is  
-[**Atom editor with plugins**](atom.md). It helps easily type Unicode, interactively run python/Jupyter code blocks and instantly see results.
+Pandoctools is a tools for converting markdown document. But we also need tools for writing markdown and deploying python/Hupyter code blocks.  
+And the best one for it is:
+
+* [**Atom editor with plugins**](atom.md). It helps easily type Unicode, interactively run highlighed python/Jupyter code blocks and instantly see results (+ completions from the running Jupyter kernel), can convert basic pandoc markdown to html with live preview, 
 
 
 # Contents
@@ -27,7 +29,7 @@ Pandoctools is a tools for converting markdown document. But we also need tools 
 
 # Install
 
-### Windows:
+## Windows:
 
 * Install [Miniconda](https://conda.io/miniconda.html)
 * Install [Git together with Bash](https://git-scm.com/downloads)  
@@ -47,7 +49,7 @@ pip install git+https://github.com/kiwi0fruit/pandoctools.git
   `<miniconda-path>/envs/myenv/Library/bin`.
 
 
-### Unix:
+## Unix:
 
 * Install [Miniconda](https://conda.io/miniconda.html)
 * Install Git. On Ubuntu/Debian: `sudo apt-get install git` Fedora/CentOS and macOS also have such one-liners.

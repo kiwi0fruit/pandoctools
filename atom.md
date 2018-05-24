@@ -5,10 +5,10 @@
 * [Atom editor with full Unicode support](#atom-editor-with-full-unicode-support)
 * [SugarTeX Completions for Atom](#sugartex-completions-for-atom)
 * [Hydrogen](#hydrogen)
+* [Markdown Preview Plus](#markdown-preview-plus)
 * [Recommended Atom options](#recommended-atom-options)
 * [Enable Atom spell checking](#enable-atom-spell-checking)
 * [Useful Atom packages](#useful-atom-packages)
-* [Pandoctools Atom Package](#pandoctools-atom-package)
 
 
 # Atom editor with full Unicode support
@@ -29,6 +29,15 @@ In the [SugarTeX documentation](https://github.com/kiwi0fruit/sugartex/blob/mast
 
 
 # Hydrogen
+
+#### TODO
+
+
+# Markdown Preview Plus
+
+Then you can convert markdown to markdown via Pandoctools, then convert to html / preview via Markdown Preview Plus.
+
+See [recommended serif font-family fallback chain](https://github.com/kiwi0fruit/open-fonts#best-serif) for **Markdown Preview Plus**.
 
 #### TODO
 
@@ -76,24 +85,3 @@ To remove/add characters from list edit `%USERPROFILE%\.atom\packages\highlight-
   '\u02C2',  # modifier letter left arrowhead
   '\u02C3',  # modifier letter right arrowhead
 ```
-
-
-# Pandoctools Atom Package
-
-Pandoctools Atom Package is still under development. As a temporal solution you can use [patched Markdown Preview Plus](https://github.com/kiwi0fruit/markdown-preview-plus) Atom Package. You can install it via:
-```sh
-apm install kiwi0fruit/markdown-preview-plus
-```
-(it's incompatible with original [markdown-preview-plus](https://atom.io/packages/markdown-preview-plus) and with default **markdown-preview** packages).
-
-Then you can convert markdown to markdown via Pandoctools, then convert to html / preview via Markdown Preview Plus.
-
-See [this](https://github.com/atom-community/markdown-preview-plus/issues/255) for details about possible bugs when using it with **pandoc-crossref** (that's the default setting).
-
-Recommended serif font-family fallback chain for **Markdown Preview Plus**:
-
-`'Times New Roman', 'STIX Two Text', 'Segoe UI Symbol', 'Noto Sans Symbols', 'Noto Sans Symbols2', 'Noto Serif CJK TC ExtraLight', serif`
-
-[STIX Two](http://www.stixfonts.org/) and [Noto](https://www.google.com/get/noto/) fonts can be freely downloaded.
-
-#### TODO
