@@ -55,7 +55,7 @@ def push(*data_frames):
             dot_ext = '.df'
         else:
             raise ValueError('Unsupported input type. Only numpy.ndarray and pandas.DataFrame are supported.')
-        if len(df.as_matrix().shape) > 2:
+        if len(df.values.shape) > 2:
             raise ValueError('3D and multidimensional arrays are not supported.')
         feather.write_dataframe(df, p.join(_cwd, str(i) + dot_ext))
         pass
@@ -74,7 +74,7 @@ def pull():
         dot_ext = p.splitext(file_name)[1]
         df = feather.read_dataframe(p.join(_cwd, file_name))
         if dot_ext == '.np':
-            ret.append(df.as_matrix())
+            ret.append(df.values)
         elif dot_ext == '.df':
             ret.append(df)
         else:
