@@ -8,8 +8,7 @@ Notable parts of Pandoctools.
 
 1. [**Knitty**](https://github.com/kiwi0fruit/knitty) (dependence): Knitty is another CLI for Stitch/Knotr: reproducible report generation tool via Jupyter, Pandoc and Markdown. Insert python code (or other Jupyter kernel code) to the Markdown document and have code's results in the output document.
 2. [**SugarTeX**](https://github.com/kiwi0fruit/sugartex) (dependence): SugarTeX is a more readable LaTeX language extension and transcompiler to LaTeX.
-3. [**panfl**](https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/panfl) allows [Panflute](https://github.com/sergiocorreia/panflute) to be run as a command line script so it can be used in Pandoctools shell scripts. It actually actomatically searches for provided Panflute filters in provided directories (python's `sys.path` is the default place to search). See `panfl --help` for options details and format info.  Usage:
-    * `panfl -t makdown filter1 filter2 filter3`
+3. [**panfl**](https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/panfl) allows [Panflute](https://github.com/sergiocorreia/panflute) to be run as a command line script so it can be used in Pandoctools shell scripts.
 4. [**cat-md**](https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/cat_md) is a simple CLI tool that concatenates input files with stdin input (joins them with double new lines) and prints to stdout.
 5. [**Feather Helper**](https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/feather) helps to cache 2D numpy arrays and pandas dataframes.
 6. [**Matplotlib Helper**](https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/matplotlib) is my custom helper to tune Matplotlib experience.
