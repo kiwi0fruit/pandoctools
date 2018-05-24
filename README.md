@@ -24,7 +24,6 @@ pip install git+https://github.com/kiwi0fruit/pandoctools.git
 
 * Install [pandoc-crossref v0.3.0.1](https://github.com/lierdakil/pandoc-crossref/releases/tag/v0.3.0.1) to  
   `<miniconda-path>/envs/myenv/Library/bin`.
-* Remember, that opening right-click context menu while holding Shift gives "Copy as Path" menu option. Feel free to use it as Pandoctools strips double quotes.
 
 
 ### Unix:
@@ -43,5 +42,3 @@ pip install git+https://github.com/kiwi0fruit/pandoctools.git
 ```
 * Install [pandoc-crossref v0.3.0.1](https://github.com/lierdakil/pandoc-crossref/releases/tag/v0.3.0.1) to  
   `<miniconda-path>/envs/myenv/bin`.
-* If on Ubuntu 18.04 do not forget add pandoctools to 'Open With Other Application' simply by selecting from the list ('View All Applications').
-* If there be problems with the desktop shortcut then delete the shortcut and install pandoctools again.

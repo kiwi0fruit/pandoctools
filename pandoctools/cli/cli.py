@@ -125,15 +125,20 @@ def user_file_query():
     no = {'no', 'n'}
 
     def message(filepath):
-        print("Type 'y'/'yes'+Enter to use clipboard paste as input file (Pandoctools strips double quotes):")
+        print("Type 'y'/'yes'+Enter to use this clipboard paste as input file:\n" +
+              "--------")
         try:
             print(filepath)
         except UnicodeEncodeError:
             print(filepath.encode('utf-8'))
-        print("\nType 'n'/'no'+Enter to exit.\nType '/'+Enter to type input file manually.\nType ENTER to reload clipboard paste.")
+        print("--------\n" +
+              "Type 'n'/'no'+Enter to exit.\n" +
+              "Type '/'+Enter to type input file manually.\n" +
+              "Type Enter to reload clipboard paste.\n\n" +
+              "Hint: on Windows Shift+right-click gives new 'Copy as Path' context menu option (pandoctools strips \"\").")
         return filepath
 
-    message2 = "Please type input file path (or type '/' to exit):"
+    message2 = "Please type input file path (or type '/'+Enter to exit):"
 
     file_path = message(pyperclip.paste())
     while True:
@@ -221,7 +226,9 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
         doc = input_stream.read()  # doc = sys.stdin.read()
     else:
         if input_file is None:
-            print('Input file was not provided.\n')
+            print("Input file was not provided.\n" + 
+                  "The recommended way to run Pandoctools in to add it to 'Open With' " +
+                  "applications for desired file format.\n")
             input_file = user_file_query()
             if input_file is None:
                 return None
