@@ -1,100 +1,105 @@
-from IPython.display import display, Markdown  # Image, SVG
-# from subprocess import call
-# import os
+"""
+Helper for Matplotlib with Atom/Hydrogen/Knitty.
+Can export plots with unicode to SVG or PNG.
+See default fonts in default keyword arguments.
+
+MJ fonts:
+    https://github.com/kiwi0fruit/open-fonts/tree/master/Fonts/MJ/oft
+
+Hints:
+
+1. Delete `fontList.cache`, `fontList.py3k.cache` or `fontList.json`
+    from `%USERPROFILE%\.matplotlib` folder after installing new font.
+2. If fonts become bold without a reason (`"font.family"` affected text) try:
+    * clearing font cache (see above) and `tex.cache` folder
+    * clearing cache several times (for some reason this can help)
+    * updating matplotlib: `conda install -c anaconda matplotlib`
+    * deleting matplotlib and installing again
+3. Install [Computer Modern Unicode](https://sourceforge.net/projects/cm-unicode/)
+    for bold-italic unicode support: `"mathtext.sf": "CMU Serif:bold:italic"`
+    sans-serif command `\mathsf{}` is reassigned because sans-serif font is
+    rarely used in serif docs.
+"""
+from IPython.display import display, Markdown
 import io
 import base64
+# noinspection PyUnresolvedReferences
 from sugartex import sugartex, stex
 import matplotlib as mpl
 from matplotlib import font_manager
+# import subprocess.call
+# import os
 
 
-GR = (1 + 5**0.5) / 2
+GR = (1 + 5 ** 0.5) / 2
+mpl_params = {}
 sugartex.mpl_hack()
 sugartex.ready()
-options = {}
+_knitty = False
+_font_dir = None
+# _poppler = ""
 
 
-class MPLHelper:
-    """
-    Helper for Matplotlib with Atom/Hydrogen/Knitty.
-    Can export plots with unicode to SVG or PNG.
-    See default keyword arguments for default fonts.
-    https://github.com/kiwi0fruit/open-fonts/tree/master/Fonts/MJ/oft
-    
-    Hints:
+def finalize():
+    mpl.use('Qt5Agg')
+    mpl.rc('text.latex', unicode=True)
+    if _font_dir is not None:
+        font_dirs = [_font_dir, ]
+        font_files = font_manager.findSystemFonts(fontpaths=font_dirs)
+        font_list = font_manager.createFontList(font_files)
+        font_manager.fontManager.ttflist.extend(font_list)
+    mpl.rcParams.update(mpl_params)
 
-    1. Delete `fontList.cache`, `fontList.py3k.cache` or `fontList.json`
-        from `%USERPROFILE%\.matplotlib` folder after installing new font.
-    2. If fonts become bold without a reason (`"font.family"` affected text) try:
-        * clearing font cache (see above) and `tex.cache` folder
-        * clearing cache several times (for some reason this can help)
-        * updating matplotlib: `conda install -c anaconda matplotlib`
-        * deleting matplotlib and installing again
-    3. Install [Computer Modern Unicode](https://sourceforge.net/projects/cm-unicode/)
-        for bold-italic unicode support: `"mathtext.sf": "CMU Serif:bold:italic"`
-        sans-serif command `\mathsf{}` is reassigned because sans-serif font is
-        rarely used in serif docs.
-    
-    TODO: change single font to list of fallback fonts.
-    """
-    def __init__(self,
-                 knitty: bool=False,
-                 delay: bool=False,
-                 # poppler: str=r'C:\Program Files (x86)\poppler\bin',
-                 # http://blog.alivate.com.au/poppler-windows/
-                 font_dir: str=None,
-                 font_size: float=12.8,  # 12.8pt ~ 17px
-                 font_family: str="serif",
-                 font_serif: str="Libertinus Serif",
-                 font_sans: str="Segoe UI",
-                 font_cursive: str="Comic Sans MS",
-                 font_mono: str="Consolas",
-                 fontm_calig: str="MJ_Cal",
-                 fontm_regular: str="MJ",
-                 fontm_italic: str="MJ_Mat",
-                 fontm_bold: str="MJ",
-                 fontm_itbold: str="MJ_Mat"  # "CMU Serif"
-                 ):
-        self.options = options
-        options['knitty'] = knitty
-        # options['poppler'] = poppler
-        options['font_dir'] = font_dir
-        self.mpl_params = {
-            "text.usetex": False,
-            "font.size": font_size,
-            "font.family": font_family,
-            "font.serif": font_serif,
-            "font.sans-serif": font_sans,
-            "font.cursive": font_cursive,
-            "font.monospace": font_mono,
-            "mathtext.fontset": "custom",  # cm
-            "mathtext.cal": fontm_calig,
-            "mathtext.tt": font_mono,
-            "mathtext.rm": fontm_regular,
-            "mathtext.it": fontm_italic + ":italic",
-            "mathtext.bf": fontm_bold + ":bold",
-            "mathtext.sf": fontm_itbold + ":bold:italic"
-        }
-        if not delay:
-            self.tune()
 
-    def tune(self):
-        mpl.use('Qt5Agg')
-        mpl.rc('text.latex', unicode=True)
-        if options['font_dir'] is not None:
-            font_dirs = [options['font_dir'], ]
-            font_files = font_manager.findSystemFonts(fontpaths=font_dirs)
-            font_list = font_manager.createFontList(font_files)
-            font_manager.fontManager.ttflist.extend(font_list)
-        mpl.rcParams.update(self.mpl_params)
+def ready(knitty: bool = False,
+          finalize_: bool = True,
+          # poppler: str=r'C:\Program Files (x86)\poppler\bin',
+          #   http://blog.alivate.com.au/poppler-windows/
+          font_dir: str = None,
+          font_size: float = 12.8,  # 12.8pt ~ 17px
+          font_family: str = "serif",
+          font_serif: str = "Libertinus Serif",
+          font_sans: str = "Segoe UI",
+          font_cursive: str = "Comic Sans MS",
+          font_mono: str = "Consolas",
+          fontm_calig: str = "MJ_Cal",
+          fontm_regular: str = "MJ",
+          fontm_italic: str = "MJ_Mat",
+          fontm_bold: str = "MJ",
+          fontm_itbold: str = "MJ_Mat"):
+
+    global _knitty, _font_dir, mpl_params  # , _poppler
+    _knitty = knitty
+    _font_dir = font_dir
+    # _poppler = poppler
+
+    mpl_params.update({
+        "text.usetex": False,
+        "font.size": font_size,
+        "font.family": font_family,
+        "font.serif": font_serif,
+        "font.sans-serif": font_sans,
+        "font.cursive": font_cursive,
+        "font.monospace": font_mono,
+        "mathtext.fontset": "custom",  # cm
+        "mathtext.cal": fontm_calig,
+        "mathtext.tt": font_mono,
+        "mathtext.rm": fontm_regular,
+        "mathtext.it": fontm_italic + ":italic",
+        "mathtext.bf": fontm_bold + ":bold",
+        "mathtext.sf": fontm_itbold + ":bold:italic"
+    })
+    # TODO: change single font to list of fallback fonts
+    if finalize_:
+        finalize()
 
 
 def img(plot,
-        name: str=None,
-        ext: str='svg',
-        dpi: int=300,
-        hide: bool=False,
-        qt: bool=False,
+        name: str = None,
+        ext: str = 'svg',
+        dpi: int = 300,
+        hide: bool = False,
+        qt: bool = False,
         ) -> str:
     """
     :param: plot: matplotlib.pyplot
@@ -121,8 +126,8 @@ def img(plot,
             image = f.read()
 
     # plot.savefig(name + ".pdf")  # was useful with external LaTeX renderer instead of matplotlib's
-    # call([os.path.join(options['poppler'], "pdftocairo"), "-svg", name + ".pdf", name + ".svg"],
-    #      cwd=os.getcwd())
+    # subprocess.call([os.path.join(_poppler, "pdftocairo"), "-svg", name + ".pdf", name + ".svg"],
+    #                  cwd=os.getcwd())
 
     base64_url = 'data:image/{};base64,' + base64.b64encode(image).decode("utf-8")
     if ext.upper() == 'PNG':
@@ -137,11 +142,11 @@ def img(plot,
     else:
         url = name + "." + ext
 
-    if options['knitty']:
+    if _knitty:
         hide = True
 
     if not hide:  # noinspection PyTypeChecker
-        display(Markdown('![]({})'.format(base64_url)))  # display(SVG(name_svg)) was buggy in Hydrogen.
+        display(Markdown('![]({})'.format(base64_url)))
     if (not hide) and qt:
         plot.show()
-    return url if options['knitty'] else ""
+    return url if _knitty else ""
