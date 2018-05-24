@@ -54,7 +54,9 @@ def push(*data_frames):
         elif isinstance(df, pd.DataFrame):
             dot_ext = '.df'
         else:
-            raise FeatherHelperError('Unsupported input type')
+            raise ValueError('Unsupported input type. Only numpy.ndarray and pandas.DataFrame are supported.')
+        if len(df.as_matrix().shape) > 2:
+            raise ValueError('3D and multidimensional arrays are not supported.')
         feather.write_dataframe(df, p.join(_cwd, str(i) + dot_ext))
         pass
     _cwd = p.join(_dir, 'default')
