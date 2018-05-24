@@ -81,5 +81,7 @@ def pull():
             ret.append(df)
         else:
             raise FeatherHelperError('Wrong file ext in {}'.format(_cwd))
+    if not ret:
+        raise FeatherHelperError()
     _cwd = p.join(_dir, 'default')
-    return ret
+    return ret if (len(ret) > 1) else ret[0]
