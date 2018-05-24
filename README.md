@@ -8,12 +8,11 @@ Notable parts of Pandoctools.
 
 1. [**Knitty**](https://github.com/kiwi0fruit/knitty): Knitty is another CLI for Stitch/Knotr: reproducible report generation tool via Jupyter, Pandoc and Markdown. Insert python code (or other Jupyter kernel code) to the Markdown document and have code's results in the output document.
 2. [**SugarTeX**](https://github.com/kiwi0fruit/sugartex): SugarTeX is a more readable LaTeX language extension and transcompiler to LaTeX.
-3. **panfl** allows [Panflute](https://github.com/sergiocorreia/panflute) to be run as a command line script so it can be used in Pandoctools shell scripts. It actually actomatically searches for provided Panflute filters in provided directories (python's `sys.path` is the default place to search).
-    * Usage: `panfl -t makdown filter1 filter2 filter3`
-    * See `panfl --help` for options details and format info
-4. **cat-md** is a simple CLI tool that concatenates input files, joins them with double new lines and prints to stdout. In can have `stdin` as one of inputs - reads from stdin.
+3. [**panfl**](https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/panfl) allows [Panflute](https://github.com/sergiocorreia/panflute) to be run as a command line script so it can be used in Pandoctools shell scripts. It actually actomatically searches for provided Panflute filters in provided directories (python's `sys.path` is the default place to search). See `panfl --help` for options details and format info.  Usage:
+    * `anfl -t makdown filter1 filter2 filter3`
+4. [**cat-md**](https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/cat_md) is a simple CLI tool that concatenates input files, joins them with double new lines and prints to stdout. In can have `stdin` as one of inputs - reads from stdin.
     * Usage: `cat-md stdin meta.yaml`
-5. **Feather Helper** helps to cache 2D numpy arrays and pandas dataframes. Usage example in Atom/Hydrogen:
+5. [**Feather Helper**](https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/feather) helps to cache 2D numpy arrays and pandas dataframes. Usage example in Atom/Hydrogen:
 
 ```py
 from pandoctools import feather as fh
@@ -28,7 +27,7 @@ except:
     fh.push(A, B, C)
 ```
 
-#### 4. TODO
+6. [**Matplotlib Helper**](https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/matplotlib) is my custom helper to tune Matplotlib. I tuned fonts, made some tweaks to use it with SugarTeX, some tweaks to use mpl interactive plots in Atom/Hydrogen. Added export to raw markdown so it nicely works with [`results=pandoc` from Knitty](https://github.com/kiwi0fruit/knitty/blob/master/knitty.md#22-results-pandoc-chunk-option).
 
 
 # Contents
