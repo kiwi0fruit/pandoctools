@@ -1,18 +1,8 @@
 # Contents
 
-* [Using Pandoc](#using-pandoc)
 * [Install useful Atom packages](#install-useful-atom-packages)
 * [Install R](#install-r)
 * [Install LyX](#install-lyx)
-
-
-# Using Pandoc
-
-Here is useful [Pandoc manual](http://pandoc.org/MANUAL.html) and some notable options:
-
-* `--toc`, `--table-of-contents` – terminal commands that generate table of contents.
-
-See [Install Pandoc](install.md#1-install-pandoc).
 
 
 # Install useful Atom packages
@@ -53,9 +43,7 @@ In order to get R language support you may need to install [**language-r**](http
 1. Installed [**R**](https://cran.r-project.org/). For example to `%APPDATA%\R`,
 2. Installed [**RStudio**](https://www.rstudio.com/products/rstudio/download/),
 3. Run `setx -m R_HOME %APPDATA%\R` in command prompt with administrator privileges (I don't remember if it's necessary).
-4. Installed [**IRkernel**](https://irkernel.github.io/installation/) from RStudio that was started in the context of `the_env` python environment. To do so run `activate the_env` and then start `"%PROGRAMFILES%\RStudio\bin\rstudio.exe"` (I assume it's x64 version of RStudio on x64 Windows so `%PROGRAMFILES%` instead of `%PROGRAMFILES(x86)%`).
-
-**Note** that if you call `conda` or `activate` from a shell script you need to add `call activate the_env` on Windows / `source activate the_env` on Linux/Unix.
+4. Installed [**IRkernel**](https://irkernel.github.io/installation/) from RStudio that was started in the context of `the_env` python environment. To do so run `call activate the_env` (`. activate the_env` on Unix) and then start `"%PROGRAMFILES%\RStudio\bin\rstudio.exe"` (I assume it's x64 version of RStudio on x64 Windows so `%PROGRAMFILES%` instead of `%PROGRAMFILES(x86)%`).
 
 **Tip**: If on Windows and you didn't add python to `PATH` during installation you can modify `PATH` in console. For example:
 ```bat
