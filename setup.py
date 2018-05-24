@@ -147,7 +147,7 @@ setup(
 
     install_requires=['click', 'pyyaml', 'panflute', 'knitty', 'pandas',
                       'sugartex', 'matplotlib', 'feather-format',  # 'shortcut',
-                      'notebook', 'jupyter', 'pyperclip', 'numpy', 
+                      'notebook', 'jupyter', 'pyperclip',
                       'winshell;platform_system=="Windows"',
                       'pywin32;platform_system=="Windows"'],
 
