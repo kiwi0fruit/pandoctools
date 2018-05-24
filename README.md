@@ -6,8 +6,8 @@ Glueing part of pandoctools is a profile manager of text processing pipelines. I
 
 Notable parts of Pandoctools.
 
-1. [Knitty](https://github.com/kiwi0fruit/pandoctools/blob/master/knitty.md): Knitty is another CLI for Stitch/Knotr: reproducible report generation tool via Jupyter, Pandoc and Markdown. Insert python code (or other Jupyter kernel code) to the Markdown document and have code's results in the output document.
-2. [SugarTeX](https://github.com/kiwi0fruit/pandoctools/blob/master/sugartex.md): SugarTeX is a more readable LaTeX language extension and transcompiler to LaTeX.
+1. [Knitty](https://github.com/kiwi0fruit/knitty): Knitty is another CLI for Stitch/Knotr: reproducible report generation tool via Jupyter, Pandoc and Markdown. Insert python code (or other Jupyter kernel code) to the Markdown document and have code's results in the output document.
+2. [SugarTeX](https://github.com/kiwi0fruit/sugartex): SugarTeX is a more readable LaTeX language extension and transcompiler to LaTeX.
 
 #### 3. TODO
 
