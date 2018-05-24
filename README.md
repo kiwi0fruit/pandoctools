@@ -49,7 +49,7 @@ conda install "conda>=4.5.4"
 conda create -n myenv python=3
 call activale myenv
 
-conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.0,<2.1" matplotlib feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future shutilwhich cython pyperclip pywin32 pandas
+conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.0,<2.1" matplotlib feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future shutilwhich cython pywin32 pandas
 pip install panflute knitty sugartex winshell
 pip install git+https://github.com/kiwi0fruit/pandoctools.git
 ```
@@ -68,7 +68,7 @@ conda install "conda>=4.5.4"
 conda create -n myenv python=3
 source activate myenv
 
-conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.0,<2.1" matplotlib feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future shutilwhich cython pyperclip pyqt pandas
+conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.0,<2.1" matplotlib feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future shutilwhich cython pandas
 pip install panflute knitty sugartex
 pip install git+https://github.com/kiwi0fruit/pandoctools.git
 ```
