@@ -4,7 +4,14 @@ Pandoc profile manager (stores any CLI filter pipelines), CLI wrapper for Panflu
 
 **Pandoctools is not finished yet!**
 
-## Install
+
+# Contents
+
+* [Install](#install)
+* [Useful tips](#useful-tips)
+
+
+# Install
 
 ### Windows:
 
@@ -42,3 +49,8 @@ pip install git+https://github.com/kiwi0fruit/pandoctools.git
 ```
 * Install [pandoc-crossref v0.3.0.1](https://github.com/lierdakil/pandoc-crossref/releases/tag/v0.3.0.1) to  
   `<miniconda-path>/envs/myenv/bin`.
+
+
+# Useful tips
+
+* [Tips](tips.md)
