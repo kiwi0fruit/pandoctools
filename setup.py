@@ -145,9 +145,9 @@ setup(
     # keywords='sample setuptools development',
     packages=find_packages(exclude=['docs', 'tests']),
 
-    install_requires=['click', 'pyyaml', 'panflute', 'knitty',
+    install_requires=['click', 'pyyaml', 'panflute', 'knitty', 'pandas',
                       'sugartex', 'matplotlib', 'feather-format',  # 'shortcut',
-                      'notebook', 'jupyter', 'pyperclip', 
+                      'notebook', 'jupyter', 'pyperclip', 'numpy', 
                       'winshell;platform_system=="Windows"',
                       'pywin32;platform_system=="Windows"'],
 
