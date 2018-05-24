@@ -97,6 +97,8 @@ class PostInstallCommand(install):
                 pandoctools_core = _pandoctools_core
             else:
                 default_sect['win_bash'] = ''
+        elif p.exists(p.expandvars(default_sect['win_bash'])):
+                pandoctools_core = _pandoctools_core
 
         config['Default'] = default_sect
         with io.StringIO() as f:
