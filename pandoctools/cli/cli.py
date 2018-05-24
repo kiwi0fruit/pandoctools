@@ -117,7 +117,7 @@ def user_yes_no_query(message: str):
         else:
             print("Please respond with 'y' or 'n'.")
 
-
+"""
 def user_file_query():
     import pyperclip
     
@@ -158,7 +158,7 @@ def user_file_query():
                     return file_path.strip('"').strip()
         else:
             file_path = message(pyperclip.paste())
-
+"""
 
 if os.name == 'nt':
     pandoctools_user_data = r"%APPDATA%\pandoc\pandoctools"
@@ -227,11 +227,12 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
     else:
         if input_file is None:
             print("Input file was not provided.\n" + 
-                  "The recommended way to run Pandoctools in to add it to 'Open With' " +
-                  "applications for desired file format.\n")
-            input_file = user_file_query()
-            if input_file is None:
-                return None
+                  "Recommended ways to run Pandoctools are to:\n" +
+                  "- add it to 'Open With' applications for desired file format,\n" +
+                  "- drag and drop file over pandoctools shortcut,\n" +
+                  "- run it from console, see: pandoctools --help")
+            input("Press Enter to exit.")
+            return None
         with open(p.expandvars(input_file), 'r', encoding="utf-8") as file:
             doc = file.read()
     input_file = "untitled" if (input_file is None) else input_file
