@@ -15,7 +15,7 @@ Notable parts of Pandoctools.
 # Contents
 
 * [Install](#install)
-* [Useful tips](#useful-tips)
+* [Useful tips](tips.md)
 
 
 # Install
@@ -60,4 +60,4 @@ pip install git+https://github.com/kiwi0fruit/pandoctools.git
 
 # Useful tips
 
-* [Tips](tips.md)
+[Useful tips](tips.md)
