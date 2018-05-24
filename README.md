@@ -10,7 +10,7 @@ Notable parts of Pandoctools.
 2. [**SugarTeX**](https://github.com/kiwi0fruit/sugartex): SugarTeX is a more readable LaTeX language extension and transcompiler to LaTeX.
 3. [**panfl**](https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/panfl) allows [Panflute](https://github.com/sergiocorreia/panflute) to be run as a command line script so it can be used in Pandoctools shell scripts. It actually actomatically searches for provided Panflute filters in provided directories (python's `sys.path` is the default place to search). See `panfl --help` for options details and format info.  Usage:
     * `anfl -t makdown filter1 filter2 filter3`
-4. [**cat-md**](https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/cat_md) is a simple CLI tool that concatenates input files, joins them with double new lines and prints to stdout. In can have `stdin` as one of inputs - reads from stdin.
+4. [**cat-md**](https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/cat_md) is a simple CLI tool that concatenates input files, joins them with double new lines and prints to stdout. In can have `stdin` as one of it's inputs - reads from stdin.
     * Usage: `cat-md stdin meta.yaml`
 5. [**Feather Helper**](https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/feather) helps to cache 2D numpy arrays and pandas dataframes. Usage example in Atom/Hydrogen:
 
