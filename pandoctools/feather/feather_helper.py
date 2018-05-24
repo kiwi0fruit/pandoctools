@@ -25,12 +25,19 @@ _dir = ""
 _cwd = ""
 
 
+def name(name_: str):
+    global _cwd
+    _cwd = p.join(_dir, name_)
+    if not p.isdir(_cwd):
+        os.makedirs(_cwd)
+
+
 def setdir(dir_: str):
     global _dir, _cwd
     _dir = p.abspath(p.expandvars(dir_))
     if not p.isdir(_dir):
         os.makedirs(_dir)
-    _cwd = p.join(_dir, 'default')
+    name('default')
 
 
 setdir(p.join('.', 'feather'))
@@ -38,11 +45,6 @@ setdir(p.join('.', 'feather'))
 
 class FeatherHelperError(Exception):
     pass
-
-
-def name(name_: str):
-    global _cwd
-    _cwd = p.join(_dir, name_)
 
 
 def push(*data_frames):
