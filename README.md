@@ -9,8 +9,8 @@ Notable parts of Pandoctools.
 1. [**Knitty**](https://github.com/kiwi0fruit/knitty): Knitty is another CLI for Stitch/Knotr: reproducible report generation tool via Jupyter, Pandoc and Markdown. Insert python code (or other Jupyter kernel code) to the Markdown document and have code's results in the output document.
 2. [**SugarTeX**](https://github.com/kiwi0fruit/sugartex): SugarTeX is a more readable LaTeX language extension and transcompiler to LaTeX.
 3. **Panfl** allows [Panflute](https://github.com/sergiocorreia/panflute) to be run as a command line script so it can be used in Pandoctools shell scripts. It actually actomatically searches for provided Panflute filters in provided directories (python's `sys.path` is the default place to search).
-  * Use it like `panfl -t makdown filter1 filter2 filter3`
-  * See `panfl --help` for options details and format info
+    * Use it like `panfl -t makdown filter1 filter2 filter3`
+    * See `panfl --help` for options details and format info
 4. ...
 
 #### 4. TODO
