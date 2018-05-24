@@ -1,4 +1,8 @@
-# Install
+# Recommended install
+
+* Atom
+* [SugarTeX Completions for Atom](https://github.com/kiwi0fruit/sugartex-completions)
+* [Other useful Atom packages](https://github.com/kiwi0fruit/pandoctools/blob/master/tips.md#install-useful-atom-packages)
 
 # Contents
 
