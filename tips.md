@@ -1,42 +1,10 @@
 # Contents
 
-* [Install useful Atom packages](#install-useful-atom-packages)
 * [Install R](#install-r)
 * [Install LyX](#install-lyx)
 
 
-# Install useful Atom packages
-
-Optionally install some useful Atom packages:
-
-* [**MagicPython**](https://atom.io/packages/MagicPython) (by *MagicStack*): syntax highlighter for cutting edge Python 3 (default Atom highlighter does not support Python 3).
-* [**document-outline**](https://atom.io/packages/document-outline) (by *mangecoeur*): navigation sidebar with table of contents of markdown document when editing.
-* [**character-table**](https://atom.io/packages/character-table) (by *klorenz*): insert any Unicode character via name search,
-* [**markdown-table-editor**](https://atom.io/packages/markdown-table-editor) (by *susisu*): automatic markdown table editor/formatter,
-* [**file-watcher**](https://atom.io/packages/file-watcher) (by *lwblackledge*): helps simultaneously open and edit files in two editors. To use it with PyCharm you should disable PyCharm "safe write" (**Settings → Appearance and Behavior → System Settings → Synchronization → Use "safe write"**).
-* [**git-time-machine**](https://atom.io/packages/git-time-machine) (by *littlebee*): see difference with any older Git commit (if you add markdown document to the Git repository). This can be useful for authoring edits (7zip the whole repository and send).
-* [**language-batchfile**](https://atom.io/packages/language-batchfile) (by *mmims*): syntax highlighting and snippets for batch files.
-* [**highlight-bad-chars**](https://atom.io/packages/highlight-bad-chars) (by *ohanhi*): highlights some Unicode characters that can be confused with standard ANSI (like no-break spaces). The package is buggy so you may need to periodically edit the file to make the package work. Optionally edit theme file: `%USERPROFILE%\.atom\packages\highlight-bad-chars\styles\highlight-bad-chars.atom-text-editor.less`. Fast way to open it is **Setting** → **Open Config Folder**. Then replace:
-
-```less
-.highlight-bad-chars .region {
-  background-color: fadeout(@text-color-error, 85%);
-  border: 1px solid @syntax-background-color;  // @text-color-error;
-}
-```
-
-To remove/add characters from list edit `%USERPROFILE%\.atom\packages\highlight-bad-chars\lib\highlight-bad-chars.coffee`. For example to remove *diaeresis* and *broken bar* from the list and add `<>` doppelgangers edit this way:
-
-```coffe
-  #'\xA6', # Split vertical bar
-  ...
-  #'\xA8', # modifier - under curve
-  '\u02C2',  # modifier letter left arrowhead
-  '\u02C3',  # modifier letter right arrowhead
-```
-
-
-## Install R
+# Install R
 
 In order to get R language support you may need to install [**language-r**](https://atom.io/packages/language-r) package for Atom. And actually install R. This is what I did:
 
