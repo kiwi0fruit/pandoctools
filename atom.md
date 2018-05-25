@@ -53,6 +53,12 @@ Then you can convert markdown to markdown via Pandoctools, then convert to html 
 
 See [recommended serif font-family fallback chain](https://github.com/kiwi0fruit/open-fonts#best-serif) for **Markdown Preview Plus**.
 
+Install:
+
+```sh
+apm install kiwi0fruit/markdown-preview-plus --production
+```
+
 #### TODO
 
 
