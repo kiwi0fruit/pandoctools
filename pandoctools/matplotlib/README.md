@@ -5,7 +5,7 @@ Matplotlib Helper is my custom helper to tune Matplotlib experience. I tuned fon
 ```py
 from pandoctools import matplotlib as mh
 mh.ready()
-# mh.ready(KNITTY, font_size=14, finalize_=False)
+# mh.ready(KNITTY, font_size=14, finalize=False)
 # ... do additional tuning
 # mh.finalize()
 
