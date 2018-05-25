@@ -379,16 +379,20 @@ def pandoctools(input_file, profile, out, stdio, stdin, cwd, debug):
     # forward output:
     stdout = proc.stdout if (proc.stdout is not None) else ""
     if not stdio or stdin:
+        def _print(s):
+            if not stdin:
+                print(s)
         if stdout != "":
             print(stdout, file=open(output_file, 'w', encoding="utf-8"))
-            print('Pandoctools wrote profile\'s stdout to:')
+            _print('Pandoctools wrote profile\'s stdout to:')
         else:
-            print('Profile\'s stdout is empty. Presumably profile wrote to:')
+            _print('Profile\'s stdout is empty. Presumably profile wrote to:')
         try:
-            print('    ' + output_file)
+            _print('    ' + output_file)
         except UnicodeEncodeError:
-            print(('    ' + output_file).encode('utf-8'))
-        input("Press Enter to continue...")
+            _print(('    ' + output_file).encode('utf-8'))
+        if not stdin:
+            input("Press Enter to continue...")
     else:
         output_stream = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
         output_stream.write(stdout)  # sys.stdout.write(proc.stdout)
