@@ -51,8 +51,12 @@ def finalize():
     mpl.rcParams.update(mpl_params)
 
 
+_finalize = finalize
+
+
+# noinspection PyShadowingNames
 def ready(knitty: bool = False,
-          finalize_: bool = True,
+          finalize: bool = True,
           # poppler: str=r'C:\Program Files (x86)\poppler\bin',
           #   http://blog.alivate.com.au/poppler-windows/
           font_dir: str = None,
@@ -90,8 +94,8 @@ def ready(knitty: bool = False,
         "mathtext.sf": fontm_itbold + ":bold:italic"
     })
     # TODO: change single font to list of fallback fonts
-    if finalize_:
-        finalize()
+    if finalize:
+        _finalize()
 
 
 def img(plot,
