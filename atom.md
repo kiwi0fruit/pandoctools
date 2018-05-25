@@ -21,7 +21,7 @@ Highly recommended to install [Atom editor](https://atom.io/) as it's the best f
 [SugarTeX Completions for Atom](https://github.com/kiwi0fruit/sugartex-completions) is an Atom package for easy typing SugarTeX and lots of other Unicode characters. At the moment it can be installed via:
 
 ```sh
-apm install kiwi0fruit/sugartex-completions
+apm install kiwi0fruit/sugartex-completions --production
 ```
 (it's incompatible with [latex-completions](https://atom.io/packages/latex-completions) package).
 
