@@ -37,7 +37,7 @@ def expand_pattern(pattern: str,  target_file: str,  cwd: bool) -> str:
     return p.abspath(file_path)
 
 
-def get_extensions(file_path: str) -> str:
+def get_extensions(file_path: str):
     """Get extension and full extension like 'tag.gz'."""
     ext = p.splitext(file_path)[1][1:]
     match = re.search(r'[.]([.0-9a-zA-Z]*)$', p.basename(file_path))
@@ -90,6 +90,7 @@ def read_ini(ini: str,  dir1: str,  dir2: str):
     return config
 
 
+# noinspection PyShadowingNames
 def guess_root_env(env_path: str):
     """
     Checks if python root env in default location:
@@ -117,6 +118,7 @@ def user_yes_no_query(message: str):
         else:
             print("Please respond with 'y' or 'n'.")
 
+
 """
 def user_file_query():
     import pyperclip
@@ -135,7 +137,8 @@ def user_file_query():
               "Type 'n'/'no'+Enter to exit.\n" +
               "Type '/'+Enter to type input file manually.\n" +
               "Type Enter to reload clipboard paste.\n\n" +
-              "Hint: on Windows Shift+right-click gives new 'Copy as Path' context menu option (pandoctools strips \"\").")
+              "Hint: on Windows Shift+right-click gives new 'Copy as Path' context menu option
+                     (pandoctools strips \"\").")
         return filepath
 
     message2 = "Please type input file path (or type '/'+Enter to exit):"
@@ -203,14 +206,16 @@ May be (?) for security concerns the user data folder should be set to write-all
               help='Output file path like "./out/doc.html" ' +
                    'or input file path transformation like "*.html", "./out/*.r.ipynb" (default is "*.html").\n' +
                    'In --std mode only full extension is considered: "doc.r.ipynb" > "r.ipynb".')
-@click.option('--std', is_flag=True, default=False,
+@click.option('--stdio', is_flag=True, default=False,
               help="Read document form stdin and write to stdout in a silent mode. " +
-                   "INPUT_FILE only gives a file path. If --std was set but stdout = '' " +
+                   "INPUT_FILE only gives a file path. If --stdio was set but stdout = '' " +
                    "then the profile always writes output file to disc with these options.")
-@click.option('--debug', is_flag=True, default=False, help="Debug mode.")
+@click.option('--stdin', is_flag=True, default=False,
+              help="Same as --std but always writes output file to disc (suppresses --std).")
 @click.option('--cwd', is_flag=True, default=False,
-              help="Use real CWD in profile and out options (instead of input file dir).")
-def pandoctools(input_file, profile, out, std, debug, cwd):
+              help="Use real CWD everywhere (instead of input file dir).")
+@click.option('--debug', is_flag=True, default=False, help="Debug mode.")
+def pandoctools(input_file, profile, out, stdio, stdin, cwd, debug):
     """
     Sets environment variables:
     * scripts, import, source
@@ -221,7 +226,7 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
     * out_ext, out_ext_full
     """
     # Read document and mod input_file if needed:
-    if std:
+    if stdio or stdin:
         input_stream = io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8')
         doc = input_stream.read()  # doc = sys.stdin.read()
     else:
@@ -278,7 +283,7 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
     profile_path = get_profile_path(profile, pandoctools_user, pandoctools_core, input_file, cwd)
 
     # Run profile confirmation:
-    if not std:
+    if not stdio and not stdin:
         with open(profile_path, 'r') as file:
             print('\nProfile code:\n\n{}\n'.format(file.read()))
         message = ("Type 'y/yes' to continue with:\n" +
@@ -290,8 +295,6 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
                                                                        out, output_file)
         if not user_yes_no_query(message):
             return None
-
-
 
     # Set environment vars to dict:
     env_vars = {}
@@ -309,7 +312,8 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
     else:
         env_vars['import'] = p.join(scripts_bin, 'pandoctools-import')
         env_vars['source'] = p.join(scripts_bin, 'path-source')
-        env_vars['pyprepPATH'] = p.join(scripts_bin, 'path-pyprep') if (os.name != 'nt') else p.join(scripts_bin, 'path-pyprep-win')
+        env_vars['pyprepPATH'] = p.join(scripts_bin, 'path-pyprep') if (os.name != 'nt') else p.join(scripts_bin,
+                                                                                                     'path-pyprep-win')
         env_vars['r'] = ''
         env_vars['set_resolve'] = ''
         env_vars['resolve'] = p.join(scripts_bin, 'pandoctools-resolve')
@@ -328,8 +332,8 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
     # convert win-paths to unix-paths if needed:
     if (os.name == 'nt') and (win_bash is not None):
         vars_ = ["import", "source", "scripts", "resolve", "pyprepPATH",
-                "env_path", "input_file", "output_file", "_core_config",
-                "_user_config", "root_env"]
+                 "env_path", "input_file", "output_file", "_core_config",
+                 "_user_config", "root_env"]
         vars_ = [var for var in vars_ if env_vars[var] != '']
         args = [win_bash, p.join(scripts_bin, 'pandoctools-cygpath')] + [env_vars[var] for var in vars_]
 
@@ -364,8 +368,8 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
                               encoding='utf-8', cwd=bash_cwd)
     else:
         proc = subprocess.run([bash, profile_path], stdout=PIPE, input=doc,
-                               encoding='utf-8', cwd=bash_cwd,
-                               env={**dict(os.environ), **env_vars})
+                              encoding='utf-8', cwd=bash_cwd,
+                              env={**dict(os.environ), **env_vars})
 
     if proc.stderr is not None:
         # error_stream = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
@@ -374,7 +378,7 @@ def pandoctools(input_file, profile, out, std, debug, cwd):
 
     # forward output:
     stdout = proc.stdout if (proc.stdout is not None) else ""
-    if not std:
+    if not stdio or stdin:
         if stdout != "":
             print(stdout, file=open(output_file, 'w', encoding="utf-8"))
             print('Pandoctools wrote profile\'s stdout to:')
