@@ -39,7 +39,7 @@ Install:
 apm install kiwi0fruit/atom-unix-filter --production
 ```
 
-Specify command option to `<...>\pandoctools.exe --stdin` (`<...>/pandoctools --stdin` on Unix) where `<...>` is a path to pandoctools executable that can be learned from desktop shortcut.
+Specify command option to `<...>\pandoctools.exe --stdin "%FILE%"` (`<...>/pandoctools --stdin "$FILE"` on Unix) where `<...>` is a path to pandoctools executable that can be learned from desktop shortcut.
 
 
 # Hydrogen
