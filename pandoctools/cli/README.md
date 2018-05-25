@@ -5,14 +5,14 @@ Pandoctools CLI application is a profile manager of text processing pipelines. I
 ```yaml
 ---
 pandoctools:
-  profile: Kiwi
+  profile: Default
   out: "*.md.md"
 ...
 ```
 
-Pandoctools automatically searches for [`Profile-Kiwi.sh`](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Profile-Kiwi.sh) (or [`Profile-Kiwi.bat`](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/bat/Profile-Kiwi.bat) - depends on OS and installed Git) in special folders: first - folder in user data, then - [folder in python module](https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/sh) (actually all files defined in shell scripts are searched in that order, so you can replace a file in a chain simply by putting it to the folder in user data).
+Pandoctools automatically searches for [`Profile-Default.sh`](../sh/Profile-Default.sh) (or [`Profile-Default.bat`](../bat/Profile-Default.bat) - depends on OS and installed Git) in special folders: first - folder in user data, then - [folder in python module](../sh) (actually all files defined in shell scripts are searched in that order, so you can replace a file in a chain simply by putting it to the folder in user data).
 
-Shortcuts to these folders are created on the desktop. Profile can import other shell scripts from that special folders and read files from there. For example [this one](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Args-Default.sh) defines CLI options depending on output format, and [that one](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Pipe-Default.sh) defines text convertion pipeline with CLI text filters. Moreover, profiles can use environment variables defined in Pandoctools CLI application - this shortens shell scripts and makes them more readable.
+Shortcuts to these folders are created on the desktop. Profile can import other shell scripts from that special folders and read files from there. For example [this one](../sh/Args-Default.sh) defines CLI options depending on output format, and [that one](../sh/Pipe-Default.sh) defines text convertion pipeline with CLI text filters. Moreover, profiles can use environment variables defined in Pandoctools CLI application - this shortens shell scripts and makes them more readable.
 
 
 ## Environment variables predefined in Pandoctools CLI application:
