@@ -4,6 +4,7 @@
 
 * [Atom editor with full Unicode support](#atom-editor-with-full-unicode-support)
 * [SugarTeX Completions for Atom](#sugartex-completions-for-atom)
+* [Unix Filter](#unix-filter)
 * [Hydrogen](#hydrogen)
 * [Markdown Preview Plus](#markdown-preview-plus)
 * [Recommended Atom options](#recommended-atom-options)
@@ -26,6 +27,19 @@ apm install kiwi0fruit/sugartex-completions --production
 (it's incompatible with [latex-completions](https://atom.io/packages/latex-completions) package).
 
 In the [SugarTeX documentation](https://github.com/kiwi0fruit/sugartex/blob/master/sugartex.md) appropriate shortcuts for SugarTeX Completions for Atom are given.
+
+
+# Unix Filter
+
+[**Patched** version of Unix Filter](https://github.com/kiwi0fruit/atom-unix-filter). It runs Pandoctools right from Atom and writes output file (though profile confirmation prompt is not shown). It's convenient to use it with [file-watcher](#useful-atom-packages).
+
+Install:
+
+```sh
+apm install kiwi0fruit/atom-unix-filter --production
+```
+
+Specify command option to `<...>\pandoctools.exe --stdin` (`<...>/pandoctools --stdin` on Unix) where `<...>` is a path to pandoctools executable that can be learned from desktop shortcut.
 
 
 # Hydrogen
