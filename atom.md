@@ -49,7 +49,7 @@ And in my opinion the best tool for this is Markdown Peview Plus Atom package.
 
 ### Installation
 
-* First install patched version of MPP (I hope my patch would be pulled soon so it would be possible to install it the standard way):
+* First install [patched version of MPP](https://github.com/kiwi0fruit/markdown-preview-plus) (I hope my patch would be pulled soon so it would be possible to install it the standard way):
 
 ```sh
 apm install kiwi0fruit/markdown-preview-plus --production
