@@ -33,8 +33,8 @@ And the best one for it is:
 
 Here are [examples](examples) that demonstrate converting documents:
 
-* first is markdown `.md` with Jupyter python code blocks, SugarTeX math and cross-references to `ipynb`.
-* second is `.py` with Atom/Hydrogen code cells, Knitty markdown incerts (again with SugarTeX math and cross-references) to `.ipynb`.  
+* *from* markdown `.md` with Jupyter python code blocks, SugarTeX math and cross-references *to* `ipynb`.
+* *from* `.py` with Atom/Hydrogen code cells, Knitty markdown incerts (again with SugarTeX math and cross-references) *to* `.ipynb`.  
 
 
 # Install
