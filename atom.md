@@ -49,14 +49,9 @@ And in my opinion the best tool for this is Markdown Peview Plus Atom package.
 
 ### Installation
 
-* First install [patched version of MPP](https://github.com/kiwi0fruit/markdown-preview-plus) (I hope my patch would be pulled soon so it would be possible to install it the standard way):
-
-```sh
-apm install kiwi0fruit/markdown-preview-plus --production
-```
-
+* First install [Markdown Peview Plus](https://atom.io/packages/markdown-preview-plus)
 * Then patch MPP by copying files from [MPP patch](https://github.com/kiwi0fruit/misc/tree/master/mpp) to `%USERPROFILE%\.atom\packages\markdown-preview-plus\styles` folder (`%USERPROFILE%\.atom` is `~/.atom` on Linux). The patch overrides default css theme. It has `custom-fonts.less` file - tune it to change fonts of the theme.
-* Make sure MPP settings are set to:
+* Make sure MPP settings are set to (TeX extensions and undefined Family are in PR so they are still not available in current MPP version):
     * **Settings** (root) > **Renderer backend** is pandoc
     * **Math Options** > **Enable Math Rendering By Default** is checked
     * **Math Options** > **Math Renderer** is `HTML-CSS`
