@@ -4,6 +4,15 @@ Pandoctools is a combination of tools that help write reproducible markdown repo
 
 Glueing part of pandoctools is a profile manager of text processing pipelines. It stores short shell (bash or batch) scripts that define chain operations over text. They are mostly Pandoc filters but any CLI text filter is OK.
 
+
+# Contents
+
+* [Notable parts of Pandoctools](#notable-parts-of-pandoctools)
+* [Examples markdown to ipynb](#examples-markdown-to-ipynb)
+* [Install](#install)
+* [Useful tips](#tips.md)
+
+
 # Notable parts of Pandoctools
 
 * [**Pandoc**](https://pandoc.org/), [**Jupyter**](http://jupyter.org/), [**pandoc-crossref**](https://github.com/lierdakil/pandoc-crossref) (dependence) - classical tools.
@@ -20,11 +29,12 @@ And the best one for it is:
 * Must have plugins: [**SugarTeX Completions**](atom.md#sugartex-completions), [**Unix Filter**](atom.md#unix-filter), [**Hydrogen**](atom.md#hydrogen), [**Markdown Preview Plus**](atom.md#markdown-preview-plus)
 
 
-# Contents
+# Examples markdown to ipynb
 
-* [Notable parts of Pandoctools](#notable-parts-of-pandoctools)
-* [Install](#install)
-* [Useful tips](tips.md)
+Here are [examples](examples) that demonstrate converting documents:
+
+* first is markdown `.md` with Jupyter python code blocks, SugarTeX math and cross-references to `ipynb`.
+* second is `.py` with Atom/Hydrogen code cells, Knitty markdown incerts (again with SugarTeX math and cross-references) to `.ipynb`.  
 
 
 # Install
