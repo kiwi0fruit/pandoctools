@@ -31,13 +31,7 @@ In the [SugarTeX documentation](https://github.com/kiwi0fruit/sugartex/blob/mast
 
 # Unix Filter
 
-[**Patched** version of Unix Filter](https://github.com/kiwi0fruit/atom-unix-filter). It runs Pandoctools right from Atom and writes output file (though profile confirmation prompt is not shown). It's convenient to use it with [file-watcher](#useful-atom-packages).
-
-Install:
-
-```sh
-apm install kiwi0fruit/atom-unix-filter --production
-```
+Install [Unix Filter](https://atom.io/packages/unix-filter) (>=0.0.2). It runs Pandoctools right from Atom and writes output file (though profile confirmation prompt is not shown). It's convenient to use it with [file-watcher](#useful-atom-packages).
 
 Specify command option to `<...>\pandoctools.exe --stdin "%FILE%"` (`<...>/pandoctools --stdin "$FILE"` on Unix) where `<...>` is a path to pandoctools executable that can be learned from desktop shortcut. And **uncheck** "Replace Text" option.
 
