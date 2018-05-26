@@ -4,7 +4,7 @@
 
 * [Atom editor with full Unicode support](#atom-editor-with-full-unicode-support)
 * [Atom packages for right Pandoctools experience](#atom-packages-for-right-pandoctools-experience)
-    * [SugarTeX Completions for Atom](#sugartex-completions-for-atom)
+    * [SugarTeX Completions](#sugartex-completions)
     * [Unix Filter](#unix-filter)
     * [Hydrogen](#hydrogen)
     * [Markdown Preview Plus](#markdown-preview-plus)
@@ -20,9 +20,9 @@ Highly recommended to install [Atom editor](https://atom.io/) as it's the best f
 
 # Atom packages for right Pandoctools experience 
 
-## SugarTeX Completions for Atom
+## SugarTeX Completions
 
-Install [SugarTeX Completions for Atom](https://atom.io/packages/sugartex-completions) for easy typing SugarTeX and lots of other Unicode characters. (it's incompatible with [latex-completions](https://atom.io/packages/latex-completions) package).
+Install [SugarTeX Completions](https://atom.io/packages/sugartex-completions) package for easy typing SugarTeX and lots of other Unicode characters. (it's incompatible with [latex-completions](https://atom.io/packages/latex-completions) package).
 
 In the [SugarTeX documentation](https://github.com/kiwi0fruit/sugartex/blob/master/sugartex.md) appropriate shortcuts for SugarTeX Completions for Atom are given.
 
