@@ -3,10 +3,11 @@
 # Contents
 
 * [Atom editor with full Unicode support](#atom-editor-with-full-unicode-support)
-* [SugarTeX Completions for Atom](#sugartex-completions-for-atom)
-* [Unix Filter](#unix-filter)
-* [Hydrogen](#hydrogen)
-* [Markdown Preview Plus](#markdown-preview-plus)
+* [Atom packages for right Pandoctools experience](#atom-packages-for-right-pandoctools-experience)
+    * [SugarTeX Completions for Atom](#sugartex-completions-for-atom)
+    * [Unix Filter](#unix-filter)
+    * [Hydrogen](#hydrogen)
+    * [Markdown Preview Plus](#markdown-preview-plus)
 * [Recommended Atom options](#recommended-atom-options)
 * [Enable Atom spell checking](#enable-atom-spell-checking)
 * [Useful Atom packages](#useful-atom-packages)
@@ -17,26 +18,28 @@
 Highly recommended to install [Atom editor](https://atom.io/) as it's the best for markdown. Atom is perfect for Unicode rich texts. But you need to install some fonts and set font fall-back chains first. See [this instruction](https://github.com/kiwi0fruit/sugartex#atom-editor-with-full-unicode-support) in SugarTeX docs.
 
 
-# SugarTeX Completions for Atom
+# Atom packages for right Pandoctools experience 
 
-Install [SugarTeX Completions for Atom](https://atom.io/packages/sugartex-completions) that is an Atom package for easy typing SugarTeX and lots of other Unicode characters. (it's incompatible with [latex-completions](https://atom.io/packages/latex-completions) package).
+## SugarTeX Completions for Atom
+
+Install [SugarTeX Completions for Atom](https://atom.io/packages/sugartex-completions) for easy typing SugarTeX and lots of other Unicode characters. (it's incompatible with [latex-completions](https://atom.io/packages/latex-completions) package).
 
 In the [SugarTeX documentation](https://github.com/kiwi0fruit/sugartex/blob/master/sugartex.md) appropriate shortcuts for SugarTeX Completions for Atom are given.
 
 
-# Unix Filter
+## Unix Filter
 
 Install [Unix Filter](https://atom.io/packages/unix-filter) (>=0.0.2). It nicely runs on Windows too. It runs Pandoctools right from Atom and writes output file (though profile confirmation prompt is not shown). It's convenient to use it with [file-watcher](#useful-atom-packages).
 
 Specify command option to `<...>\pandoctools.exe --stdin "%FILE%"` (`<...>/pandoctools --stdin "$FILE"` on Unix) where `<...>` is a path to pandoctools executable that can be learned from desktop shortcut. And **uncheck** "Replace Text" option.
 
 
-# Hydrogen
+## Hydrogen
 
 #### TODO
 
 
-# Markdown Preview Plus
+## Markdown Preview Plus
 
 Then you can convert markdown to markdown via Pandoctools, then convert to html / preview via Markdown Preview Plus.
 
