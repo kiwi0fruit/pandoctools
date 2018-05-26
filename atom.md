@@ -59,6 +59,8 @@ Install:
 apm install kiwi0fruit/markdown-preview-plus --production
 ```
 
+Specify path to pandoc in MPP settings by taking path to pandoctools executable (from desktop shortcut for example) and replacing `pandoctools` with `pandoc`.
+
 #### TODO
 
 
