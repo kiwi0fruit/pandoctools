@@ -26,12 +26,12 @@ Pandoctools is a tool for converting markdown document. But we also need tools f
 And the best one for it is:
 
 * [**Atom editor with plugins**](https://github.com/kiwi0fruit/pandoctools/blob/master/atom.md). It helps easily type Unicode, interactively run highlighed python/Jupyter code blocks and instantly see results (+ completions from the running Jupyter kernel), can convert basic pandoc markdown to html with live preview.
-* Must have plugins: [**SugarTeX Completions**](https://github.com/kiwi0fruit/pandoctools/blob/master/atom.md#sugartex-completions), [**Unix Filter**](atom.md#unix-filter), [**Hydrogen**](https://github.com/kiwi0fruit/pandoctools/blob/master/atom.md#hydrogen), [**Markdown Preview Plus**](https://github.com/kiwi0fruit/pandoctools/blob/master/atom.md#markdown-preview-plus)
+* Must have plugins: [**SugarTeX Completions**](https://github.com/kiwi0fruit/pandoctools/blob/master/atom.md#sugartex-completions), [**Unix Filter**](https://github.com/kiwi0fruit/pandoctools/blob/master/atom.md#unix-filter), [**Hydrogen**](https://github.com/kiwi0fruit/pandoctools/blob/master/atom.md#hydrogen), [**Markdown Preview Plus**](https://github.com/kiwi0fruit/pandoctools/blob/master/atom.md#markdown-preview-plus)
 
 
 # Examples markdown to ipynb
 
-Here are [examples](https://github.com/kiwi0fruit/pandoctools/blob/master/examples) that demonstrate converting documents:
+Here are [**examples**](https://github.com/kiwi0fruit/pandoctools/blob/master/examples) that demonstrate converting documents:
 
 * from markdown `.md` with Jupyter python code blocks, SugarTeX math and cross-references to `ipynb` notebook.
 * from Hydrogen/python notebook `.py` with Atom/Hydrogen code cells, Knitty markdown incerts (again with SugarTeX math and cross-references) to `.ipynb` notebook.

@@ -60,7 +60,8 @@ Notable parts of Pandoctools
    to html with live preview.
 -  Must have plugins: `**SugarTeX
    Completions** <https://github.com/kiwi0fruit/pandoctools/blob/master/atom.md#sugartex-completions>`__,
-   `**Unix Filter** <atom.md#unix-filter>`__,
+   `**Unix
+   Filter** <https://github.com/kiwi0fruit/pandoctools/blob/master/atom.md#unix-filter>`__,
    `**Hydrogen** <https://github.com/kiwi0fruit/pandoctools/blob/master/atom.md#hydrogen>`__,
    `**Markdown Preview
    Plus** <https://github.com/kiwi0fruit/pandoctools/blob/master/atom.md#markdown-preview-plus>`__
@@ -69,7 +70,7 @@ Examples markdown to ipynb
 ==========================
 
 Here are
-`examples <https://github.com/kiwi0fruit/pandoctools/blob/master/examples>`__
+`**examples** <https://github.com/kiwi0fruit/pandoctools/blob/master/examples>`__
 that demonstrate converting documents:
 
 -  from markdown ``.md`` with Jupyter python code blocks, SugarTeX math
