@@ -10,6 +10,8 @@ pandoctools:
 ...
 ```
 
+You can use special shortcuts in `profile` and `out` definitions: `*` mean input file basename without extension, `*.*` mean input file with extension.
+
 Pandoctools automatically searches for [`Profile-Default.sh`](../sh/Profile-Default.sh) (or [`Profile-Default.bat`](../bat/Profile-Default.bat) - depends on OS and installed Git) in special folders: first - folder in user data, then - [folder in python module](../sh) (actually all files defined in shell scripts are searched in that order, so you can replace a file in a chain simply by putting it to the folder in user data). Folder in user data is `%APPDATA%\pandoc\pandoctools` on Windows, `~/.pandoc/pandoctools` on Unix.
 
 Shortcuts to these folders are created on the desktop. Profile can import other shell scripts from that special folders and read files from there. For example [this one](../sh/Args-Default.sh) defines CLI options depending on output format, and [that one](../sh/Pipe-Default.sh) defines text convertion pipeline with CLI text filters. Moreover, profiles can use environment variables defined in Pandoctools CLI application - this shortens shell scripts and makes them more readable.
@@ -33,19 +35,19 @@ Pandoctools comes with convenience CLI apps:
 * `import` - `call`/`source` shell script (provided without extension!) from folder in user data first, then from [folder in python module](../sh)
 * `source` - `call`/`source` shell script from PATH only (without current working dir)
 * `r` (win) - run app from PATH only (without current working dir)
-* `set_resolve` (win)
-* `resolve` (unix)
-* `pyprepPATH`
-* `env_path`
-* `input_file`
-* `output_file`
-* `in_ext`
-* `in_ext_full`
-* `out_ext`
-* `out_ext_full`
-* `_core_config`
-* `_user_config`
-* `root_env`
-* `setUTF8` (win)
-* `PYTHONIOENCODING` (win)
-* `LANG` (win)
+* `set_resolve` (win) - sets to env var which name given in first arg the resolved fullpath to file given in second arg. File is searched in the folder in user data first, then in the [folder in python module](../sh)
+* `resolve` (unix) - echoes the resolved fullpath to file given. File is searched in the folder in user data first, then in the [folder in python module](../sh)
+* `pyprepPATH` - prepends PATH with all necessary python folders. Argument is the root dir of python installation (root env or created env). Runs only if argument is not empty.
+* `env_path` - root dir of python installation where pandoctools was installed
+* `input_file` - absolute path to input file (?may be broken when no CWD was specified and python can't resolve relative path)
+* `output_file` - absolute path to output file (?may be broken when no CWD)
+* `in_ext` - input file extension
+* `in_ext_full` - input file full extension like `tar.gz` or `r.ipynb` or `md.md.html`
+* `out_ext` - output file extension
+* `out_ext_full` - output file full extension
+* `_core_config` - [sh folder in python module](../sh) or [bat folder in python module](../bat) - the one in use (depends on OS and bash on Windows set up)
+* `_user_config` - `%APPDATA%\pandoc\pandoctools` on Windows, `~/.pandoc/pandoctools` on Unix
+* `root_env` - root dir of main Miniconda/Anaconda installation (empty if wasn't specified in INI and Pandoctools cannot guess it)
+* `setUTF8` (win) - set python and console codepage to UTF-8
+* `PYTHONIOENCODING` (win) - encoding was set to UTF-8
+* `LANG` (win) - encoding was set to UTF-8
