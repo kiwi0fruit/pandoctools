@@ -54,7 +54,7 @@ apm install kiwi0fruit/markdown-preview-plus --production
 ```
 
 * Then specify path to pandoc executable in MPP settings by taking path to pandoctools executable (from desktop shortcut for example) and replacing `pandoctools` with `pandoc`.
-* Then patch MPP by copying files from [MPP patch](https://github.com/kiwi0fruit/misc/tree/master/mpp) to `%USERPROFILE%\.atom\packages\markdown-preview-plus\styles` folder (`%USERPROFILE%\.atom` is `~/.atom` on Linux). The patch overrides default css theme.
+* Then patch MPP by copying files from [MPP patch](https://github.com/kiwi0fruit/misc/tree/master/mpp) to `%USERPROFILE%\.atom\packages\markdown-preview-plus\styles` folder (`%USERPROFILE%\.atom` is `~/.atom` on Linux). The patch overrides default css theme. It has `custom-fonts.less` file - tune it to change fonts of the theme.
 
 It needs installed [serif](https://github.com/kiwi0fruit/open-fonts#best-serif) and [monospace](https://github.com/kiwi0fruit/open-fonts#best-monospace) fallback fonts chains from [Open fonts](https://github.com/kiwi0fruit/open-fonts). You can switch from serif to [sans serif](https://github.com/kiwi0fruit/open-fonts#best-sans-serif) if you want.
 
