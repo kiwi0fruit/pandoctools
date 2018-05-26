@@ -43,8 +43,6 @@ Specify command option to `<...>\pandoctools.exe --stdin "%FILE%"` (`<...>/pando
 
 Then you can convert markdown to markdown via Pandoctools, then convert to html / preview via Markdown Preview Plus.
 
-See [recommended serif font-family fallback chain](https://github.com/kiwi0fruit/open-fonts#best-serif) for **Markdown Preview Plus**.
-
 Install:
 
 ```sh
@@ -54,6 +52,8 @@ apm install kiwi0fruit/markdown-preview-plus --production
 Specify path to pandoc in MPP settings by taking path to pandoctools executable (from desktop shortcut for example) and replacing `pandoctools` with `pandoc`.
 
 Then patch MPP by [copying MPP patch](https://github.com/kiwi0fruit/misc/tree/master/mpp) to `<...>/styles` dir.
+
+It needs installed [serif](https://github.com/kiwi0fruit/open-fonts#best-serif) and [monospace](https://github.com/kiwi0fruit/open-fonts#best-monospace) fallback fonts chains from [Open fonts](https://github.com/kiwi0fruit/open-fonts). You can switch from serif to [sans serif](https://github.com/kiwi0fruit/open-fonts#best-sans-serif) if you want.
 
 #### TODO
 
