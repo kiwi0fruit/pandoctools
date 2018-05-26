@@ -4,6 +4,6 @@ prof=Kiwi
 . "$import" Args-Default
 stex="--kiwi"
 inputs=(stdin)
-writer_args=("${writer_args[@]}" --toc)
+# writer_args=("${writer_args[@]}" --toc)
 . "$import" "Pipe-$pipe"
 . "$source" deactivate

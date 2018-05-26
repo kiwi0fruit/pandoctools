@@ -4,6 +4,6 @@ prof=Default
 . "$import" Args-Default
 stex="$to"
 inputs=(stdin)
-writer_args=("${writer_args[@]}" --toc)
+# writer_args=("${writer_args[@]}" --toc)
 . "$import" "Pipe-$pipe"
 . "$source" deactivate
