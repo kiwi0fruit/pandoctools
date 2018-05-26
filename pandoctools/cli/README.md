@@ -48,6 +48,6 @@ Pandoctools comes with convenience CLI apps:
 * `_core_config` - [sh folder in python module](../sh) or [bat folder in python module](../bat) - the one in use (depends on OS and bash on Windows set up)
 * `_user_config` - `%APPDATA%\pandoc\pandoctools` on Windows, `~/.pandoc/pandoctools` on Unix
 * `root_env` - root dir of main Miniconda/Anaconda installation (empty if wasn't specified in INI and Pandoctools cannot guess it)
-* `setUTF8` (win) - set python and console codepage to UTF-8
-* `PYTHONIOENCODING` (win) - encoding was set to UTF-8
-* `LANG` (win) - encoding was set to UTF-8
+* `setUTF8` (win) - set python and console encoding to UTF-8
+* `PYTHONIOENCODING` (win) = `utf-8`
+* `LANG` (win) = `C.UTF-8`
