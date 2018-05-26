@@ -19,19 +19,14 @@ Highly recommended to install [Atom editor](https://atom.io/) as it's the best f
 
 # SugarTeX Completions for Atom
 
-[SugarTeX Completions for Atom](https://github.com/kiwi0fruit/sugartex-completions) is an Atom package for easy typing SugarTeX and lots of other Unicode characters. At the moment it can be installed via:
-
-```sh
-apm install kiwi0fruit/sugartex-completions --production
-```
-(it's incompatible with [latex-completions](https://atom.io/packages/latex-completions) package).
+Install [SugarTeX Completions for Atom](https://atom.io/packages/sugartex-completions) that is an Atom package for easy typing SugarTeX and lots of other Unicode characters. (it's incompatible with [latex-completions](https://atom.io/packages/latex-completions) package).
 
 In the [SugarTeX documentation](https://github.com/kiwi0fruit/sugartex/blob/master/sugartex.md) appropriate shortcuts for SugarTeX Completions for Atom are given.
 
 
 # Unix Filter
 
-Install [Unix Filter](https://atom.io/packages/unix-filter) (>=0.0.2). It runs Pandoctools right from Atom and writes output file (though profile confirmation prompt is not shown). It's convenient to use it with [file-watcher](#useful-atom-packages).
+Install [Unix Filter](https://atom.io/packages/unix-filter) (>=0.0.2). It nicely runs on Windows too. It runs Pandoctools right from Atom and writes output file (though profile confirmation prompt is not shown). It's convenient to use it with [file-watcher](#useful-atom-packages).
 
 Specify command option to `<...>\pandoctools.exe --stdin "%FILE%"` (`<...>/pandoctools --stdin "$FILE"` on Unix) where `<...>` is a path to pandoctools executable that can be learned from desktop shortcut. And **uncheck** "Replace Text" option.
 
