@@ -16,8 +16,8 @@ Glueing part of pandoctools is a profile manager of text processing pipelines. I
 Pandoctools is a tool for converting markdown document. But we also need tools for writing markdown and deploying python/Jupyter code blocks.  
 And the best one for it is:
 
-* [**Atom editor with plugins**](atom.md). It helps easily type Unicode, interactively run highlighed python/Jupyter code blocks and instantly see results (+ completions from the running Jupyter kernel), can convert basic pandoc markdown to html with live preview. Must have plugins:
-    * [**SugarTeX Completions**](atom.md#sugartex-completions), [**Unix Filter**](atom.md#unix-filter), [**Hydrogen**](atom.md#hydrogen), [**Markdown Preview Plus**](atom.md#markdown-preview-plus)
+* [**Atom editor with plugins**](atom.md). It helps easily type Unicode, interactively run highlighed python/Jupyter code blocks and instantly see results (+ completions from the running Jupyter kernel), can convert basic pandoc markdown to html with live preview.
+* Must have plugins: [**SugarTeX Completions**](atom.md#sugartex-completions), [**Unix Filter**](atom.md#unix-filter), [**Hydrogen**](atom.md#hydrogen), [**Markdown Preview Plus**](atom.md#markdown-preview-plus)
 
 
 # Contents
