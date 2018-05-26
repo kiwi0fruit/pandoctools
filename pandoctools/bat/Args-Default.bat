@@ -29,6 +29,9 @@ if        "%in_ext%"=="" (
 ) else if "%in_ext%"=="md" (
     set _from=markdown
 
+) else if "%in_ext%"=="md" (
+    set _from=markdown
+
 ) else (
     set "_from=%in_ext%"
 )

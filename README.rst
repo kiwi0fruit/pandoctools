@@ -73,9 +73,10 @@ Here are
 that demonstrate converting documents:
 
 -  from markdown ``.md`` with Jupyter python code blocks, SugarTeX math
-   and cross-references to ``ipynb``.
--  from ``.py`` with Atom/Hydrogen code cells, Knitty markdown incerts
-   (again with SugarTeX math and cross-references) to ``.ipynb``.
+   and cross-references to ``ipynb`` notebook.
+-  from Hydrogen/python notebook ``.py`` with Atom/Hydrogen code cells,
+   Knitty markdown incerts (again with SugarTeX math and
+   cross-references) to ``.ipynb`` notebook.
 
 Install
 =======

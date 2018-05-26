@@ -28,6 +28,9 @@ if   [ "${in_ext}" == "" ]; then
 elif [ "${in_ext}" == "md" ]; then
     _from=markdown
 
+elif [ "${in_ext}" == "py" ]; then
+    _from=markdown
+
 else
     _from="${in_ext}"
 fi
