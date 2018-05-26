@@ -36,7 +36,9 @@ Specify command option to `<...>\pandoctools.exe --stdin "%FILE%"` (`<...>/pando
 
 ## Hydrogen
 
-#### TODO
+Install [Hydrogen](https://atom.io/packages/hydrogen) (by nteract) Atom package that allows interactive python code execution. With it you can run and see instantly see results of code blocks that are later would be processed by Pandoctools/Knitty and be included to the output document.
+
+See the [short instruction](https://github.com/kiwi0fruit/knitty/blob/master/hydrogen.md) how to use and set up Hydrogen.
 
 
 ## Markdown Preview Plus
