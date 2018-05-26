@@ -12,13 +12,20 @@ pandoctools:
 
 You can use special shortcuts in `profile` and `out` definitions: `*` mean input file basename without extension, `*.*` mean input file basename with extension.
 
-Pandoctools automatically searches for [`Profile-Default.sh`](../sh/Profile-Default.sh) (or [`Profile-Default.bat`](../bat/Profile-Default.bat) - depends on OS and installed Git) in special folders: first - folder in user data, then - [folder in python module](../sh) (actually all files defined in shell scripts are searched in that order, so you can replace a file in a chain simply by putting it to the folder in user data). Folder in user data is `%APPDATA%\pandoc\pandoctools` on Windows, `~/.pandoc/pandoctools` on Unix.
+Pandoctools automatically searches for [`Profile-Default.sh`](../sh/Profile-Default.sh) (or [`Profile-Default.bat`](../bat/Profile-Default.bat) - depends on OS and installed Git) in special folders: first - folder in user data, then - [folder in python module](../sh) (actually all files defined in shell scripts and `Defaults.ini` are searched in that order, so you can replace a file in a chain simply by putting it to the folder in user data). Folder in user data is `%APPDATA%\pandoc\pandoctools` on Windows, `~/.pandoc/pandoctools` on Unix.
 
 Shortcuts to these folders are created on the desktop. Profile can import other shell scripts from that special folders and read files from there. For example [this one](../sh/Args-Default.sh) defines CLI options depending on output format, and [that one](../sh/Pipe-Default.sh) defines text convertion pipeline with CLI text filters. Moreover, profiles can use environment variables defined in Pandoctools CLI application - this shortens shell scripts and makes them more readable.
 
 I tried to make shell scripts short and transparent so you can easily copy/tune them.
 
 **WARNING**: shell scripts are stored inside user data (both in Pandoc user data and Miniconda installation). I heard some talks about security concerns on this but I'm sure it they are of any importance...
+
+
+## Defaults.ini
+
+Pandoctools stores some settings in `Defaults.ini` file. The active `Defaults.ini` is resolved the same way Pandoctools resolves profiles (first in userdata then in active sh/bat folder in python module).
+
+
 
 
 ## New CLI apps
