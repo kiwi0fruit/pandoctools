@@ -10,7 +10,7 @@ pandoctools:
 ...
 ```
 
-You can use special shortcuts in `profile` and `out` definitions: `*` mean input file basename without extension, `*.*` mean input file with extension.
+You can use special shortcuts in `profile` and `out` definitions: `*` mean input file basename without extension, `*.*` mean input file basename with extension.
 
 Pandoctools automatically searches for [`Profile-Default.sh`](../sh/Profile-Default.sh) (or [`Profile-Default.bat`](../bat/Profile-Default.bat) - depends on OS and installed Git) in special folders: first - folder in user data, then - [folder in python module](../sh) (actually all files defined in shell scripts are searched in that order, so you can replace a file in a chain simply by putting it to the folder in user data). Folder in user data is `%APPDATA%\pandoc\pandoctools` on Windows, `~/.pandoc/pandoctools` on Unix.
 
