@@ -19,22 +19,22 @@ Glueing part of pandoctools is a profile manager of text processing pipelines. I
 * [**Pandoctools CLI app**](https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/cli): profile manager of text processing pipelines. It stores short shell (bash or batch) scripts - called profiles - that define chain operations over text. They are mostly Pandoc filters but any CLI text filter is OK. Profiles can be used to convert any document of choise in the specified manner.
 * [**Knitty**](https://github.com/kiwi0fruit/knitty) (dependence): Knitty is another CLI for Stitch/Knotr: reproducible report generation tool via Jupyter, Pandoc and Markdown. Insert python code (or other Jupyter kernel code) to the Markdown document and have code's results in the output document. Can even export to Jupyter ipynb notebooks.
 * [**SugarTeX**](https://github.com/kiwi0fruit/sugartex) (dependence): SugarTeX is a more readable LaTeX language extension and transcompiler to LaTeX.
-* [**Feather Helper**](pandoctools/feather) helps to cache 2D numpy arrays and pandas dataframes.
-* [**Matplotlib Helper**](pandoctools/matplotlib) is my custom helper to tune Matplotlib experience.
+* [**Feather Helper**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/feather) helps to cache 2D numpy arrays and pandas dataframes.
+* [**Matplotlib Helper**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/matplotlib) is my custom helper to tune Matplotlib experience.
 
 Pandoctools is a tool for converting markdown document. But we also need tools for writing markdown and deploying python/Jupyter code blocks.  
 And the best one for it is:
 
-* [**Atom editor with plugins**](atom.md). It helps easily type Unicode, interactively run highlighed python/Jupyter code blocks and instantly see results (+ completions from the running Jupyter kernel), can convert basic pandoc markdown to html with live preview.
-* Must have plugins: [**SugarTeX Completions**](atom.md#sugartex-completions), [**Unix Filter**](atom.md#unix-filter), [**Hydrogen**](atom.md#hydrogen), [**Markdown Preview Plus**](atom.md#markdown-preview-plus)
+* [**Atom editor with plugins**](https://github.com/kiwi0fruit/pandoctools/blob/master/atom.md). It helps easily type Unicode, interactively run highlighed python/Jupyter code blocks and instantly see results (+ completions from the running Jupyter kernel), can convert basic pandoc markdown to html with live preview.
+* Must have plugins: [**SugarTeX Completions**](https://github.com/kiwi0fruit/pandoctools/blob/master/atom.md#sugartex-completions), [**Unix Filter**](atom.md#unix-filter), [**Hydrogen**](https://github.com/kiwi0fruit/pandoctools/blob/master/atom.md#hydrogen), [**Markdown Preview Plus**](https://github.com/kiwi0fruit/pandoctools/blob/master/atom.md#markdown-preview-plus)
 
 
 # Examples markdown to ipynb
 
-Here are [examples](examples) that demonstrate converting documents:
+Here are [examples](https://github.com/kiwi0fruit/pandoctools/blob/master/examples) that demonstrate converting documents:
 
 * from markdown `.md` with Jupyter python code blocks, SugarTeX math and cross-references to `ipynb`.
-* from `.py` with Atom/Hydrogen code cells, Knitty markdown incerts (again with SugarTeX math and cross-references) to `.ipynb`.  
+* from `.py` with Atom/Hydrogen code cells, Knitty markdown incerts (again with SugarTeX math and cross-references) to `.ipynb`.
 
 
 # Install
@@ -76,4 +76,4 @@ pip install panflute knitty sugartex pandoctools
 
 # Useful tips
 
-[Useful tips](tips.md)
+[Useful tips](https://github.com/kiwi0fruit/pandoctools/blob/master/tips.md)
