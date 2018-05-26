@@ -33,8 +33,8 @@ And the best one for it is:
 
 Here are [examples](examples) that demonstrate converting documents:
 
-* *from* markdown `.md` with Jupyter python code blocks, SugarTeX math and cross-references *to* `ipynb`.
-* *from* `.py` with Atom/Hydrogen code cells, Knitty markdown incerts (again with SugarTeX math and cross-references) *to* `.ipynb`.  
+* from markdown `.md` with Jupyter python code blocks, SugarTeX math and cross-references to `ipynb`.
+* from `.py` with Atom/Hydrogen code cells, Knitty markdown incerts (again with SugarTeX math and cross-references) to `.ipynb`.  
 
 
 # Install
@@ -51,8 +51,7 @@ conda create -n myenv python=3
 call activale myenv
 
 conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.0,<2.1" matplotlib feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future shutilwhich cython pywin32 pandas
-pip install panflute knitty sugartex winshell
-pip install git+https://github.com/kiwi0fruit/pandoctools.git
+pip install panflute knitty sugartex winshell pandoctools
 ```
 
 * Install [pandoc-crossref v0.3.0.1](https://github.com/lierdakil/pandoc-crossref/releases/tag/v0.3.0.1) to  
@@ -62,7 +61,6 @@ pip install git+https://github.com/kiwi0fruit/pandoctools.git
 ## Unix:
 
 * Install [Miniconda](https://conda.io/miniconda.html)
-* Install Git. On Ubuntu/Debian: `sudo apt-get install git` Fedora/CentOS and macOS also have such one-liners.
 
 ```
 conda install "conda>=4.5.4"
@@ -70,8 +68,7 @@ conda create -n myenv python=3
 source activate myenv
 
 conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.0,<2.1" matplotlib feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future shutilwhich cython pandas
-pip install panflute knitty sugartex
-pip install git+https://github.com/kiwi0fruit/pandoctools.git
+pip install panflute knitty sugartex pandoctools
 ```
 * Install [pandoc-crossref v0.3.0.1](https://github.com/lierdakil/pandoc-crossref/releases/tag/v0.3.0.1) to  
   `<miniconda-path>/envs/myenv/bin`.
