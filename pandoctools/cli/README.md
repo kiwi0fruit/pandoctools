@@ -23,9 +23,15 @@ I tried to make shell scripts short and transparent so you can easily copy/tune 
 
 ## Defaults.ini
 
-Pandoctools stores some settings in [`Defaults.ini`](../sh/Defaults.ini) file. The active `Defaults.ini` is resolved the same way Pandoctools resolves profiles (first in userdata then in active sh/bat folder in python module).
+Pandoctools stores some settings in [`Defaults.ini`](../sh/Defaults.ini) file. The active `Defaults.ini` is resolved the same way Pandoctools resolves profiles (first in user data then in active sh/bat folder in python module).
 
+* you can set `root_env` var there if you installed current environment to special location instead or default `<root_env>/envs/my_env`
+* `pandoctools` var stores the path of the python interpreter of the environment where pandoctools is installed. It is set by pandoctools installer when it writes `Defaults.ini` to the folder in user data. You can specify it yourself too.
+* `win_bash` var stores the path to bash on Windows. Default is `%PROGRAMFILES%\Git\bin\bash.exe` but you can set it yourself. **Important**: if pandoctools cannot find bash by this path it switches to batch mode (instead of default bash mode). You can manually switch to batch mode by setting `win_bash` value to empty string or deleting it:
 
+```ini
+win_bash=
+```
 
 
 ## New CLI apps
