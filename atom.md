@@ -57,7 +57,7 @@ apm install kiwi0fruit/markdown-preview-plus --production
 * Make sure MPP settings are set to:
     * **Settings** (root) > **Renderer backend** is pandoc
     * **Math Options** > **Enable Math Rendering By Default** is checked
-    * **Math Options** > **Math Renderer** is 'HTML-CSS'
+    * **Math Options** > **Math Renderer** is `HTML-CSS`
     * **Math Options** > **MathJax TeX Extensions** are `AMSmath.js, AMSsymbols.js, noErrors.js, noUndefined.js, HTML.js`
     * **Math Options** > **MathJax 'undefinedFamily' (font family)** is `'Libertinus Serif', 'PT Astra Serif', 'Libertinus Math', Tinos, 'STIX Two Math', 'Noto Serif', Symbola, 'Noto Serif CJK TC', serif`
     * **Pandoc settings** > **Path to Pandoc executable** set to pandoc exec that wasinstalled by conda/Miniconda: take path to pandoctools executable (from desktop shortcut for example) and replace `pandoctools` with `pandoc`
