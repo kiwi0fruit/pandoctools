@@ -23,7 +23,7 @@ I tried to make shell scripts short and transparent so you can easily copy/tune 
 
 ## Defaults.ini
 
-Pandoctools stores some settings in `Defaults.ini` file. The active `Defaults.ini` is resolved the same way Pandoctools resolves profiles (first in userdata then in active sh/bat folder in python module).
+Pandoctools stores some settings in [`Defaults.ini`](../sh/Defaults.ini) file. The active `Defaults.ini` is resolved the same way Pandoctools resolves profiles (first in userdata then in active sh/bat folder in python module).
 
 
 
