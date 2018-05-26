@@ -41,23 +41,26 @@ Specify command option to `<...>\pandoctools.exe --stdin "%FILE%"` (`<...>/pando
 
 ## Markdown Preview Plus
 
-Then you can convert markdown to markdown via Pandoctools, then convert to html / preview via Markdown Preview Plus.
+Running Pandoctools can be slow since it uses Knitty (and hence starts and stops Jupyter every time) so the best approach when writing document with Pandoctools is to convert from enchanced Markdown to standard Pandoc Markdown (Knitty and all Pandoc filters run here). Then preview html/print pdf it with standard tool and plain Pandoc without filters.
 
-Install:
+And in my opinion the best tool for this is Markdown Peview Plus Atom package.
+
+### Installation
+
+* First install patched version of MPP (I hope my patch would be pulled soon so it would be possible to install it the standard way):
 
 ```sh
 apm install kiwi0fruit/markdown-preview-plus --production
 ```
 
-Specify path to pandoc in MPP settings by taking path to pandoctools executable (from desktop shortcut for example) and replacing `pandoctools` with `pandoc`.
-
-Then patch MPP by [copying MPP patch](https://github.com/kiwi0fruit/misc/tree/master/mpp) to `<...>/styles` dir.
+* Then specify path to pandoc executable in MPP settings by taking path to pandoctools executable (from desktop shortcut for example) and replacing `pandoctools` with `pandoc`.
+* Then patch MPP by copying files from [MPP patch](https://github.com/kiwi0fruit/misc/tree/master/mpp) to `%USERPROFILE%\.atom\packages\markdown-preview-plus\styles` folder (`%USERPROFILE%\.atom` is `~/.atom` on Linux). The patch overrides default css theme.
 
 It needs installed [serif](https://github.com/kiwi0fruit/open-fonts#best-serif) and [monospace](https://github.com/kiwi0fruit/open-fonts#best-monospace) fallback fonts chains from [Open fonts](https://github.com/kiwi0fruit/open-fonts). You can switch from serif to [sans serif](https://github.com/kiwi0fruit/open-fonts#best-sans-serif) if you want.
 
-PS: If you are interested in beautiful fonts and on Windows take a look at [MacType](https://github.com/kiwi0fruit/open-fonts#mactype) font rendering engine.
+The patched CSS (less actually) theme is not ideal and still buggy but a lot better that default MMP theme. Suggestions and pull requests are welcomed.
 
-#### TODO
+PS: If you are interested in beautiful fonts and on Windows take a look at [MacType](https://github.com/kiwi0fruit/open-fonts#mactype) font rendering engine.
 
 
 # Recommended Atom options
