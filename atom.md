@@ -55,8 +55,15 @@ apm install kiwi0fruit/markdown-preview-plus --production
 
 * Then specify path to pandoc executable in MPP settings by taking path to pandoctools executable (from desktop shortcut for example) and replacing `pandoctools` with `pandoc`.
 * Then patch MPP by copying files from [MPP patch](https://github.com/kiwi0fruit/misc/tree/master/mpp) to `%USERPROFILE%\.atom\packages\markdown-preview-plus\styles` folder (`%USERPROFILE%\.atom` is `~/.atom` on Linux). The patch overrides default css theme. It has `custom-fonts.less` file - tune it to change fonts of the theme.
+* Make sure MPP settings are set to:
+    * **Settings** (root) > **Renderer backend** is pandoc
+    * **Math Options** > **Enable Math Rendering By Default** is checked
+    * **Math Options** > **Math Renderer** is 'HTML-CSS'
+    * **Math Options** > **MathJax TeX Extensions** are `AMSmath.js, AMSsymbols.js, noErrors.js, noUndefined.js, HTML.js`
+    * **Math Options** > **MathJax 'undefinedFamily' (font family)** is `'Libertinus Serif', 'PT Astra Serif', 'Libertinus Math', Tinos, 'STIX Two Math', 'Noto Serif', Symbola, 'Noto Serif CJK TC', serif`
 
-It needs installed [serif](https://github.com/kiwi0fruit/open-fonts#best-serif) and [monospace](https://github.com/kiwi0fruit/open-fonts#best-monospace) fallback fonts chains from [Open fonts](https://github.com/kiwi0fruit/open-fonts). You can switch from serif to [sans serif](https://github.com/kiwi0fruit/open-fonts#best-sans-serif) if you want.
+
+MPP patch needs installed [serif](https://github.com/kiwi0fruit/open-fonts#best-serif) and [monospace](https://github.com/kiwi0fruit/open-fonts#best-monospace) fallback fonts chains from [Open fonts](https://github.com/kiwi0fruit/open-fonts). You can switch from serif to [sans serif](https://github.com/kiwi0fruit/open-fonts#best-sans-serif) if you want.
 
 The patched CSS (less actually) theme is not ideal and still buggy but a lot better that default MMP theme. Suggestions and pull requests are welcomed.
 
