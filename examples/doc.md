@@ -6,9 +6,17 @@ pandoctools:
 input: True
 eval: False
 ...
-@{py, echo=False}
+@{py, echo=False, input=False, eval=True}
 ```
 KNITTY = True
+```
+@{input=False, echo=False}
+```py
+try:
+    # noinspection PyUnresolvedReferences,PyUnboundLocalVariable
+    KNITTY
+except:
+    KNITTY = False
 ```
 
 # Markdown to Jupyter notebook example
@@ -37,12 +45,11 @@ Image caption does not work but it can be fixed via simple Panflute filter. Or i
 ```py
 import pandas as pd
 import numpy as np
-from pandoctools import pandas as dfh
+from pandoctools import pandas as th
 
 df = pd.DataFrame(np.random.random(16).reshape(4, 4))
 
-print(dfh.md_table(df, KNITTY))
-print('')
+print(th.md_table(df, KNITTY))
 print(': Table {#tbl:table1}')
 ```
 

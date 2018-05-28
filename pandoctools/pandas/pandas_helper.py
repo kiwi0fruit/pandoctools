@@ -1,4 +1,4 @@
-from IPython.display import Markdown, display
+from IPython.display import display
 import pandas as pd
 _knitty = False
 
@@ -15,7 +15,8 @@ def md_table(df: pd.DataFrame, knitty: bool or None=None, hide: bool=False) -> s
         else ""
     """
     global _knitty
-    
+
+    # noinspection PyUnusedLocal
     fmt = ['---' for i in range(len(df.columns))]
     df_fmt = pd.DataFrame([fmt], columns=df.columns)
     df_formatted = pd.concat([df_fmt, df])
@@ -28,5 +29,6 @@ def md_table(df: pd.DataFrame, knitty: bool or None=None, hide: bool=False) -> s
         hide = True
 
     if not hide:
-        display(Markdown(_md_table))
+        # noinspection PyTypeChecker
+        display(df)
     return _md_table if _knitty else ""

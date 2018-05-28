@@ -12,8 +12,14 @@ echo: False
 KNITTY = True
 ```
 """
+# %%
+try:
+    # noinspection PyUnresolvedReferences,PyUnboundLocalVariable
+    KNITTY
+except:
+    KNITTY = False
 
-# %% --------
+
 from pandoctools import matplotlib as mh
 mh.ready()
 # mh.ready(KNITTY, font_size=14, finalize=False)
