@@ -9,6 +9,9 @@ pipelines. It stores short shell (bash or batch) scripts that define
 chain operations over text. They are mostly Pandoc filters but any CLI
 text filter is OK.
 
+`**Introduction article about
+Pandoctools** <https://github.com/kiwi0fruit/atom-jupyter-pandoc-markdown>`__.
+
 Contents
 ========
 
