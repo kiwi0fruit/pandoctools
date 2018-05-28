@@ -50,6 +50,9 @@ Notable parts of Pandoctools
 -  `**Matplotlib
    Helper** <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/matplotlib>`__
    is my custom helper to tune Matplotlib experience.
+-  `**Pandas
+   Helper** <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/pandas>`__
+   helps print dataframes to Markdown.
 
 | Pandoctools is a tool for converting markdown document. But we also
   need tools for writing markdown and deploying python/Jupyter code

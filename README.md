@@ -23,6 +23,7 @@ Glueing part of pandoctools is a profile manager of text processing pipelines. I
 * [**SugarTeX**](https://github.com/kiwi0fruit/sugartex) (dependence): SugarTeX is a more readable LaTeX language extension and transcompiler to LaTeX.
 * [**Feather Helper**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/feather) helps to cache 2D numpy arrays and pandas dataframes.
 * [**Matplotlib Helper**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/matplotlib) is my custom helper to tune Matplotlib experience.
+* [**Pandas Helper**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/pandas) helps print dataframes to Markdown.
 
 Pandoctools is a tool for converting markdown document. But we also need tools for writing markdown and deploying python/Jupyter code blocks.  
 And the best one for it is:
