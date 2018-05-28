@@ -52,12 +52,13 @@ conda install "conda>=4.5.4"
 conda create -n myenv python=3
 call activale myenv
 
-conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.0,<2.1" matplotlib feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future shutilwhich cython pywin32 pandas
+conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.2.1" matplotlib feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future shutilwhich cython pywin32 pandas
 pip install panflute knitty sugartex winshell pandoctools
 ```
 
-* Install [pandoc-crossref v0.3.0.1](https://github.com/lierdakil/pandoc-crossref/releases/tag/v0.3.0.1) to  
+* Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) to  
   `<miniconda-path>/envs/myenv/Library/bin`.
+* if Pandoc errors try downgrade to `"pandoc>=2.0,<2.1"` and pandoc-crossref v0.3.0.1.
 
 
 ## Unix:
@@ -69,11 +70,12 @@ conda install "conda>=4.5.4"
 conda create -n myenv python=3
 source activate myenv
 
-conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.0,<2.1" matplotlib feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future shutilwhich cython pandas
+conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.2.1" matplotlib feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future shutilwhich cython pandas
 pip install panflute knitty sugartex pandoctools
 ```
-* Install [pandoc-crossref v0.3.0.1](https://github.com/lierdakil/pandoc-crossref/releases/tag/v0.3.0.1) to  
+* Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) to  
   `<miniconda-path>/envs/myenv/bin`.
+* if Pandoc errors try downgrade to `"pandoc>=2.0,<2.1"` and pandoc-crossref v0.3.0.1.
 
 
 # Useful tips
