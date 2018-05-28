@@ -2,11 +2,14 @@
 pandoctools:
   profile: Default
   out: "%USERPROFILE%\\*.ipynb"
-  # out: "*.ipynb"
   # out: "*.md.md"
 input: True
 eval: False
 ...
+@{py, echo=False}
+```
+KNITTY = True
+```
 
 # Markdown to Jupyter notebook example
 
@@ -30,21 +33,16 @@ where ˎ[ ⃗B], [ ⃗E], [ ⃗j]: ℝ⁴ → ℝ³ˎ – vector functions
 
 Image caption does not work but it can be fixed via simple Panflute filter. Or it can be considered Pandoc bug.
 
-
 @{results=pandoc, input=False, eval=True}
 ```py
 import pandas as pd
 import numpy as np
+from pandoctools import pandas as dfh
+
 df = pd.DataFrame(np.random.random(16).reshape(4, 4))
 
-def pandas_df_to_markdown(df) -> str:
-    from IPython.display import Markdown, display
-    fmt = ['---' for i in range(len(df.columns))]
-    df_fmt = pd.DataFrame([fmt], columns=df.columns)
-    df_formatted = pd.concat([df_fmt, df])
-    return df_formatted.to_csv(sep="|", index=False)
-
-print(pandas_df_to_markdown(df), '')
+print(dfh.md_table(df, KNITTY))
+print('')
 print(': Table {#tbl:table1}')
 ```
 

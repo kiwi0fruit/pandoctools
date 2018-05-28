@@ -113,7 +113,7 @@ def img(plot,
     :param: hide: Whether to show Hydrogen and Qt plots at all
     :param: qt: Whether to show interactive plot via Qt
         Presumably mpl.use('Qt5Agg') was called
-    :return: url: Image URL if STITCH is True
+    :return: url: Image URL if KNITTY is True
         else ""
     """
     if name is None:
