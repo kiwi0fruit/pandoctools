@@ -244,7 +244,7 @@ def pandoctools(input_file, profile, out, stdio, stdin, cwd, debug):
 
     if (profile is None) or (out is None):
         # Read metadata:
-        m = re.search(r'(?:^|\n)---\n(.+)(?:---|\.\.\.)(?:\n|$)', doc, re.DOTALL)
+        m = re.search(r'(?:^|\n)---\n(.+?\n)(?:---|\.\.\.)(?:\n|$)', doc, re.DOTALL)
         metadata = yaml.load(m.group(1)) if m else {}
         pandoctools_meta = metadata.get('pandoctools', None)
         if not isinstance(pandoctools_meta, dict):
