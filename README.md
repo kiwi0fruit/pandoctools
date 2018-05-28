@@ -2,9 +2,9 @@
 
 Pandoctools is a combination of tools that help write reproducible markdown reports. They rely on Pandoc and Jupyter kernels.
 
-Glueing part of pandoctools is a profile manager of text processing pipelines. It stores short shell (bash or batch) scripts that define chain operations over text. They are mostly Pandoc filters but any CLI text filter is OK.
+**Introduction article**: [**Convenient and easily tweakable Atom+Markdown+Pandoc+Jupyter experience (can export to ipynb)**](https://github.com/kiwi0fruit/atom-jupyter-pandoc-markdown).
 
-[**Introduction article about Pandoctools**](https://github.com/kiwi0fruit/atom-jupyter-pandoc-markdown).
+Glueing part of pandoctools is a profile manager of text processing pipelines. It stores short shell (bash or batch) scripts that define chain operations over text. They are mostly Pandoc filters but any CLI text filter is OK.
 
 
 # Contents
