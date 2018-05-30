@@ -104,7 +104,10 @@ Windows:
     conda create -n myenv python=3
     call activale myenv
 
-    conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.2.1" matplotlib feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future shutilwhich cython pywin32 pandas
+    conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.2.1" matplotlib ^
+    feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters ^
+    pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future ^
+    shutilwhich cython pywin32 pandas
     pip install panflute knitty sugartex winshell pandoctools
 
 -  Install latest stable
@@ -125,7 +128,10 @@ Unix:
     conda create -n myenv python=3
     source activate myenv
 
-    conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.2.1" matplotlib feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future shutilwhich cython pandas
+    conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.2.1" matplotlib \
+    feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters \
+    pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future \
+    shutilwhich cython pandas
     pip install panflute knitty sugartex pandoctools
 
 -  Install latest stable
