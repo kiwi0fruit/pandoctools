@@ -23,7 +23,7 @@ Hints:
 import io
 import base64
 # noinspection PyUnresolvedReferences
-from sugartex import sugartex, stex
+from sugartex import sugartex, stex, stex2
 import matplotlib as mpl
 from matplotlib import font_manager
 from IPython.display import display, Markdown
