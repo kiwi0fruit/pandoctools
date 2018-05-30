@@ -15,7 +15,6 @@ except NameError:
     KNITTY = False
 
 
-# %% --------
 import pandas as pd
 import numpy as np
 from pandoctools import pandas as dfh
