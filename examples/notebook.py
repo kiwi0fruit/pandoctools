@@ -13,6 +13,7 @@ echo: False
 # %% {echo=False, eval=True}
 KNITTY = True
 # %% {echo=False, eval=False}
+# noinspection PyRedeclaration
 KNITTY = False
 
 
