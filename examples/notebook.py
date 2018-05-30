@@ -9,17 +9,11 @@ input: False
 eval: True
 echo: False
 ...
-
-```py
-KNITTY = True
-```
 """
-# %%
-try:
-    # noinspection PyUnresolvedReferences,PyUnboundLocalVariable
-    KNITTY
-except NameError:
-    KNITTY = False
+# %% {echo=False, eval=True}
+KNITTY = True
+# %% {echo=False, eval=False}
+KNITTY = False
 
 
 # %% {md} Markdown cell that doesn't affect PyCharm code inspection and Atom+Hydrogen 'Run All':

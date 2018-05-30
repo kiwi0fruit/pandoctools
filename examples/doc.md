@@ -6,16 +6,13 @@ pandoctools:
 input: True
 eval: False
 ...
-@{py, input=False, echo=False, eval=True}
-```
+@{input=False, echo=False, eval=True}
+```py
 KNITTY = True
 ```
-@{input=False, echo=False}
+@{input=False, echo=False, eval=False}
 ```py
-try:
-    KNITTY
-except:
-    KNITTY = False
+KNITTY = False
 ```
 
 # Markdown to Jupyter notebook example
