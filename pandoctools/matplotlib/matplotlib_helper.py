@@ -20,13 +20,13 @@ Hints:
     sans-serif command `\mathsf{}` is reassigned because sans-serif font is
     rarely used in serif docs.
 """
-from IPython.display import display, Markdown
 import io
 import base64
 # noinspection PyUnresolvedReferences
 from sugartex import sugartex, stex
 import matplotlib as mpl
 from matplotlib import font_manager
+from IPython.display import display, Markdown
 # import subprocess.call
 # import os
 
@@ -42,7 +42,8 @@ _preview_width = '600px'
 
 
 def finalize():
-    mpl.use('Qt5Agg')
+    if not _knitty:
+        mpl.use('Qt5Agg')
     mpl.rc('text.latex', unicode=True)
     if _font_dir is not None:
         font_dirs = [_font_dir, ]
@@ -153,8 +154,9 @@ def img(plot,
     if _knitty:
         hide = True
 
-    if not hide:  # noinspection PyTypeChecker
+    if not hide:
         preview_width = preview_width if (preview_width is not None) else _preview_width
+        # noinspection PyTypeChecker
         display(Markdown('<img src="{}" style="width: {};"/>'.format(base64_url, preview_width)))
     if (not hide) and qt:
         plot.show()
