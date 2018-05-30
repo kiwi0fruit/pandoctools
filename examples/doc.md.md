@@ -1,4 +1,4 @@
-`````py
+```yaml
 ---
 pandoctools:
   profile: Default
@@ -7,6 +7,9 @@ pandoctools:
 input: True
 eval: False
 ...
+```
+
+`````py
 @{input=False, echo=False, eval=True}
 ```py
 KNITTY = True
@@ -15,12 +18,15 @@ KNITTY = True
 ```py
 KNITTY = False
 ```
+`````
 
+```md
 # Markdown to Jupyter notebook example
 
 Here is a SugarTeX example with @eq:max and @fig:img.
 
-See [PDF of this source](https://github.com/kiwi0fruit/sugartex/raw/master/sugartex.pdf) if you do not have [excellent Unicode support](https://github.com/kiwi0fruit/sugartex#atom-editor-with-full-unicode-support).
+See [PDF of this source](https://github.com/kiwi0fruit/sugartex/raw/master/sugartex.pdf) if you do
+ not have [excellent Unicode support](https://github.com/kiwi0fruit/sugartex#atom-editor-with-full-unicode-support).
 
 
 ˎˎ
@@ -37,7 +43,9 @@ where ˎ[ ⃗B], [ ⃗E], [ ⃗j]: ℝ⁴ → ℝ³ˎ – vector functions
 ![Sample image with cross-references.](https://avatars3.githubusercontent.com/u/19735117?s=460&v=4){#fig:img}
 
 Image caption does not work but it can be fixed via simple Panflute filter. Or it can be considered Pandoc bug.
+```
 
+`````py
 @{input=False, eval=True, results=pandoc}
 ```py
 import pandas as pd
@@ -59,7 +67,9 @@ import numpy as np
 df = pd.DataFrame(np.random.random(16).reshape(4, 4))
 df
 ```
+`````
 
+```md
 # Title
 
 Text and @tbl:table2
@@ -69,7 +79,9 @@ Text and @tbl:table2
 | 1 | 2 | 3 | 4 |
 
 : Table {#tbl:table2}
+```
 
+`````py
 ```py
 print('Hello!')
 ```
