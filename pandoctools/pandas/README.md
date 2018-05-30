@@ -17,11 +17,11 @@ except NameError:
 
 import pandas as pd
 import numpy as np
-from pandoctools import pandas as dfh
+from pandoctools import pandas as th
 
 df = pd.DataFrame(np.random.random(16).reshape(4, 4))
 
-print(dfh.md_table(df, KNITTY))
+print(th.md_table(df, KNITTY))
 print('')
 print(': Table {#tbl:table1}')
 ```
