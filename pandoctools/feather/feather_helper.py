@@ -1,20 +1,3 @@
-"""
-Usage example in Atom/Hydrogen:
-
-# %%
-from pandoctools import feather as fh  # Feather Helper
-# fh.setdir(r"%USERPROFILE%\feather\mydoc")
-
-# %%
-fh.name('1')
-try:
-    # raise Exception  # <- this is a switch
-    A, B, C = fh.pull()
-except:
-    # calculate stuff
-    fh.push(A, B, C)
-"""
-
 import pandas as pd
 import os
 from os import path as p
