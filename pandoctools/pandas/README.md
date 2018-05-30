@@ -1,6 +1,6 @@
 # Pandas Helper
 
-Pandas Helper displays Data Frame and returns it's Markdown string. Usage example in Atom/Hydrogen:
+Pandas Helper displays Data Frame and returns it's Markdown string. Usage example for Atom+Hydrogen/Pandoctools:
 
 ```py
 # %% """ %%% """
