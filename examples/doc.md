@@ -6,14 +6,13 @@ pandoctools:
 input: True
 eval: False
 ...
-@{py, echo=False, input=False, eval=True}
+@{py, input=False, echo=False, eval=True}
 ```
 KNITTY = True
 ```
 @{input=False, echo=False}
 ```py
 try:
-    # noinspection PyUnresolvedReferences,PyUnboundLocalVariable
     KNITTY
 except:
     KNITTY = False
@@ -41,7 +40,7 @@ where ˎ[ ⃗B], [ ⃗E], [ ⃗j]: ℝ⁴ → ℝ³ˎ – vector functions
 
 Image caption does not work but it can be fixed via simple Panflute filter. Or it can be considered Pandoc bug.
 
-@{results=pandoc, input=False, eval=True}
+@{input=False, eval=True, results=pandoc}
 ```py
 import pandas as pd
 import numpy as np
