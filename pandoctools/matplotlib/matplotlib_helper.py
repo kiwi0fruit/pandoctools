@@ -37,6 +37,7 @@ sugartex.mpl_hack()
 sugartex.ready()
 _knitty = False
 _font_dir = None
+_preview_width = '600px'
 # _poppler = ""
 
 
@@ -57,6 +58,7 @@ _finalize = finalize
 # noinspection PyShadowingNames
 def ready(knitty: bool = False,
           finalize: bool = True,
+          preview_width: str = '600px',
           # poppler: str=r'C:\Program Files (x86)\poppler\bin',
           #   http://blog.alivate.com.au/poppler-windows/
           font_dir: str = None,
@@ -72,9 +74,10 @@ def ready(knitty: bool = False,
           fontm_bold: str = "MJ",
           fontm_itbold: str = "MJ_Mat"):
 
-    global _knitty, _font_dir, mpl_params  # , _poppler
+    global _knitty, _font_dir, mpl_params, _preview_width  # , _poppler
     _knitty = knitty
     _font_dir = font_dir
+    _preview_width = preview_width
     # _poppler = poppler
 
     mpl_params.update({
@@ -99,11 +102,12 @@ def ready(knitty: bool = False,
 
 
 def img(plot,
-        name: str = None,
-        ext: str = 'svg',
-        dpi: int = 300,
-        hide: bool = False,
-        qt: bool = False,
+        name: str=None,
+        ext: str='svg',
+        dpi: int=300,
+        hide: bool=False,
+        qt: bool=False,
+        preview_width: str=None
         ) -> str:
     """
     :param: plot: matplotlib.pyplot
@@ -150,7 +154,8 @@ def img(plot,
         hide = True
 
     if not hide:  # noinspection PyTypeChecker
-        display(Markdown('![]({})'.format(base64_url)))
+        preview_width = preview_width if (preview_width is not None) else _preview_width
+        display(Markdown('<img src="{}" style="width: {};"/>'.format(base64_url, preview_width)))
     if (not hide) and qt:
         plot.show()
     return url if _knitty else ""
