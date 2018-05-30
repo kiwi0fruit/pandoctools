@@ -1,4 +1,4 @@
-set tagname=0.4.4
+set tagname=0.4.5
 git tag -d %tagname%
 git push --delete origin %tagname%
 git tag -a %tagname%

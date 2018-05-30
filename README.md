@@ -57,7 +57,7 @@ conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.2.1" matplotli
 feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters ^
 pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future ^
 shutilwhich cython pywin32 pandas
-pip install panflute "knitty>=0.3.10" "sugartex>=0.1.8" winshell pandoctools
+pip install panflute knitty sugartex winshell pandoctools
 ```
 
 * Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) to  
@@ -78,7 +78,7 @@ conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.2.1" matplotli
 feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters \
 pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future \
 shutilwhich cython pandas
-pip install panflute "knitty>=0.3.10" "sugartex>=0.1.8" pandoctools
+pip install panflute knitty sugartex pandoctools
 ```
 * Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) to  
   `<miniconda-path>/envs/myenv/bin`.
