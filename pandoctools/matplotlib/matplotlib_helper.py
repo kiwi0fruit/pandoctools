@@ -35,8 +35,11 @@ GR = (1 + 5 ** 0.5) / 2
 mpl_params = {}
 sugartex.mpl_hack()
 sugartex.ready()
+
 _knitty = False
 _font_dir = None
+_ext = 'svg'
+_dpi = 300
 _preview_width = '600px'
 # _poppler = ""
 
@@ -57,29 +60,34 @@ _finalize = finalize
 
 
 # noinspection PyShadowingNames
-def ready(knitty: bool = False,
-          finalize: bool = True,
+def ready(knitty: bool=False,
+          finalize: bool=True,
+          ext: str='svg',
+          dpi: int=300,
           preview_width: str = '600px',
-          # poppler: str=r'C:\Program Files (x86)\poppler\bin',
-          #   http://blog.alivate.com.au/poppler-windows/
-          font_dir: str = None,
-          font_size: float = 12.8,  # 12.8pt ~ 17px
-          font_family: str = "serif",
-          font_serif: str = "Libertinus Serif",
-          font_sans: str = "Segoe UI",
-          font_cursive: str = "Comic Sans MS",
-          font_mono: str = "Consolas",
-          fontm_calig: str = "MJ_Cal",
-          fontm_regular: str = "MJ",
-          fontm_italic: str = "MJ_Mat",
-          fontm_bold: str = "MJ",
-          fontm_itbold: str = "MJ_Mat"):
+          font_dir: str=None,
+          font_size: float=12.8,  # 12.8pt ~ 17px
+          font_family: str="serif",
+          font_serif: str="Libertinus Serif",
+          font_sans: str="Segoe UI",
+          font_cursive: str="Comic Sans MS",
+          font_mono: str="Consolas",
+          fontm_calig: str="MJ_Cal",
+          fontm_regular: str="MJ",
+          fontm_italic: str="MJ_Mat",
+          fontm_bold: str="MJ",
+          fontm_itbold: str="MJ_Mat"):
 
-    global _knitty, _font_dir, mpl_params, _preview_width  # , _poppler
-    _knitty = knitty
-    _font_dir = font_dir
-    _preview_width = preview_width
+    # poppler: str=r'C:\Program Files (x86)\poppler\bin',
+    #   http://blog.alivate.com.au/poppler-windows/
+    # global _poppler
     # _poppler = poppler
+    global mpl_params
+    global _knitty;        _knitty = knitty
+    global _font_dir;      _font_dir = font_dir
+    global _preview_width; _preview_width = preview_width
+    global _ext;           _ext = ext
+    global _dpi;           _dpi = dpi
 
     mpl_params.update({
         "text.usetex": False,
@@ -104,23 +112,32 @@ def ready(knitty: bool = False,
 
 def img(plot,
         name: str=None,
-        ext: str='svg',
-        dpi: int=300,
+        ext: str=None,  # default 'svg'
+        dpi: int=None,  # default 300
+        preview_width: str=None,  # default '600px'
         hide: bool=False,
         qt: bool=False,
-        preview_width: str=None
         ) -> str:
     """
-    :param: plot: matplotlib.pyplot
-    :param: name: File name to store image (without extension)
-    :param: ext: File extension
-    :param: dpi: DPI for PNG
-    :param: hide: Whether to show Hydrogen and Qt plots at all
-    :param: qt: Whether to show interactive plot via Qt
+    plot: matplotlib.pyplot
+    name: File name to store image (without extension)
+    ext: File extension
+        default 'svg'
+    dpi: DPI for PNG
+        default 300
+    preview_width: Hydrogen img preview width
+        default '600px'
+    hide: Whether to show Hydrogen and Qt plots at all
+    qt: Whether to show interactive plot via Qt
         Presumably mpl.use('Qt5Agg') was called
-    :return: url: Image URL if KNITTY is True
+
+    return: url: Image URL if KNITTY is True
         else ""
     """
+    ext = ext if (ext is not None) else _ext
+    dpi = dpi if (dpi is not None) else _dpi
+    preview_width = preview_width if (preview_width is not None) else _preview_width
+
     if name is None:
         with io.BytesIO() as f:
             plot.savefig(f, format=ext)
@@ -155,7 +172,6 @@ def img(plot,
         hide = True
 
     if not hide:
-        preview_width = preview_width if (preview_width is not None) else _preview_width
         # noinspection PyTypeChecker
         display(Markdown('<img src="{}" style="width: {};"/>'.format(base64_url, preview_width)))
     if (not hide) and qt:
