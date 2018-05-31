@@ -9,6 +9,9 @@ from subprocess import PIPE
 import configparser
 import io
 
+PROFILE = 'Default'
+OUT = '*.html'
+
 
 def expand_pattern(pattern: str,  target_file: str,  cwd: bool) -> str:
     """
@@ -253,19 +256,14 @@ def pandoctools(input_file, profile, out, stdio, stdin, cwd, detailed_out, debug
         if not isinstance(pandoctools_meta, dict):
             pandoctools_meta = {}
         # Mod options if needed:
-        profile = pandoctools_meta.get('profile', 'Default') if (profile is None) else profile
-        out = pandoctools_meta.get('out', '*.html') if (out is None) else out
+        profile = pandoctools_meta.get('profile') if (profile is None) else profile
+        out = pandoctools_meta.get('out') if (out is None) else out
 
-    # Expand environment vars and get abs path:
-    input_file = p.abspath(p.expandvars(input_file))
-    profile = p.expandvars(profile)
-    out = p.expandvars(out)
-
-    # Find python root env and bash on Windows:
+    # Read from INI config (Read profile, 'out'. Find python root env, bash on Windows):
     if os.name == 'nt':
         config = read_ini('Defaults', pandoctools_user, _pandoctools_core)
         win_bash = p.expandvars(config.get('Default', 'win_bash', fallback=''))
-        if p.exists(win_bash) and not p.isdir(win_bash) and (profile[-4:] != '.bat'):
+        if p.exists(win_bash) and not p.isdir(win_bash) and (str(profile)[-4:] != '.bat'):
             # here we implicitly use the fact that
             # ini from core sh folder (_pandoctools_core)
             # has path to git's bash
@@ -278,8 +276,16 @@ def pandoctools(input_file, profile, out, stdio, stdin, cwd, detailed_out, debug
         win_bash = None
         config = read_ini('Defaults', pandoctools_user, pandoctools_core)
 
-    root_env = p.expandvars(config.get('Default', 'root_env', fallback=''))
+    root_env = config.get('Default', 'root_env', fallback='')
+    profile = config.get('Default', 'profile', fallback=PROFILE) if (profile is None) else profile
+    out = config.get('Default', 'out', fallback=OUT) if (out is None) else out
+
+    # Expand environment vars and get abs path:
+    root_env = p.expandvars(root_env)
     root_env = root_env if p.isabs(root_env) and p.isdir(root_env) else guess_root_env(env_path)
+    input_file = p.abspath(p.expandvars(input_file))
+    profile = p.expandvars(profile)
+    out = p.expandvars(out)
 
     # Expand custom patterns:
     output_file = expand_pattern(out, input_file, cwd)
