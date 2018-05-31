@@ -184,4 +184,4 @@ def subplot(figure, rows: int, columns: int, position: int):
     :position: count pos. in rows x columns matrix
     :return: figure.add_subplot(rows, columns, position)
     """
-    return fig.add_subplot(rows, columns, position)
+    return figure.add_subplot(rows, columns, position)
