@@ -9,9 +9,12 @@ from pandoctools.cli import pandoctools_user, pandoctools_bin
 import versioneer
 import io
 
+DEFAULTS_INI = {'profile': 'Default',
+                'out': '*.html',
+                'root_env': '',
+                'win_bash': r'%PROGRAMFILES%\Git\bin\bash.exe'}
 
 here = p.abspath(p.dirname(__file__))
-
 with open(p.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
@@ -81,36 +84,28 @@ class PostInstallCommand(install):
         if p.exists(config_file):
             config.read(config_file)
             try:
-                default_sect = dict(config.items('Default'))
+                default_sect = DEFAULTS_INI.copy()
+                default_sect.update(dict(config.items('Default')))
             except configparser.NoSectionError:
-                default_sect = {}
+                default_sect = DEFAULTS_INI.copy()
         else:
-            default_sect = {}
+            default_sect = DEFAULTS_INI.copy()
 
         default_sect['pandoctools'] = pandoctools_bin
-        if 'root_env' not in default_sect:
-            default_sect['root_env'] = ''
-        if 'win_bash' not in default_sect:
-            git_bash = r'%PROGRAMFILES%\Git\bin\bash.exe'
-            if p.exists(p.expandvars(git_bash)):
-                default_sect['win_bash'] = git_bash
-                pandoctools_core = _pandoctools_core
-            else:
-                default_sect['win_bash'] = ''
-        elif p.exists(p.expandvars(default_sect['win_bash'])):
-                pandoctools_core = _pandoctools_core
+        if p.exists(p.expandvars(default_sect['win_bash'])):
+            pandoctools_core = _pandoctools_core
 
         config['Default'] = default_sect
-        with io.StringIO() as f:
-            config.write(f)
-            config_str = f.getvalue()
+        with io.StringIO() as file:
+            config.write(file)
+            config_str = file.getvalue()
         try:
-            with open(config_file, 'w') as f:
-                config.write(f)
+            with open(config_file, 'w') as file:
+                config.write(file)
         except:
             error_log += 'WARNING: Failed to create ini file.\n\n' + ''.join(traceback.format_exc())
             error_log += '\nFile:\n{}\n\n{}'.format(config_file, config_str)
-        
+
         # Dump error log:
         if error_log != "":
             print(error_log, file=open(p.join(pandoctools_core, 'install_error_log.txt'), 'w', encoding="utf-8"))
@@ -163,7 +158,7 @@ setup(
             'panfl=pandoctools.panfl.panfl:main',
         ],
     },
-    scripts = [
+    scripts=[
         'scripts/html_indent_fix.py',
         'scripts/pandoctools-import',
         'scripts/pandoctools-import.bat',
