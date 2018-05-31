@@ -119,19 +119,19 @@ def img(plot,
         qt: bool=False,
         ) -> str:
     """
-    plot: matplotlib.pyplot
-    name: File name to store image (without extension)
-    ext: File extension
+    :plot: matplotlib.pyplot
+    :name: File name to store image (without extension)
+    :ext: File extension
         default 'svg'
-    dpi: DPI for PNG
+    :dpi: DPI for PNG
         default 300
-    preview_width: Hydrogen img preview width
+    :preview_width: Hydrogen img preview width
         default '600px'
-    hide: Whether to show Hydrogen and Qt plots at all
-    qt: Whether to show interactive plot via Qt
+    :hide: Whether to show Hydrogen and Qt plots at all
+    :qt: Whether to show interactive plot via Qt
         Presumably mpl.use('Qt5Agg') was called
 
-    return: url: Image URL if KNITTY is True
+    :return: url: Image URL if KNITTY is True
         else ""
     """
     ext = ext if (ext is not None) else _ext
@@ -179,5 +179,9 @@ def img(plot,
     return url if _knitty else ""
 
 
-def subplot(rows: int, columns: int, position: int):
-    return rows, columns, position
+def subplot(figure, rows: int, columns: int, position: int):
+    """
+    :position: count pos. in rows x columns matrix
+    :return: figure.add_subplot(rows, columns, position)
+    """
+    return fig.add_subplot(rows, columns, position)
