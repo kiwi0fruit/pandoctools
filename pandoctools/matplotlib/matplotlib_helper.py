@@ -181,14 +181,6 @@ def img(plot,
     return url if _knitty else ""
 
 
-def subplot(figure, rows: int, columns: int, position: int):
-    """
-    :position: count pos. in rows x columns matrix
-    :return: figure.add_subplot(rows, columns, position)
-    """
-    return figure.add_subplot(rows, columns, position)
-
-
 def dump2D(file_path: str,
             matrix: np.ndarray=None,
             x: np.ndarray=None,
