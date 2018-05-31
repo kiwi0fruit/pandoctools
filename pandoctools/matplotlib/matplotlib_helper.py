@@ -27,6 +27,8 @@ from sugartex import sugartex, stex, stex2
 import matplotlib as mpl
 from matplotlib import font_manager
 from IPython.display import display, Markdown
+import numpy as np
+import pandas as pd
 # import subprocess.call
 # import os
 
@@ -185,3 +187,22 @@ def subplot(figure, rows: int, columns: int, position: int):
     :return: figure.add_subplot(rows, columns, position)
     """
     return figure.add_subplot(rows, columns, position)
+
+
+def dump2D(file_path: str,
+            matrix: np.ndarray=None,
+            x: np.ndarray=None,
+            y: np.ndarray=None,
+            header=False) -> None:
+    """
+    Dumps 2D plot agruments to CSV. Provide 2D marrix OR two 1D arrays.
+
+    :matrix: 2D marrix
+    :x: 1D array
+    :y: 1D array
+    :header: boolean or list of string, default True
+        Write out the column names. If a list of strings is given
+        it is assumed to be aliases for the column names
+    """
+    df = pd.DataFrame(np.array((x, y)).T if (matrix is None) else matrix)
+    df.to_csv(file_path, header=header, index=None)
