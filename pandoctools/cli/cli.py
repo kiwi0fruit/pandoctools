@@ -209,13 +209,16 @@ May be (?) for security concerns the user data folder should be set to write-all
 @click.option('--stdio', is_flag=True, default=False,
               help="Read document form stdin and write to stdout in a silent mode. " +
                    "INPUT_FILE only gives a file path. If --stdio was set but stdout = '' " +
-                   "then the profile always writes output file to disc with these options.")
+                   "then the profile (not Pandoctools itself) always writes output file to disc with these options.")
 @click.option('--stdin', is_flag=True, default=False,
-              help="Same as --std but always writes output file to disc (suppresses --std).")
+              help="Same as --std but always writes output file to disc (suppresses --stdio).")
 @click.option('--cwd', is_flag=True, default=False,
               help="Use real CWD everywhere (instead of input file dir).")
+@click.option('--detailed-out', is_flag=True, default=False,
+              help="In --stdio and --stdin modes print stdout together with " +
+                   "yaml metadata section with 'outpath' and 'output' keys (when --stdin 'output: None').")
 @click.option('--debug', is_flag=True, default=False, help="Debug mode.")
-def pandoctools(input_file, profile, out, stdio, stdin, cwd, debug):
+def pandoctools(input_file, profile, out, stdio, stdin, cwd, detailed_out, debug):
     """
     Sets environment variables:
     * scripts, import, source
@@ -377,22 +380,35 @@ def pandoctools(input_file, profile, out, stdio, stdin, cwd, debug):
         print(proc.stderr, file=sys.stderr)
 
     # forward output:
-    stdout = proc.stdout if (proc.stdout is not None) else ""
+    stdout = proc.stdout if (proc.stdout is not None) else ''
+    if detailed_out:
+        with io.StringIO() as f:
+            dic = {'outpath': output_file}
+            if stdin or (stdout == ''):
+                dic['output'] = 'None'
+            yaml.dump(dic, f, default_flow_style=False)
+            meta = '---\n' + f.getvalue() + '...\n'
+    else:
+        meta = ''
+
+    output_stream = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
     if not stdio or stdin:
         def _print(s):
             if not stdin:
-                print(s)
-        if stdout != "":
-            print(stdout, file=open(output_file, 'w', encoding="utf-8"))
-            _print('Pandoctools wrote profile\'s stdout to:')
+                try:
+                    print(s)
+                except UnicodeEncodeError:
+                    print(str(s).encode('utf-8'))
+
+        if detailed_out:
+            output_stream.write(meta)
+
+        if stdout != '':
+            print(stdout, end='', file=open(output_file, 'w', encoding='utf-8'))
+            _print("Pandoctools wrote profile's stdout to:\n    " + output_file)
         else:
-            _print('Profile\'s stdout is empty. Presumably profile wrote to:')
-        try:
-            _print('    ' + output_file)
-        except UnicodeEncodeError:
-            _print(('    ' + output_file).encode('utf-8'))
+            _print("Profile's stdout is empty. Presumably profile wrote to:\n    " + output_file)
         if not stdin:
-            input("Press Enter to continue...")
+            input('Press Enter to continue...')
     else:
-        output_stream = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
-        output_stream.write(stdout)  # sys.stdout.write(proc.stdout)
+        output_stream.write(meta + stdout)  # sys.stdout.write(proc.stdout)
