@@ -157,7 +157,7 @@ setup(
         ],
     },
     scripts=[
-        'scripts/html_indent_fix.py',
+        'scripts/pandoc19_fix_html_indent.py',
         'scripts/pandoctools-import',
         'scripts/pandoctools-import.bat',
         'scripts/pandoctools-resolve',
