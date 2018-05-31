@@ -81,16 +81,14 @@ class PostInstallCommand(install):
         # Write INI:
         config_file = p.join(pandoctools_user, 'Defaults.ini')
         config = configparser.ConfigParser(interpolation=None)
+        default_sect = DEFAULTS_INI.copy()
         if p.exists(config_file):
             config.read(config_file)
             try:
-                default_sect = DEFAULTS_INI.copy()
-                default_sect.update(dict(config.items('Default')))
+                d = config.items('Default')
+                default_sect.update(dict(d))
             except configparser.NoSectionError:
-                default_sect = DEFAULTS_INI.copy()
-        else:
-            default_sect = DEFAULTS_INI.copy()
-
+                pass
         default_sect['pandoctools'] = pandoctools_bin
         if p.exists(p.expandvars(default_sect['win_bash'])):
             pandoctools_core = _pandoctools_core
