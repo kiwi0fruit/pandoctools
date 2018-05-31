@@ -8,4 +8,4 @@ sugartex "$stex" | \
 pandoc-crossref "$to" | \
 pandoc -f json "${writer_args[@]}" | \
 knotedown --match=in --nomagic | \
-jupyter nbconvert --to notebook --stdin --stdout
+jupyter nbconvert --to notebook --execute --stdin --stdout

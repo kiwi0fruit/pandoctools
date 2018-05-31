@@ -9,4 +9,4 @@
 %r% pandoc-crossref %to% | ^
 %r% pandoc -f json %writer_args% | ^
 %r% knotedown --match=in --nomagic | ^
-%r% jupyter nbconvert --to notebook --stdin --stdout
+%r% jupyter nbconvert --to notebook --execute --stdin --stdout
