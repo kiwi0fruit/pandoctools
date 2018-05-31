@@ -177,3 +177,7 @@ def img(plot,
     if (not hide) and qt:
         plot.show()
     return url if _knitty else ""
+
+
+def subplot(rows: int, columns: int, position: int):
+    return rows, columns, position
