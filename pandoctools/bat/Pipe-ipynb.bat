@@ -8,5 +8,5 @@
 %r% sugartex %stex% | ^
 %r% pandoc-crossref %to% | ^
 %r% pandoc -f json %writer_args% | ^
-%r% knotedown --match=in --nomagic > "%output_file%"
-%r% jupyter nbconvert --to notebook --execute "%output_file%"
+%r% knotedown --match=in --nomagic | ^
+%r% jupyter nbconvert --to notebook --stdin --stdout

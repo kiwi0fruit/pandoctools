@@ -7,5 +7,5 @@ knitty "${input_file}" "${reader_args[@]}" "${writer_args[@]}" --to-ipynb | \
 sugartex "$stex" | \
 pandoc-crossref "$to" | \
 pandoc -f json "${writer_args[@]}" | \
-knotedown --match=in --nomagic > "${output_file}"
-jupyter nbconvert --to notebook --execute "${output_file}"
+knotedown --match=in --nomagic | \
+jupyter nbconvert --to notebook --stdin --stdout
