@@ -10,7 +10,7 @@ import versioneer
 import io
 
 DEFAULTS_INI = {'profile': 'Default',
-                'out': '*.html',
+                'out': '*.*.md',
                 'root_env': '',
                 'win_bash': r'%PROGRAMFILES%\Git\bin\bash.exe'}
 
