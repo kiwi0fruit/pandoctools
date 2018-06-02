@@ -113,7 +113,7 @@ class ShortCutter(object):
                     os.makedirs(os.path.dirname(target))
                 open(target, 'a').close()
                 clean = True
-            except OSError, IOError:
+            except (OSError, IOError):
                 sys.stderr.write(''.join(traceback.format_exc()))
 
         # Create shortcut to the target_path:
