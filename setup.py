@@ -19,34 +19,6 @@ with open(p.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 
-def desktop_dir_shortcut(shortcut_name, target_path):
-    if not p.isdir(target_path):
-        os.makedirs(target_path)
-    if os.name == 'nt':
-        from win32com.client import Dispatch
-        import winshell
-        shell = Dispatch('WScript.Shell')
-        shortcut_file = p.join(winshell.desktop(), shortcut_name + '.lnk')
-        shortcut = shell.CreateShortCut(shortcut_file)
-        shortcut.Targetpath = target_path
-        shortcut.WorkingDirectory = target_path
-        shortcut.save()
-        return ""
-    elif os.name != 'darwin':
-        import subprocess
-        desktop = subprocess.check_output([
-            'xdg-user-dir',
-            'DESKTOP'
-        ]).decode('utf-8').strip()
-        shortcut_path = p.join(desktop, shortcut_name)
-        if p.exists(shortcut_path):
-            os.remove(shortcut_path)
-        os.symlink(target_path, shortcut_path)
-        return ""
-    else:
-        return 'WARNING: "{}" folder shortcut was not implemented for macOS.'
-
-
 class PostInstallCommand(install):
     """Post-installation for installation mode."""
     def run(self):
@@ -66,17 +38,15 @@ class PostInstallCommand(install):
             bash_append = ''
 
         # Create shortcuts:
-        if not p.exists(pandoctools_bin):
-            open(pandoctools_bin, 'a').close()
         try:
             sc = ShortCutter()
-            sc.create_desktop_shortcut(pandoctools_bin)
-            sc.create_menu_shortcut(pandoctools_bin)
-            error_log += desktop_dir_shortcut('Pandoctools User Data', pandoctools_user)
-            error_log += desktop_dir_shortcut('Pandoctools Core Data', pandoctools_core)
-            error_log += desktop_dir_shortcut('Pandoctools Core Data' + bash_append, _pandoctools_core)
+            sc.create_desktop_shortcut(pandoctools_bin, virtual=True)
+            sc.create_menu_shortcut(pandoctools_bin, virtual=True)
+            sc.create_desktop_shortcut('Pandoctools User Data', pandoctools_user, target_is_dir=True)
+            sc.create_shortcut_to_dir('Pandoctools Core Data', pandoctools_core)
+            sc.create_shortcut_to_dir('Pandoctools Core Data' + bash_append, _pandoctools_core)
         except:
-            error_log += 'WARNING: Failed to create desktop shortcuts.\n\n' + ''.join(traceback.format_exc())
+            sys.stderr.write('\nWARNING: Failed to create desktop shortcuts.\n\n' + ''.join(traceback.format_exc())
 
         # Write INI:
         config_file = p.join(pandoctools_user, 'Defaults.ini')
