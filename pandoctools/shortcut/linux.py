@@ -23,7 +23,7 @@ class ShortCutterLinux(ShortCutter):
 
         Returns shortcut_file_path
         """
-        shortcut_path = p.join(shortcut_directory, target_name)
+        shortcut_path = os.path.join(shortcut_directory, target_name)
         if os.path.islink(shortcut_path):
             os.remove(shortcut_path)
         os.symlink(target_path, shortcut_path)
