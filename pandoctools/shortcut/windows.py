@@ -27,9 +27,9 @@ from .base import ShortCutter
 
 class ShortCutterWindows(ShortCutter):
 
-    def __init__(self):
+    def __init__(self, err_file=None):
         self.executable_file_extensions = os.environ['PATHEXT'].split(os.pathsep)
-        super(ShortCutterWindows, self).__init__()
+        super(ShortCutterWindows, self).__init__(err_file)
 
     def _get_desktop_folder(self):
         return winshell.desktop()
