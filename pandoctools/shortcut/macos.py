@@ -4,11 +4,14 @@ from .linux import ShortCutterLinux
 from tempfile import NamedTemporaryFile
 import subprocess
 
+
 class ShortCutterMacOS(ShortCutterLinux):
-            
+    def _get_desktop_folder(self):
+        return os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
+
     def _get_menu_folder(self):
         return os.path.join('/', 'Applications') 
-        
+
     def _create_shortcut_file(self, target_name, target_path, shortcut_directory):
         """
         Creates a MacOS app which opens an executable via the terminal

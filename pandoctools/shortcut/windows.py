@@ -18,10 +18,12 @@ except ImportError as e:
         raise e
 
 import winshell
+from win32com.client import Dispatch
 import sys
 import os
 from .exception import *
 from .base import ShortCutter
+
 
 class ShortCutterWindows(ShortCutter):
 
@@ -30,16 +32,33 @@ class ShortCutterWindows(ShortCutter):
         super(ShortCutterWindows, self).__init__()
 
     def _get_desktop_folder(self):
-        return winshell.folder("CSIDL_DESKTOPDIRECTORY")
-        
+        return winshell.desktop()
+
     def _get_menu_folder(self):
         return winshell.folder("CSIDL_PROGRAMS")
+
+    def _create_shortcut_to_dir(self, target_name, target_path, shortcut_directory):
+        """
+        Creates a Windows shortcut file for a directory.
+        This might be the same as _create_shortcut_file but it needs testing.
+        TODO: merge with _create_shortcut_file
+
+        Returns shortcut_file_path
+        """
+        shell = Dispatch('WScript.Shell')
+        shortcut_file_path = os.path.join(shortcut_directory, target_name + '.lnk')
+        shortcut = shell.CreateShortCut(shortcut_file_path)
+        shortcut.Targetpath = target_path
+        shortcut.WorkingDirectory = target_path
+        shortcut.save()
+
+        return shortcut_file_path
 
     def _create_shortcut_file(self, target_name, target_path, shortcut_directory):
         """
         Creates a Windows shortcut file.
 
-        Returns a tuple of (target_name, target_path, shortcut_file_path)
+        Returns (target_name, target_path, shortcut_file_path)
         """
         shortcut_file_path = os.path.join(shortcut_directory, target_name + ".lnk")
 
@@ -50,7 +69,7 @@ class ShortCutterWindows(ShortCutter):
             Description = "Shortcut to" + target_name)
 
         return shortcut_file_path
-           
+
     def _is_file_the_target(self, target, file_name, file_path):
         match = False
         # does the target have an extension?
@@ -74,7 +93,7 @@ class ShortCutterWindows(ShortCutter):
         Returns a list of paths.
         """
         paths = super(ShortCutterWindows, self)._get_paths()
-        
+
         # add the python scripts path
         python_scripts_path = self._get_python_scripts_path()
         if python_scripts_path not in paths:

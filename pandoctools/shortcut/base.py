@@ -2,6 +2,8 @@ import sys
 import os
 import stat
 from .exception import *
+import traceback
+
 
 class ShortCutter(object):
     """
@@ -22,12 +24,12 @@ class ShortCutter(object):
     # should be overridden
     def _get_desktop_folder(self):
         raise ShortcutError("_get_desktop_folder needs overriding")
-    
+
     # should be overridden
     def _get_menu_folder(self):
         raise ShortcutError("_get_menu_folder needs overriding")
 
-    def create_desktop_shortcut(self, target):
+    def create_desktop_shortcut(self, target, target_name=None, virtual=False):
         """
         Creates a desktop shortcut to a target.
 
@@ -35,15 +37,19 @@ class ShortCutter(object):
             The target to create a shortcut for, it can be a fully qualified
             file path `/path/to/my_program` or a simple application name 
             `my_program`.
+        :param str target_name:
+            Name of the shortcut without extension
+        :param bool virtual:
+            whether to allow shortcuts to yet non-existing files
 
         Returns a tuple of (target_name, target_path, shortcut_file_path)
         """
         if not os.path.isdir(self._desktop_folder):
             raise ShortcutNoDesktopError("Desktop folder '{}' not found".format(self._desktop_folder))
 
-        return self.create_shortcut(target, self._desktop_folder)
+        return self.create_shortcut(target, self._desktop_folder, target_name, virtual)
 
-    def create_menu_shortcut(self, target):
+    def create_menu_shortcut(self, target, target_name=None, virtual=False):
         """
         Creates a menu shortcut to a target.
 
@@ -51,15 +57,19 @@ class ShortCutter(object):
             The target to create a shortcut for, it can be a fully qualified
             file path `/path/to/my_program` or a simple application name 
             `my_program`.
-        
+        :param str target_name:
+            Name of the shortcut without extension
+        :param bool virtual:
+            whether to allow shortcuts to yet non-existing files
+
         Returns a tuple of (target_name, target_path, shortcut_file_path)
         """
         if not os.path.isdir(self._menu_folder):
             raise ShortcutNoMenuError("Menu folder '{}' not found".format(self._menu_folder))
 
-        return self.create_shortcut(target, self._menu_folder) 
+        return self.create_shortcut(target, self._menu_folder, target_name, virtual) 
 
-    def create_shortcut(self, target, shortcut_directory):
+    def create_shortcut(self, target, shortcut_directory, target_name=None, virtual=False):
         """
         Creates a shortcut to a target.
 
@@ -67,25 +77,57 @@ class ShortCutter(object):
             The target to create a shortcut for, it can be a fully qualified
             file path `/path/to/my_program` or a simple application name 
             `my_program`.
-
+        :param bool virtual:
+            whether to allow shortcuts to yet non-existing files
+        :param str target_name:
+            Name of the shortcut without extension
         :param str shortcut_directory:
             The directory path where the shortcut should be created.
 
         Returns a tuple of (target_name, target_path, shortcut_file_path)
         """
-        # get the target name by getting the file name and removing the extension
-        target_name = os.path.splitext(os.path.basename(target))[0]
+        if target_name is None:
+            # get the target name by getting the file name and removing the extension
+            target_name = os.path.splitext(os.path.basename(target))[0]
 
         # find for the target path  
         target_path = self.find_target(target)
 
+        # Create temporal file in order to create shortcut in virtual mode:
+        clean = False
+        if virtual and (target_path is None):
+            try:
+                os.makedirs(os.path.dirname(target))
+                open(target, 'a').close()
+                clean = True
+            except OSError, IOError:
+                sys.stderr.write(traceback.format_exc())
+
+        # Create shortcut:
         shortcut_file_path = self._create_shortcut_file(target_name, target_path, shortcut_directory)
+
+        # Delete temporal file:
+        if clean:
+            os.remove(target)
 
         return (target_name, target_path, shortcut_file_path)
 
-    #needs overriding
+    def create_shortcut_to_dir(self, target_name, target_path, shortcut_directory):
+    """
+    Creates a shortcut to a direcrory.
+
+    Returns a tuple of (target_name, target_path, shortcut_file_path)
+    """
+    shortcut_file_path = self._create_shortcut_file(target_name, target_path, shortcut_directory)
+    return (target_name, target_path, shortcut_file_path)
+
+    # should be overridden
+    def _create_shortcut_to_dir(self, target_name, target_path, shortcut_directory):
+        raise ShortcutError("_create_shortcut_to_dir needs overriding")
+
+    # should be overridden
     def _create_shortcut_file(self, target_name, target_path, shortcut_directory):
-        raise ShortcutError("create_shortcut_file needs overriding")
+        raise ShortcutError("_create_shortcut_file needs overriding")
 
     def find_target(self, target):
         """
@@ -151,7 +193,7 @@ class ShortCutter(object):
         """
         # get folders from PATH
         paths = os.environ['PATH'].split(os.pathsep)
-        
+
         return paths
 
     @property
