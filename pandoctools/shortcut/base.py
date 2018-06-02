@@ -118,6 +118,7 @@ class ShortCutter(object):
                 print(''.join(traceback.format_exc()), file=self.err_file)
 
         # Create shortcut to the target_path:
+        print(os.path.isfile(target), file=self.err_file)
         try:
             shortcut_file_path = self._create_shortcut_file(target_name, target_path, shortcut_directory)
         except:
