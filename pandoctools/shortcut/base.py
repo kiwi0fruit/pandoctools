@@ -18,7 +18,7 @@ class ShortCutter(object):
     """
 
     def __init__(self, err_file=None):
-        self.err_file = sys.stderr if (err is None) else err_file
+        self.err_file = sys.stderr if (err_file is None) else err_file
         self._desktop_folder = self._get_desktop_folder()
         self._menu_folder = self._get_menu_folder()
 

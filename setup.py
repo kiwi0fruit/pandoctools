@@ -21,9 +21,12 @@ with open(p.join(here, 'README.rst'), encoding='utf-8') as f:
 
 
 class PostInstallCommand(install):
-    """Post-installation for installation mode."""
+    """
+    Post-installation for installation mode.
+    """
     def run(self):
         error_log = io.StringIO()
+
         # Set pandoctools_core:
         if os.name == 'nt':
             _pdt = p.join(p.dirname(sys.executable), 'Lib', 'site-packages', 'pandoctools')
