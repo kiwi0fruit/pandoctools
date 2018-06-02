@@ -23,6 +23,7 @@ with open(p.join(here, 'README.rst'), encoding='utf-8') as f:
 class PostInstallCommand(install):
     """Post-installation for installation mode."""
     def run(self):
+        error_log = io.StringIO()
         # Set pandoctools_core:
         if os.name == 'nt':
             _pdt = p.join(p.dirname(sys.executable), 'Lib', 'site-packages', 'pandoctools')
@@ -37,14 +38,14 @@ class PostInstallCommand(install):
 
         # Create shortcuts:
         try:
-            sc = ShortCutter()
+            sc = ShortCutter(error_log)
             sc.create_desktop_shortcut(pandoctools_bin)
             sc.create_menu_shortcut(pandoctools_bin)
             sc.create_desktop_shortcut(pandoctools_user, 'Pandoctools User Data', target_is_dir=True)
             sc.create_shortcut_to_dir(pandoctools_core, pandoctools_user, 'Pandoctools Core Data')
             sc.create_shortcut_to_dir(_pandoctools_core, pandoctools_user, 'Pandoctools Core Data' + bash_append)
         except:
-            print('WARNING: Failed to create desktop shortcuts:\n\n' + ''.join(traceback.format_exc()), file=sys.stderr)
+            print('WARNING: Failed to create desktop shortcuts:\n\n' + ''.join(traceback.format_exc()), file=error_log)
 
         # Write INI:
         config_file = p.join(pandoctools_user, 'Defaults.ini')
@@ -69,13 +70,12 @@ class PostInstallCommand(install):
             with open(config_file, 'w') as file:
                 config.write(file)
         except:
-            print('WARNING: Failed to create ini file.\n\n' + ''.join(traceback.format_exc()), file=sys.stderr)
-            print('File:\n{}\n\n{}'.format(config_file, config_str), file=sys.stderr)
+            print('WARNING: Failed to create ini file.\n\n' + ''.join(traceback.format_exc()), file=error_log)
+            print('File:\n{}\n\n{}'.format(config_file, config_str), file=error_log)
 
         # Dump error log:
-        # error_log = ""
-        # if error_log != "":
-        print(sys.stderr.read(), file=open(p.join(p.join(p.expanduser('~')), 'pandoctools_install_error_log.txt'), 'w', encoding="utf-8"))
+        print(error_log, file=open(p.join(p.join(p.expanduser('~')), 'pandoctools_install_error_log.txt'), 'w', encoding="utf-8"))
+        error_log.close()
 
         install.run(self)
 

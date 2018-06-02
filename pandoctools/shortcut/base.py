@@ -17,7 +17,8 @@ class ShortCutter(object):
         s.create_menu_shortcut("python")
     """
 
-    def __init__(self):
+    def __init__(self, err_file=None):
+        self.err_file = sys.stderr if (err is None) else err_file
         self._desktop_folder = self._get_desktop_folder()
         self._menu_folder = self._get_menu_folder()
 
@@ -48,7 +49,7 @@ class ShortCutter(object):
         Returns a tuple of (target_name, target_path, shortcut_file_path) or None
         """
         if not os.path.isdir(self._desktop_folder):
-            sys.stderr.write("Desktop folder '{}' not found.\n".format(self._desktop_folder))
+            print("Desktop folder '{}' not found.\n".format(self._desktop_folder), file=self.err_file)
         else:
             if target_is_dir:
                 return self.create_shortcut_to_dir(target, self._desktop_folder, target_name)
@@ -74,7 +75,7 @@ class ShortCutter(object):
         Returns a tuple of (target_name, target_path, shortcut_file_path) or None
         """
         if not os.path.isdir(self._menu_folder):
-            sys.stderr.write("Menu folder '{}' not found.\n".format(self._menu_folder))
+            print("Menu folder '{}' not found.\n".format(self._menu_folder), file=self.err_file)
         else:
             if target_is_dir:
                 return self.create_shortcut_to_dir(target, self._menu_folder, target_name)
@@ -114,14 +115,14 @@ class ShortCutter(object):
                 open(target, 'a').close()
                 clean = True
             except (OSError, IOError):
-                sys.stderr.write(''.join(traceback.format_exc()))
+                print(''.join(traceback.format_exc()), file=self.err_file)
 
         # Create shortcut to the target_path:
         try:
             shortcut_file_path = self._create_shortcut_file(target_name, target_path, shortcut_directory)
         except:
             shortcut_file_path = None
-            sys.stderr.write(''.join(traceback.format_exc()))
+            print(''.join(traceback.format_exc()), file=self.err_file)
 
         # Delete temporal file:
         if clean:
@@ -151,14 +152,14 @@ class ShortCutter(object):
             try:
                 os.makedirs(target_path)
             except OSError:
-                sys.stderr.write(''.join(traceback.format_exc()))
+                print(''.join(traceback.format_exc()), file=self.err_file)
 
         # Create shortcut to the target_path:
         try:
             shortcut_file_path = self._create_shortcut_to_dir(target_name, target_path, shortcut_directory)
         except:
             shortcut_file_path = None
-            sys.stderr.write(''.join(traceback.format_exc()))
+            print(''.join(traceback.format_exc()), file=self.err_file)
 
         return (target_name, target_path, shortcut_file_path)
 
