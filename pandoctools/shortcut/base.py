@@ -29,7 +29,7 @@ class ShortCutter(object):
     def _get_menu_folder(self):
         raise ShortcutError("_get_menu_folder needs overriding")
 
-    def create_desktop_shortcut(self, target, target_name=None, target_is_dir=False, virtual=False):
+    def create_desktop_shortcut(self, target, target_name=None, target_is_dir=False, virtual=True):
         """
         Creates a desktop shortcut to a target.
 
@@ -48,14 +48,14 @@ class ShortCutter(object):
         Returns a tuple of (target_name, target_path, shortcut_file_path) or None
         """
         if not os.path.isdir(self._desktop_folder):
-            sys.stderr.write("Desktop folder '{}' not found".format(self._desktop_folder))
+            sys.stderr.write("Desktop folder '{}' not found.\n".format(self._desktop_folder))
         else:
             if target_is_dir:
                 return self.create_shortcut_to_dir(target, self._desktop_folder, target_name)
             else:
                 return self.create_shortcut(target, self._desktop_folder, target_name, virtual)
 
-    def create_menu_shortcut(self, target, target_name=None, target_is_dir=False, virtual=False):
+    def create_menu_shortcut(self, target, target_name=None, target_is_dir=False, virtual=True):
         """
         Creates a menu shortcut to a target.
 
@@ -74,14 +74,14 @@ class ShortCutter(object):
         Returns a tuple of (target_name, target_path, shortcut_file_path) or None
         """
         if not os.path.isdir(self._menu_folder):
-            sys.stderr.write("Menu folder '{}' not found".format(self._menu_folder))
+            sys.stderr.write("Menu folder '{}' not found.\n".format(self._menu_folder))
         else:
             if target_is_dir:
                 return self.create_shortcut_to_dir(target, self._menu_folder, target_name)
             else:
                 return self.create_shortcut(target, self._menu_folder, target_name, virtual) 
 
-    def create_shortcut(self, target, shortcut_directory, target_name=None, virtual=False):
+    def create_shortcut(self, target, shortcut_directory, target_name=None, virtual=True):
         """
         Creates a shortcut to a target.
 
@@ -114,14 +114,14 @@ class ShortCutter(object):
                 open(target, 'a').close()
                 clean = True
             except OSError, IOError:
-                sys.stderr.write(traceback.format_exc())
+                sys.stderr.write(''.join(traceback.format_exc()))
 
         # Create shortcut to the target_path:
         try:
             shortcut_file_path = self._create_shortcut_file(target_name, target_path, shortcut_directory)
         except:
             shortcut_file_path = None
-            sys.stderr.write(traceback.format_exc())
+            sys.stderr.write(''.join(traceback.format_exc()))
 
         # Delete temporal file:
         if clean:
@@ -151,14 +151,14 @@ class ShortCutter(object):
             try:
                 os.makedirs(target_path)
             except OSError:
-                sys.stderr.write(traceback.format_exc())
+                sys.stderr.write(''.join(traceback.format_exc()))
 
         # Create shortcut to the target_path:
         try:
             shortcut_file_path = self._create_shortcut_to_dir(target_name, target_path, shortcut_directory)
         except:
             shortcut_file_path = None
-            sys.stderr.write(traceback.format_exc())
+            sys.stderr.write(''.join(traceback.format_exc()))
 
         return (target_name, target_path, shortcut_file_path)
 

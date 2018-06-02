@@ -8,6 +8,7 @@ from pandoctools.shortcut import ShortCutter
 from pandoctools.cli import pandoctools_user, pandoctools_bin
 import versioneer
 import io
+import sys
 
 DEFAULTS_INI = {'profile': 'Default',
                 'out': '*.*.md',
@@ -22,11 +23,8 @@ with open(p.join(here, 'README.rst'), encoding='utf-8') as f:
 class PostInstallCommand(install):
     """Post-installation for installation mode."""
     def run(self):
-        error_log = ""
-
         # Set pandoctools_core:
         if os.name == 'nt':
-            import sys
             _pdt = p.join(p.dirname(sys.executable), 'Lib', 'site-packages', 'pandoctools')
             pandoctools_core = p.join(_pdt, 'bat')
             _pandoctools_core = p.join(_pdt, 'sh')
@@ -40,13 +38,13 @@ class PostInstallCommand(install):
         # Create shortcuts:
         try:
             sc = ShortCutter()
-            sc.create_desktop_shortcut(pandoctools_bin, virtual=True)
-            sc.create_menu_shortcut(pandoctools_bin, virtual=True)
-            sc.create_desktop_shortcut('Pandoctools User Data', pandoctools_user, target_is_dir=True)
-            sc.create_shortcut_to_dir('Pandoctools Core Data', pandoctools_core)
-            sc.create_shortcut_to_dir('Pandoctools Core Data' + bash_append, _pandoctools_core)
+            sc.create_desktop_shortcut(pandoctools_bin)
+            sc.create_menu_shortcut(pandoctools_bin)
+            sc.create_desktop_shortcut(pandoctools_user, 'Pandoctools User Data', target_is_dir=True)
+            sc.create_shortcut_to_dir(pandoctools_core, pandoctools_user, 'Pandoctools Core Data')
+            sc.create_shortcut_to_dir(_pandoctools_core, pandoctools_user, 'Pandoctools Core Data' + bash_append)
         except:
-            sys.stderr.write('\nWARNING: Failed to create desktop shortcuts.\n\n' + ''.join(traceback.format_exc())
+            print('WARNING: Failed to create desktop shortcuts:\n\n' + ''.join(traceback.format_exc()), file=sys.stderr)
 
         # Write INI:
         config_file = p.join(pandoctools_user, 'Defaults.ini')
@@ -71,12 +69,13 @@ class PostInstallCommand(install):
             with open(config_file, 'w') as file:
                 config.write(file)
         except:
-            error_log += 'WARNING: Failed to create ini file.\n\n' + ''.join(traceback.format_exc())
-            error_log += '\nFile:\n{}\n\n{}'.format(config_file, config_str)
+            print('WARNING: Failed to create ini file.\n\n' + ''.join(traceback.format_exc()), file=sys.stderr)
+            print('File:\n{}\n\n{}'.format(config_file, config_str), file=sys.stderr)
 
         # Dump error log:
-        if error_log != "":
-            print(error_log, file=open(p.join(pandoctools_core, 'install_error_log.txt'), 'w', encoding="utf-8"))
+        # error_log = ""
+        # if error_log != "":
+        #     print(error_log, file=open(p.join(pandoctools_core, 'install_error_log.txt'), 'w', encoding="utf-8"))
 
         install.run(self)
 
