@@ -49,7 +49,7 @@ class ShortCutter(object):
         Returns a tuple of (target_name, target_path, shortcut_file_path) or None
         """
         if not os.path.isdir(self._desktop_folder):
-            print("Desktop folder '{}' not found.\n".format(self._desktop_folder), file=self.err_file)
+            self.err_file.write("Desktop folder '{}' not found.\n".format(self._desktop_folder))
         else:
             if target_is_dir:
                 return self.create_shortcut_to_dir(target, self._desktop_folder, target_name)
@@ -75,7 +75,7 @@ class ShortCutter(object):
         Returns a tuple of (target_name, target_path, shortcut_file_path) or None
         """
         if not os.path.isdir(self._menu_folder):
-            print("Menu folder '{}' not found.\n".format(self._menu_folder), file=self.err_file)
+            self.err_file.write("Menu folder '{}' not found.\n".format(self._menu_folder))
         else:
             if target_is_dir:
                 return self.create_shortcut_to_dir(target, self._menu_folder, target_name)
@@ -116,7 +116,7 @@ class ShortCutter(object):
                 target_path = self.find_target(target)
                 clean = True
             except (OSError, IOError):
-                print(''.join(traceback.format_exc()), file=self.err_file)
+                self.err_file.write(''.join(traceback.format_exc()))
 
         # Create shortcut to the target_path:
         # noinspection PyBroadException
@@ -124,7 +124,7 @@ class ShortCutter(object):
             shortcut_file_path = self._create_shortcut_file(target_name, target_path, shortcut_directory)
         except:
             shortcut_file_path = None
-            print(''.join(traceback.format_exc()), file=self.err_file)
+            self.err_file.write(''.join(traceback.format_exc()))
 
         # Delete temporal file:
         if clean:
@@ -154,7 +154,7 @@ class ShortCutter(object):
             try:
                 os.makedirs(target_path)
             except OSError:
-                print(''.join(traceback.format_exc()), file=self.err_file)
+                self.err_file.write(''.join(traceback.format_exc()))
 
         # Create shortcut to the target_path:
         # noinspection PyBroadException
@@ -162,7 +162,7 @@ class ShortCutter(object):
             shortcut_file_path = self._create_shortcut_to_dir(target_name, target_path, shortcut_directory)
         except:
             shortcut_file_path = None
-            print(''.join(traceback.format_exc()), file=self.err_file)
+            self.err_file.write(''.join(traceback.format_exc()))
 
         return target_name, target_path, shortcut_file_path
 
