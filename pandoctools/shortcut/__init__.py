@@ -1,3 +1,4 @@
+from .exception import *
 # get operating system
 import sys
 platform = sys.platform
@@ -8,13 +9,12 @@ if sys.platform.startswith("linux"):
 if platform == "win32":
     from .windows import ShortCutterWindows as ShortCutter
 elif platform == "linux":
-    from .linux import  ShortCutterLinux as ShortCutter
+    from .linux import ShortCutterLinux as ShortCutter
 elif platform == "darwin":
     from .macos import ShortCutterMacOS as ShortCutter
 else:
     raise Exception("Error: '{}' platform is not supported.")
 
-from .exception import *
 
 def main():
     
@@ -67,4 +67,3 @@ def main():
 
     except ShortcutError as e:
         print("Shortcut failed: '{}'".format(e))
-

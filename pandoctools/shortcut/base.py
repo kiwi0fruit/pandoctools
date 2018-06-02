@@ -1,6 +1,6 @@
 import sys
 import os
-import stat
+# import stat
 from .exception import *
 import traceback
 
@@ -119,6 +119,7 @@ class ShortCutter(object):
                 print(''.join(traceback.format_exc()), file=self.err_file)
 
         # Create shortcut to the target_path:
+        # noinspection PyBroadException
         try:
             shortcut_file_path = self._create_shortcut_file(target_name, target_path, shortcut_directory)
         except:
@@ -129,7 +130,7 @@ class ShortCutter(object):
         if clean:
             os.remove(target)
 
-        return (target_name, target_path, shortcut_file_path)
+        return target_name, target_path, shortcut_file_path
 
     def create_shortcut_to_dir(self, target_path, shortcut_directory, target_name=None):
         """
@@ -156,13 +157,14 @@ class ShortCutter(object):
                 print(''.join(traceback.format_exc()), file=self.err_file)
 
         # Create shortcut to the target_path:
+        # noinspection PyBroadException
         try:
             shortcut_file_path = self._create_shortcut_to_dir(target_name, target_path, shortcut_directory)
         except:
             shortcut_file_path = None
             print(''.join(traceback.format_exc()), file=self.err_file)
 
-        return (target_name, target_path, shortcut_file_path)
+        return target_name, target_path, shortcut_file_path
 
     # should be overridden
     def _create_shortcut_to_dir(self, target_name, target_path, shortcut_directory):

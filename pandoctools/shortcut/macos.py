@@ -21,7 +21,7 @@ class ShortCutterMacOS(ShortCutterLinux):
         shortcut_file_path = os.path.join(shortcut_directory, target_name + ".app")
 
         # create the AppleScript script
-        sf = NamedTemporaryFile(mode = "w")
+        sf = NamedTemporaryFile(mode="w")
         sf.write('tell application "Terminal"\n')
         sf.write('activate\n')
         sf.write('do script "{}"\n'.format(target_path))
@@ -29,7 +29,8 @@ class ShortCutterMacOS(ShortCutterLinux):
         sf.flush()
 
         # compile the script into an application
-        result = subprocess.run(["osacompile", "-o", shortcut_file_path, sf.name], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        result = subprocess.run(["osacompile", "-o", shortcut_file_path, sf.name], stdout=subprocess.PIPE,
+                                stderr=subprocess.PIPE)
         if len(result.stderr):
             raise ShortcutError("Error occured creating app - {}".format(str(result.stderr)))
 

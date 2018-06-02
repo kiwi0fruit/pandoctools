@@ -1,9 +1,7 @@
 import os
 import stat
-from .exception import *
+# from .exception import *
 from .base import ShortCutter
-import traceback
-import sys
 
 
 class ShortCutterLinux(ShortCutter):
@@ -23,10 +21,10 @@ class ShortCutterLinux(ShortCutter):
 
         Returns shortcut_file_path
         """
-        shortcut_path = os.path.join(shortcut_directory, target_name)
-        if os.path.islink(shortcut_path):
-            os.remove(shortcut_path)
-        os.symlink(target_path, shortcut_path)
+        shortcut_file_path = os.path.join(shortcut_directory, target_name)
+        if os.path.islink(shortcut_file_path):
+            os.remove(shortcut_file_path)
+        os.symlink(target_path, shortcut_file_path)
         return shortcut_file_path
 
     def _create_shortcut_file(self, target_name, target_path, shortcut_directory):
