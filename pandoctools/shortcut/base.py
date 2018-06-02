@@ -29,7 +29,7 @@ class ShortCutter(object):
     def _get_menu_folder(self):
         raise ShortcutError("_get_menu_folder needs overriding")
 
-    def create_desktop_shortcut(self, target, target_name=None, to_dir=False, virtual=False):
+    def create_desktop_shortcut(self, target, target_name=None, target_is_dir=False, virtual=False):
         """
         Creates a desktop shortcut to a target.
 
@@ -39,20 +39,23 @@ class ShortCutter(object):
             `my_program`.
         :param str target_name:
             Name of the shortcut without extension (.lnk would be appended if needed).
-        :param bool to_dir:
+        :param bool target_is_dir:
             whether it's a shortcut to a directory
         :param bool virtual:
             whether to allow shortcuts to yet non-existing files
-            (shortcuts to dir always work on non-existing dirs)
+            (shortcuts to dirs always work on non-existing dirs)
 
-        Returns a tuple of (target_name, target_path, shortcut_file_path)
+        Returns a tuple of (target_name, target_path, shortcut_file_path) or None
         """
         if not os.path.isdir(self._desktop_folder):
-            raise ShortcutNoDesktopError("Desktop folder '{}' not found".format(self._desktop_folder))
+            sys.stderr.write("Desktop folder '{}' not found".format(self._desktop_folder))
+        else:
+            if target_is_dir:
+                return self.create_shortcut_to_dir(target, self._desktop_folder, target_name)
+            else:
+                return self.create_shortcut(target, self._desktop_folder, target_name, virtual)
 
-        return self.create_shortcut(target, self._desktop_folder, target_name, virtual)
-
-    def create_menu_shortcut(self, target, target_name=None, to_dir=False, virtual=False):
+    def create_menu_shortcut(self, target, target_name=None, target_is_dir=False, virtual=False):
         """
         Creates a menu shortcut to a target.
 
@@ -62,18 +65,21 @@ class ShortCutter(object):
             `my_program`.
         :param str target_name:
             Name of the shortcut without extension (.lnk would be appended if needed).
-        :param bool to_dir:
+        :param bool target_is_dir:
             whether it's a shortcut to a directory
         :param bool virtual:
             whether to allow shortcuts to yet non-existing files
-            (shortcuts to dir always work on non-existing dirs)
+            (shortcuts to dirs always work on non-existing dirs)
 
-        Returns a tuple of (target_name, target_path, shortcut_file_path)
+        Returns a tuple of (target_name, target_path, shortcut_file_path) or None
         """
         if not os.path.isdir(self._menu_folder):
-            raise ShortcutNoMenuError("Menu folder '{}' not found".format(self._menu_folder))
-
-        return self.create_shortcut(target, self._menu_folder, target_name, virtual) 
+            sys.stderr.write("Menu folder '{}' not found".format(self._menu_folder))
+        else:
+            if target_is_dir:
+                return self.create_shortcut_to_dir(target, self._menu_folder, target_name)
+            else:
+                return self.create_shortcut(target, self._menu_folder, target_name, virtual) 
 
     def create_shortcut(self, target, shortcut_directory, target_name=None, virtual=False):
         """
@@ -110,8 +116,12 @@ class ShortCutter(object):
             except OSError, IOError:
                 sys.stderr.write(traceback.format_exc())
 
-        # Create shortcut:
-        shortcut_file_path = self._create_shortcut_file(target_name, target_path, shortcut_directory)
+        # Create shortcut to the target_path:
+        try:
+            shortcut_file_path = self._create_shortcut_file(target_name, target_path, shortcut_directory)
+        except:
+            shortcut_file_path = None
+            sys.stderr.write(traceback.format_exc())
 
         # Delete temporal file:
         if clean:
@@ -120,37 +130,37 @@ class ShortCutter(object):
         return (target_name, target_path, shortcut_file_path)
 
     def create_shortcut_to_dir(self, target_path, shortcut_directory, target_name=None):
-    """
-    Creates a shortcut to a direcrory.
+        """
+        Creates a shortcut to a direcrory.
 
-    :param str target_path:
-        The target directory path to create a shortcut for.
-    :param str shortcut_directory:
-        The directory path where the shortcut should be created.
-    :param str target_name:
-        Name of the shortcut without extension (.lnk would be appended if needed).
+        :param str target_path:
+            The target directory path to create a shortcut for.
+        :param str shortcut_directory:
+            The directory path where the shortcut should be created.
+        :param str target_name:
+            Name of the shortcut without extension (.lnk would be appended if needed).
 
-    Returns a tuple of (target_name, target_path, shortcut_file_path)
-    """
-    if target_name is None:
-        # get the target_name by getting the target dir name
-        target_name = os.path.basename(target_path)
+        Returns a tuple of (target_name, target_path, shortcut_file_path)
+        """
+        if target_name is None:
+            # get the target_name by getting the target dir name
+            target_name = os.path.basename(target_path)
 
-    # Create target_path if it doesn't exist:
-    if not os.path.isdir(target_path):
+        # Create target_path if it doesn't exist:
+        if not os.path.isdir(target_path):
+            try:
+                os.makedirs(target_path)
+            except OSError:
+                sys.stderr.write(traceback.format_exc())
+
+        # Create shortcut to the target_path:
         try:
-            os.makedirs(target_path)
-        except OSError:
+            shortcut_file_path = self._create_shortcut_to_dir(target_name, target_path, shortcut_directory)
+        except:
+            shortcut_file_path = None
             sys.stderr.write(traceback.format_exc())
 
-    # Create shortcut to the target_path:
-    try:
-        shortcut_file_path = self._create_shortcut_to_dir(target_name, target_path, shortcut_directory)
-    except:
-        shortcut_file_path = None
-        sys.stderr.write(traceback.format_exc())
-
-    return (target_name, target_path, shortcut_file_path)
+        return (target_name, target_path, shortcut_file_path)
 
     # should be overridden
     def _create_shortcut_to_dir(self, target_name, target_path, shortcut_directory):
