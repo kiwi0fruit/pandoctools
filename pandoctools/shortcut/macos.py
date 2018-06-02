@@ -16,7 +16,7 @@ class ShortCutterMacOS(ShortCutterLinux):
         """
         Creates a MacOS app which opens an executable via the terminal
 
-        Returns a the file path of the shortcut created
+        Returns the file path of the shortcut created
         """
         shortcut_file_path = os.path.join(shortcut_directory, target_name + ".app")
 

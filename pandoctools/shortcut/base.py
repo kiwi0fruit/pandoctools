@@ -38,7 +38,7 @@ class ShortCutter(object):
             file path `/path/to/my_program` or a simple application name 
             `my_program`.
         :param str target_name:
-            Name of the shortcut without extension
+            Name of the shortcut without extension (.lnk would be appended if needed).
         :param bool virtual:
             whether to allow shortcuts to yet non-existing files
 
@@ -58,7 +58,7 @@ class ShortCutter(object):
             file path `/path/to/my_program` or a simple application name 
             `my_program`.
         :param str target_name:
-            Name of the shortcut without extension
+            Name of the shortcut without extension (.lnk would be appended if needed).
         :param bool virtual:
             whether to allow shortcuts to yet non-existing files
 
@@ -77,12 +77,12 @@ class ShortCutter(object):
             The target to create a shortcut for, it can be a fully qualified
             file path `/path/to/my_program` or a simple application name 
             `my_program`.
-        :param bool virtual:
-            whether to allow shortcuts to yet non-existing files
-        :param str target_name:
-            Name of the shortcut without extension
         :param str shortcut_directory:
             The directory path where the shortcut should be created.
+        :param str target_name:
+            Name of the shortcut without extension (.lnk would be appended if needed).
+        :param bool virtual:
+            whether to allow shortcuts to yet non-existing files
 
         Returns a tuple of (target_name, target_path, shortcut_file_path)
         """
@@ -97,7 +97,8 @@ class ShortCutter(object):
         clean = False
         if virtual and (target_path is None):
             try:
-                os.makedirs(os.path.dirname(target))
+                if not os.path.isdir(os.path.dirname(target)):
+                    os.makedirs(os.path.dirname(target))
                 open(target, 'a').close()
                 clean = True
             except OSError, IOError:
@@ -112,13 +113,37 @@ class ShortCutter(object):
 
         return (target_name, target_path, shortcut_file_path)
 
-    def create_shortcut_to_dir(self, target_name, target_path, shortcut_directory):
+    def create_shortcut_to_dir(self, target_path, shortcut_directory, target_name=None):
     """
     Creates a shortcut to a direcrory.
 
+    :param str target_path:
+        The target directory path to create a shortcut for.
+    :param str shortcut_directory:
+        The directory path where the shortcut should be created.
+    :param str target_name:
+        Name of the shortcut without extension (.lnk would be appended if needed).
+
     Returns a tuple of (target_name, target_path, shortcut_file_path)
     """
-    shortcut_file_path = self._create_shortcut_file(target_name, target_path, shortcut_directory)
+    if target_name is None:
+        # get the target_name by getting the target dir name
+        target_name = os.path.basename(target_path)
+
+    # Create target_path if it doesn't exist:
+    if not os.path.isdir(target_path):
+        try:
+            os.makedirs(target_path)
+        except OSError:
+            sys.stderr.write(traceback.format_exc())
+
+    # Create shortcut to the target_path:
+    try:
+        shortcut_file_path = self._create_shortcut_to_dir(target_name, target_path, shortcut_directory)
+    except:
+        shortcut_file_path = None
+        sys.stderr.write(traceback.format_exc())
+
     return (target_name, target_path, shortcut_file_path)
 
     # should be overridden

@@ -40,8 +40,7 @@ class ShortCutterWindows(ShortCutter):
     def _create_shortcut_to_dir(self, target_name, target_path, shortcut_directory):
         """
         Creates a Windows shortcut file for a directory.
-        This might be the same as _create_shortcut_file but it needs testing.
-        TODO: merge with _create_shortcut_file
+            TODO: This might be the same as _create_shortcut_file but it needs testing.
 
         Returns shortcut_file_path
         """
@@ -58,7 +57,7 @@ class ShortCutterWindows(ShortCutter):
         """
         Creates a Windows shortcut file.
 
-        Returns (target_name, target_path, shortcut_file_path)
+        Returns shortcut_file_path
         """
         shortcut_file_path = os.path.join(shortcut_directory, target_name + ".lnk")
 

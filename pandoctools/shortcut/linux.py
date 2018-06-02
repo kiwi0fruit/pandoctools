@@ -25,22 +25,15 @@ class ShortCutterLinux(ShortCutter):
         """
         shortcut_path = p.join(shortcut_directory, target_name)
         if os.path.islink(shortcut_path):
-            try:
-                os.remove(shortcut_path)
-            except OSError:
-                sys.stderr.write(traceback.format_exc())
-        try:
-            os.symlink(target_path, shortcut_path)
-        except OSError:
-            sys.stderr.write(traceback.format_exc())
-
+            os.remove(shortcut_path)
+        os.symlink(target_path, shortcut_path)
         return shortcut_file_path
 
     def _create_shortcut_file(self, target_name, target_path, shortcut_directory):
         """
         Creates a Linux shortcut file.
 
-        Returns a tuple of (target_name, target_path, shortcut_file_path)
+        Returns shortcut_file_path
         """
         shortcut_file_path = os.path.join(shortcut_directory, "launch_" + target_name + ".desktop")
         with open(shortcut_file_path, "w") as shortcut:
