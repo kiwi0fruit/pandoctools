@@ -29,7 +29,7 @@ class ShortCutter(object):
     def _get_menu_folder(self):
         raise ShortcutError("_get_menu_folder needs overriding")
 
-    def create_desktop_shortcut(self, target, target_name=None, virtual=False):
+    def create_desktop_shortcut(self, target, target_name=None, to_dir=False, virtual=False):
         """
         Creates a desktop shortcut to a target.
 
@@ -39,8 +39,11 @@ class ShortCutter(object):
             `my_program`.
         :param str target_name:
             Name of the shortcut without extension (.lnk would be appended if needed).
+        :param bool to_dir:
+            whether it's a shortcut to a directory
         :param bool virtual:
             whether to allow shortcuts to yet non-existing files
+            (shortcuts to dir always work on non-existing dirs)
 
         Returns a tuple of (target_name, target_path, shortcut_file_path)
         """
@@ -49,7 +52,7 @@ class ShortCutter(object):
 
         return self.create_shortcut(target, self._desktop_folder, target_name, virtual)
 
-    def create_menu_shortcut(self, target, target_name=None, virtual=False):
+    def create_menu_shortcut(self, target, target_name=None, to_dir=False, virtual=False):
         """
         Creates a menu shortcut to a target.
 
@@ -59,8 +62,11 @@ class ShortCutter(object):
             `my_program`.
         :param str target_name:
             Name of the shortcut without extension (.lnk would be appended if needed).
+        :param bool to_dir:
+            whether it's a shortcut to a directory
         :param bool virtual:
             whether to allow shortcuts to yet non-existing files
+            (shortcuts to dir always work on non-existing dirs)
 
         Returns a tuple of (target_name, target_path, shortcut_file_path)
         """
