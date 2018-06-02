@@ -75,7 +75,7 @@ class PostInstallCommand(install):
         # Dump error log:
         # error_log = ""
         # if error_log != "":
-        #     print(error_log, file=open(p.join(pandoctools_core, 'install_error_log.txt'), 'w', encoding="utf-8"))
+        print(sys.stderr.read(), file=open(p.join(p.join(p.expanduser('~')), 'pandoctools_install_error_log.txt'), 'w', encoding="utf-8"))
 
         install.run(self)
 
