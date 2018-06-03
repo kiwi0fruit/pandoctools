@@ -1,6 +1,6 @@
 import os
 import stat
-from .exception import ShortcutError, ShortcutNoDesktopError, ShortcutNoMenuError
+# from .exception import ShortcutError, ShortcutNoDesktopError, ShortcutNoMenuError
 from .base import ShortCutter
 
 
@@ -10,7 +10,7 @@ class ShortCutterLinux(ShortCutter):
         try:
             return subprocess.check_output(['xdg-user-dir',
                                             'DESKTOP']).decode('utf-8').strip()
-        except CalledProcessError:
+        except subprocess.CalledProcessError:
             return os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
 
     def _get_menu_folder(self):

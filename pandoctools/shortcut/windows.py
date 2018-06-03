@@ -5,14 +5,16 @@ try:
     import win32com
 except ImportError as e:
     if "DLL load failed:" in str(e):
-        import os,sys
-        path = os.path.join(os.path.split(sys.executable)[0], "Lib","site-packages","pywin32_system32")
+        import os
+        import sys
+        path = os.path.join(os.path.split(sys.executable)[0], "Lib", "site-packages", "pywin32_system32")
         os.environ["PATH"] = os.environ["PATH"] + ";" + path
         try:
             import win32com
         except ImportError as ee:
             dll = os.listdir(path)
-            dll = [os.path.join(path,_) for _ in dll if "dll" in _]
+            dll = [os.path.join(path, _) for _ in dll if "dll" in _]
+            # TODO: Python version 2.7 does not support this syntax:
             raise ImportError("Failed to import win32com, due to missing DLL:\n" + "\n".join(dll)) from e
     else:
         raise e
@@ -21,7 +23,7 @@ import winshell
 from win32com.client import Dispatch
 import sys
 import os
-from .exception import ShortcutError, ShortcutNoDesktopError, ShortcutNoMenuError
+# from .exception import ShortcutError, ShortcutNoDesktopError, ShortcutNoMenuError
 from .base import ShortCutter
 
 
@@ -72,10 +74,10 @@ class ShortCutterWindows(ShortCutter):
         shortcut_file_path = os.path.join(shortcut_directory, target_name + ".lnk")
 
         winshell.CreateShortcut(
-            Path = os.path.join(shortcut_file_path),
-            Target = target_path,
-            Icon = (target_path, 0),
-            Description = "Shortcut to" + target_name)
+            Path=os.path.join(shortcut_file_path),
+            Target=target_path,
+            Icon=(target_path, 0),
+            Description="Shortcut to" + target_name)
 
         return shortcut_file_path
 
@@ -101,6 +103,7 @@ class ShortCutterWindows(ShortCutter):
 
         Returns a list of paths.
         """
+        # noinspection PyProtectedMember
         paths = super(ShortCutterWindows, self)._get_paths()
 
         # add the python scripts path
@@ -110,6 +113,7 @@ class ShortCutterWindows(ShortCutter):
 
         return paths
 
+    # noinspection PyMethodMayBeStatic
     def _get_python_scripts_path(self):
         """
         Gets the Python Scripts path by examining the location of the 
@@ -125,7 +129,7 @@ class ShortCutterWindows(ShortCutter):
         current_path = python_path
 
         searched = False
-        while searched == False:
+        while not searched:
             path_to_test = os.path.join(current_path, "Scripts")
             if os.path.isdir(path_to_test):
                 searched = True

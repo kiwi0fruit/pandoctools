@@ -141,6 +141,7 @@ class ShortCutter(object):
 
         # Create temporal file in order to create shortcut in virtual mode:
         clean = False
+
         def create_temp_target():
             if not os.path.isdir(os.path.dirname(target)):
                 os.makedirs(os.path.dirname(target))
@@ -155,7 +156,7 @@ class ShortCutter(object):
                     create_temp_target()
                     clean = True
                 except (OSError, IOError):
-                    self.err_file.write(''.join(traceback.format_exc()))
+                    self._err_file.write(''.join(traceback.format_exc()))
 
         target_path = self.find_target(target)
 
@@ -168,7 +169,7 @@ class ShortCutter(object):
                 shortcut_file_path = self._create_shortcut_file(target_name, target_path, shortcut_directory)
             except:
                 shortcut_file_path = None
-                self.err_file.write(''.join(traceback.format_exc()))
+                self._err_file.write(''.join(traceback.format_exc()))
 
         # Delete temporal file:
         if clean:
@@ -218,7 +219,7 @@ class ShortCutter(object):
                 shortcut_file_path = self._create_shortcut_to_dir(target_name, target_path, shortcut_directory)
             except:
                 shortcut_file_path = None
-                self.err_file.write(''.join(traceback.format_exc()))
+                self._err_file.write(''.join(traceback.format_exc()))
 
         return target_name, target_path, shortcut_file_path
 
