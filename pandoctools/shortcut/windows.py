@@ -21,15 +21,25 @@ import winshell
 from win32com.client import Dispatch
 import sys
 import os
-from .exception import *
+from .exception import ShortcutError, ShortcutNoDesktopError, ShortcutNoMenuError
 from .base import ShortCutter
 
 
 class ShortCutterWindows(ShortCutter):
 
-    def __init__(self, err_file=None):
+    def __init__(self, silent=False, err_file=None, virtual=False):
+        """
+        Creates ShortCutter.
+
+        :param bool silent:
+            Whether to use shortcut in a silent mode.
+        :param err_file:
+            File object where to write errors in a silent mode. Default is sys.stderr
+        :param bool virtual:
+            Whether to allow shortcuts to yet non-existing files/dirs
+        """
         self.executable_file_extensions = os.environ['PATHEXT'].split(os.pathsep)
-        super(ShortCutterWindows, self).__init__(err_file)
+        super(ShortCutterWindows, self).__init__(silent, err_file, virtual)
 
     def _get_desktop_folder(self):
         return winshell.desktop()

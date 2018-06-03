@@ -1,4 +1,4 @@
-from .exception import *
+from .exception import ShortcutError, ShortcutNoDesktopError, ShortcutNoMenuError
 # get operating system
 import sys
 platform = sys.platform

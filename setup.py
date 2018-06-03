@@ -41,14 +41,14 @@ class PostInstallCommand(install):
 
         # Create shortcuts:
         try:
-            sc = ShortCutter(error_log)
+            sc = ShortCutter(silent=True, err_file=error_log, virtual=True)
             sc.create_desktop_shortcut(pandoctools_bin)
             sc.create_menu_shortcut(pandoctools_bin)
             sc.create_desktop_shortcut(pandoctools_user, 'Pandoctools User Data', target_is_dir=True)
             sc.create_shortcut_to_dir(pandoctools_core, pandoctools_user, 'Pandoctools Core Data')
             sc.create_shortcut_to_dir(_pandoctools_core, pandoctools_user, 'Pandoctools Core Data' + bash_append)
         except:
-            print('WARNING: Failed to create desktop shortcuts:\n\n' + ''.join(traceback.format_exc()), file=error_log)
+            print('WARNING: Failed to create shortcuts:\n\n' + ''.join(traceback.format_exc()), file=error_log)
 
         # Write INI:
         config_file = p.join(pandoctools_user, 'Defaults.ini')
