@@ -29,17 +29,19 @@ from .base import ShortCutter
 
 class ShortCutterWindows(ShortCutter):
 
-    def __init__(self, silent=False, err_file=None):
+    def __init__(self, skip_errors=False, error_log=None):
         """
         Creates ShortCutter.
 
-        :param bool silent:
-            Whether to use shortcut in a silent mode.
-        :param err_file:
-            File object where to write errors in a silent mode. Default is sys.stderr
+        :param bool skip_errors:
+            Whether to raise exceptions or skip errors and continue.
+        :param error_log:
+            File object where to write errors in a skip_errors mode.
+            Default is `None` - do not write errors.
+            Can also be `sys.stderr` or `io.StringIO()`.
         """
         self.executable_file_extensions = os.environ['PATHEXT'].split(os.pathsep)
-        super(ShortCutterWindows, self).__init__(silent, err_file)
+        super(ShortCutterWindows, self).__init__(skip_errors, error_log)
 
     def _get_desktop_folder(self):
         return winshell.desktop()
