@@ -17,7 +17,7 @@ class ShortCutter(object):
         s.create_menu_shortcut("python")
     """
 
-    def __init__(self, silent=False, err_file=None, virtual=False):
+    def __init__(self, silent=False, err_file=None):
         """
         Creates ShortCutter.
 
@@ -25,15 +25,12 @@ class ShortCutter(object):
             Whether to use shortcut in a silent mode.
         :param err_file:
             File object where to write errors in a silent mode. Default is sys.stderr
-        :param bool virtual:
-            Whether to allow shortcuts to yet non-existing files/dirs
         """
         self._silent = silent
         if silent:
             self._err_file = sys.stderr if (err_file is None) else err_file
         else:
             self._err_file = None
-        self._virtual = virtual
         self._desktop_folder = self._get_desktop_folder()
         self._menu_folder = self._get_menu_folder()
 
@@ -45,7 +42,7 @@ class ShortCutter(object):
     def _get_menu_folder(self):
         raise ShortcutError("_get_menu_folder needs overriding")
 
-    def create_desktop_shortcut(self, target, target_name=None, target_is_dir=False, virtual=None):
+    def create_desktop_shortcut(self, target, target_name=None, virtual_type=None):
         """
         Creates a desktop shortcut to a target.
 
@@ -56,15 +53,13 @@ class ShortCutter(object):
         :param str target_name:
             Name of the shortcut without extension (.lnk would be appended if needed).
             If `None` uses the target filename. Defaults to `None`.
-        :param bool target_is_dir:
-            Whether it's a shortcut to a directory
-        :param bool virtual: None | True | False
+        :param str virtual_type: `None` | `'file'` | `'dir'`
             Whether to create shortcut to yet non-existing file/dir (creates dir)
-            Default is None - use defined in __init__
+            Default is `None` - do not create
 
-        Returns a tuple of (target_name, target_path, shortcut_file_path) or None
+        Returns a tuple of (target_name, target_path, shortcut_file_path)
         """
-        virtual = virtual if (virtual is not None) else self._virtual
+        isdir, virtual = self._isdir_virtual(target, virtual_type)
 
         if not os.path.isdir(self._desktop_folder):
             msg = "Desktop folder '{}' not found.".format(self._desktop_folder)
@@ -73,12 +68,12 @@ class ShortCutter(object):
             else:
                 self._err_file.write(msg + '\n')
         else:
-            if target_is_dir:
+            if isdir:
                 return self.create_shortcut_to_dir(target, self._desktop_folder, target_name, virtual)
             else:
                 return self.create_shortcut(target, self._desktop_folder, target_name, virtual)
 
-    def create_menu_shortcut(self, target, target_name=None, target_is_dir=False, virtual=None):
+    def create_menu_shortcut(self, target, target_name=None, virtual_type=None):
         """
         Creates a menu shortcut to a target.
 
@@ -89,15 +84,13 @@ class ShortCutter(object):
         :param str target_name:
             Name of the shortcut without extension (.lnk would be appended if needed).
             If `None` uses the target filename. Defaults to `None`.
-        :param bool target_is_dir:
-            Whether it's a shortcut to a directory
-        :param bool virtual: None | True | False
+        :param str virtual_type: `None` | `'file'` | `'dir'`
             Whether to create shortcut to yet non-existing file/dir (creates dir)
-            Default is None - use defined in __init__
+            Default is `None` - do not create
 
-        Returns a tuple of (target_name, target_path, shortcut_file_path) or None
+        Returns a tuple of (target_name, target_path, shortcut_file_path)
         """
-        virtual = virtual if (virtual is not None) else self._virtual
+        isdir, virtual = self._isdir_virtual(target, virtual_type)
 
         if not os.path.isdir(self._menu_folder):
             msg = "Menu folder '{}' not found.".format(self._menu_folder)
@@ -106,12 +99,12 @@ class ShortCutter(object):
             else:
                 self._err_file.write(msg + '\n')
         else:
-            if target_is_dir:
+            if isdir:
                 return self.create_shortcut_to_dir(target, self._menu_folder, target_name, virtual)
             else:
                 return self.create_shortcut(target, self._menu_folder, target_name, virtual) 
 
-    def create_shortcut(self, target, shortcut_directory, target_name=None, virtual=None):
+    def create_shortcut(self, target, shortcut_directory, target_name=None, virtual=False):
         """
         Creates a shortcut to a target.
 
@@ -124,14 +117,12 @@ class ShortCutter(object):
         :param str target_name:
             Name of the shortcut without extension (.lnk would be appended if needed).
             If `None` uses the target filename. Defaults to `None`.
-        :param bool virtual: None | True | False
+        :param bool virtual:
             Whether to create shortcut to yet non-existing file
-            Default is None - use defined in __init__
+            Default is `False` - do not create
 
         Returns a tuple of (target_name, target_path, shortcut_file_path)
         """
-        virtual = virtual if (virtual is not None) else self._virtual
-
         if target_name is None:
             # get the target name by getting the file name and removing the extension
             target_name = os.path.splitext(os.path.basename(target))[0]
@@ -177,7 +168,7 @@ class ShortCutter(object):
 
         return target_name, target_path, shortcut_file_path
 
-    def create_shortcut_to_dir(self, target_path, shortcut_directory, target_name=None, virtual=None):
+    def create_shortcut_to_dir(self, target_path, shortcut_directory, target_name=None, virtual=False):
         """
         Creates a shortcut to a direcrory.
 
@@ -188,17 +179,18 @@ class ShortCutter(object):
         :param str target_name:
             Name of the shortcut without extension (.lnk would be appended if needed).
             If `None` uses the target filename. Defaults to `None`.
-        :param bool virtual: None | True | False
-            Whether to create shortcut to yet non-existing directory (creates dir)
-            Default is None - use defined in __init__
+        :param bool virtual:
+            Whether to create shortcut to yet non-existing dir (creates dir)
+            Default is `False` - do not create
 
         Returns a tuple of (target_name, target_path, shortcut_file_path)
         """
-        virtual = virtual if (virtual is not None) else self._virtual
-
         if target_name is None:
             # get the target_name by getting the target dir name
             target_name = os.path.basename(target_path)
+
+        # Expand to abs path:
+        target_path = os.path.abspath(target_path)
 
         # Create target_path if it doesn't exist in virtual mode:
         if not os.path.isdir(target_path) and virtual:
@@ -230,6 +222,35 @@ class ShortCutter(object):
     # should be overridden
     def _create_shortcut_file(self, target_name, target_path, shortcut_directory):
         raise ShortcutError("_create_shortcut_file needs overriding")
+
+    def _isdir_virtual(target, virtual_type):
+        """
+        Sets
+            isdir = True/False (whether it's a shortcut to a directory),
+            virtual = True/False (whether to create shortcut to yet non-existing file/dir),
+        depending on inputs.
+
+        :param str target:
+            The target to create a shortcut for, it can be a fully qualified
+            file path `/path/to/my_program` or a simple application name 
+            `my_program`.
+        :param str virtual_type: `None` | `'file'` | `'dir'`
+            Whether to create shortcut to yet non-existing file/dir (creates dir)
+
+        returns (isdir, virtual)
+        """
+        if virtual_type is None:
+            virtual = False
+            isdir = True if os.path.isdir(target) else False
+        elif virtual_type == 'file':
+            virtual = True
+            isdir = False
+        elif virtual_type == 'dir':
+            virtual = True
+            isdir = True
+        else:
+            raise ValueError("virtual_type kwarg can only be None, 'dir' or 'file'.")
+        return isdir, virtual
 
     def find_target(self, target):
         """

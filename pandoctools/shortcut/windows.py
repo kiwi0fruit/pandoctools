@@ -29,7 +29,7 @@ from .base import ShortCutter
 
 class ShortCutterWindows(ShortCutter):
 
-    def __init__(self, silent=False, err_file=None, virtual=False):
+    def __init__(self, silent=False, err_file=None):
         """
         Creates ShortCutter.
 
@@ -37,11 +37,9 @@ class ShortCutterWindows(ShortCutter):
             Whether to use shortcut in a silent mode.
         :param err_file:
             File object where to write errors in a silent mode. Default is sys.stderr
-        :param bool virtual:
-            Whether to allow shortcuts to yet non-existing files/dirs
         """
         self.executable_file_extensions = os.environ['PATHEXT'].split(os.pathsep)
-        super(ShortCutterWindows, self).__init__(silent, err_file, virtual)
+        super(ShortCutterWindows, self).__init__(silent, err_file)
 
     def _get_desktop_folder(self):
         return winshell.desktop()
