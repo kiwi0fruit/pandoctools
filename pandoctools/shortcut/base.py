@@ -223,6 +223,7 @@ class ShortCutter(object):
     def _create_shortcut_file(self, target_name, target_path, shortcut_directory):
         raise ShortcutError("_create_shortcut_file needs overriding")
 
+    @staticmethod
     def _isdir_virtual(target, virtual_type):
         """
         Sets
