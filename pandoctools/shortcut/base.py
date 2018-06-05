@@ -145,7 +145,7 @@ class ShortCutter(object):
         Returns a tuple of (shortcut_name, target_path, shortcut_file_path)
         """
         # Check entry_point input:
-        if os.path.basename(target) != target:
+        if entry_point and os.path.basename(target) != target:
             raise ValueError('When entry_point=True target can be basename only.')
 
         # Check if target is dir or file:
