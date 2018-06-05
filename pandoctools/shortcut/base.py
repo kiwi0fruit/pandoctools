@@ -156,8 +156,6 @@ class ShortCutter(object):
         else:
             isdir = True if os.path.isdir(target) else False
 
-        print(target, os.path.isdir(target), file=self.error_log)  # TODO remove after testing
-
         # Set shortcut name:
         if shortcut_name is None:
             if entry_point:

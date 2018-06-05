@@ -42,9 +42,6 @@ class PostInstallCommand(install):
         sc.create_desktop_shortcut('pandoctools', entry_point=True)
         ret = sc.create_menu_shortcut('pandoctools', entry_point=True)
         pandoctools_bin = ret[1]
-        
-        sc.create_desktop_shortcut('python')  # TODO remove after testing
-        sc.create_desktop_shortcut('pandoctools', 'pandoctools2')  # TODO remove after testing
 
         sc.makedirs(pandoctools_user, pandoctools_core, _pandoctools_core)
         sc.create_desktop_shortcut(pandoctools_user, 'Pandoctools User Data')
