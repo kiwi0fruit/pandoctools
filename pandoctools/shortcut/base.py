@@ -240,7 +240,7 @@ class ShortCutter(object):
         """
         ret = True
         for path in args:
-            if not sys.path.isdir(path):
+            if not os.path.isdir(path):
                 if self.raise_errors:
                     os.makedirs(path)
                 else:
