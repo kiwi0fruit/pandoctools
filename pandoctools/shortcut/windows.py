@@ -20,10 +20,8 @@ except ImportError as e:
         raise e
 
 import winshell
-# from win32com.client import Dispatch
 import sys
 import os
-# from .exception import ShortcutError, ShortcutNoDesktopError, ShortcutNoMenuError
 from .base import ShortCutter
 
 
@@ -55,19 +53,6 @@ class ShortCutterWindows(ShortCutter):
 
     def _create_shortcut_to_dir(self, shortcut_name, target_path, shortcut_directory):
         return self._create_shortcut_file(shortcut_name, target_path, shortcut_directory)
-        # """
-        # Creates a Windows shortcut file for a directory.
-        #     TODO: This might be the same as _create_shortcut_file but it needs testing.
-        # 
-        # Returns shortcut_file_path
-        # """
-        # shell = Dispatch('WScript.Shell')
-        # shortcut_file_path = os.path.join(shortcut_directory, shortcut_name + '.lnk')
-        # shortcut = shell.CreateShortCut(shortcut_file_path)
-        # shortcut.Targetpath = target_path
-        # shortcut.WorkingDirectory = target_path
-        # shortcut.save()
-        # return shortcut_file_path
 
     def _create_shortcut_file(self, shortcut_name, target_path, shortcut_directory):
         """

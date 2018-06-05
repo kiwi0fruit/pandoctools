@@ -2,7 +2,6 @@ import os
 import sys
 import site
 import stat
-# from .exception import ShortcutError, ShortcutNoDesktopError, ShortcutNoMenuError
 from .base import ShortCutter
 
 

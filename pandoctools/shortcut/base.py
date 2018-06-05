@@ -144,67 +144,38 @@ class ShortCutter(object):
 
         Returns a tuple of (shortcut_name, target_path, shortcut_file_path)
         """
-        if entry_point:
-            return self._create_entry_point_shortcut(target, shortcut_directory, shortcut_name)
-        else:
-            # Check if target is dir or file:
-            isdir = True if os.path.isdir(target) else False
-
-            # Get the target name by getting the file name and removing the extension
-            if shortcut_name is None:
-                shortcut_name = os.path.basename(target)
-                shortcut_name = shortcut_name if isdir else os.path.splitext(shortcut_name)[0]
-
-            # Find the target path:
-            target_path = os.path.abspath(target) if isdir else self.find_target(target)
-
-            # Create shortcut:
-            def create():
-                if isdir:
-                    return self._create_shortcut_to_dir(shortcut_name, target_path, shortcut_directory)
-                else:
-                    return self._create_shortcut_file(shortcut_name, target_path, shortcut_directory)
-
-            if self.raise_errors:
-                shortcut_file_path = create()
-            else:
-                # noinspection PyBroadException
-                try:
-                    shortcut_file_path = create()
-                except:
-                    shortcut_file_path = None
-                    self.error_log.write(''.join(traceback.format_exc()))
-            return shortcut_name, target_path, shortcut_file_path
-
-    def _create_entry_point_shortcut(self, target, shortcut_directory, shortcut_name=None):
-        """
-        Returns (shortcut_name, target_path, shortcut_file_path)
-        """
         # Check entry_point input:
         if os.path.basename(target) != target:
             raise ValueError('When entry_point=True target can be basename only.')
 
-        # Set shortcut name: 
-        shortcut_name = target if (shortcut_name is None) else shortcut_name
+        # Check if target is dir or file:
+        isdir = True if os.path.isdir(target) else False
+
+        # Set shortcut name:
+        if shortcut_name is None:
+            if entry_point:
+                shortcut_name = target
+            elif isdir:
+                shortcut_name = os.path.basename(target)
+            else:
+                # getting the file name and removing the extension:
+                shortcut_name = os.path.splitext(os.path.basename(target))[0]
 
         # Set the target path:
-        target_path = os.path.join(
-            self.bin_folder,
-            target + ('.exe' if (os.name == 'nt') else '')
-        )
+        if entry_point:
+            target_path = os.path.join(self.bin_folder,
+                                       target + ('.exe' if (os.name == 'nt') else ''))
+        elif isdir:
+            target_path = os.path.abspath(target)
+        else:
+            target_path = self.find_target(target)
 
         # Create shortcut:
-        #   (if needed create temporal file)
-        # temp = False if os.path.isfile(target_path) else True
-        # clean = [False]
-
         def create():
-            # if temp:
-            #     if not os.path.isdir(os.path.dirname(target_path)):
-            #         os.makedirs(os.path.dirname(target_path))
-            #     open(target_path, 'a').close()
-            #     clean[0] = True
-            return self._create_shortcut_file(shortcut_name, target_path, shortcut_directory)
+            if isdir:
+                return self._create_shortcut_to_dir(shortcut_name, target_path, shortcut_directory)
+            else:
+                return self._create_shortcut_file(shortcut_name, target_path, shortcut_directory)
 
         if self.raise_errors:
             shortcut_file_path = create()
@@ -216,8 +187,6 @@ class ShortCutter(object):
                 shortcut_file_path = None
                 self.error_log.write(''.join(traceback.format_exc()))
 
-        # if clean[0]:
-        #     os.remove(target_path)
         return shortcut_name, target_path, shortcut_file_path
 
     # should be overridden

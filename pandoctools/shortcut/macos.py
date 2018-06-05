@@ -1,5 +1,5 @@
 import os
-from .exception import ShortcutError  # , ShortcutNoDesktopError, ShortcutNoMenuError
+from .exception import ShortcutError
 from .linux import ShortCutterLinux
 from tempfile import NamedTemporaryFile
 import subprocess
