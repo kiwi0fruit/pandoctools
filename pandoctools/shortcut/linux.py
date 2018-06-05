@@ -1,4 +1,6 @@
 import os
+import sys
+import site
 import stat
 # from .exception import ShortcutError, ShortcutNoDesktopError, ShortcutNoMenuError
 from .base import ShortCutter
@@ -18,16 +20,17 @@ class ShortCutterLinux(ShortCutter):
 
     def _get_site_packages(self):
         """
-        Returns site packages dir path (the one to where setup.py installs).
-            Tested only on Miniconda at Ubuntu.
+        Returns site packages dir path
+        (the one to where setup.py installs if use `ShortCutter()` from setup.py).
+            Works (tested) only on Miniconda at Ubuntu.
         """
-        import site
         return site.getsitepackages()[0]
 
     def _get_bin_folder(self):
         """
-        Returns `bin` dir path (the one to where setup.py installs).
-            Tested only on Miniconda at Ubuntu.
+        Returns `bin` dir path
+        (the one to where setup.py installs if use `ShortCutter()` from setup.py).
+            Works (tested) only on Miniconda at Ubuntu.
             TODO: add system python support
         """
         return os.path.dirname(sys.executable)

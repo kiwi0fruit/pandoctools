@@ -20,7 +20,7 @@ except ImportError as e:
         raise e
 
 import winshell
-from win32com.client import Dispatch
+# from win32com.client import Dispatch
 import sys
 import os
 # from .exception import ShortcutError, ShortcutNoDesktopError, ShortcutNoMenuError
@@ -39,20 +39,22 @@ class ShortCutterWindows(ShortCutter):
 
     def _get_site_packages(self):
         """
-        Returns site packages dir path (the one to where setup.py installs).
+        Returns site packages dir path
+        (the one to where setup.py installs if use `ShortCutter()` from setup.py).
             Works (tested) only on Miniconda.
         """
         return os.path.join(os.path.dirname(sys.executable), 'Lib', 'site-packages')
 
     def _get_bin_folder(self):
         """
-        Returns `Scripts` dir path (the one to where setup.py installs).
+        Returns `Scripts` dir path
+        (the one to where setup.py installs if use `ShortCutter()` from setup.py).
             Works (tested) only on Miniconda.
         """
         return os.path.join(os.path.dirname(sys.executable), "Scripts")
 
     def _create_shortcut_to_dir(self, shortcut_name, target_path, shortcut_directory):
-        return self._create_shortcut_file(self, shortcut_name, target_path, shortcut_directory)
+        return self._create_shortcut_file(shortcut_name, target_path, shortcut_directory)
         # """
         # Creates a Windows shortcut file for a directory.
         #     TODO: This might be the same as _create_shortcut_file but it needs testing.

@@ -145,7 +145,7 @@ class ShortCutter(object):
         Returns a tuple of (shortcut_name, target_path, shortcut_file_path)
         """
         if entry_point:
-            shortcut_file_path = self._create_entry_point_shortcut(target, shortcut_directory, shortcut_name)
+            return self._create_entry_point_shortcut(target, shortcut_directory, shortcut_name)
         else:
             # Check if target is dir or file:
             isdir = True if os.path.isdir(target) else False
@@ -174,12 +174,11 @@ class ShortCutter(object):
                 except:
                     shortcut_file_path = None
                     self.error_log.write(''.join(traceback.format_exc()))
-
-        return shortcut_name, target_path, shortcut_file_path
+            return shortcut_name, target_path, shortcut_file_path
 
     def _create_entry_point_shortcut(self, target, shortcut_directory, shortcut_name=None):
         """
-        Returns shortcut_file_path
+        Returns (shortcut_name, target_path, shortcut_file_path)
         """
         # Check entry_point input:
         if os.path.basename(target) != target:
@@ -214,11 +213,12 @@ class ShortCutter(object):
             try:
                 shortcut_file_path = create()
             except:
+                shortcut_file_path = None
                 self.error_log.write(''.join(traceback.format_exc()))
 
         # if clean[0]:
         #     os.remove(target_path)
-        return shortcut_file_path
+        return shortcut_name, target_path, shortcut_file_path
 
     # should be overridden
     def _create_shortcut_to_dir(self, shortcut_name, target_path, shortcut_directory):
@@ -228,13 +228,13 @@ class ShortCutter(object):
     def _create_shortcut_file(self, shortcut_name, target_path, shortcut_directory):
         raise ShortcutError("_create_shortcut_file needs overriding")
 
-    def makedirs(*args):
+    def makedirs(self, *args):
         """
         Recursively creates dirs if they don't exist.
         Utilizes self.raise_errors and self.error_log
-        
-        :param str *args:
-            Multiple paths for folders to create.
+
+        :param args:
+            Multiple paths (str) for folders to create.
 
         Returns True on success False of failure
         """
