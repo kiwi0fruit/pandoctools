@@ -149,7 +149,7 @@ class ShortCutter(object):
             raise ValueError('When entry_point=True target can be basename only.')
 
         # Check if target is dir or file:
-        isdir = True if os.path.isdir(target) else False
+        isdir = True if (os.path.isdir(target) and not entry_point) else False
 
         # Set shortcut name:
         if shortcut_name is None:
