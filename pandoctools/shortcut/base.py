@@ -29,9 +29,11 @@ class ShortCutter(object):
     menu_folder : str
         Directory used when creating menu shortcuts
     bin_folder : str
-        `Scripts` or `bin` dir path (the one to where setup.py installs)
+        `Scripts` or `bin` dir path
+        (the one to where setup.py installs if use `ShortCutter()` from setup.py)
     site_packages : str
-        Site packages dir path (the one to where setup.py installs)
+        Site packages dir path
+        (the one to where setup.py installs if use `ShortCutter()` from setup.py)
     """
 
     def __init__(self, raise_errors=True, error_log=None):
