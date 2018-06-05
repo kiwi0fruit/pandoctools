@@ -150,6 +150,7 @@ class ShortCutter(object):
 
         # Check if target is dir or file:
         isdir = True if (os.path.isdir(target) and not entry_point) else False
+        print(target, os.path.isdir(target), file=open('_log.txt', 'w'))  # TODO remove after testing
 
         # Set shortcut name:
         if shortcut_name is None:
