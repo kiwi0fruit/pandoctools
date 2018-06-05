@@ -12,13 +12,13 @@ class ShortCutterMacOS(ShortCutterLinux):
     def _get_menu_folder(self):
         return os.path.join('/', 'Applications') 
 
-    def _create_shortcut_file(self, target_name, target_path, shortcut_directory):
+    def _create_shortcut_file(self, shortcut_name, target_path, shortcut_directory):
         """
         Creates a MacOS app which opens an executable via the terminal
 
         Returns the file path of the shortcut created
         """
-        shortcut_file_path = os.path.join(shortcut_directory, target_name + ".app")
+        shortcut_file_path = os.path.join(shortcut_directory, shortcut_name + ".app")
 
         # create the AppleScript script
         sf = NamedTemporaryFile(mode="w")

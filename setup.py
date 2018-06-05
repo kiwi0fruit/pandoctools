@@ -5,7 +5,7 @@ import os
 import configparser
 import traceback
 from pandoctools.shortcut import ShortCutter
-from pandoctools.cli import pandoctools_user, pandoctools_bin
+from pandoctools.cli import pandoctools_user
 import versioneer
 import io
 import sys
@@ -26,30 +26,26 @@ class PostInstallCommand(install):
     """
     def run(self):
         error_log = io.StringIO()
+        sc = ShortCutter(raise_errors=False, error_log=error_log)
 
         # Set pandoctools_core:
         if os.name == 'nt':
-            _pdt = p.join(p.dirname(sys.executable), 'Lib', 'site-packages', 'pandoctools')
-            pandoctools_core = p.join(_pdt, 'bat')
-            _pandoctools_core = p.join(_pdt, 'sh')
+            pandoctools_core = p.join(sc.site_packages, 'pandoctools', 'bat')
+            _pandoctools_core = p.join(sc.site_packages, 'pandoctools', 'sh')
             bash_append = ' (Bash)'
         else:
-            import site
-            pandoctools_core = p.join(site.getsitepackages()[0], 'pandoctools', 'sh')
+            pandoctools_core = p.join(sc.site_packages, 'pandoctools', 'sh')
             _pandoctools_core = pandoctools_core
             bash_append = ''
 
         # Create shortcuts:
-        try:
-            sc = ShortCutter(raise_errors=False, error_log=error_log)
-            sc.create_desktop_shortcut(pandoctools_bin)
-            sc.create_menu_shortcut(pandoctools_bin)
-            sc.makedirs(pandoctools_user, pandoctools_core, _pandoctools_core)
-            sc.create_desktop_shortcut(pandoctools_user, 'Pandoctools User Data')
-            sc.create_shortcut(pandoctools_core, pandoctools_user, 'Pandoctools Core Data')
-            sc.create_shortcut(_pandoctools_core, pandoctools_user, 'Pandoctools Core Data' + bash_append)
-        except:
-            print('WARNING: Failed to create shortcuts:\n\n' + ''.join(traceback.format_exc()), file=error_log)
+        sc.create_desktop_shortcut('pandoctools', entry_point=True)
+        sc.create_menu_shortcut('pandoctools', entry_point=True)
+
+        sc.makedirs(pandoctools_user, pandoctools_core, _pandoctools_core)
+        sc.create_desktop_shortcut(pandoctools_user, 'Pandoctools User Data')
+        sc.create_shortcut(pandoctools_core, pandoctools_user, 'Pandoctools Core Data')
+        sc.create_shortcut(_pandoctools_core, pandoctools_user, 'Pandoctools Core Data' + bash_append)
 
         # Write INI:
         config_file = p.join(pandoctools_user, 'Defaults.ini')

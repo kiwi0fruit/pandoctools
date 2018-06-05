@@ -28,20 +28,8 @@ from .base import ShortCutter
 
 
 class ShortCutterWindows(ShortCutter):
-
-    def __init__(self, skip_errors=False, error_log=None):
-        """
-        Creates ShortCutter.
-
-        :param bool skip_errors:
-            Whether to raise exceptions or skip errors and continue.
-        :param error_log:
-            File object where to write errors in a skip_errors mode.
-            Default is `None` - do not write errors.
-            Can also be `sys.stderr` or `io.StringIO()`.
-        """
+    def _custom_init(self):
         self.executable_file_extensions = os.environ['PATHEXT'].split(os.pathsep)
-        super(ShortCutterWindows, self).__init__(skip_errors, error_log)
 
     def _get_desktop_folder(self):
         return winshell.desktop()
@@ -49,35 +37,50 @@ class ShortCutterWindows(ShortCutter):
     def _get_menu_folder(self):
         return winshell.folder("CSIDL_PROGRAMS")
 
-    def _create_shortcut_to_dir(self, target_name, target_path, shortcut_directory):
+    def _get_site_packages(self):
         """
-        Creates a Windows shortcut file for a directory.
-            TODO: This might be the same as _create_shortcut_file but it needs testing.
-
-        Returns shortcut_file_path
+        Returns site packages dir path (the one to where setup.py installs).
+            Works (tested) only on Miniconda.
         """
-        shell = Dispatch('WScript.Shell')
-        shortcut_file_path = os.path.join(shortcut_directory, target_name + '.lnk')
-        shortcut = shell.CreateShortCut(shortcut_file_path)
-        shortcut.Targetpath = target_path
-        shortcut.WorkingDirectory = target_path
-        shortcut.save()
+        return os.path.join(os.path.dirname(sys.executable), 'Lib', 'site-packages')
 
-        return shortcut_file_path
+    def _get_bin_folder(self):
+        """
+        Returns `Scripts` dir path (the one to where setup.py installs).
+            Works (tested) only on Miniconda.
+        """
+        return os.path.join(os.path.dirname(sys.executable), "Scripts")
 
-    def _create_shortcut_file(self, target_name, target_path, shortcut_directory):
+    def _create_shortcut_to_dir(self, shortcut_name, target_path, shortcut_directory):
+        return self._create_shortcut_file(self, shortcut_name, target_path, shortcut_directory)
+        # """
+        # Creates a Windows shortcut file for a directory.
+        #     TODO: This might be the same as _create_shortcut_file but it needs testing.
+        # 
+        # Returns shortcut_file_path
+        # """
+        # shell = Dispatch('WScript.Shell')
+        # shortcut_file_path = os.path.join(shortcut_directory, shortcut_name + '.lnk')
+        # shortcut = shell.CreateShortCut(shortcut_file_path)
+        # shortcut.Targetpath = target_path
+        # shortcut.WorkingDirectory = target_path
+        # shortcut.save()
+        # return shortcut_file_path
+
+    def _create_shortcut_file(self, shortcut_name, target_path, shortcut_directory):
         """
         Creates a Windows shortcut file.
 
         Returns shortcut_file_path
         """
-        shortcut_file_path = os.path.join(shortcut_directory, target_name + ".lnk")
+        shortcut_file_path = os.path.join(shortcut_directory, shortcut_name + ".lnk")
 
         winshell.CreateShortcut(
-            Path=os.path.join(shortcut_file_path),
+            Path=shortcut_file_path,
             Target=target_path,
             Icon=(target_path, 0),
-            Description="Shortcut to" + target_name)
+            Description="Shortcut to" + os.path.basename(target_path),
+            StartIn=target_path)
 
         return shortcut_file_path
 
@@ -118,8 +121,8 @@ class ShortCutterWindows(ShortCutter):
         """
         Gets the Python Scripts path by examining the location of the 
         sys.executable and working backwards through the directory
-        structure. 
-        
+        structure.
+
         Returns `None` if it cant be found.
         """
         python_exe_path = sys.executable
