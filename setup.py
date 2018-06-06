@@ -39,7 +39,7 @@ setup(
 
     install_requires=['click', 'pyyaml', 'panflute', 'knitty>=0.3.10', 'pandas',
                       'sugartex>=0.1.9', 'matplotlib', 'feather-format',
-                      'notebook', 'jupyter'],
+                      'notebook', 'jupyter', 'shortcutter'],
 
     include_package_data=True,
     package_data={
