@@ -198,3 +198,13 @@ def dump2D(file_path: str,
     """
     df = pd.DataFrame(np.array((x, y)).T if (matrix is None) else matrix)
     df.to_csv(file_path, header=header, index=None)
+
+
+def inch(cm: float) -> float:
+    """cm to inch"""
+    return cm / 2.54
+
+
+def cm(inch: float) -> float:
+    """inch to cm"""
+    return inch * 2.54
