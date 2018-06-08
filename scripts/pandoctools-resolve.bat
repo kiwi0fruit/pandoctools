@@ -4,7 +4,7 @@
 :: Uses predefined absolute path variables:
 ::   %_core_config% (<...>\site-packages\pandoctools\bat)
 ::   %_user_config% (%APPDATA%\pandoc\pandoctools)
-
+@echo off
 if exist "%_user_config%\%~2" (
     set "%~1=%_user_config%\%~2"
 ) else (
