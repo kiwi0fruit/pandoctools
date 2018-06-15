@@ -1,0 +1,24 @@
+# install to conda environment:
+#   twine
+#   pandoc>=2.2
+
+conda install -c defaults -c conda-forge twine "pandoc>=2.2"
+
+# run update_version.bat to update version
+
+# open terminal with activated environment
+# to upload:
+#   run upload__to_clip.bat
+#   paste clipboard to the terminal
+
+# to update rst:
+#   run update_rst__to_clip.bat
+#   paste clipboard to the terminal
+
+
+# hint: easily create shortcut to activated environment via Shortcutter:
+    # windows only preparation:
+    conda install pywin32
+    # cross-platform installation:
+    pip install shortcut
+    shortcut --terminal
