@@ -20,5 +20,5 @@ conda install -c defaults -c conda-forge twine "pandoc>=2.2"
     # windows only preparation:
     conda install pywin32
     # cross-platform installation:
-    pip install shortcut
-    shortcut --terminal
+    pip install shortcutter
+    shortcutter --terminal
