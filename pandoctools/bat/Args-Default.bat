@@ -22,6 +22,8 @@
 ::   set scripts=%scripts:~0,-10%
 :: or use predefined %scripts% var (conda environment Scripts folder).
 
+set "out_ext_full=.%out_ext_full%"
+
 
 if        "%in_ext%"=="" (
     set _from=markdown
@@ -52,7 +54,7 @@ if        "%out_ext%"=="" (
 ) else if "%out_ext%"=="md" (
     set _to=markdown
 
-) else if "%out_ext_full:~-7%"=="r.ipynb" (
+) else if "%out_ext_full:~-8%"==".r.ipynb" (
     set "_to=%_jupymd%"
     set to=markdown
     set pipe=ipynb
