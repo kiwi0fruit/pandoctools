@@ -21,6 +21,8 @@
 #   scripts="${scripts%/*}"
 # or use predefined $scripts var (conda environment bin folder).
 
+out_ext_full = ".${out_ext_full}"
+
 
 if   [ "${in_ext}" == "" ]; then
     _from=markdown
@@ -50,7 +52,7 @@ if   [ "${out_ext}" == "" ]; then
 elif [ "${out_ext}" == "md" ]; then
     _to=markdown
 
-elif [ "${out_ext_full: -7}" == "r.ipynb" ]; then
+elif [ "${out_ext_full: -8}" == ".r.ipynb" ]; then
     _to="${_jupymd}"
     to=markdown
     stdin_plus=("${stdin_plus[@]}" "$(. "$resolve" Meta-ipynb-R.yaml)")
