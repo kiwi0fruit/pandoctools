@@ -1,5 +1,5 @@
 :: Usage with Pandoctools:
-::   %call% setvar varname cmd
+::   %source% setvar varname cmd
 :: Usage:
 ::   call setvar varname cmd
 :: Sets VARNAME to the output of CMD
