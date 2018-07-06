@@ -18,7 +18,7 @@ Shortcuts to these folders are created on the desktop. Profile can import other 
 
 I tried to make shell scripts short and transparent so you can easily copy/tune them.
 
-**WARNING**: shell scripts are stored inside user data (both in Pandoc user data and Miniconda installation). I heard some talks about security concerns on this but I'm sure it they are of any importance...
+**WARNING**: shell scripts are stored inside user data (both in Pandoc user data and Miniconda installation). I heard some talks about security concerns on this but I'm not sure it they are of any importance...
 
 
 ## Defaults.ini
