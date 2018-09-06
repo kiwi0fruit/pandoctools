@@ -101,7 +101,7 @@ Windows:
 
       conda install "conda>=4.5.4"
       conda create -n myenv python=3
-      call activale myenv
+      call activate myenv
 
       conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.2.1" matplotlib ^
       feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters ^
