@@ -21,7 +21,7 @@
 #   scripts="${scripts%/*}"
 # or use predefined $scripts var (conda environment bin folder).
 
-out_ext_full = ".${out_ext_full}"
+out_ext_full=".${out_ext_full}"
 
 
 if   [ "${in_ext}" == "" ]; then
