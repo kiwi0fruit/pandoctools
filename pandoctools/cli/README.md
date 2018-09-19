@@ -21,6 +21,15 @@ I tried to make shell scripts short and transparent so you can easily copy/tune 
 **WARNING**: shell scripts are stored inside user data (both in Pandoc user data and Miniconda installation). I heard some talks about security concerns on this but I'm not sure it they are of any importance...
 
 
+## How to use
+
+After installation you would have a shortcut on the desktop. Recommended ways to run Pandoctools are to:
+
+- add it to 'Open With' applications for desired file format,
+- drag and drop file over pandoctools shortcut,
+- run it from console, see: `pandoctools --help`
+
+
 ## Defaults.ini
 
 Pandoctools stores some settings in [`Defaults.ini`](../sh/Defaults.ini) file. The active `Defaults.ini` is resolved the same way Pandoctools resolves profiles (first in user data then in active sh/bat folder in python module).
