@@ -27,8 +27,7 @@ mh.ready(KNITTY)
 # mh.finalize()
 
 import matplotlib.pyplot as plt
-w = 6
-plt.figure(figsize=(w, w/mh.GR))
+w = 6; plt.figure(figsize=(w, w / mh.GR))
 plt.plot([1,2,3,4])
 plt.ylabel(mh.stex('ˎ∇ ⋅ [ ⃗E]ˎ, V/m'))
 img = mh.img(plt, qt=True)
