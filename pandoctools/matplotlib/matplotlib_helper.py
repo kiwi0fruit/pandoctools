@@ -29,6 +29,7 @@ from matplotlib import font_manager
 from IPython.display import display, Markdown
 import numpy as np
 import pandas as pd
+from typing import Tuple
 # import subprocess.call
 # import os
 
@@ -210,7 +211,7 @@ def cm(inch: float) -> float:
     return inch * 2.54
 
 
-def figsize(w: float=None, h: float=None) -> float:
+def figsize(w: float=None, h: float=None) -> Tuple[float, float]:
     """Returns (width, height) based on golden ratio
     if either width or height was provided.
     """
