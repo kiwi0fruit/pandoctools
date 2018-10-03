@@ -208,3 +208,15 @@ def inch(cm: float) -> float:
 def cm(inch: float) -> float:
     """inch to cm"""
     return inch * 2.54
+
+
+def figsize(w: float=None, h: float=None) -> float:
+    """Returns (width, height) based on golden ratio
+    if either width or height was provided.
+    """
+    if (w is None) and (h is None):
+        raise ValueError('Either width or height should be provided (now they are both None).')
+    w = (h * GR) if (w is None) else w
+    h = (w / GR) if (h is None) else h
+
+    return (w, h)
