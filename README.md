@@ -46,10 +46,10 @@ Here are [**examples**](https://github.com/kiwi0fruit/pandoctools/blob/master/ex
 
 Via conda:
 
-* Install [Miniconda](https://conda.io/miniconda.html)
-* Install [Git together with Bash](https://git-scm.com/downloads)  
-  Git is needed for writing text conversion profiles in cross-platform bash language instead of Windows-only batch language (that is supported by Pandoctools anyway).
-
+* Install [Miniconda](https://conda.io/miniconda.html),
+* Install [Git together with Bash](https://git-scm.com/downloads).  
+  Git is needed for writing text conversion profiles in cross-platform bash language instead of Windows-only batch language (that is supported by Pandoctools anyway),
+* :
   ```
   call activate root
   conda update conda
@@ -64,9 +64,7 @@ Via conda:
   shutilwhich cython pywin32 pandas
   pip install panflute knitty sugartex shortcutter pandoctools pandoctools-ready
   ```
-
-* Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) to  
-  `<miniconda-path>/envs/myenv/Library/bin`,
+* Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) to `<miniconda-path>/envs/myenv/Library/bin`,
 * Tips:
   - If Pandoc errors try downgrade to `"pandoc>=2.0,<2.1"` and pandoc-crossref v0.3.0.1,
   - Should be `"conda>=4.5.4"` (`conda update conda` should be enough).
@@ -74,19 +72,19 @@ Via conda:
 
 Via pip:
 
-```
-pip install pandoctools pandoctools-ready
-```
-Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) to  
-`<miniconda-path>/envs/myenv/Scripts`,
+* :
+  ```
+  pip install pandoctools pandoctools-ready
+  ```
+* Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) to `<miniconda-path>/envs/myenv/Scripts`,
 
 
 ## Unix:
 
 Via conda:
 
-* Install [Miniconda](https://conda.io/miniconda.html)
-
+* Install [Miniconda](https://conda.io/miniconda.html),
+* :
   ```
   source activate root
   conda update conda
@@ -101,9 +99,7 @@ Via conda:
   shutilwhich cython pandas
   pip install panflute knitty sugartex shortcutter pandoctools pandoctools-ready
   ```
-
-* Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) to  
-  `<miniconda-path>/envs/myenv/bin`,
+* Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) to `<miniconda-path>/envs/myenv/bin`,
 * Tips:
   - If Pandoc errors try downgrade to `"pandoc>=2.0,<2.1"` and pandoc-crossref v0.3.0.1,
   - Should be `"conda>=4.5.4"` (`conda update conda` should be enough).
@@ -111,11 +107,11 @@ Via conda:
 
 Via pip:
 
-```
-pip install pandoctools pandoctools-ready
-```
-Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) to  
-`<miniconda-path>/envs/myenv/bin`.
+* :
+  ```
+  pip install pandoctools pandoctools-ready
+  ```
+* Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) to `<miniconda-path>/envs/myenv/bin`.
 
 
 # [Useful tips](https://github.com/kiwi0fruit/pandoctools/blob/master/tips.md)
