@@ -94,11 +94,12 @@ Windows:
 
 Via conda:
 
--  Install `Miniconda <https://conda.io/miniconda.html>`__
--  | Install `Git together with Bash <https://git-scm.com/downloads>`__
-   | Git is needed for writing text conversion profiles in
-     cross-platform bash language instead of Windows-only batch language
-     (that is supported by Pandoctools anyway).
+-  Install `Miniconda <https://conda.io/miniconda.html>`__,
+-  Install `Git together with Bash <https://git-scm.com/downloads>`__.
+   Git is needed for writing text conversion profiles in cross-platform
+   bash language instead of Windows-only batch language (that is
+   supported by Pandoctools anyway),
+-  :
 
    ::
 
@@ -117,8 +118,7 @@ Via conda:
 
 -  Install latest stable
    `pandoc-crossref <https://github.com/lierdakil/pandoc-crossref/releases>`__
-   to
-   ``<miniconda-path>/envs/myenv/Library/bin``,
+   to ``<miniconda-path>/envs/myenv/Library/bin``,
 -  Tips:
 
    -  If Pandoc errors try downgrade to ``"pandoc>=2.0,<2.1"`` and
@@ -128,21 +128,23 @@ Via conda:
 
 Via pip:
 
-::
+-  :
 
-    pip install pandoctools pandoctools-ready
+   ::
 
-| Install latest stable
-  `pandoc-crossref <https://github.com/lierdakil/pandoc-crossref/releases>`__
-  to
-| ``<miniconda-path>/envs/myenv/Scripts``,
+       pip install pandoctools pandoctools-ready
+
+-  Install latest stable
+   `pandoc-crossref <https://github.com/lierdakil/pandoc-crossref/releases>`__
+   to ``<miniconda-path>/envs/myenv/Scripts``,
 
 Unix:
 -----
 
 Via conda:
 
--  Install `Miniconda <https://conda.io/miniconda.html>`__
+-  Install `Miniconda <https://conda.io/miniconda.html>`__,
+-  :
 
    ::
 
@@ -161,8 +163,7 @@ Via conda:
 
 -  Install latest stable
    `pandoc-crossref <https://github.com/lierdakil/pandoc-crossref/releases>`__
-   to
-   ``<miniconda-path>/envs/myenv/bin``,
+   to ``<miniconda-path>/envs/myenv/bin``,
 -  Tips:
 
    -  If Pandoc errors try downgrade to ``"pandoc>=2.0,<2.1"`` and
@@ -172,14 +173,15 @@ Via conda:
 
 Via pip:
 
-::
+-  :
 
-    pip install pandoctools pandoctools-ready
+   ::
 
-| Install latest stable
-  `pandoc-crossref <https://github.com/lierdakil/pandoc-crossref/releases>`__
-  to
-| ``<miniconda-path>/envs/myenv/bin``.
+       pip install pandoctools pandoctools-ready
+
+-  Install latest stable
+   `pandoc-crossref <https://github.com/lierdakil/pandoc-crossref/releases>`__
+   to ``<miniconda-path>/envs/myenv/bin``.
 
 `Useful tips <https://github.com/kiwi0fruit/pandoctools/blob/master/tips.md>`__
 ===============================================================================
