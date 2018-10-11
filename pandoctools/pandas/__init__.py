@@ -1,1 +1,1 @@
-from .pandas_helper import md_table, ready
+from .pandas_helper import md_table

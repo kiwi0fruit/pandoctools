@@ -1,6 +1,26 @@
 # Matplotlib Helper
 
-Matplotlib Helper is my custom helper to tune Matplotlib experience. I tuned fonts, made some tweaks to use it with SugarTeX, some tweaks to use mpl interactive plots in Atom/Hydrogen. Added export to raw markdown so it nicely works with [`results=pandoc` from Knitty](https://github.com/kiwi0fruit/knitty/blob/master/knitty.md#22-results-pandoc-chunk-option). Usage example that works both in Atom+Hydrogen and in Pandoctools+Knitty:
+Matplotlib Helper is my custom helper to tune Matplotlib experience. I tuned fonts, made some tweaks to use it with SugarTeX, some tweaks to use mpl interactive plots in Atom/Hydrogen. Added export to raw markdown so it nicely works with [`results=pandoc` from Knitty](https://github.com/kiwi0fruit/knitty/blob/master/knitty.md#22-results-pandoc-chunk-option).
+
+Can export plots with unicode to SVG or PNG. See default fonts in default keyword arguments of `ready()`.
+
+Hints:
+
+1. [MJ fonts](https://github.com/kiwi0fruit/open-fonts/tree/master/Fonts/MJ/oft).
+2. Delete `fontList.cache`, `fontList.py3k.cache` or `fontList.json` from `%USERPROFILE%\.matplotlib` folder after installing a new font.
+3. If font becomes bold without a reason try ([source](https://github.com/matplotlib/matplotlib/issues/5574)):
+
+  ```py
+  if 'roman' in font_manager.weight_dict:
+      del font_manager.weight_dict['roman']
+      # noinspection PyProtectedMember
+      font_manager._rebuild()
+  ```
+
+4. Install [Computer Modern Unicode](https://sourceforge.net/projects/cm-unicode/) for bold-italic unicode support: `"mathtext.sf": "CMU Serif:bold:italic"`. Sans-serif command `\mathsf{}` is reassigned because sans-serif font is rarely used in serif docs.
+
+
+Usage example that works both in Atom+Hydrogen and in Pandoctools+Knitty:
 
 ```py
 # %% {md} """ %%% """
@@ -8,21 +28,16 @@ Matplotlib Helper is my custom helper to tune Matplotlib experience. I tuned fon
 ---
 pandoctools:
   profile: Default
-  out: "*.*.md"
 results: pandoc
+results: hide
 ...
 """
-# %% {echo=False, eval=True}
-KNITTY = True
-# %% {echo=False, eval=False}
-# noinspection PyRedeclaration
-KNITTY = False
 
 
-# %% {results=hide} ----------------------------
+# %% ----------------------------
 from pandoctools import matplotlib as mh
-mh.ready(KNITTY)
-# mh.ready(KNITTY, font_size=14, finalize=False)
+mh.ready()
+# mh.ready(font_size=14, finalize=False)
 # ... do additional tuning
 # mh.finalize()
 
@@ -38,4 +53,5 @@ print('''
 ![My beautiful figure]({}){{#fig:1}}
 '''.format(img))
 ```
+
 Qt backend gives [interactive plots in Atom/Hydrogen](https://nteract.gitbooks.io/hydrogen/docs/Usage/Examples.html#interactive-plots-using-matplotlib).

@@ -1,37 +1,17 @@
 """
-Helper for Matplotlib with Atom/Hydrogen/Knitty.
-Can export plots with unicode to SVG or PNG.
-See default fonts in default keyword arguments.
-
-MJ fonts:
-    https://github.com/kiwi0fruit/open-fonts/tree/master/Fonts/MJ/oft
-
-Hints:
-
-1. Delete `fontList.cache`, `fontList.py3k.cache` or `fontList.json`
-    from `%USERPROFILE%\.matplotlib` folder after installing new font.
-2. If fonts become bold without a reason (`"font.family"` affected text) try:
-    * clearing font cache (see above) and `tex.cache` folder
-    * clearing cache several times (for some reason this can help)
-    * updating matplotlib: `conda install -c anaconda matplotlib`
-    * deleting matplotlib and installing again
-3. Install [Computer Modern Unicode](https://sourceforge.net/projects/cm-unicode/)
-    for bold-italic unicode support: `"mathtext.sf": "CMU Serif:bold:italic"`
-    sans-serif command `\mathsf{}` is reassigned because sans-serif font is
-    rarely used in serif docs.
+https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/matplotlib
 """
 import io
 import base64
 # noinspection PyUnresolvedReferences
-from sugartex import sugartex, stex, stex2
+from sugartex import sugartex, stex
 import matplotlib as mpl
 from matplotlib import font_manager
 from IPython.display import display, Markdown
 import numpy as np
 import pandas as pd
 from typing import Tuple
-# import subprocess.call
-# import os
+from ..knitty import KNITTY
 
 
 GR = (1 + 5 ** 0.5) / 2
@@ -39,16 +19,20 @@ mpl_params = {}
 sugartex.mpl_hack()
 sugartex.ready()
 
-_knitty = False
 _font_dir = None
 _ext = 'svg'
 _dpi = 300
 _preview_width = '600px'
-# _poppler = ""
+_readied = False
+_finalized = False
 
 
 def finalize():
-    if not _knitty:
+    global _finalized; _finalized = True
+    if not _readied:
+        raise RuntimeError('Run ready() first.')
+
+    if not KNITTY:
         mpl.use('Qt5Agg')
     mpl.rc('text.latex', unicode=True)
     if _font_dir is not None:
@@ -62,14 +46,13 @@ def finalize():
 _finalize = finalize
 
 
-# noinspection PyShadowingNames
-def ready(knitty: bool=False,
-          finalize: bool=True,
+# noinspection PyShadowingNames,PyIncorrectDocstring
+def ready(finalize: bool=True,
           ext: str='svg',
           dpi: int=300,
           preview_width: str = '600px',
           font_dir: str=None,
-          font_size: float=12.8,  # 12.8pt ~ 17px
+          font_size: float=12.8,
           font_family: str="serif",
           font_serif: str="Libertinus Serif",
           font_sans: str="Segoe UI",
@@ -80,17 +63,20 @@ def ready(knitty: bool=False,
           fontm_italic: str="MJ_Mat",
           fontm_bold: str="MJ",
           fontm_itbold: str="MJ_Mat"):
+    """
+    Parameters
+    ----------
+    font_size : float
+        In pt. Default is 12.8pt ~ 17px
+    """
+    # TODO: change single font to list of fallback fonts
 
-    # poppler: str=r'C:\Program Files (x86)\poppler\bin',
-    #   http://blog.alivate.com.au/poppler-windows/
-    # global _poppler
-    # _poppler = poppler
-    global mpl_params
-    global _knitty;        _knitty = knitty
+    global _readied;       _readied = True
     global _font_dir;      _font_dir = font_dir
     global _preview_width; _preview_width = preview_width
     global _ext;           _ext = ext
     global _dpi;           _dpi = dpi
+    global mpl_params
 
     mpl_params.update({
         "text.usetex": False,
@@ -108,35 +94,52 @@ def ready(knitty: bool=False,
         "mathtext.bf": fontm_bold + ":bold",
         "mathtext.sf": fontm_itbold + ":bold:italic"
     })
-    # TODO: change single font to list of fallback fonts
     if finalize:
         _finalize()
 
 
 def img(plot,
         name: str=None,
-        ext: str=None,  # default 'svg'
-        dpi: int=None,  # default 300
-        preview_width: str=None,  # default '600px'
+        ext: str=None,
+        dpi: int=None,
+        preview_width: str=None,
         hide: bool=False,
         qt: bool=False,
         ) -> str:
     """
-    :plot: matplotlib.pyplot
-    :name: File name to store image (without extension)
-    :ext: File extension
-        default 'svg'
-    :dpi: DPI for PNG
-        default 300
-    :preview_width: Hydrogen img preview width
-        default '600px'
-    :hide: Whether to show Hydrogen and Qt plots at all
-    :qt: Whether to show interactive plot via Qt
-        Presumably mpl.use('Qt5Agg') was called
+    Parameters
+    ----------
+    plot :
+        matplotlib.pyplot
+    name :
+        File name to store image (without extension)
+    ext :
+        File extension
+        default 'svg' or value set in ready()
+    dpi :
+        DPI for PNG
+        default 300 or value set in ready()
+    preview_width :
+        Hydrogen img preview width
+        default '600px' or value set in ready()
+    hide :
+        Whether to show Hydrogen and Qt plots at all
+    qt :
+        Whether to show interactive plot via Qt
+        Presumably mpl.use('Qt5Agg') was called in finalize()
 
-    :return: url: Image URL if KNITTY is True
+    Returns
+    ------
+    url :
+        Image URL if KNITTY is True
         else ""
     """
+    global _readied, _finalized
+    if not _readied:
+        ready()
+    elif not _finalized:
+        finalize()
+
     ext = ext if (ext is not None) else _ext
     dpi = dpi if (dpi is not None) else _dpi
     preview_width = preview_width if (preview_width is not None) else _preview_width
@@ -154,10 +157,6 @@ def img(plot,
         with open(file_name, "rb") as f:
             image = f.read()
 
-    # plot.savefig(name + ".pdf")  # was useful with external LaTeX renderer instead of matplotlib's
-    # subprocess.call([os.path.join(_poppler, "pdftocairo"), "-svg", name + ".pdf", name + ".svg"],
-    #                  cwd=os.getcwd())
-
     base64_url = 'data:image/{};base64,' + base64.b64encode(image).decode("utf-8")
     if ext.upper() == 'PNG':
         base64_url = base64_url.format('png')
@@ -171,53 +170,102 @@ def img(plot,
     else:
         url = name + "." + ext
 
-    if _knitty:
+    if KNITTY:
         hide = True
-
     if not hide:
         # noinspection PyTypeChecker
         display(Markdown('<img src="{}" style="width: {};"/>'.format(base64_url, preview_width)))
     if (not hide) and qt:
         plot.show()
-    return url if _knitty else ""
+    return url if KNITTY else ""
 
 
+# noinspection PyPep8Naming
 def dump2D(file_path: str,
-            matrix: np.ndarray=None,
-            x: np.ndarray=None,
-            y: np.ndarray=None,
-            header=False) -> None:
+           matrix: np.ndarray=None,
+           x: np.ndarray=None,
+           y: np.ndarray=None,
+           stack: Tuple[np.ndarray]=None,
+           cat: Tuple[np.ndarray]=None,
+           header=False) -> None:
     """
-    Dumps 2D plot agruments to CSV. Provide 2D marrix OR two 1D arrays.
+    Dumps 2D plot arguments to CSV file. Provide 2D matrix,
+    or two 1D arrays, or tuple of 1D or 2D arrays.
 
-    :matrix: 2D marrix
-    :x: 1D array
-    :y: 1D array
-    :header: boolean or list of string, default True
+    Parameters
+    ----------
+    file_path :
+    matrix :
+        2D array [[x, y, ...], ...]
+    x :
+        1D array
+    y :
+        1D array
+    stack :
+        tuple of 1D arrays
+    cat :
+        tuple of 1D or 2D arrays
+    header :
+        boolean or list of string, default True
         Write out the column names. If a list of strings is given
         it is assumed to be aliases for the column names
     """
-    df = pd.DataFrame(np.array((x, y)).T if (matrix is None) else matrix)
-    df.to_csv(file_path, header=header, index=None)
+    if not (matrix is None):
+        pass
+    elif not (x is None) and not (y is None):
+        matrix = np.stack((x, y), axis=-1)
+    elif not (stack is None):
+        matrix = np.stack(stack, axis=-1)
+    elif not (cat is None):
+        matrix = np.concatenate([arr if len(arr.shape) > 1 else arr[np.newaxis].T
+                                 for arr in cat], axis=-1)
+    else:
+        raise ValueError('Neither matrix, nor x,y, nor stack, nor cat were provided.')
+    pd.DataFrame(matrix).to_csv(file_path, header=header, index=None)
 
 
-def inch(cm: float) -> float:
-    """cm to inch"""
-    return cm / 2.54
+# noinspection PyShadowingNames
+def inch(cm: float=None, mm: float=None) -> float:
+    """ Either cm or mm to inch """
+    if (cm is not None) and (mm is None):
+        return cm / 2.54
+    elif (mm is not None) and (cm is None):
+        return (mm / 10) / 2.54
+    else:
+        raise ValueError('Either cm or mm should be provided.')
 
 
+# noinspection PyShadowingNames
 def cm(inch: float) -> float:
-    """inch to cm"""
+    """ inch to cm """
     return inch * 2.54
 
 
+# noinspection PyShadowingNames
+def mm(inch: float) -> float:
+    """ inch to mm """
+    return (inch * 2.54) * 10
+
+
 def figsize(w: float=None, h: float=None) -> Tuple[float, float]:
-    """Returns (width, height) based on golden ratio
+    """
+    Returns (width, height) based on golden ratio
     if either width or height was provided.
+    If both specified then they are simply returned.
     """
     if (w is None) and (h is None):
-        raise ValueError('Either width or height should be provided (now they are both None).')
+        raise ValueError('Either width or height should be provided.')
     w = (h * GR) if (w is None) else w
     h = (w / GR) if (h is None) else h
+    return w, h
 
-    return (w, h)
+
+# http://blog.alivate.com.au/poppler-windows/
+# import subprocess.call
+# import os
+# _poppler = ""
+#   poppler: str=r'C:\Program Files (x86)\poppler\bin',
+#   global _poppler; _poppler = poppler
+#   plot.savefig(name + ".pdf")  # was useful with external LaTeX renderer instead of matplotlib's
+#   subprocess.call([os.path.join(_poppler, "pdftocairo"), "-svg", name + ".pdf", name + ".svg"],
+#                   cwd=os.getcwd())

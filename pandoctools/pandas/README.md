@@ -8,15 +8,9 @@ Pandas Helper displays Data Frame and returns it's Markdown string. Usage exampl
 ---
 pandoctools:
   profile: Default
-  out: "*.*.md"
 results: pandoc
 ...
 """
-# %% {echo=False, eval=True}
-KNITTY = True
-# %% {echo=False, eval=False}
-# noinspection PyRedeclaration
-KNITTY = False
 
 
 # %% ----------------------------
@@ -32,5 +26,5 @@ print("""
 
 : Table {{#tbl:table1}}
 
-""".format(tbl=th.md_table(df, KNITTY)))
+""".format(tbl=th.md_table(df)))
 ```
