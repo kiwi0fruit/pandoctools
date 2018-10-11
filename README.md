@@ -49,9 +49,12 @@ Here are [**examples**](https://github.com/kiwi0fruit/pandoctools/blob/master/ex
   Git is needed for writing text conversion profiles in cross-platform bash language instead of Windows-only batch language (that is supported by Pandoctools anyway).
 
   ```
-  conda install "conda>=4.5.4"
-  conda create -n myenv python=3
+  call activate root
+  conda update conda
+  conda create -n myenv python=3 pip
+
   call activate myenv
+  conda update python pip
 
   conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.2.1" matplotlib ^
   feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters ^
@@ -60,6 +63,7 @@ Here are [**examples**](https://github.com/kiwi0fruit/pandoctools/blob/master/ex
   pip install panflute knitty sugartex shortcutter pandoctools pandoctools-ready
   ```
 
+* Should be `"conda>=4.5.4"`
 * Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) to  
   `<miniconda-path>/envs/myenv/Library/bin`.
 * if Pandoc errors try downgrade to `"pandoc>=2.0,<2.1"` and pandoc-crossref v0.3.0.1.
@@ -70,9 +74,12 @@ Here are [**examples**](https://github.com/kiwi0fruit/pandoctools/blob/master/ex
 * Install [Miniconda](https://conda.io/miniconda.html)
 
   ```
-  conda install "conda>=4.5.4"
-  conda create -n myenv python=3
+  source activate root
+  conda update conda
+  conda create -n myenv python=3 pip
+
   source activate myenv
+  conda update python pip
 
   conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.2.1" matplotlib \
   feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters \
@@ -80,6 +87,8 @@ Here are [**examples**](https://github.com/kiwi0fruit/pandoctools/blob/master/ex
   shutilwhich cython pandas
   pip install panflute knitty sugartex shortcutter pandoctools pandoctools-ready
   ```
+
+* Should be `"conda>=4.5.4"`
 * Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) to  
   `<miniconda-path>/envs/myenv/bin`.
 * if Pandoc errors try downgrade to `"pandoc>=2.0,<2.1"` and pandoc-crossref v0.3.0.1.
