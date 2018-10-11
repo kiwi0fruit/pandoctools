@@ -34,11 +34,7 @@ results: pandoc
 
 # %% {results=hide} --------------------
 from pandoctools import matplotlib as mh
-mh.ready()
-# mh.ready(font_size=14, finalize=False)
-# ... do additional tuning
-# mh.finalize()
-
+# mh.ready(font_size=14)
 import matplotlib.pyplot as plt
 
 
