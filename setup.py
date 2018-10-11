@@ -38,7 +38,7 @@ setup(
     packages=find_packages(exclude=['docs', 'tests']),
 
     install_requires=['click', 'pyyaml', 'panflute', 'knitty>=0.3.10', 'pandas',
-                      'sugartex>=0.1.9', 'matplotlib', 'feather-format',
+                      'sugartex>=0.1.10', 'matplotlib', 'feather-format',
                       'notebook', 'jupyter', 'shortcutter'],
 
     include_package_data=True,
