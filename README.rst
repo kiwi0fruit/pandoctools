@@ -6,7 +6,7 @@ markdown reports. They rely on Pandoc and Jupyter kernels.
 
 **Introduction article**: `Convenient and easily tweakable
 Atom+Markdown+Pandoc+Jupyter experience (can export to
-ipynb) <https://github.com/kiwi0fruit/misc/blob/master/atom_jupyter_pandoc_markdown.md>`__.
+ipynb) <https://github.com/kiwi0fruit/misc/blob/master/src/atom_jupyter_pandoc_markdown.md>`__.
 
 Glueing part of pandoctools is a profile manager of text processing
 pipelines. It stores short shell (bash or batch) scripts that define
