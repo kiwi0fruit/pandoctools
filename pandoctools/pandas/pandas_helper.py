@@ -24,11 +24,11 @@ def md_table(df: pd.DataFrame, hide: bool=False) -> str:
     fmt = ['---' for i in range(len(df.columns))]
     df_fmt = pd.DataFrame([fmt], columns=df.columns)
     df_formatted = pd.concat([df_fmt, df])
-    _md_table = df_formatted.to_csv(sep="|", index=False)
+    md = df_formatted.to_csv(sep="|", index=False)
 
     if KNITTY:
         hide = True
     if not hide:
         # noinspection PyTypeChecker
         display(df)
-    return _md_table if KNITTY else ""
+    return md if KNITTY else ""

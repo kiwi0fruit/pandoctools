@@ -1,7 +1,7 @@
 import os
 import sys
 
-KNITTY = os.environ['KNITTY'].lower()
+KNITTY = os.getenv('KNITTY', '')
 
 if KNITTY == 'true':
     KNITTY = True
