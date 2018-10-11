@@ -1,4 +1,5 @@
 @echo off
+set KNITTY=True
 %r% cat-md %inputs% | ^
 %r% pre-knitty "%input_file%" | ^
 %r% pre-sugartex | ^

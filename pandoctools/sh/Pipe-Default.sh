@@ -1,3 +1,4 @@
+export KNITTY=True
 cat-md "${inputs[@]}" | \
 pre-knitty "${input_file}" | \
 pre-sugartex | \

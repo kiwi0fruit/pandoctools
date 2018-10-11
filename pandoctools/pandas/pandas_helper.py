@@ -17,7 +17,7 @@ def md_table(df: pd.DataFrame, hide: bool=False) -> str:
     Returns
     -------
     md :
-        Markdown table if KNITTY is True (OS env var or module was imported)
+        Markdown table if KNITTY is True (OS env var)
         else ""
     """
     # noinspection PyUnusedLocal

@@ -131,7 +131,7 @@ def img(plot,
     Returns
     ------
     url :
-        Image URL if KNITTY is True
+        Image URL if KNITTY is True (OS env var)
         else ""
     """
     global _readied, _finalized
