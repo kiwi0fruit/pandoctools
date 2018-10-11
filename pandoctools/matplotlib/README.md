@@ -29,12 +29,10 @@ Usage example that works both in Atom+Hydrogen and in Pandoctools+Knitty:
 pandoctools:
   profile: Default
 results: pandoc
-results: hide
 ...
 """
 
-
-# %% ----------------------------
+# %% {results=hide} --------------------
 from pandoctools import matplotlib as mh
 mh.ready()
 # mh.ready(font_size=14, finalize=False)
@@ -48,7 +46,8 @@ plt.figure(figsize=mh.figsize(w=6))
 plt.plot([1, 2, 3, 4])
 plt.ylabel(mh.stex('ˎ∇ ⋅ [ ⃗E]ˎ, V/m'))
 img = mh.img(plt, qt=True)
-# %%
+
+# %% -----------------------------------
 print('''
 ![My beautiful figure]({}){{#fig:1}}
 '''.format(img))
