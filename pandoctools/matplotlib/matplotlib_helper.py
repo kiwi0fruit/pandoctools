@@ -44,6 +44,8 @@ def ready(ext: str='svg',
           fontm_bold: str="MJ",
           fontm_itbold: str="MJ_Mat"):
     """
+    Should be run before import matplotlib.pyplot
+
     Parameters
     ----------
     font_size : float

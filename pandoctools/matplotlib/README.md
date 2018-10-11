@@ -10,12 +10,13 @@ Hints:
 2. Delete `fontList.cache`, `fontList.py3k.cache` or `fontList.json` from `%USERPROFILE%\.matplotlib` folder after installing a new font.
 3. If font becomes bold without a reason try ([source](https://github.com/matplotlib/matplotlib/issues/5574)):
 
-  ```py
-  if 'roman' in font_manager.weight_dict:
-      del font_manager.weight_dict['roman']
-      # noinspection PyProtectedMember
-      font_manager._rebuild()
-  ```
+```py
+from matplotlib import font_manager
+if 'roman' in font_manager.weight_dict:
+    del font_manager.weight_dict['roman']
+    # noinspection PyProtectedMember
+    font_manager._rebuild()
+```
 
 4. Install [Computer Modern Unicode](https://sourceforge.net/projects/cm-unicode/) for bold-italic unicode support: `"mathtext.sf": "CMU Serif:bold:italic"`. Sans-serif command `\mathsf{}` is reassigned because sans-serif font is rarely used in serif docs.
 
@@ -34,7 +35,7 @@ results: pandoc
 
 # %% {results=hide} --------------------
 from pandoctools import matplotlib as mh
-# mh.ready(font_size=14)
+mh.ready(font_size=14)  # should be run before import matplotlib.pyplot
 import matplotlib.pyplot as plt
 
 
