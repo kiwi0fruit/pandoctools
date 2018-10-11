@@ -92,6 +92,8 @@ Install
 Windows:
 --------
 
+Via conda:
+
 -  Install `Miniconda <https://conda.io/miniconda.html>`__
 -  | Install `Git together with Bash <https://git-scm.com/downloads>`__
    | Git is needed for writing text conversion profiles in
@@ -102,10 +104,10 @@ Windows:
 
        call activate root
        conda update conda
-       conda create -n myenv python=3 pip
+       conda create -n myenv python=3 pip setuptools
 
        call activate myenv
-       conda update python pip
+       conda update python pip setuptools
 
        conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.2.1" matplotlib ^
        feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters ^
@@ -113,16 +115,32 @@ Windows:
        shutilwhich cython pywin32 pandas
        pip install panflute knitty sugartex shortcutter pandoctools pandoctools-ready
 
--  Should be ``"conda>=4.5.4"``
 -  Install latest stable
    `pandoc-crossref <https://github.com/lierdakil/pandoc-crossref/releases>`__
    to
-   ``<miniconda-path>/envs/myenv/Library/bin``.
--  if Pandoc errors try downgrade to ``"pandoc>=2.0,<2.1"`` and
-   pandoc-crossref v0.3.0.1.
+   ``<miniconda-path>/envs/myenv/Library/bin``,
+-  Tips:
+
+   -  If Pandoc errors try downgrade to ``"pandoc>=2.0,<2.1"`` and
+      pandoc-crossref v0.3.0.1,
+   -  Should be ``"conda>=4.5.4"`` (``conda update conda`` should be
+      enough).
+
+Via pip:
+
+::
+
+    pip install pandoctools pandoctools-ready
+
+| Install latest stable
+  `pandoc-crossref <https://github.com/lierdakil/pandoc-crossref/releases>`__
+  to
+| ``<miniconda-path>/envs/myenv/Scripts``,
 
 Unix:
 -----
+
+Via conda:
 
 -  Install `Miniconda <https://conda.io/miniconda.html>`__
 
@@ -130,10 +148,10 @@ Unix:
 
        source activate root
        conda update conda
-       conda create -n myenv python=3 pip
+       conda create -n myenv python=3 pip setuptools
 
        source activate myenv
-       conda update python pip
+       conda update python pip setuptools
 
        conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.2.1" matplotlib \
        feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters \
@@ -141,13 +159,27 @@ Unix:
        shutilwhich cython pandas
        pip install panflute knitty sugartex shortcutter pandoctools pandoctools-ready
 
--  Should be ``"conda>=4.5.4"``
 -  Install latest stable
    `pandoc-crossref <https://github.com/lierdakil/pandoc-crossref/releases>`__
    to
-   ``<miniconda-path>/envs/myenv/bin``.
--  if Pandoc errors try downgrade to ``"pandoc>=2.0,<2.1"`` and
-   pandoc-crossref v0.3.0.1.
+   ``<miniconda-path>/envs/myenv/bin``,
+-  Tips:
+
+   -  If Pandoc errors try downgrade to ``"pandoc>=2.0,<2.1"`` and
+      pandoc-crossref v0.3.0.1,
+   -  Should be ``"conda>=4.5.4"`` (``conda update conda`` should be
+      enough).
+
+Via pip:
+
+::
+
+    pip install pandoctools pandoctools-ready
+
+| Install latest stable
+  `pandoc-crossref <https://github.com/lierdakil/pandoc-crossref/releases>`__
+  to
+| ``<miniconda-path>/envs/myenv/bin``.
 
 `Useful tips <https://github.com/kiwi0fruit/pandoctools/blob/master/tips.md>`__
 ===============================================================================
