@@ -14,41 +14,21 @@ from typing import Tuple
 from ..knitty import KNITTY
 
 
+if not KNITTY:
+    mpl.use('Qt5Agg')
+
 GR = (1 + 5 ** 0.5) / 2
-mpl_params = {}
 sugartex.mpl_hack()
 sugartex.ready()
 
-_font_dir = None
 _ext = 'svg'
 _dpi = 300
 _preview_width = '600px'
 _readied = False
-_finalized = False
-
-
-def finalize():
-    global _finalized; _finalized = True
-    if not _readied:
-        raise RuntimeError('Run ready() first.')
-
-    if not KNITTY:
-        mpl.use('Qt5Agg')
-    mpl.rc('text.latex', unicode=True)
-    if _font_dir is not None:
-        font_dirs = [_font_dir, ]
-        font_files = font_manager.findSystemFonts(fontpaths=font_dirs)
-        font_list = font_manager.createFontList(font_files)
-        font_manager.fontManager.ttflist.extend(font_list)
-    mpl.rcParams.update(mpl_params)
-
-
-_finalize = finalize
 
 
 # noinspection PyShadowingNames,PyIncorrectDocstring
-def ready(finalize: bool=True,
-          ext: str='svg',
+def ready(ext: str='svg',
           dpi: int=300,
           preview_width: str = '600px',
           font_dir: str=None,
@@ -72,13 +52,11 @@ def ready(finalize: bool=True,
     # TODO: change single font to list of fallback fonts
 
     global _readied;       _readied = True
-    global _font_dir;      _font_dir = font_dir
-    global _preview_width; _preview_width = preview_width
     global _ext;           _ext = ext
     global _dpi;           _dpi = dpi
-    global mpl_params
+    global _preview_width; _preview_width = preview_width
 
-    mpl_params.update({
+    mpl.rcParams.update({
         "text.usetex": False,
         "font.size": font_size,
         "font.family": font_family,
@@ -94,8 +72,13 @@ def ready(finalize: bool=True,
         "mathtext.bf": fontm_bold + ":bold",
         "mathtext.sf": fontm_itbold + ":bold:italic"
     })
-    if finalize:
-        _finalize()
+
+    mpl.rc('text.latex', unicode=True)
+    if font_dir is not None:
+        font_dirs = [font_dir, ]
+        font_files = font_manager.findSystemFonts(fontpaths=font_dirs)
+        font_list = font_manager.createFontList(font_files)
+        font_manager.fontManager.ttflist.extend(font_list)
 
 
 def img(plot,
@@ -134,11 +117,8 @@ def img(plot,
         Image URL if KNITTY is True (OS env var)
         else ""
     """
-    global _readied, _finalized
     if not _readied:
         ready()
-    elif not _finalized:
-        finalize()
 
     ext = ext if (ext is not None) else _ext
     dpi = dpi if (dpi is not None) else _dpi
