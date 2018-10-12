@@ -1,19 +1,10 @@
 ---
 pandoctools:
   profile: Default
-  out: "%USERPROFILE%\\*.ipynb"
-  # out: "*.md.md"
+  out: "~/*.ipynb"
 input: True
 eval: False
 ...
-@{input=False, echo=False, eval=True}
-```py
-KNITTY = True
-```
-@{input=False, echo=False, eval=False}
-```py
-KNITTY = False
-```
 
 # Markdown to Jupyter notebook example
 
@@ -35,7 +26,7 @@ where ˎ[ ⃗B], [ ⃗E], [ ⃗j]: ℝ⁴ → ℝ³ˎ – vector functions
 
 ![Sample image with cross-references.](https://avatars3.githubusercontent.com/u/19735117?s=460&v=4){#fig:img}
 
-Image caption does not work but it can be fixed via simple Panflute filter. Or it can be considered Pandoc bug.
+In this version of Pandoc image caption @fig:img works but for some reason this text is not inside `<p></p>`...
 
 @{input=False, eval=True, results=pandoc}
 ```py
@@ -45,7 +36,7 @@ from pandoctools import pandas as th
 
 df = pd.DataFrame(np.random.random(16).reshape(4, 4))
 
-print(th.md_table(df, KNITTY))
+print(th.md_table(df))
 print(': Table {#tbl:table1}')
 ```
 

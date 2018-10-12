@@ -32,7 +32,7 @@ where ˎ[ ⃗B], [ ⃗E], [ ⃗j]: ℝ⁴ → ℝ³ˎ – vector functions
 
 ![Sample image with cross-references.](https://avatars3.githubusercontent.com/u/19735117?s=460&v=4){#fig:img}
 
-Does image caption @fig:img work in this version of Pandoc?
+In this version of Pandoc image caption @fig:img works but for some reason this text is not inside `<p></p>`...
 """
 
 

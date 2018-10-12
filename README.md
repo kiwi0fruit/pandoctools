@@ -58,13 +58,13 @@ Via conda:
   call activate myenv
   conda update python pip setuptools
 
-  conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.2.1" matplotlib ^
+  conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" matplotlib ^
   feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters ^
   pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future ^
   shutilwhich cython pywin32 pandas
   pip install panflute knitty sugartex shortcutter pandoctools pandoctools-ready
   ```
-* Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) to `<miniconda-path>/envs/myenv/Library/bin`,
+* Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) (compatible with pandoc version) to `<miniconda-path>/envs/myenv/Library/bin`,
 * Tips:
   - If Pandoc errors try downgrade to `"pandoc>=2.0,<2.1"` and pandoc-crossref v0.3.0.1,
   - Should be `"conda>=4.5.4"` (`conda update conda` should be enough).
@@ -76,7 +76,7 @@ Via pip:
   ```
   pip install pandoctools pandoctools-ready
   ```
-* Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) to `<miniconda-path>/envs/myenv/Scripts`,
+* Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) (compatible with pandoc version) to `<miniconda-path>/envs/myenv/Scripts`,
 
 
 ## Unix:
@@ -93,13 +93,13 @@ Via conda:
   source activate myenv
   conda update python pip setuptools
 
-  conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.2.1" matplotlib \
+  conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" matplotlib \
   feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters \
   pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future \
   shutilwhich cython pandas
   pip install panflute knitty sugartex shortcutter pandoctools pandoctools-ready
   ```
-* Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) to `<miniconda-path>/envs/myenv/bin`,
+* Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) (compatible with pandoc version) to `<miniconda-path>/envs/myenv/bin`,
 * Tips:
   - If Pandoc errors try downgrade to `"pandoc>=2.0,<2.1"` and pandoc-crossref v0.3.0.1,
   - Should be `"conda>=4.5.4"` (`conda update conda` should be enough).
@@ -111,7 +111,7 @@ Via pip:
   ```
   pip install pandoctools pandoctools-ready
   ```
-* Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) to `<miniconda-path>/envs/myenv/bin`.
+* Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) (compatible with pandoc version) to `<miniconda-path>/envs/myenv/bin`.
 
 
 # [Useful tips](https://github.com/kiwi0fruit/pandoctools/blob/master/tips.md)
