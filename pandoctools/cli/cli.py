@@ -13,6 +13,10 @@ PROFILE = 'Default'
 OUT = '*.html'
 
 
+def expandvars(file_path):
+    return p.expanduser(p.expandvars(file_path))
+
+
 def expand_pattern(pattern: str,  target_file: str,  cwd: bool) -> str:
     """
     Make file path from pattern and target file path:
@@ -244,7 +248,7 @@ def pandoctools(input_file, profile, out, stdio, stdin, cwd, detailed_out, debug
                   "- run it from console, see: pandoctools --help")
             input("Press Enter to exit.")
             return None
-        with open(p.expandvars(input_file), 'r', encoding="utf-8") as file:
+        with open(expandvars(input_file), 'r', encoding="utf-8") as file:
             doc = file.read()
     input_file = "untitled" if (input_file is None) else input_file
 
@@ -262,7 +266,7 @@ def pandoctools(input_file, profile, out, stdio, stdin, cwd, detailed_out, debug
     # Read from INI config (Read profile, 'out'. Find python root env, bash on Windows):
     if os.name == 'nt':
         config = read_ini('Defaults', pandoctools_user, _pandoctools_core)
-        win_bash = p.expandvars(config.get('Default', 'win_bash', fallback=''))
+        win_bash = expandvars(config.get('Default', 'win_bash', fallback=''))
         if p.exists(win_bash) and not p.isdir(win_bash) and (str(profile)[-4:] != '.bat'):
             # here we implicitly use the fact that
             # ini from core sh folder (_pandoctools_core)
@@ -281,11 +285,11 @@ def pandoctools(input_file, profile, out, stdio, stdin, cwd, detailed_out, debug
     out = config.get('Default', 'out', fallback=OUT) if (out is None) else out
 
     # Expand environment vars and get abs path:
-    root_env = p.expandvars(root_env)
+    root_env = expandvars(root_env)
     root_env = root_env if p.isabs(root_env) and p.isdir(root_env) else guess_root_env(env_path)
-    input_file = p.abspath(p.expandvars(input_file))
-    profile = p.expandvars(profile)
-    out = p.expandvars(out)
+    input_file = p.abspath(expandvars(input_file))
+    profile = expandvars(profile)
+    out = expandvars(out)
 
     # Expand custom patterns:
     output_file = expand_pattern(out, input_file, cwd)

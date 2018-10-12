@@ -3,19 +3,12 @@
 ---
 pandoctools:
   profile: Kiwi
-  out: "%USERPROFILE%\\*.ipynb"
-  # out: "*.py.md"
+  out: "~/*.ipynb"
 input: False
 eval: True
 echo: False
 ...
 """
-# %% {echo=False, eval=True}
-KNITTY = True
-# %% {echo=False, eval=False}
-# noinspection PyRedeclaration
-KNITTY = False
-
 
 # %% {md} Markdown cell that doesn't affect PyCharm code inspection and Atom+Hydrogen 'Run All':
 """
@@ -39,7 +32,7 @@ where ˎ[ ⃗B], [ ⃗E], [ ⃗j]: ℝ⁴ → ℝ³ˎ – vector functions
 
 ![Sample image with cross-references.](https://avatars3.githubusercontent.com/u/19735117?s=460&v=4){#fig:img}
 
-Image caption does not work but it can be fixed via simple Panflute filter. Or it can be considered Pandoc bug.
+Does image caption @fig:img work in this version of Pandoc?
 """
 
 
@@ -50,7 +43,7 @@ from pandoctools import pandas as th
 
 df = pd.DataFrame(np.random.random(16).reshape(4, 4))
 
-print(th.md_table(df, KNITTY))
+print(th.md_table(df))
 print(': Table {#tbl:table1}')
 
 
@@ -82,7 +75,7 @@ print('''
 Markdown text with SugarTeX formula: ˎα^˱{pi:1.3f}˲ˎ.
 It works because of the results=pandoc option and SugarTeX Pandoc filter.
 
-'''.replace('ˎ', '$').format(pi=math.pi))
+'''.format(pi=math.pi))
 
 
 # %% {input=True, eval=False, echo=True}
