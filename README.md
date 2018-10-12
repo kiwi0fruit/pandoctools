@@ -62,6 +62,8 @@ Via conda:
   feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters ^
   pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future ^
   shutilwhich cython pywin32 pandas
+
+  chcp 1252
   pip install panflute knitty sugartex shortcutter pandoctools pandoctools-ready
   ```
 * Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) (compatible with pandoc version) to `<miniconda-path>/envs/myenv/Library/bin`,
@@ -97,6 +99,7 @@ Via conda:
   feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters \
   pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future \
   shutilwhich cython pandas
+
   pip install panflute knitty sugartex shortcutter pandoctools pandoctools-ready
   ```
 * Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) (compatible with pandoc version) to `<miniconda-path>/envs/myenv/bin`,
