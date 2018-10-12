@@ -8,7 +8,7 @@ markdown reports. They rely on Pandoc and Jupyter kernels.
 Atom+Markdown+Pandoc+Jupyter experience (can export to
 ipynb) <https://github.com/kiwi0fruit/misc/blob/master/src/atom_jupyter_pandoc_markdown.md>`__.
 
-Glueing part of pandoctools is a profile manager of text processing
+“Glueing” part of pandoctools is a profile manager of text processing
 pipelines. It stores short shell (bash or batch) scripts that define
 chain operations over text. They are mostly Pandoc filters but any CLI
 text filter is OK.
