@@ -63,11 +63,11 @@ Via conda:
   pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future ^
   shutilwhich cython pywin32 pandas
 
-  chcp 1252
   pip install panflute knitty sugartex shortcutter pandoctools pandoctools-ready
   ```
 * Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) (compatible with pandoc version) to `<miniconda-path>/envs/myenv/Library/bin`,
 * Tips:
+  - if pip install fails try to change codepage: `chcp 1252`, 
   - If Pandoc errors try downgrade to `"pandoc>=2.0,<2.1"` and pandoc-crossref v0.3.0.1,
   - Should be `"conda>=4.5.4"` (`conda update conda` should be enough).
 
