@@ -1,7 +1,39 @@
 # Contents
 
+* [Reload imported modules in Hydrogen](#reload-imported-modules-in-hydrogen)
 * [Install R](#install-r)
 * [Install LyX](#install-lyx)
+
+
+# Reload imported modules in Hydrogen
+
+It may be useful to have an external module with Hydrogen. Import it to make the code more elegant. But you need to reload it after you change it. More to say: you need to reload every sub-import:
+
+Hydrogen `./document.py`:
+
+```py
+from importlib import reload
+import the
+reload(the)
+from the import something
+```
+
+Module `./the/__init__.py`:
+
+```py
+from importlib import reload
+from . import smth
+reload(smth); del smth
+
+from .smth import something
+```
+
+Module `./the/smth.py`:
+
+```py
+def something():
+  pass
+```
 
 
 # Install R
