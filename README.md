@@ -12,7 +12,7 @@ Pandoctools is a combination of tools that help write reproducible markdown repo
 * [Notable parts of Pandoctools](#notable-parts-of-pandoctools)
 * [Examples markdown to ipynb](#examples-markdown-to-ipynb)
 * [Install](#install)
-* [Useful tips](#useful-tips)
+* [Useful tips (R kernel, LyX)](#useful-tips-r-kernel-lyx)
 
 
 # Notable parts of Pandoctools
@@ -117,6 +117,6 @@ Via pip:
 * Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) (compatible with pandoc version) to `<miniconda-path>/envs/myenv/bin`.
 
 
-# [Useful tips](https://github.com/kiwi0fruit/pandoctools/blob/master/tips.md)
+# Useful tips (R kernel, LyX)
 
-[Useful tips](https://github.com/kiwi0fruit/pandoctools/blob/master/tips.md)
+[Useful tips (R kernel, LyX)](https://github.com/kiwi0fruit/pandoctools/blob/master/tips.md)
