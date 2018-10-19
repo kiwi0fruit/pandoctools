@@ -14,7 +14,7 @@ Pandoctools is a combination of tools that help write reproducible markdown repo
 * [Notable parts of Pandoctools](#notable-parts-of-pandoctools)
 * [Examples markdown to ipynb](#examples-markdown-to-ipynb)
 * [Install](#install)
-* [Useful tips (reload imported modules in Hydrogen, R kernel, LyX)](#useful-tips-reload-imported-modules-in-hydrogenr-kernel-lyx)
+* [Useful tips (reload imported modules in Hydrogen, R kernel, LyX)](#useful-tips-reload-imported-modules-in-hydrogen-r-kernel-lyx)
 * [Alternatives to R Markdown (Markdown-based Literate Programming)](#alternatives-to-r-markdown-markdown-based-literate-programming)
 
 
