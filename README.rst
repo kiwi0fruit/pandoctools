@@ -6,7 +6,7 @@ markdown reports. They rely on Pandoc and Jupyter kernels.
 
 **Introduction article**: `Convenient and easily tweakable
 Atom+Markdown+Pandoc+Jupyter experience (can export to
-ipynb) <https://github.com/kiwi0fruit/misc/blob/master/src/atom_jupyter_pandoc_markdown.md>`__.
+ipynb) <https://github.com/kiwi0fruit/pandoctools/blob/master/atom_jupyter_pandoc_markdown.md>`__.
 
 “Glueing” part of pandoctools is a profile manager of text processing
 pipelines. It stores short shell (bash or batch) scripts that define
@@ -16,10 +16,14 @@ text filter is OK.
 Contents
 ========
 
+-  `Pandoctools <#pandoctools>`__
+-  `Contents <#contents>`__
 -  `Notable parts of Pandoctools <#notable-parts-of-pandoctools>`__
 -  `Examples markdown to ipynb <#examples-markdown-to-ipynb>`__
 -  `Install <#install>`__
--  `Useful tips <#useful-tips>`__
+-  `Useful tips (R kernel, LyX) <#useful-tips-r-kernel-lyx>`__
+-  `Alternatives to R Markdown (Markdown-based Literate
+   Programming) <#alternatives-to-r-markdown-markdown-based-literate-programming>`__
 
 Notable parts of Pandoctools
 ============================
@@ -114,7 +118,6 @@ Via conda:
       pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future ^
       shutilwhich cython pywin32 pandas
 
-      chcp 1252
       pip install panflute knitty sugartex shortcutter pandoctools pandoctools-ready
 
 -  Install latest stable
@@ -123,6 +126,7 @@ Via conda:
    ``<miniconda-path>/envs/myenv/Library/bin``,
 -  Tips:
 
+   -  if pip install fails try to change codepage: ``chcp 1252``,
    -  If Pandoc errors try downgrade to ``"pandoc>=2.0,<2.1"`` and
       pandoc-crossref v0.3.0.1,
    -  Should be ``"conda>=4.5.4"`` (``conda update conda`` should be
@@ -189,8 +193,14 @@ Via pip:
    (compatible with pandoc version) to
    ``<miniconda-path>/envs/myenv/bin``.
 
-`Useful tips <https://github.com/kiwi0fruit/pandoctools/blob/master/tips.md>`__
-===============================================================================
+Useful tips (R kernel, LyX)
+===========================
 
-`Useful
-tips <https://github.com/kiwi0fruit/pandoctools/blob/master/tips.md>`__
+`Useful tips (R kernel,
+LyX) <https://github.com/kiwi0fruit/pandoctools/blob/master/tips.md>`__
+
+Alternatives to R Markdown (Markdown-based Literate Programming)
+================================================================
+
+`Alternatives to R
+Markdown <https://github.com/kiwi0fruit/pandoctools/blob/master/alternatives_to_r_markdown.md>`__
