@@ -14,7 +14,7 @@ Pandoctools is a combination of tools that help write reproducible markdown repo
 * [Notable parts of Pandoctools](#notable-parts-of-pandoctools)
 * [Examples markdown to ipynb](#examples-markdown-to-ipynb)
 * [Install](#install)
-* [Useful tips (R kernel, LyX)](#useful-tips-r-kernel-lyx)
+* [Useful tips (reload imported modules in Hydrogen, R kernel, LyX)](#useful-tips-reload-imported-modules-in-hydrogenr-kernel-lyx)
 * [Alternatives to R Markdown (Markdown-based Literate Programming)](#alternatives-to-r-markdown-markdown-based-literate-programming)
 
 
@@ -120,9 +120,9 @@ Via pip:
 * Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) (compatible with pandoc version) to `<miniconda-path>/envs/myenv/bin`.
 
 
-# Useful tips (R kernel, LyX)
+# Useful tips (reload imported modules in Hydrogen, R kernel, LyX)
 
-[Useful tips (R kernel, LyX)](https://github.com/kiwi0fruit/pandoctools/blob/master/tips.md)
+[Useful tips](https://github.com/kiwi0fruit/pandoctools/blob/master/tips.md)
 
 
 # Alternatives to R Markdown (Markdown-based Literate Programming)
