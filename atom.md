@@ -7,6 +7,7 @@
     * [SugarTeX Completions](#sugartex-completions)
     * [Unix Filter](#unix-filter)
     * [Hydrogen](#hydrogen)
+      * [Reload imported modules in Hydrogen](#reload-imported-modules-in-hydrogen)
     * [Markdown Preview Plus](#markdown-preview-plus)
 * [Recommended Atom options](#recommended-atom-options)
 * [Enable Atom spell checking](#enable-atom-spell-checking)
@@ -39,6 +40,11 @@ Specify command option to `<...>\pandoctools.exe --stdin "%FILE%"` (`<...>/pando
 Install [Hydrogen](https://atom.io/packages/hydrogen) (by nteract) Atom package that allows interactive python code execution. With it you can run and see instantly see results of code blocks that are later would be processed by Pandoctools/Knitty and be included to the output document.
 
 See the [short instruction](https://github.com/kiwi0fruit/knitty/blob/master/hydrogen.md) how to use and set up Hydrogen.
+
+
+### Reload imported modules in Hydrogen
+
+[Reload imported modules in Hydrogen](https://github.com/kiwi0fruit/pandoctools/blob/master/tips.md#reload-imported-modules-in-hydrogen)
 
 
 ## Markdown Preview Plus
