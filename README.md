@@ -69,7 +69,7 @@ Via conda:
   pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future ^
   shutilwhich cython pywin32 pandas
 
-  pip install panflute knitty sugartex shortcutter pandoctools pandoctools-ready
+  pip install --progress-bar off panflute knitty sugartex shortcutter pandoctools pandoctools-ready
   ```
 * Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) (compatible with pandoc version) to `<miniconda-path>/envs/myenv/Library/bin`,
 * Tips:
