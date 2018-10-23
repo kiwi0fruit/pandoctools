@@ -4,9 +4,14 @@ Pandoctools
 Pandoctools is a combination of tools that help write reproducible
 markdown reports. They rely on Pandoc and Jupyter kernels.
 
-**Introduction article**: `Convenient and easily tweakable
-Atom+Markdown+Pandoc+Jupyter experience (can export to
-ipynb) <https://github.com/kiwi0fruit/pandoctools/blob/master/atom_jupyter_pandoc_markdown.md>`__.
+**Introduction articles**:
+
+-  `Convenient and easily tweakable Atom+Markdown+Pandoc+Jupyter
+   experience (can export to
+   ipynb) <https://github.com/kiwi0fruit/pandoctools/blob/master/atom_jupyter_pandoc_markdown.md>`__.
+-  `Best Python/Jupyter/PyCharm experience + report generation with
+   Pandoc
+   filters <https://github.com/kiwi0fruit/pandoctools/blob/master/best_python_jupyter_pycharm_experience.md>`__.
 
 “Glueing” part of pandoctools is a profile manager of text processing
 pipelines. It stores short shell (bash or batch) scripts that define
@@ -21,7 +26,8 @@ Contents
 -  `Notable parts of Pandoctools <#notable-parts-of-pandoctools>`__
 -  `Examples markdown to ipynb <#examples-markdown-to-ipynb>`__
 -  `Install <#install>`__
--  `Useful tips (R kernel, LyX) <#useful-tips-r-kernel-lyx>`__
+-  `Useful tips (reload imported modules in Hydrogen, R kernel,
+   LyX) <#useful-tips-reload-imported-modules-in-hydrogen-r-kernel-lyx>`__
 -  `Alternatives to R Markdown (Markdown-based Literate
    Programming) <#alternatives-to-r-markdown-markdown-based-literate-programming>`__
 
@@ -118,7 +124,7 @@ Via conda:
       pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future ^
       shutilwhich cython pywin32 pandas
 
-      pip install panflute knitty sugartex shortcutter pandoctools pandoctools-ready
+      pip install --progress-bar off panflute knitty sugartex shortcutter pandoctools pandoctools-ready
 
 -  Install latest stable
    `pandoc-crossref <https://github.com/lierdakil/pandoc-crossref/releases>`__
@@ -193,11 +199,11 @@ Via pip:
    (compatible with pandoc version) to
    ``<miniconda-path>/envs/myenv/bin``.
 
-Useful tips (R kernel, LyX)
-===========================
+Useful tips (reload imported modules in Hydrogen, R kernel, LyX)
+================================================================
 
-`Useful tips (R kernel,
-LyX) <https://github.com/kiwi0fruit/pandoctools/blob/master/tips.md>`__
+`Useful
+tips <https://github.com/kiwi0fruit/pandoctools/blob/master/tips.md>`__
 
 Alternatives to R Markdown (Markdown-based Literate Programming)
 ================================================================
