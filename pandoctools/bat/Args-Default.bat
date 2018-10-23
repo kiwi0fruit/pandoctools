@@ -27,6 +27,11 @@ set "reader_args= "
 set "writer_args= "
 set "t="
 
+%set_resolve% _meta_prof "Meta-%prof%.yaml"
+%set_resolve% _meta_ipynb_R "Meta-ipynb-R.yaml"
+%set_resolve% _meta_ipynb "Meta-ipynb-py3.yaml"
+%set_resolve% _templ_docx "Template-%prof%.docx"
+
 
 if "%in_ext%"=="" (
     set from=markdown
@@ -34,7 +39,7 @@ if "%in_ext%"=="" (
 ) else if "%in_ext%"=="md" (
     set from=markdown
 
-) else if "%in_ext%"=="md" (
+) else if "%in_ext%"=="py" (
     set from=markdown
 
 ) else (
@@ -43,8 +48,7 @@ if "%in_ext%"=="" (
 
 
 set "_jupymd=markdown-bracketed_spans-fenced_divs-link_attributes-simple_tables-multiline_tables-grid_tables-pipe_tables-fenced_code_attributes-markdown_in_html_blocks-table_captions-smart"
-%set_resolve% _meta "Meta-%prof%.yaml"
-set stdin_plus=stdin "%_meta%"
+set stdin_plus=stdin "%_meta_prof%"
 set "to=%out_ext%"
 
 if        "%out_ext%"=="" (
@@ -56,18 +60,15 @@ if        "%out_ext%"=="" (
 ) else if "%out_ext_full:~-8%"==".r.ipynb" (
     set "to=%_jupymd%"
     set t=markdown
-    %set_resolve% _meta Meta-ipynb-R.yaml
-    set stdin_plus=%stdin_plus% "%_meta%"
+    set stdin_plus=%stdin_plus% "%_meta_ipynb_R%"
 
 ) else if "%out_ext%"=="ipynb" (
     set "to=%_jupymd%"
     set t=markdown
-    %set_resolve% _meta Meta-ipynb-py3.yaml
-    set stdin_plus=%stdin_plus% "%_meta%"
+    set stdin_plus=%stdin_plus% "%_meta_ipynb%"
 
 ) else if "%out_ext%"=="docx" (
-    %set_resolve% _temp "Template-%prof%.docx"
-    set writer_args=%writer_args% --reference-doc="%_temp%" -o "%output_file%"
+    set writer_args=%writer_args% --reference-doc="%_templ_docx%" -o "%output_file%"
 )
 
 if "%t%" == "" set "t=%to%"
