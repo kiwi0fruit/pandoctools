@@ -7,9 +7,9 @@ set KNITTY=True
 %r% cat-md %stdin_plus% | ^
 %r% pandoc %reader_args% -t json | ^
 %r% knitty "%input_file%" %reader_args% %writer_args% | ^
-%r% sugartex %stex% | ^
-%r% pandoc-crossref %to% | ^
+%r% sugartex %sugartex% | ^
+%r% pandoc-crossref %t% | ^
 %r% pandoc -f json %writer_args%
 
-:: panfl sugartex -t %to% == sugartex %to% == sugartex 
-:: panfl sugartex_kiwi -t %to% == sugartex --kiwi
+:: panfl sugartex -t %t% == sugartex %t% == sugartex 
+:: panfl sugartex_kiwi -t %t% == sugartex --kiwi

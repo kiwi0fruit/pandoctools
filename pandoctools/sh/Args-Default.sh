@@ -12,56 +12,57 @@
 #   ${output_file} (output file path with extension)
 #   $scripts (conda environment bin folder)
 # Exports vars:
+#   $from
+#   $to
+#   $t (argument for filters)
 #   ${reader_args}
 #   ${writer_args}
 #   ${stdin_plus}
-#   $to
 
 out_ext_full=".${out_ext_full}"
+writer_args=()
+reader_args=()
+t=""
 
 
 if   [ "${in_ext}" == "" ]; then
-    _from=markdown
+    from=markdown
 
 elif [ "${in_ext}" == "md" ]; then
-    _from=markdown
+    from=markdown
 
 elif [ "${in_ext}" == "py" ]; then
-    _from=markdown
+    from=markdown
 
 else
-    _from="${in_ext}"
+    from="${in_ext}"
 fi
-reader_args=(-f "${_from}")
 
 
 _jupymd="markdown-bracketed_spans-fenced_divs-link_attributes-simple_tables-multiline_tables-grid_tables-pipe_tables-fenced_code_attributes-markdown_in_html_blocks-table_captions-smart"
 stdin_plus=("stdin" "$(. "$resolve" Meta-$prof.yaml)")
-to=""
-_to="${out_ext}"
-writer_args=(--standalone --self-contained)
+to="${out_ext}"
 
 if   [ "${out_ext}" == "" ]; then
-    _to=markdown
+    to=markdown
 
 elif [ "${out_ext}" == "md" ]; then
-    _to=markdown
+    to=markdown
 
 elif [ "${out_ext_full: -8}" == ".r.ipynb" ]; then
-    _to="${_jupymd}"
-    to=markdown
+    to="${_jupymd}"
+    t=markdown
     stdin_plus=("${stdin_plus[@]}" "$(. "$resolve" Meta-ipynb-R.yaml)")
 
 elif [ "${out_ext}" == "ipynb" ]; then
-    _to="${_jupymd}"
-    to=markdown
+    to="${_jupymd}"
+    t=markdown
     stdin_plus=("${stdin_plus[@]}" "$(. "$resolve" Meta-ipynb-py3.yaml)")
 
 elif [ "${out_ext}" == "docx" ]; then
     writer_args=("${writer_args[@]}" --reference-doc="$(. "$resolve" Template-$prof.docx)" -o "${output_file}")
 fi
 
-if [ "$to" == "" ]; then
-    to="${_to}"
+if [ "$t" == "" ]; then
+    t="$to"
 fi
-writer_args=("${writer_args[@]}" -t "${_to}")

@@ -4,14 +4,16 @@
 
 set prof=Kiwi
 %import% Args-Default
+set reader_args=%reader_args% -f "%from%"
+set writer_args=%writer_args% --standalone --self-contained -t "%to%"
+
 set pipe=Default
 if "%out_ext%"=="ipynb" (
     set pipe=ipynb
 )
 
-set "stex=--kiwi"
+set "sugartex=--kiwi"
 set inputs=stdin
-::set writer_args=%writer_args% --toc
 %import% "Pipe-%pipe%"
 
 %source% deactivate
