@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Usage in Pandoctools profiles (for Meta-Default.yaml):
 #   x="$(. "$resolve" Meta-Default.yaml)"
 
