@@ -11,16 +11,14 @@
 ::   %out_ext_full% (extended output file extension like "r.ipynb")
 ::   %input_file% (input file path with extension)
 ::   %output_file% (output file path with extension)
+::   %scripts% (conda environment Scripts folder).
 :: Exports vars:
 ::   %reader_args%
 ::   %writer_args%
 ::   %stdin_plus%
 ::   %to%
-::   %pipe%
 :: May be useful:
-::   %source% setvar scripts %r% where $PATH:panfl.exe
-::   set scripts=%scripts:~0,-10%
-:: or use predefined %scripts% var (conda environment Scripts folder).
+::   %source% setvar v echo hello
 
 set "out_ext_full=.%out_ext_full%"
 
@@ -43,7 +41,6 @@ set reader_args=-f "%_from%"
 set "_jupymd=markdown-bracketed_spans-fenced_divs-link_attributes-simple_tables-multiline_tables-grid_tables-pipe_tables-fenced_code_attributes-markdown_in_html_blocks-table_captions-smart"
 %set_resolve% _meta "Meta-%prof%.yaml"
 set stdin_plus=stdin "%_meta%"
-set pipe=Default
 set "to="
 set "_to=%out_ext%"
 set writer_args=--standalone --self-contained
@@ -57,7 +54,6 @@ if        "%out_ext%"=="" (
 ) else if "%out_ext_full:~-8%"==".r.ipynb" (
     set "_to=%_jupymd%"
     set to=markdown
-    set pipe=ipynb
     
     %set_resolve% _meta Meta-ipynb-R.yaml
     set stdin_plus=%stdin_plus% "%_meta%"
@@ -65,7 +61,6 @@ if        "%out_ext%"=="" (
 ) else if "%out_ext%"=="ipynb" (
     set "_to=%_jupymd%"
     set to=markdown
-    set pipe=ipynb
 
     %set_resolve% _meta Meta-ipynb-py3.yaml
     set stdin_plus=%stdin_plus% "%_meta%"

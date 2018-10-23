@@ -10,16 +10,12 @@
 #   ${out_ext_full} (extended output file extension like "r.ipynb")
 #   ${input_file} (input file path with extension)
 #   ${output_file} (output file path with extension)
+#   $scripts (conda environment bin folder)
 # Exports vars:
 #   ${reader_args}
 #   ${writer_args}
 #   ${stdin_plus}
 #   $to
-#   $pipe
-# May be useful:
-#   scripts="$(which panfl)"
-#   scripts="${scripts%/*}"
-# or use predefined $scripts var (conda environment bin folder).
 
 out_ext_full=".${out_ext_full}"
 
@@ -41,7 +37,6 @@ reader_args=(-f "${_from}")
 
 _jupymd="markdown-bracketed_spans-fenced_divs-link_attributes-simple_tables-multiline_tables-grid_tables-pipe_tables-fenced_code_attributes-markdown_in_html_blocks-table_captions-smart"
 stdin_plus=("stdin" "$(. "$resolve" Meta-$prof.yaml)")
-pipe="Default"
 to=""
 _to="${out_ext}"
 writer_args=(--standalone --self-contained)
@@ -56,13 +51,11 @@ elif [ "${out_ext_full: -8}" == ".r.ipynb" ]; then
     _to="${_jupymd}"
     to=markdown
     stdin_plus=("${stdin_plus[@]}" "$(. "$resolve" Meta-ipynb-R.yaml)")
-    pipe="ipynb"
 
 elif [ "${out_ext}" == "ipynb" ]; then
     _to="${_jupymd}"
     to=markdown
     stdin_plus=("${stdin_plus[@]}" "$(. "$resolve" Meta-ipynb-py3.yaml)")
-    pipe="ipynb"
 
 elif [ "${out_ext}" == "docx" ]; then
     writer_args=("${writer_args[@]}" --reference-doc="$(. "$resolve" Template-$prof.docx)" -o "${output_file}")
