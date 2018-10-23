@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 if [ "$1" != "" ]; then
     PATH="$1:$1/Scripts:$1/Library/bin:$PATH"
 fi
