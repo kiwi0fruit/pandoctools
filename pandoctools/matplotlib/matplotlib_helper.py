@@ -74,8 +74,8 @@ def ready(ext: str='svg',
         "mathtext.bf": fontm_bold + ":bold",
         "mathtext.sf": fontm_itbold + ":bold:italic"
     })
-
-    mpl.rc('text.latex', unicode=True)
+    if mpl.__version__.startswith('2'):
+        mpl.rc('text.latex', unicode=True)
     if font_dir is not None:
         font_dirs = [font_dir, ]
         font_files = font_manager.findSystemFonts(fontpaths=font_dirs)
