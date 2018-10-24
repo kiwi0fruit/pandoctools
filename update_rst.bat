@@ -1,5 +1,3 @@
-set "script_dir=%~dp0"
-cd /d "%script_dir%"
+cd /d "%~dp0"
 
-chcp 65001 > NUL
 pandoc README.md -o README.rst
