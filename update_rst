@@ -1,5 +1,4 @@
 #!/bin/bash
-script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-cd "${script_dir}"
+cd "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 pandoc README.md -o README.rst
