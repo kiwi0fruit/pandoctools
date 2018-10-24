@@ -3,16 +3,17 @@
 
 prof=Default
 . "$import" Args-Default
-reader_args=("${reader_args[@]}" -f "$from")
-writer_args=("${writer_args[@]}" --standalone --self-contained -t "$to")
+
+inputs=(stdin)
+stdin_plus=(stdin "${metas[@]}")
+reader_args=(-f "$from" "${reader_args[@]}")
+writer_args=(--standalone --self-contained -t "$to" "${writer_args[@]}")
+sugartex="$t"
 
 pipe=Default
 if [ "${out_ext}" == "ipynb" ]; then
     pipe=ipynb
 fi
-
-sugartex="$t"
-inputs=(stdin)
 . "$import" "Pipe-$pipe"
 
 . "$source" deactivate

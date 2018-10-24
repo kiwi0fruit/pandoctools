@@ -17,12 +17,17 @@
 #   $t (argument for filters)
 #   ${reader_args}
 #   ${writer_args}
-#   ${stdin_plus}
+#   $metas (additional metadata files)
 
 out_ext_full=".${out_ext_full}"
 writer_args=()
 reader_args=()
 t=""
+
+_meta_prof="$(. "$resolve" Meta-$prof.yaml)"
+_meta_ipynb_R="$(. "$resolve" Meta-ipynb-R.yaml)"
+_meta_ipynb="$(. "$resolve" Meta-ipynb-py3.yaml)"
+_templ_docx="$(. "$resolve" Template-$prof.docx)"
 
 
 if   [ "${in_ext}" == "" ]; then
@@ -40,7 +45,7 @@ fi
 
 
 _jupymd="markdown-bracketed_spans-fenced_divs-link_attributes-simple_tables-multiline_tables-grid_tables-pipe_tables-fenced_code_attributes-markdown_in_html_blocks-table_captions-smart"
-stdin_plus=("stdin" "$(. "$resolve" Meta-$prof.yaml)")
+metas=("${_meta_prof}")
 to="${out_ext}"
 
 if   [ "${out_ext}" == "" ]; then
@@ -52,15 +57,15 @@ elif [ "${out_ext}" == "md" ]; then
 elif [ "${out_ext_full: -8}" == ".r.ipynb" ]; then
     to="${_jupymd}"
     t=markdown
-    stdin_plus=("${stdin_plus[@]}" "$(. "$resolve" Meta-ipynb-R.yaml)")
+    metas=("${metas[@]}" "${_meta_ipynb_R}")
 
 elif [ "${out_ext}" == "ipynb" ]; then
     to="${_jupymd}"
     t=markdown
-    stdin_plus=("${stdin_plus[@]}" "$(. "$resolve" Meta-ipynb-py3.yaml)")
+    metas=("${metas[@]}" "${_meta_ipynb}")
 
 elif [ "${out_ext}" == "docx" ]; then
-    writer_args=("${writer_args[@]}" --reference-doc="$(. "$resolve" Template-$prof.docx)" -o "${output_file}")
+    writer_args=(--reference-doc="${_templ_docx}" -o "${output_file}" "${writer_args[@]}")
 fi
 
 if [ "$t" == "" ]; then
