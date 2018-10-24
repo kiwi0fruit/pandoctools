@@ -189,10 +189,10 @@ else:
     _pandoctools_core = pandoctools_core
 
 
-help_str = """Pandoctools is a Pandoc profile manager that stores CLI filter pipelines.
+help_str = f"""Pandoctools is a Pandoc profile manager that stores CLI filter pipelines.
 (default INPUT_FILE is "Untitled").
 
-Profiles are searched in user data: "{}" then in python module: "{}".
+Profiles are searched in user data: "{pandoctools_user_data}" then in python module: "{pandoctools_core}".
 Profiles read from stdin and write to stdout (usually).
 
 Some options can be set in document metadata:\n
@@ -202,7 +202,7 @@ pandoctools:\n
   out: *.html\n
 ...\n
 May be (?) for security concerns the user data folder should be set to write-allowed only as administrator.
-""".format(pandoctools_user_data, pandoctools_core)
+"""
 
 
 @click.command(help=help_str)
@@ -212,18 +212,20 @@ May be (?) for security concerns the user data folder should be set to write-all
 @click.option('-o', '--out', type=str, default=None,
               help='Output file path like "./out/doc.html" ' +
                    'or input file path transformation like "*.html", "./out/*.r.ipynb" (default is "*.html").\n' +
-                   'In --std mode only full extension is considered: "doc.r.ipynb" > "r.ipynb".')
+                   'In --stdio mode only full extension is considered: "doc.r.ipynb" > "r.ipynb".')
 @click.option('--stdio', is_flag=True, default=False,
               help="Read document form stdin and write to stdout in a silent mode. " +
-                   "INPUT_FILE only gives a file path. If --stdio was set but stdout = '' " +
-                   "then the profile (not Pandoctools itself) always writes output file to disc with these options.")
+                   "INPUT_FILE only gives a file path. If --stdio was set but stdout output was empty " +
+                   "then the profile (not Pandoctools itself) always writes output file to disc and doesn't write " + 
+                   "to stdout with these options.")
 @click.option('--stdin', is_flag=True, default=False,
-              help="Same as --std but always writes output file to disc (suppresses --stdio).")
+              help="Same as --stdio but always writes output file to disc (suppresses --stdio).")
 @click.option('--cwd', is_flag=True, default=False,
-              help="Use real CWD everywhere (instead of input file dir).")
+              help="Use real CWD everywhere (instead of input file directory as default).")
 @click.option('--detailed-out', is_flag=True, default=False,
-              help="In --stdio and --stdin modes print stdout together with " +
-                   "yaml metadata section with 'outpath' and 'output' keys (when --stdin 'output: None').")
+              help="With this option when in --stdio and --stdin modes pandoctools stdout consist of yaml " +
+              "metadata section ---... with 'outpath' and 'output' keys that is followed by profile stdout " +
+              "(when --stdin or profile stdout output was empty then key 'output: None').")
 @click.option('--debug', is_flag=True, default=False, help="Debug mode.")
 def pandoctools(input_file, profile, out, stdio, stdin, cwd, detailed_out, debug):
     """

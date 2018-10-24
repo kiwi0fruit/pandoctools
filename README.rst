@@ -39,11 +39,11 @@ Notable parts of Pandoctools
    (dependence) - classical tools.
 -  `Pandoctools CLI
    app <https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/cli>`__:
-   profile manager of text processing pipelines. It stores short shell
-   (bash or batch) scripts - called profiles - that define chain
-   operations over text. They are mostly Pandoc filters but any CLI text
-   filter is OK. Profiles can be used to convert any document of choise
-   in the specified manner.
+   profile manager of text processing pipelines. It stores short bash
+   scripts - called profiles - that define chain operations over text.
+   They are mostly Pandoc filters but any CLI text filter is OK.
+   Profiles can be used to convert any document of choise in the
+   specified manner.
 -  `Knitty <https://github.com/kiwi0fruit/knitty>`__ (dependence):
    Knitty is another CLI for Stitch/Knotr: reproducible report
    generation tool via Jupyter, Pandoc and Markdown. Insert python code
@@ -106,8 +106,7 @@ Via conda:
 -  Install `Miniconda <https://conda.io/miniconda.html>`__,
 -  Install `Git together with Bash <https://git-scm.com/downloads>`__.
    Git is needed for writing text conversion profiles in cross-platform
-   bash language instead of Windows-only batch language (that is
-   supported by Pandoctools anyway),
+   bash language,
 -  :
 
    ::
@@ -124,7 +123,7 @@ Via conda:
       pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future ^
       shutilwhich cython pywin32 pandas
 
-      pip install --progress-bar off panflute knitty sugartex shortcutter pandoctools pandoctools-ready
+      pip install panflute knitty sugartex shortcutter pandoctools pandoctools-ready
 
 -  Install latest stable
    `pandoc-crossref <https://github.com/lierdakil/pandoc-crossref/releases>`__
@@ -140,6 +139,9 @@ Via conda:
 
 Via pip:
 
+-  Install `Git together with Bash <https://git-scm.com/downloads>`__.
+   Git is needed for writing text conversion profiles in cross-platform
+   bash language,
 -  :
 
    ::

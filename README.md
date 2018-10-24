@@ -24,7 +24,7 @@ Pandoctools is a combination of tools that help write reproducible markdown repo
 # Notable parts of Pandoctools
 
 * [**Pandoc**](https://pandoc.org/), [**Jupyter**](http://jupyter.org/), [**pandoc-crossref**](https://github.com/lierdakil/pandoc-crossref) (dependence) - classical tools.
-* [**Pandoctools CLI app**](https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/cli): profile manager of text processing pipelines. It stores short shell (bash or batch) scripts - called profiles - that define chain operations over text. They are mostly Pandoc filters but any CLI text filter is OK. Profiles can be used to convert any document of choise in the specified manner.
+* [**Pandoctools CLI app**](https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/cli): profile manager of text processing pipelines. It stores short bash scripts - called profiles - that define chain operations over text. They are mostly Pandoc filters but any CLI text filter is OK. Profiles can be used to convert any document of choise in the specified manner.
 * [**Knitty**](https://github.com/kiwi0fruit/knitty) (dependence): Knitty is another CLI for Stitch/Knotr: reproducible report generation tool via Jupyter, Pandoc and Markdown. Insert python code (or other Jupyter kernel code) to the Markdown document and have code's results in the output document. Can even export to Jupyter ipynb notebooks.
 * [**SugarTeX**](https://github.com/kiwi0fruit/sugartex) (dependence): SugarTeX is a more readable LaTeX language extension and transcompiler to LaTeX.
 * [**Feather Helper**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/feather) helps to cache 2D numpy arrays and pandas dataframes.
@@ -54,7 +54,7 @@ Via conda:
 
 * Install [Miniconda](https://conda.io/miniconda.html),
 * Install [Git together with Bash](https://git-scm.com/downloads).  
-  Git is needed for writing text conversion profiles in cross-platform bash language instead of Windows-only batch language (that is supported by Pandoctools anyway),
+  Git is needed for writing text conversion profiles in cross-platform bash language,
 * :
   ```
   call activate root
@@ -69,7 +69,7 @@ Via conda:
   pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future ^
   shutilwhich cython pywin32 pandas
 
-  pip install --progress-bar off panflute knitty sugartex shortcutter pandoctools pandoctools-ready
+  pip install panflute knitty sugartex shortcutter pandoctools pandoctools-ready
   ```
 * Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) (compatible with pandoc version) to `<miniconda-path>/envs/myenv/Library/bin`,
 * Tips:
@@ -80,6 +80,8 @@ Via conda:
 
 Via pip:
 
+* Install [Git together with Bash](https://git-scm.com/downloads).  
+  Git is needed for writing text conversion profiles in cross-platform bash language,
 * :
   ```
   pip install pandoctools pandoctools-ready
