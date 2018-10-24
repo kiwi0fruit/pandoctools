@@ -31,7 +31,7 @@ class FeatherHelperError(Exception):
     pass
 
 
-def push(*data_frames, e: Exception=None):
+def push(*data_frames, e: Exception=''):
     """
     Stores data frames. Prints exception ``e`` if it's not empty.
     """
