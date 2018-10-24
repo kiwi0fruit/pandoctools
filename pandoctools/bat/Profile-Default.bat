@@ -3,7 +3,7 @@
 %source% activate "%env_path%" && %setUTF8%
 
 set prof=Default
-%import% Args-Default
+%import% Args-Main
 :: (see docs on available and used env vars there)
 
 set inputs=stdin
@@ -12,7 +12,7 @@ set reader_args=-f "%from%" %reader_args%
 set writer_args=--standalone --self-contained -t "%to%" %writer_args%
 set "sugartex=%t%"
 
-set pipe=Default
+set pipe=Main
 if "%out_ext%"=="ipynb" (
     set pipe=ipynb
 )

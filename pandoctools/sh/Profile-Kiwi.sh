@@ -2,7 +2,7 @@
 . "$source" activate "${env_path}"
 
 prof=Kiwi
-. "$import" Args-Default
+. "$import" Args-Main
 
 inputs=(stdin)
 stdin_plus=(stdin "${metas[@]}")
@@ -10,7 +10,7 @@ reader_args=(-f "$from" "${reader_args[@]}")
 writer_args=(--standalone --self-contained -t "$to" "${writer_args[@]}")
 sugartex="--kiwi"
 
-pipe=Default
+pipe=Main
 if [ "${out_ext}" == "ipynb" ]; then
     pipe=ipynb
 fi

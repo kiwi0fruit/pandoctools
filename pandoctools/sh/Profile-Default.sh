@@ -2,7 +2,7 @@
 . "$source" activate "${env_path}"
 
 prof=Default
-. "$import" Args-Default
+. "$import" Args-Main
 # (see docs on available and used env vars there)
 
 inputs=(stdin)
@@ -11,7 +11,7 @@ reader_args=(-f "$from" "${reader_args[@]}")
 writer_args=(--standalone --self-contained -t "$to" "${writer_args[@]}")
 sugartex="$t"
 
-pipe=Default
+pipe=Main
 if [ "${out_ext}" == "ipynb" ]; then
     pipe=ipynb
 fi
