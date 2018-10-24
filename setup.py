@@ -53,7 +53,6 @@ setup(
         ],
     },
     scripts=[
-        'scripts/pandoc19_fix_html_indent.py',
         'scripts/pandoctools-import',
         'scripts/pandoctools-resolve',
         'scripts/path-source',
