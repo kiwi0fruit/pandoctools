@@ -33,11 +33,11 @@ class FeatherHelperError(Exception):
 
 def push(*data_frames, e: Exception=None):
     """
-    Stores data frames. Prints exception ``e``.
+    Stores data frames. Prints exception ``e`` if it's not empty.
     """
     global _cwd
-    if e is not None:
-        print('Exception: ', e)
+    if str(e):
+        print(e)
 
     for i, df in enumerate(data_frames):
         if isinstance(df, np.ndarray):
