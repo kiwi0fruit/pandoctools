@@ -1,6 +1,8 @@
 @echo off
-:: May use predefined variables:
+:: May use variables predefined in the profile:
 ::   %prof% (profile name)
+
+:: May use variables predefined in pandoctools:
 ::   %set_resolve% (sets var to a resolved path to a file.
 ::                  Searches in %APPDATA%\pandoc\pandoctools
 ::                  then in <...>\site-packages\pandoctools\bat folders)
@@ -11,7 +13,17 @@
 ::   %out_ext_full% (extended output file extension like "r.ipynb")
 ::   %input_file% (input file path with extension)
 ::   %output_file% (output file path with extension)
-::   %scripts% (conda environment Scripts folder).
+::   %scripts% (conda environment Scripts folder)
+
+::   %source% (call batch script from PATH but not CWD)
+::   %r% (run program from PATH but not from CWD)
+::   %import% (try call batch script from pandoctools folder
+::             in user data. Then call from pandoctools module)
+::   %pyprepPATH% (prepend PATH with python environment)
+::   %setUTF8% (set chcp and PYTHONIOENCODING to UTF-8)
+::   %root_env%
+::   %env_path%
+
 :: Exports vars:
 ::   %from%
 ::   %to%
@@ -20,8 +32,10 @@
 ::   %writer_args%
 ::   %stdin_plus%
 ::   %metas% (additional metadata files)
+
 :: May be useful:
 ::   %source% setvar v echo hello
+
 
 set "out_ext_full=.%out_ext_full%"
 set "reader_args= "

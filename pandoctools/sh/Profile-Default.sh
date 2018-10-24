@@ -3,6 +3,7 @@
 
 prof=Default
 . "$import" Args-Default
+# (see docs on available and used env vars there)
 
 inputs=(stdin)
 stdin_plus=(stdin "${metas[@]}")

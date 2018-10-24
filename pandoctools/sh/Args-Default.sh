@@ -1,5 +1,7 @@
-# May use predefined variables:
+# May use variables predefined in the profile:
 #   $prof (profile name)
+
+# May use variables predefined in pandoctools:
 #   $resolve (echoes resolved path to a file.
 #             Searches in $HOME/.pandoc/pandoctools
 #             then in <...>/site-packages/pandoctools/sh folders)
@@ -11,6 +13,14 @@
 #   ${input_file} (input file path with extension)
 #   ${output_file} (output file path with extension)
 #   $scripts (conda environment bin folder)
+
+#   $source (source bash script from PATH but not CWD)
+#   $import (try source bash script from pandoctools folder
+#            in user data. Then source from pandoctools module)
+#   $pyprepPATH (prepend PATH with python environment)
+#   ${root_env}
+#   ${env_path}
+
 # Exports vars:
 #   $from
 #   $to
@@ -18,6 +28,7 @@
 #   ${reader_args}
 #   ${writer_args}
 #   $metas (additional metadata files)
+
 
 out_ext_full=".${out_ext_full}"
 writer_args=()

@@ -4,6 +4,7 @@
 
 set prof=Default
 %import% Args-Default
+:: (see docs on available and used env vars there)
 
 set inputs=stdin
 set stdin_plus=stdin %metas%
