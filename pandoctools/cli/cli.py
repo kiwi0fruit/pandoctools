@@ -126,6 +126,8 @@ def user_yes_no_query(message: str):
             print("Please respond with 'y' or 'n'.")
 
 
+#   Set env vars and python vars:
+pandoctools_core = p.normpath(p.join(p.dirname(p.abspath(__file__)), '..', 'sh'))
 if os.name == 'nt':
     pandoctools_user_data = r"%APPDATA%\pandoc\pandoctools"
     pandoctools_user = p.join(os.environ["APPDATA"], "pandoc", "pandoctools")
@@ -138,7 +140,23 @@ else:
     scripts_bin = p.dirname(sys.executable)
     env_path = p.normpath(p.join(scripts_bin, ".."))
     pandoctools_bin = p.join(scripts_bin, "pandoctools")
-pandoctools_core = p.normpath(p.join(p.dirname(p.abspath(__file__)), '..', 'sh'))
+    win_bash = None
+
+# Read from INI config:
+config = read_ini('Defaults', pandoctools_user, pandoctools_core)
+if os.name == 'nt':
+    # Find bash on Windows:
+    win_bash = expandvars(config.get('Default', 'win_bash', fallback=''))
+    if not p.isfile(win_bash):
+        # here we implicitly use the fact that ini from core sh folder
+        # (pandoctools_core) has path to git's bash
+        win_bash = None
+
+# Find python root env:
+root_env = config.get('Default', 'root_env', fallback='')
+#   Expand environment vars and get abs path:
+root_env = expandvars(root_env)
+root_env = root_env if p.isabs(root_env) and p.isdir(root_env) else guess_root_env(env_path)
 
 
 help_str = f"""Pandoctools is a Pandoc profile manager that stores CLI filter pipelines.
@@ -199,7 +217,10 @@ def pandoctools(input_file, profile, out, stdio, stdin, cwd, detailed_out, debug
                   "Recommended ways to run Pandoctools are to:\n" +
                   "- add it to 'Open With' applications for desired file format,\n" +
                   "- drag and drop file over pandoctools shortcut,\n" +
-                  "- run it from console, see: pandoctools --help")
+                  "- run it from console, see: pandoctools --help\n" +
+                  ("\nERROR: Bash was not found by the path provided in INI file.\n"
+                   if (win_bash is None) and (os.name == 'nt')
+                   else ""))
             input("Press Enter to exit.")
             return None
         with open(expandvars(input_file), 'r', encoding="utf-8") as file:
@@ -217,25 +238,15 @@ def pandoctools(input_file, profile, out, stdio, stdin, cwd, detailed_out, debug
         profile = pandoctools_meta.get('profile') if (profile is None) else profile
         out = pandoctools_meta.get('out') if (out is None) else out
 
-    # Read from INI config (Read profile, 'out'. Find python root env, bash on Windows):
-    config = read_ini('Defaults', pandoctools_user, pandoctools_core)
-    if os.name == 'nt':
-        win_bash = expandvars(config.get('Default', 'win_bash', fallback=''))
-        if not p.isfile(win_bash):
-            # here we implicitly use the fact that
-            # ini from core sh folder (pandoctools_core)
-            # has path to git's bash
-            raise ValueError('Bash was not found by the path provided in INI file.')
-    else:
-        win_bash = None
+    # #
+    if (win_bash is None) and (os.name == 'nt'):
+        raise ValueError('Bash was not found by the path provided in INI file.')
 
-    root_env = config.get('Default', 'root_env', fallback='')
+    # Read from INI config (Read profile, 'out'):
     profile = config.get('Default', 'profile', fallback=PROFILE) if (profile is None) else profile
     out = config.get('Default', 'out', fallback=OUT) if (out is None) else out
 
     # Expand environment vars and get abs path:
-    root_env = expandvars(root_env)
-    root_env = root_env if p.isabs(root_env) and p.isdir(root_env) else guess_root_env(env_path)
     input_file = p.abspath(expandvars(input_file))
     profile = expandvars(profile)
     out = expandvars(out)
