@@ -47,7 +47,7 @@ import re
 @click.command(help="Filters should have basename only (may be with or without .py extension). " +
                "Search preserves directories order (except for --data-dir and `sys.path`).")
 @click.argument('filters', nargs=-1)
-@click.option('-w', '-t', '--write', '--to', type=str, default='html',
+@click.option('-w', '-t', '--write', '--to', 'to', type=str, default='html',
               help='Pandoc writer option.')
 @click.option('--dir', '-d', 'dirs', multiple=True,
               help="Search filters in provided directories: `-d dir1 -d dir2`.")
