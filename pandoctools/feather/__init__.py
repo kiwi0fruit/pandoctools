@@ -1,1 +1,1 @@
-from .feather_helper import setdir, name, push, pull
+from .feather_helper import setdir, name, push, pull, FeatherHelperError
