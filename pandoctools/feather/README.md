@@ -10,7 +10,7 @@ fh.name('id1')
 try:
     # raise Exception  # <- this is a switch
     A, B, C = fh.pull()
-except:
+except Exception as e:
     # calculate stuff
-    fh.push(A, B, C)
+    fh.push(A, B, C, e=e)
 ```
