@@ -105,7 +105,7 @@ Pandoctools comes with convenience CLI apps:
 * `scripts` - `<python_env>\Scripts` folder on Windows, `<python_env>/bin` on Unix
 * `import` - `source` bash script (provided without extension!) from folder in user data first, then from [folder in python module](../sh)
 * `source` - `source` bash script from PATH only (without current working dir)
-* `resolve` (unix) - echoes the resolved fullpath to file given. File is searched in the folder in user data first, then in the [folder in python module](../sh)
+* `resolve` - echoes the resolved fullpath to file given. File is searched in the folder in user data first, then in the [folder in python module](../sh)
 * `pyprepPATH` - prepends PATH with all necessary python folders. Argument is the root dir of python installation (root env or created env). Runs only if argument is not empty.
 * `env_path` - root dir of python installation where pandoctools was installed
 * `input_file` - absolute path to input file (?may be broken when no CWD was specified and python can't resolve relative path)
