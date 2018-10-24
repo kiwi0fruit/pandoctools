@@ -5,6 +5,7 @@ prof=Kiwi
 . "$import" Args-Default
 
 inputs=(stdin)
+stdin_plus=(stdin "${metas[@]}")
 reader_args=(-f "$from" "${reader_args[@]}")
 writer_args=(--standalone --self-contained -t "$to" "${writer_args[@]}")
 sugartex="--kiwi"
