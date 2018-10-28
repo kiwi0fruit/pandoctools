@@ -43,13 +43,9 @@ Usage: pandoctools [OPTIONS] [INPUT_FILE]
   Some options can be set in document metadata:
 
   ---
-
   pandoctools:
-
     prof: Default
-
     out: *.html
-
   ...
 
   May be (?) for security concerns the user data folder should be set to

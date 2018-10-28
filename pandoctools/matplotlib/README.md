@@ -24,7 +24,6 @@ if 'roman' in font_manager.weight_dict:
 Usage example that works both in Atom+Hydrogen and in Pandoctools+Knitty:
 
 ```py
-# %% {md} """ %%% """
 """
 ---
 pandoctools:

@@ -1,4 +1,3 @@
-# %% {md} """ %%% """
 """
 ---
 pandoctools:
@@ -10,7 +9,7 @@ echo: False
 ...
 """
 
-# %% {md} Markdown cell that doesn't affect PyCharm code inspection and Atom+Hydrogen 'Run All':
+# %% Markdown cell that doesn't affect PyCharm code inspection and Atom+Hydrogen 'Run All':
 """
 # Markdown to Jupyter notebook example
 
@@ -47,7 +46,7 @@ print(th.md_table(df))
 print(': Table {#tbl:table1}')
 
 
-# %% {md}
+# %%
 """
 Text and @tbl:table1
 """
@@ -67,15 +66,26 @@ x <- c(10, 20)
 x[1]
 """
 
+# %%
+"""
+# Header
+
+@{echo=True}
+```r
+x <- c(10, 20)
+x[1]
+```
+"""
+
 
 # %% {results=pandoc, echo=True}
 import math
-print('''
+print(f'''
 
-Markdown text with SugarTeX formula: ˎα^˱{pi:1.3f}˲ˎ.
+Markdown text with SugarTeX formula: ˎα^˱{math.pi:1.3f}˲ˎ.
 It works because of the results=pandoc option and SugarTeX Pandoc filter.
 
-'''.format(pi=math.pi))
+''')
 
 
 # %% {input=True, eval=False, echo=True}
