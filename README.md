@@ -4,8 +4,9 @@ Pandoctools is a combination of tools that help write reproducible markdown repo
 
 **Introduction articles**:
 
+* [**Best Python/Jupyter/PyCharm experience + report generation with Pandoc filters**](https://github.com/kiwi0fruit/pandoctools/blob/master/best_python_jupyter_pycharm_experience.md).
 * [**Convenient and easily tweakable Atom+Markdown+Pandoc+Jupyter experience (can export to ipynb)**](https://github.com/kiwi0fruit/pandoctools/blob/master/atom_jupyter_pandoc_markdown.md).  
-* [**Best Python/Jupyter/PyCharm experience + report generation with Pandoc filters**](https://github.com/kiwi0fruit/pandoctools/blob/master/best_python_jupyter_pycharm_experience.md).  
+
 
 “Glueing” part of pandoctools is a profile manager of text processing pipelines. It stores short shell (bash or batch) scripts that define chain operations over text. They are mostly Pandoc filters but any CLI text filter is OK.
 
