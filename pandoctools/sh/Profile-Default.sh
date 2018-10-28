@@ -7,7 +7,7 @@ prof=Default
 
 inputs=(stdin)
 stdin_plus=(stdin "${metas[@]}")
-meta_profile = "${metas[0]}"
+meta_profile="${metas[0]}"
 reader_args=(-f "$from" "${reader_args[@]}")
 writer_args=(--standalone --self-contained -t "$to" "${writer_args[@]}")
 sugartex="$t"

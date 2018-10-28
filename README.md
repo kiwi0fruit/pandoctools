@@ -13,7 +13,7 @@ Pandoctools is a combination of tools that help write reproducible markdown repo
 ## Update info
 
 * Switch to bash profiles as batch profiles are no longer supported (and install bash if needed).
-* Add `meta_profile = "${metas[0]}"` to all your custom profiles (also see changes in default profile and pipe).
+* Add `meta_profile="${metas[0]}"` to all your custom profiles (also see changes in default profile and pipe).
 
 
 # Contents
