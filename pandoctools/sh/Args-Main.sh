@@ -27,7 +27,7 @@
 #   $t (argument for filters)
 #   ${reader_args}
 #   ${writer_args}
-#   $metas (additional metadata files)
+#   $metas (additional metadata files, first is the profile metadata)
 
 
 out_ext_full=".${out_ext_full}"
@@ -35,7 +35,7 @@ writer_args=()
 reader_args=()
 t=""
 
-_meta_prof="$(. "$resolve" Meta-$prof.yaml)"
+_meta_profile="$(. "$resolve" Meta-$prof.yaml)"
 _meta_ipynb_R="$(. "$resolve" Meta-ipynb-R.yaml)"
 _meta_ipynb="$(. "$resolve" Meta-ipynb-py3.yaml)"
 _templ_docx="$(. "$resolve" Template-$prof.docx)"
@@ -56,7 +56,7 @@ fi
 
 
 _jupymd="markdown-bracketed_spans-fenced_divs-link_attributes-simple_tables-multiline_tables-grid_tables-pipe_tables-fenced_code_attributes-markdown_in_html_blocks-table_captions-smart"
-metas=("${_meta_prof}")
+metas=("${_meta_profile}")
 to="${out_ext}"
 
 if   [ "${out_ext}" == "" ]; then

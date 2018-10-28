@@ -4,4 +4,8 @@ kernels-map:
   py: python
 styles-map:
   py: python
+comments-map:
+  py: ['#', "'''", "'''", "\"\"\"", "\"\"\""]
+  js: ["//", "/*", "*/"]
+  r: ['#']
 ...
