@@ -14,7 +14,7 @@ You can use special shortcuts in `profile` and `out` definitions: `*` mean input
 
 Pandoctools automatically searches for [`Profile-Default.sh`](../sh/Profile-Default.sh) in special folders: first - folder in user data, then - [folder in python module](../sh) (actually all files defined in shell scripts and `Defaults.ini` are searched in that order, so you can replace a file in a chain simply by putting it to the folder in user data). Folder in user data is `%APPDATA%\pandoc\pandoctools` on Windows, `~/.pandoc/pandoctools` on Unix.
 
-Shortcuts to these folders are created on the desktop. Profile can import other shell scripts from that special folders and read files from there. For example [this one](../sh/Args-Default.sh) defines CLI options depending on output format, and [that one](../sh/Pipe-Default.sh) defines text convertion pipeline with CLI text filters. Moreover, profiles can use environment variables defined in Pandoctools CLI application - this shortens shell scripts and makes them more readable.
+Shortcuts to these folders are created on the desktop. Profile can import other shell scripts from that special folders and read files from there. For example [this one](../sh/Args-Main.sh) defines CLI options depending on output format, and [that one](../sh/Pipe-Main.sh) defines text convertion pipeline with CLI text filters. Moreover, profiles can use environment variables defined in Pandoctools CLI application - this shortens shell scripts and makes them more readable.
 
 I tried to make shell scripts short and transparent so you can easily copy/tune them.
 
