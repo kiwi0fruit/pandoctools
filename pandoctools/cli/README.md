@@ -77,6 +77,19 @@ Options:
   --help              Show this message and exit.
 
 ```
+When run without arguments pandoctools would print:
+
+```
+Input file was not provided. 
+Recommended ways to run Pandoctools are to:
+- add it to 'Open With' applications for desired file format,
+- drag and drop file over pandoctools shortcut,
+- run it from console, see: pandoctools --help
+```
+(optional on Windows):
+```
+ERROR: Bash was not found by the path provided in INI file.
+```
 
 
 ## Defaults.ini
