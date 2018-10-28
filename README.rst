@@ -18,10 +18,21 @@ pipelines. It stores short shell (bash or batch) scripts that define
 chain operations over text. They are mostly Pandoc filters but any CLI
 text filter is OK.
 
+Update info
+-----------
+
+-  Switch to bash profiles as batch profiles are no longer supported
+   (and install bash if needed).
+-  Add ``meta_profile = "${metas[0]}"`` to all your custom profiles
+   (also see changes in default profile and pipe).
+
 Contents
 ========
 
 -  `Pandoctools <#pandoctools>`__
+
+   -  `Update info <#update-info>`__
+
 -  `Contents <#contents>`__
 -  `Notable parts of Pandoctools <#notable-parts-of-pandoctools>`__
 -  `Examples markdown to ipynb <#examples-markdown-to-ipynb>`__
