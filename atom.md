@@ -101,21 +101,4 @@ Optionally install some useful Atom packages:
 * [**file-watcher**](https://atom.io/packages/file-watcher) (by *lwblackledge*): helps simultaneously open and edit files in two editors. To use it with PyCharm you should disable PyCharm "safe write" (**Settings → Appearance and Behavior → System Settings → Synchronization → Use "safe write"**).
 * [**git-time-machine**](https://atom.io/packages/git-time-machine) (by *littlebee*): see difference with any older Git commit (if you add markdown document to the Git repository). This can be useful for authoring edits (7zip the whole repository and send).
 * [**language-batchfile**](https://atom.io/packages/language-batchfile) (by *mmims*): syntax highlighting and snippets for batch files.
-* [**highlight-bad-chars**](https://atom.io/packages/highlight-bad-chars) (by *ohanhi*): highlights some Unicode characters that can be confused with standard ANSI (like no-break spaces). The package is buggy so you may need to periodically edit the file to make the package work. Optionally edit theme file: `%USERPROFILE%\.atom\packages\highlight-bad-chars\styles\highlight-bad-chars.atom-text-editor.less`. Fast way to open it is **Setting** → **Open Config Folder**. Then replace:
-
-```less
-.highlight-bad-chars .region {
-  background-color: fadeout(@text-color-error, 85%);
-  border: 1px solid @syntax-background-color;  // @text-color-error;
-}
-```
-
-To remove/add characters from list edit `%USERPROFILE%\.atom\packages\highlight-bad-chars\lib\highlight-bad-chars.coffee`. For example to remove *diaeresis* and *broken bar* from the list and add `<>` doppelgangers edit this way:
-
-```coffe
-  #'\xA6', # Split vertical bar
-  ...
-  #'\xA8', # modifier - under curve
-  '\u02C2',  # modifier letter left arrowhead
-  '\u02C3',  # modifier letter right arrowhead
-```
+* [**highlight-bad-chars**](https://atom.io/packages/highlight-bad-chars) (by *ohanhi*): highlights some Unicode characters that can be confused with standard ANSI (like no-break spaces). The package is buggy so you may need to periodically edit the file to make the package work. Optionally edit theme and fix highlights list: edit files in the `%USERPROFILE%\.atom\packages\highlight-bad-chars\`. Fast way to open it is **Setting** → **Open Config Folder**. Then replace what listed in [**this PR**](https://github.com/ohanhi/atom-highlight-bad-chars/pull/20/files).
