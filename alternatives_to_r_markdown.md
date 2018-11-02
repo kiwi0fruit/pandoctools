@@ -32,3 +32,5 @@
 * [grst/ipymd](https://github.com/grst/ipymd)
     (also support python Jupyter kernels)
     > Edit Rmarkdown documents in Jupyter notebook
+* [jupytext](https://github.com/mwouts/jupytext)
+    > Jupyter notebooks as Markdown documents, Julia, Python or R scripts
