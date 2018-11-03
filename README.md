@@ -58,7 +58,7 @@ Here are [**examples**](https://github.com/kiwi0fruit/pandoctools/blob/master/ex
 
 ## Windows:
 
-Via conda:
+**_Via conda_**:
 
 * Install [Miniconda](https://conda.io/miniconda.html),
 * Install [Git together with Bash](https://git-scm.com/downloads).  
@@ -86,7 +86,7 @@ Via conda:
   - Should be `"conda>=4.5.4"` (`conda update conda` should be enough).
 
 
-Via pip:
+**_Via pip_**:
 
 * Install [Git together with Bash](https://git-scm.com/downloads).  
   Git is needed for writing text conversion profiles in cross-platform bash language,
