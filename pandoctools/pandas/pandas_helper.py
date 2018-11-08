@@ -1,4 +1,4 @@
-from IPython.display import display
+from IPython.display import display, Markdown
 import pandas as pd
 from ..knitty import KNITTY
 
@@ -47,6 +47,14 @@ def md_header(df: pd.DataFrame, hide: bool=False) -> str:
     md :
         Markdown table header + empty row
     """
-    md = md_table(df.iloc[[0]], hide).split('\n')
+    md = md_table(df.iloc[[0]], hide=True).split('\n')
     md[2] = md[1].replace('---', ' ')
-    return '\n'.join(md)
+    md = '\n'.join(md)
+
+    if KNITTY:
+        hide = True
+    if not hide:
+        # noinspection PyTypeChecker
+        display(df.iloc[[0]].drop(index=[0]))
+
+    return md
