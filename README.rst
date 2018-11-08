@@ -6,12 +6,12 @@ markdown reports. They rely on Pandoc and Jupyter kernels.
 
 **Introduction articles**:
 
--  `Convenient and easily tweakable Atom+Markdown+Pandoc+Jupyter
-   experience (can export to
-   ipynb) <https://github.com/kiwi0fruit/pandoctools/blob/master/atom_jupyter_pandoc_markdown.md>`__.
 -  `Best Python/Jupyter/PyCharm experience + report generation with
    Pandoc
    filters <https://github.com/kiwi0fruit/pandoctools/blob/master/best_python_jupyter_pycharm_experience.md>`__.
+-  `Convenient and easily tweakable Atom+Markdown+Pandoc+Jupyter
+   experience (can export to
+   ipynb) <https://github.com/kiwi0fruit/pandoctools/blob/master/atom_jupyter_pandoc_markdown.md>`__.
 
 “Glueing” part of pandoctools is a profile manager of text processing
 pipelines. It stores short shell (bash or batch) scripts that define
@@ -23,8 +23,8 @@ Update info
 
 -  Switch to bash profiles as batch profiles are no longer supported
    (and install bash if needed).
--  Add ``meta_profile="${metas[0]}"`` to all your custom profiles
-   (also see changes in default profile and pipe).
+-  Add ``meta_profile="${metas[0]}"`` to all your custom profiles (also
+   see changes in default profile and pipe).
 
 Contents
 ========
@@ -112,7 +112,7 @@ Install
 Windows:
 --------
 
-Via conda:
+**Via conda**:
 
 -  Install `Miniconda <https://conda.io/miniconda.html>`__,
 -  Install `Git together with Bash <https://git-scm.com/downloads>`__.
@@ -148,7 +148,7 @@ Via conda:
    -  Should be ``"conda>=4.5.4"`` (``conda update conda`` should be
       enough).
 
-Via pip:
+**Via pip**:
 
 -  Install `Git together with Bash <https://git-scm.com/downloads>`__.
    Git is needed for writing text conversion profiles in cross-platform

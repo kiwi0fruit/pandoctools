@@ -12,23 +12,41 @@ def md_table(df: pd.DataFrame, hide: bool=False) -> str:
     df :
         ...
     hide :
-        whether to display table via IPython or not
+        whether to display via IPython or not (KNITTY OS env var sets hide=True)
 
     Returns
     -------
     md :
-        Markdown table if KNITTY is True (OS env var)
-        else ""
+        Markdown table
     """
-    # noinspection PyUnusedLocal
-    fmt = ['---' for i in range(len(df.columns))]
-    df_fmt = pd.DataFrame([fmt], columns=df.columns)
-    df_formatted = pd.concat([df_fmt, df])
-    md = df_formatted.to_csv(sep="|", index=False)
-
     if KNITTY:
         hide = True
     if not hide:
         # noinspection PyTypeChecker
         display(df)
-    return md if KNITTY else ""
+    # noinspection PyUnusedLocal
+    fmt = ['---' for i in range(len(df.columns))]
+    df_fmt = pd.DataFrame([fmt], columns=df.columns)
+    df_formatted = pd.concat([df_fmt, df])
+    return df_formatted.to_csv(sep='|', index=False)
+
+
+def md_header(df: pd.DataFrame, hide: bool=False) -> str:
+    """
+    Displays header of the table and returns it's Markdown string.
+
+    Parameters
+    ----------
+    df :
+        ...
+    hide :
+        whether to display via IPython or not (KNITTY OS env var sets hide=True)
+
+    Returns
+    -------
+    md :
+        Markdown table header + empty row
+    """
+    md = md_table(df.iloc[[0]], hide).split('\n')
+    md[2] = md[1].replace('---', ' ')
+    return '\n'.join(md)
