@@ -1,4 +1,4 @@
-from IPython.display import display, Markdown
+from IPython.display import display
 import pandas as pd
 from ..knitty import KNITTY
 
@@ -55,6 +55,6 @@ def md_header(df: pd.DataFrame, hide: bool=False) -> str:
         hide = True
     if not hide:
         # noinspection PyTypeChecker
-        display(df.iloc[[0]].drop(index=[0]))
+        display(df.iloc[[0]].drop(index=0))
 
     return md
