@@ -68,6 +68,7 @@ And in my opinion the best tool for this is Markdown Peview Plus Atom package.
     * **Pandoc settings** > **Commandline Arguments** set to empty string
     * **Pandoc settings** > **Markdown Flavor** set to simply `markdown`
     * **Pandoc settings** > **Citations** is unchecked (if you need it you can add it in Pandoctools more explicit CLI)
+    * **Save to PDF options** > **Render background** turned ON
 
 The MPP patch needs installed [serif](https://github.com/kiwi0fruit/open-fonts#best-serif) and [monospace](https://github.com/kiwi0fruit/open-fonts#best-monospace) fallback fonts chains from [Open fonts](https://github.com/kiwi0fruit/open-fonts). You can switch from serif to [sans serif](https://github.com/kiwi0fruit/open-fonts#best-sans-serif) if you want.
 
