@@ -32,7 +32,7 @@ results: pandoc
 ...
 """
 
-# %% {results=hide} --------------------
+# %% --------------------
 from pandoctools import matplotlib as mh
 mh.ready(font_size=14)  # should be run before import matplotlib.pyplot
 import matplotlib.pyplot as plt
@@ -41,12 +41,8 @@ import matplotlib.pyplot as plt
 plt.figure(figsize=mh.figsize(w=6))
 plt.plot([1, 2, 3, 4])
 plt.ylabel(mh.stex('ˎ∇ ⋅ [ ⃗E]ˎ, V/m'))
-img = mh.img(plt, qt=True)
 
-# %% -----------------------------------
-print(f'''
-![My beautiful figure]({img}){{#fig:1}}
-''')
+mh.img(plt, caption='My beautiful figure', attrs='#fig:1')
 ```
 
 Qt backend gives [interactive plots in Atom/Hydrogen](https://nteract.gitbooks.io/hydrogen/docs/Usage/Examples.html#interactive-plots-using-matplotlib).
