@@ -1,28 +1,14 @@
 from IPython.display import display
 import pandas as pd
-from ..knitty import KNITTY, NOJUPYTER
 
 
-def md_table(df: pd.DataFrame, hide: bool=False) -> str:
+def md_table(df: pd.DataFrame) -> str:
     """
-    Displays table and returns it's Markdown string.
-
-    Parameters
-    ----------
-    df :
-        ...
-    hide :
-        whether to display via IPython or not:
-        (env var $KNITTY=NOJUPYTER or not jupyter kernel) and hide=False
-
     Returns
     -------
     md :
         Markdown table
     """
-    if NOJUPYTER and not hide:
-        # noinspection PyTypeChecker
-        display(df)
     # noinspection PyUnusedLocal
     fmt = ['---' for i in range(len(df.columns))]
     df_fmt = pd.DataFrame([fmt], columns=df.columns)
@@ -30,18 +16,8 @@ def md_table(df: pd.DataFrame, hide: bool=False) -> str:
     return df_formatted.to_csv(sep='|', index=False)
 
 
-def md_header(df: pd.DataFrame, hide: bool=False) -> str:
+def md_header(df: pd.DataFrame) -> str:
     """
-    Displays header of the table and returns it's Markdown string.
-
-    Parameters
-    ----------
-    df :
-        ...
-    hide :
-        whether to display via IPython or not:
-        (env var $KNITTY=NOJUPYTER or not jupyter kernel) and hide=False
-
     Returns
     -------
     md :
@@ -49,10 +25,8 @@ def md_header(df: pd.DataFrame, hide: bool=False) -> str:
     """
     md = md_table(df.iloc[[0]], hide=True).split('\n')
     md[2] = md[1].replace('---', ' ')
-    md = '\n'.join(md)
+    return '\n'.join(md)
 
-    if NOJUPYTER and not hide:
-        # noinspection PyTypeChecker
-        display(df.iloc[[0]].drop(index=0))
 
-    return md
+def display_header(df: pd.DataFrame):
+    display(df.iloc[[0]].drop(index=0))
