@@ -50,6 +50,6 @@ Qt backend gives [interactive plots in Atom/Hydrogen](https://nteract.gitbooks.i
 You may need to install to use in Jupyter Lab:
 
 ```
-conda install jupyterlab ipympl nodejs
+conda install -c defaults -c conda-forge jupyterlab ipympl nodejs
 jupyter labextension install @jupyter-widgets/jupyterlab-manager jupyter-matplotlib
 ```
