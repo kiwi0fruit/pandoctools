@@ -23,7 +23,7 @@ def md_header(df: pd.DataFrame) -> str:
     md :
         Markdown table header + empty row
     """
-    md = md_table(df.iloc[[0]], hide=True).split('\n')
+    md = md_table(df.iloc[[0]]).split('\n')
     md[2] = md[1].replace('---', ' ')
     return '\n'.join(md)
 
