@@ -1,6 +1,6 @@
 from IPython.display import display
 import pandas as pd
-from ..knitty import KNITTY
+from ..knitty import KNITTY, NOJUPYTER
 
 
 def md_table(df: pd.DataFrame, hide: bool=False) -> str:
@@ -12,16 +12,15 @@ def md_table(df: pd.DataFrame, hide: bool=False) -> str:
     df :
         ...
     hide :
-        whether to display via IPython or not (KNITTY OS env var sets hide=True)
+        whether to display via IPython or not:
+        (env var $KNITTY=NOJUPYTER or not jupyter kernel) and hide=False
 
     Returns
     -------
     md :
         Markdown table
     """
-    if KNITTY:
-        hide = True
-    if not hide:
+    if NOJUPYTER and not hide:
         # noinspection PyTypeChecker
         display(df)
     # noinspection PyUnusedLocal
@@ -40,7 +39,8 @@ def md_header(df: pd.DataFrame, hide: bool=False) -> str:
     df :
         ...
     hide :
-        whether to display via IPython or not (KNITTY OS env var sets hide=True)
+        whether to display via IPython or not:
+        (env var $KNITTY=NOJUPYTER or not jupyter kernel) and hide=False
 
     Returns
     -------
@@ -51,9 +51,7 @@ def md_header(df: pd.DataFrame, hide: bool=False) -> str:
     md[2] = md[1].replace('---', ' ')
     md = '\n'.join(md)
 
-    if KNITTY:
-        hide = True
-    if not hide:
+    if NOJUPYTER and not hide:
         # noinspection PyTypeChecker
         display(df.iloc[[0]].drop(index=0))
 
