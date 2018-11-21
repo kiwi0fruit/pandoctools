@@ -39,7 +39,7 @@ setup(
 
     install_requires=['click', 'pyyaml', 'panflute>=1.10.6', 'knitty>=0.4.1', 'pandas',
                       'sugartex>=0.1.10', 'matplotlib', 'feather-format',
-                      'notebook', 'jupyter', 'shortcutter>=0.1.8'],
+                      'notebook', 'jupyter', 'shortcutter>=0.1.8', 'pypandoc'],
 
     include_package_data=True,
     package_data={
