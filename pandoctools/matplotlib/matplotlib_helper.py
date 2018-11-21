@@ -3,19 +3,27 @@ https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/matplotlib
 """
 import io
 import base64
-# noinspection PyUnresolvedReferences
 from sugartex import sugartex, stex
-import matplotlib as mpl
-from matplotlib import font_manager
-from IPython.display import display, Markdown
+from IPython.display import display, Markdown, HTML
 import numpy as np
 import pandas as pd
 from typing import Tuple
-from ..knitty import KNITTY
+import pypandoc
 
+from ..knitty import KNITTY, HYDROGEN
+from IPython import get_ipython
+ipython = get_ipython()
+if KNITTY:
+    ipython.magic("matplotlib agg")
+elif not HYDROGEN:
+    ipython.magic("matplotlib widget")
 
-if not KNITTY:
+import matplotlib as mpl
+from matplotlib import font_manager
+
+if HYDROGEN:
     mpl.use('Qt5Agg')
+
 
 GR = (1 + 5 ** 0.5) / 2
 sugartex.mpl_hack()
@@ -84,18 +92,25 @@ def ready(ext: str='svg',
 
 
 def img(plot,
+        caption: str='',
+        attrs: str='',
         name: str=None,
         ext: str=None,
         dpi: int=None,
         preview_width: str=None,
         hide: bool=False,
-        qt: bool=False,
-        ) -> str:
+        interact: bool=True,
+        ret: bool=False,
+        ) -> str or None:
     """
     Parameters
     ----------
     plot :
         matplotlib.pyplot
+    caption :
+        Markdown image caption inside square brackets ![...](...){...}
+    attrs :
+        Markdown image attributes inside curly brackets ![...](...){...}
     name :
         File name to store image (without extension)
     ext :
@@ -109,15 +124,16 @@ def img(plot,
         default '600px' or value set in ready()
     hide :
         Whether to show Hydrogen and Qt plots at all
-    qt :
-        Whether to show interactive plot via Qt
-        Presumably mpl.use('Qt5Agg') was called in finalize()
+    interact :
+        Whether to show interactive plot via Qt or Widget
+    ret :
+        Whether to return Markdown image string or print it.
 
     Returns
     ------
     url :
-        Image URL if KNITTY is True (OS env var)
-        else ""
+        Image URL if ret and KNITTY
+        else None
     """
     if not _readied:
         ready()
@@ -152,14 +168,26 @@ def img(plot,
     else:
         url = name + "." + ext
 
-    if KNITTY:
-        hide = True
     if not hide:
-        # noinspection PyTypeChecker
-        display(Markdown('<img src="{}" style="width: {};"/>'.format(base64_url, preview_width)))
-    if (not hide) and qt:
-        plot.show()
-    return url if KNITTY else ""
+        attrs = '{' + attrs + '}' if attrs else ''
+        _img = f'![{caption}]({url}){attrs}'
+
+        if KNITTY:
+            if ret:
+                return _img
+            else:
+                print(_img)
+        elif HYDROGEN:
+            display(Markdown(f'<img src="{base64_url}" style="width: {preview_width};"/>'))  # there were problems with HTML(..)
+            if interact:
+                plot.show()
+        else:
+            if interact:
+                display(HTML(pypandoc.convert_text(f'[{caption}]{attrs}', 'html', format='md')))
+            else:
+                ipython.magic("matplotlib agg")
+                display(HTML(pypandoc.convert_text(_img, 'html', format='md')))
+                ipython.magic("matplotlib widget")
 
 
 # noinspection PyPep8Naming
