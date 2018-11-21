@@ -22,7 +22,7 @@ else:
         JUPYTERLAB = True
     else:
         PATH = os.getenv('PATH', '')
-        atom_win = os.sep + 'atom' + os.sep
+        atom_win = os.sep + 'atom' + os.sep + 'app-'
         atom_lin = os.sep + 'atom' + os.pathsep
         nteract_win = os.sep + 'nteract' + os.pathsep
         nteract_lin = '_nterac'
