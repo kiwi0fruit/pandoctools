@@ -179,7 +179,7 @@ def img(plot,
                 print(_img)
         elif NOJUPYTER:
             display(Markdown(f'<img src="{base64_url}" style="width: {preview_width};"/>'))  # there were problems with HTML(..)
-            print(f'[{caption}]{attrs}')
+            print(f'![{caption}](){attrs}')
             if interact:
                 plot.show()
         else:
