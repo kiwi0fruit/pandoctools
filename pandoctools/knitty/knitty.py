@@ -8,7 +8,7 @@ NOJUPYTER = False if ipython else True
 
 if KNITTY == 'true':
     KNITTY = True
-if KNITTY == 'nojupyter':
+elif KNITTY == 'nojupyter':
     NOJUPYTER = True
     KNITTY = False
 else:
