@@ -10,7 +10,7 @@ import pandas as pd
 from typing import Tuple
 import pypandoc
 
-from ..knitty import KNITTY, NOIPYTHON, NTERACT
+from ..knitty import front as fr
 from IPython import get_ipython
 
 ipython = get_ipython()
@@ -48,18 +48,21 @@ def ready(ext: str='svg',
           fontm_bold: str="MJ",
           fontm_itbold: str="MJ_Mat"):
     """
-    Should be run before ``import matplotlib.pyplot``. Default magic:
- 
-    1. In Knitty mode uses ``%matplotlib agg`` magic.
-    2. In standard mode (Jupyter / JupyterLab mode) uses
-        ``%matplotlib widget`` magic if ``jupyterlab`` and ``ipympl`` modules are found
-        othewise uses ``%matplotlib notebook`` magic.
-    3. In Hydrogen, Nteract and non-Jupyter (non-IPython) mode uses ``matplotlib.use('Qt5Agg')``. 
+    Should be run before ``import matplotlib.pyplot``.
 
     Parameters
     ----------
     magic :
-        matplotlib magic without ``%matplotlib `` prefix
+        matplotlib magic without ``%matplotlib `` prefix. Defaults:
+
+        1. In Knitty mode uses ``%matplotlib agg`` magic,
+        2. In standard Jupyter mode uses ``%matplotlib notebook`` magic,
+        3. In JupyterLab mode uses ``%matplotlib widget`` magic
+            (if ``jupyterlab`` and ``ipympl`` modules were found),
+        4. In Hydrogen, Nteract and non-Jupyter (non-IPython) mode calls ``matplotlib.use('Qt5Agg')``.
+
+        Notable magic: ``%matplotlib qt5``.
+
     font_size :
         In pt. Default is 12.8pt ~ 17px
     """
@@ -67,17 +70,14 @@ def ready(ext: str='svg',
 
     if magic is not None:
         pass
-    elif KNITTY:
+    elif fr.KNITTY:
         magic = "agg"
-    elif NOIPYTHON or NTERACT:
-        pass
+    elif fr.NOIPYTHON or fr.NTERACT:
+        pass  # magic is None
+    elif fr.JUPYTERLAB:
+        magic = "widget"
     else:
-        try:
-            import jupyterlab
-            import ipympl
-            magic = "widget"
-        except ModuleNotFoundError:
-            magic = "notebook"
+        magic = "notebook"
 
     if magic is not None:
         ipython.magic("matplotlib " + magic)
@@ -93,7 +93,7 @@ def ready(ext: str='svg',
     global _hide;          _hide = hide
     global _magic;         _magic = magic
 
-    if NOIPYTHON or NTERACT:
+    if (fr.NOIPYTHON or fr.NTERACT) and (magic is None):
         mpl.use('Qt5Agg')
 
     mpl.rcParams.update({
@@ -205,9 +205,9 @@ def img(plot,
         image = f'![{caption}]({url})' + ('{' + attrs + '}' if attrs else '')
         cap = pypandoc.convert_text(f'[{caption}]{{{attrs}}}', 'html', format='md') if caption or attrs else ''
 
-        if KNITTY:
+        if fr.KNITTY:
             print(image)
-        elif NOIPYTHON or NTERACT:
+        elif fr.NOIPYTHON or fr.NTERACT:
             display(Markdown(f'<img src="{base64_url}" style="width: {preview_width};"/>'))
             # there were problems with ``display(HTML(...))``
             if cap:
@@ -215,7 +215,6 @@ def img(plot,
             if interact:
                 plot.show()
             else:
-                plot.clf()
                 plot.close()
         else:
             if interact:
@@ -229,7 +228,6 @@ def img(plot,
                 else:
                     raise RuntimeError('Unknown bug: reached unreachable code.')
     else:
-        plot.clf()
         plot.close()
     if ret:
         return url
