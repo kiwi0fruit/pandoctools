@@ -44,9 +44,9 @@ plt.ylabel(mh.stex('ˎ∇ ⋅ [ ⃗E]ˎ, V/m'))
 img = mh.img(plt, qt=True)
 
 # %% -----------------------------------
-print('''
-![My beautiful figure]({}){{#fig:1}}
-'''.format(img))
+print(f'''
+![My beautiful figure]({img}){{#fig:1}}
+''')
 ```
 
 Qt backend gives [interactive plots in Atom/Hydrogen](https://nteract.gitbooks.io/hydrogen/docs/Usage/Examples.html#interactive-plots-using-matplotlib).
