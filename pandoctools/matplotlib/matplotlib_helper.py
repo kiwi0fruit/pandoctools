@@ -228,6 +228,9 @@ def img(plot,
                     ipython.magic("matplotlib " + _magic)
                 else:
                     raise RuntimeError('Unknown bug: reached unreachable code.')
+    else:
+        plot.clf()
+        plot.close()
     if ret:
         return url
 
