@@ -10,20 +10,10 @@ import pandas as pd
 from typing import Tuple
 import pypandoc
 
-from ..knitty import KNITTY, NOJUPYTER
+from ..knitty import KNITTY, NOIPYTHON, NTERACT
 from IPython import get_ipython
+
 ipython = get_ipython()
-if KNITTY:
-    ipython.magic("matplotlib agg")
-elif not NOJUPYTER:
-    ipython.magic("matplotlib widget")
-
-import matplotlib as mpl
-from matplotlib import font_manager
-
-if NOJUPYTER:
-    mpl.use('Qt5Agg')
-
 
 GR = (1 + 5 ** 0.5) / 2
 sugartex.mpl_hack()
@@ -33,12 +23,18 @@ _ext = 'svg'
 _dpi = 300
 _preview_width = '600px'
 _readied = False
+_interact = True
+_hide = False
+_magic = None
 
 
 # noinspection PyShadowingNames,PyIncorrectDocstring
 def ready(ext: str='svg',
           dpi: int=300,
-          preview_width: str = '600px',
+          preview_width: str='600px',
+          hide: bool=False,
+          interact: bool=True,
+          magic: str=None,
           font_dir: str=None,
           font_size: float=12.8,
           font_family: str="serif",
@@ -52,19 +48,53 @@ def ready(ext: str='svg',
           fontm_bold: str="MJ",
           fontm_itbold: str="MJ_Mat"):
     """
-    Should be run before import matplotlib.pyplot
+    Should be run before ``import matplotlib.pyplot``. Default magic:
+ 
+    1. In Knitty mode uses ``%matplotlib agg`` magic.
+    2. In standard mode (Jupyter / JupyterLab mode) uses
+        ``%matplotlib widget`` magic if ``jupyterlab`` and ``ipympl`` modules are found
+        othewise uses ``%matplotlib notebook`` magic.
+    3. In Hydrogen, Nteract and non-Jupyter (non-IPython) mode uses ``matplotlib.use('Qt5Agg')``. 
 
     Parameters
     ----------
-    font_size : float
+    magic :
+        matplotlib magic without ``%matplotlib `` prefix
+    font_size :
         In pt. Default is 12.8pt ~ 17px
     """
     # TODO: change single font to list of fallback fonts
+
+    if magic is not None:
+        pass
+    elif KNITTY:
+        magic = "agg"
+    elif NOIPYTHON or NTERACT:
+        pass
+    else:
+        try:
+            import jupyterlab
+            import ipympl
+            magic = "widget"
+        except ModuleNotFoundError:
+            magic = "notebook"
+
+    if magic is not None:
+        ipython.magic("matplotlib " + magic)
+
+    from matplotlib import font_manager
+    import matplotlib as mpl
 
     global _readied;       _readied = True
     global _ext;           _ext = ext
     global _dpi;           _dpi = dpi
     global _preview_width; _preview_width = preview_width
+    global _interact;      _interact = interact
+    global _hide;          _hide = hide
+    global _magic;         _magic = magic
+
+    if NOIPYTHON or NTERACT:
+        mpl.use('Qt5Agg')
 
     mpl.rcParams.update({
         "text.usetex": False,
@@ -98,8 +128,8 @@ def img(plot,
         ext: str=None,
         dpi: int=None,
         preview_width: str=None,
-        hide: bool=False,
-        interact: bool=True,
+        hide: bool=None,
+        interact: bool=None,
         ret: bool=False,
         ) -> str or None:
     """
@@ -112,28 +142,29 @@ def img(plot,
     attrs :
         Markdown image attributes inside curly brackets ![...](...){...}
     name :
-        File name to store image (without extension)
+        File name to store image (without extension). If None then use base64 encoding.
     ext :
         File extension
-        default 'svg' or value set in ready()
+        default ``'svg'`` or the value set in ``ready()``
     dpi :
         DPI for PNG
-        default 300 or value set in ready()
+        default ``300`` or the value set in ``ready()``
     preview_width :
-        Hydrogen img preview width
-        default '600px' or value set in ready()
+        Hydrogen or nteract image preview width
+        default ``'600px'`` or the value set in ``ready()``
     hide :
-        Whether to show Hydrogen and Qt plots at all
+        Whether to display / print plots or hide them.
+        default ``False`` or the value set in ``ready()``
     interact :
         Whether to show interactive plot via Qt or Widget
+        default ``True`` or the value set in ``ready()``
     ret :
-        Whether to return image URL string or print Markdown image string.
+        Whether to return image URL string
 
     Returns
     ------
     url :
-        Image URL if ret and KNITTY
-        else None
+        Image URL if ret else None
     """
     if not _readied:
         ready()
@@ -141,6 +172,8 @@ def img(plot,
     ext = ext if (ext is not None) else _ext
     dpi = dpi if (dpi is not None) else _dpi
     preview_width = preview_width if (preview_width is not None) else _preview_width
+    interact = interact if (interact is not None) else _interact
+    hide = hide if (hide is not None) else _hide
 
     if name is None:
         with io.BytesIO() as f:
@@ -169,26 +202,34 @@ def img(plot,
         url = name + "." + ext
 
     if not hide:
-        attrs = '{' + attrs + '}' if attrs else ''
-        _img = f'![{caption}]({url}){attrs}'
+        image = f'![{caption}]({url})' + ('{' + attrs + '}' if attrs else '')
+        cap = pypandoc.convert_text(f'[{caption}]{{{attrs}}}', 'html', format='md') if caption or attrs else ''
 
         if KNITTY:
-            if ret:
-                return url
-            else:
-                print(_img)
-        elif NOJUPYTER:
-            display(Markdown(f'<img src="{base64_url}" style="width: {preview_width};"/>'))  # there were problems with HTML(..)
-            print(f'![{caption}](){attrs}')
+            print(image)
+        elif NOIPYTHON or NTERACT:
+            display(Markdown(f'<img src="{base64_url}" style="width: {preview_width};"/>'))
+            # there were problems with ``display(HTML(...))``
+            if cap:
+                display(HTML(cap))
             if interact:
                 plot.show()
+            else:
+                plot.clf()
+                plot.close()
         else:
             if interact:
-                display(HTML(pypandoc.convert_text(f'[{caption}]{attrs}', 'html', format='md')))
+                if cap:
+                    display(HTML(cap))
             else:
                 ipython.magic("matplotlib agg")
-                display(HTML(pypandoc.convert_text(_img, 'html', format='md')))
-                ipython.magic("matplotlib widget")
+                display(HTML(pypandoc.convert_text(image, 'html', format='md')))
+                if _magic:
+                    ipython.magic("matplotlib " + _magic)
+                else:
+                    raise RuntimeError('Unknown bug: reached unreachable code.')
+    if ret:
+        return url
 
 
 # noinspection PyPep8Naming

@@ -2,14 +2,23 @@ import os
 import sys
 from IPython import get_ipython
 
-ipython = get_ipython()
-KNITTY = os.getenv('KNITTY', '').lower()
-NOJUPYTER = False if ipython else True
+NOIPYTHON = False
+NTERACT = False
+KNITTY = False
 
-if KNITTY == 'true':
+if not get_ipython():
+    NOIPYTHON = True
+
+PATH = os.getenv('PATH', '')
+atom = os.sep + 'atom' + os.sep + 'app'
+nteract = os.sep + 'nteract' + os.pathsep
+if (atom in PATH) or (nteract in PATH):
+    NTERACT = True
+
+knitty = os.getenv('KNITTY', '').lower()
+if knitty == 'true':
     KNITTY = True
-elif KNITTY == 'nojupyter':
-    NOJUPYTER = True
-    KNITTY = False
-else:
-    KNITTY = False
+elif knitty == 'noipython':
+    NOIPYTHON = True
+elif knitty == 'nteract':
+    NTERACT = True

@@ -1,1 +1,1 @@
-from .knitty import KNITTY, NOJUPYTER
+from .knitty import KNITTY, NOIPYTHON, NTERACT
