@@ -1,1 +1,1 @@
-from .knitty import KNITTY, HYDROGEN
+from .knitty import KNITTY, NOJUPYTER

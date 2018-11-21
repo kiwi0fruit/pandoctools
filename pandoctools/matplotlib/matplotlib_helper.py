@@ -10,18 +10,18 @@ import pandas as pd
 from typing import Tuple
 import pypandoc
 
-from ..knitty import KNITTY, HYDROGEN
+from ..knitty import KNITTY, NOJUPYTER
 from IPython import get_ipython
 ipython = get_ipython()
 if KNITTY:
     ipython.magic("matplotlib agg")
-elif not HYDROGEN:
+elif not NOJUPYTER:
     ipython.magic("matplotlib widget")
 
 import matplotlib as mpl
 from matplotlib import font_manager
 
-if HYDROGEN:
+if NOJUPYTER:
     mpl.use('Qt5Agg')
 
 
@@ -177,8 +177,9 @@ def img(plot,
                 return _img
             else:
                 print(_img)
-        elif HYDROGEN:
+        elif NOJUPYTER:
             display(Markdown(f'<img src="{base64_url}" style="width: {preview_width};"/>'))  # there were problems with HTML(..)
+            print(f'[{caption}]{attrs}')
             if interact:
                 plot.show()
         else:
