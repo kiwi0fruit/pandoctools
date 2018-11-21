@@ -127,7 +127,7 @@ def img(plot,
     interact :
         Whether to show interactive plot via Qt or Widget
     ret :
-        Whether to return Markdown image string or print it.
+        Whether to return image URL string or print Markdown image string.
 
     Returns
     ------
@@ -174,7 +174,7 @@ def img(plot,
 
         if KNITTY:
             if ret:
-                return _img
+                return url
             else:
                 print(_img)
         elif NOJUPYTER:
