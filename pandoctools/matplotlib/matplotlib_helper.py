@@ -48,6 +48,7 @@ def ready(ext: str='svg',
           font_sans: Union[str, tuple]=('Segoe UI', 'Noto Sans', 'DejaVu Sans'),
           font_cursive: Union[str, tuple]=None,
           font_mono: Union[str, tuple]=('Open Mono', 'DejaVu Sans Mono'),
+          fontm_set: str='custom',
           fontm_mono: str='Open Mono',
           fontm_calig: str="MJ_Cal",
           fontm_regular: str="MJ",
@@ -85,6 +86,8 @@ def ready(ext: str='svg',
         Frontend. Default value is guessed automatically.
     font_size :
         In pt. Default is 12.8pt ~ 17px
+    fontm_set :
+        ``'cm'`` is also a good option.
     """
     global _front
     front = front.lower() if isinstance(front, str) else ''
@@ -131,7 +134,7 @@ def ready(ext: str='svg',
         "font.serif": list_maybe(font_serif),
         "font.sans-serif": list_maybe(font_sans),
         "font.monospace": list_maybe(font_mono),
-        "mathtext.fontset": "custom",  # cm
+        "mathtext.fontset": fontm_set,
         "mathtext.cal": fontm_calig,
         "mathtext.tt": fontm_mono,
         "mathtext.rm": fontm_regular,
