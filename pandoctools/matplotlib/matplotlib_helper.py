@@ -79,32 +79,10 @@ def ready(ext: str='svg',
     """
     # TODO: change single font to list of fallback fonts
 
-    global _front
-    dic = dict(
-        KNITTY=False,
-        NONE=False,
-        NTERACT=False,
-        LAB=False,
-        NOTEBOOK=False
-    )
     front = front.lower() if isinstance(front, str) else ''
-
-    if front == 'knitty':
-        dic['KNITTY'] = True
-    elif front == 'none':
-        dic['NONE'] = True
-    elif front == 'nteract':
-        dic['NTERACT'] = True
-    elif front == 'lab':
-        dic['LAB'] = True
-    elif front == 'notebook':
-        dic['NOTEBOOK'] = True
-    else:
-        dic = None
-        
-    if dic is not None:
-        _front = Front(**dic)
-
+    if front in _front.keys:
+        global _front
+        _front = Front(**{front: True})
 
     if magic is not None:
         pass
