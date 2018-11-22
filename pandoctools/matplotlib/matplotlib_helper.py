@@ -84,9 +84,9 @@ def ready(ext: str='svg',
     """
     # TODO: change single font to list of fallback fonts
 
+    global _front
     front = front.lower() if isinstance(front, str) else ''
     if front in _front.keys:
-        global _front
         _front = Front(**{front: True})
 
     if magic is not None:
