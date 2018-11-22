@@ -10,7 +10,7 @@ import pandas as pd
 from typing import Tuple
 import pypandoc
 
-from ..knitty import front as fr
+from ..knitty import front as _front, Front
 from IPython import get_ipython
 
 ipython = get_ipython()
@@ -23,7 +23,7 @@ _ext = 'svg'
 _dpi = 300
 _preview_width = '600px'
 _readied = False
-_interact = True
+_interactive = True
 _hide = False
 _magic = None
 
@@ -33,8 +33,9 @@ def ready(ext: str='svg',
           dpi: int=300,
           preview_width: str='600px',
           hide: bool=False,
-          interact: bool=True,
+          interactive: bool=True,
           magic: str=None,
+          front: str=None,
           font_dir: str=None,
           font_size: float=12.8,
           font_family: str="serif",
@@ -46,9 +47,13 @@ def ready(ext: str='svg',
           fontm_regular: str="MJ",
           fontm_italic: str="MJ_Mat",
           fontm_bold: str="MJ",
-          fontm_itbold: str="MJ_Mat"):
+          fontm_itbold: str="MJ_Mat",
+          ):
     """
     Should be run before ``import matplotlib.pyplot``.
+    From ``knitty``, ``noipython``, ``nteract``, ``jupyterlab``
+    only one may be ``True`` (or none of them). If that's the case then
+    it overwrites defaults.
 
     Parameters
     ----------
@@ -63,20 +68,56 @@ def ready(ext: str='svg',
 
         Notable magic: ``%matplotlib qt5``.
 
+    front :
+        Frontend. Default value is guessed automatically. Possible values:
+
+        1. ``KNITTY``,
+        2. ``NONE`` (stands for neither IPython nor Jupyter),
+        3. ``NTERACT`` (stans for Nteract or Atom/Hydrogen),
+        4. ``LAB`` (stands for Jupyter Lab),
+        5. ``NOTEBOOK`` (stands for Jupyter Notebook).
+
     font_size :
         In pt. Default is 12.8pt ~ 17px
     """
     # TODO: change single font to list of fallback fonts
 
+    global _front
+    dic = dict(
+        KNITTY=False,
+        NONE=False,
+        NTERACT=False,
+        LAB=False,
+        NOTEBOOK=False
+    )
+    front = front.lower() if isinstance(front, str) else ''
+
+    if front == 'knitty':
+        dic['KNITTY'] = True
+    elif front == 'none':
+        dic['NONE'] = True
+    elif front == 'nteract':
+        dic['NTERACT'] = True
+    elif front == 'lab':
+        dic['LAB'] = True
+    elif front == 'notebook':
+        dic['NOTEBOOK'] = True
+    else:
+        dic = None
+        
+    if dic is not None:
+        _front = Front(**dic)
+
+
     if magic is not None:
         pass
-    elif fr.KNITTY:
+    elif _front.KNITTY:
         magic = "agg"
-    elif fr.NOIPYTHON or fr.NTERACT:
+    elif _front.NONE or _front.NTERACT:
         pass  # magic is None
-    elif fr.JUPYTERLAB:
+    elif _front.LAB:
         magic = "widget"
-    else:
+    elif _front.NOTEBOOK:
         magic = "notebook"
 
     if magic is not None:
@@ -89,11 +130,11 @@ def ready(ext: str='svg',
     global _ext;           _ext = ext
     global _dpi;           _dpi = dpi
     global _preview_width; _preview_width = preview_width
-    global _interact;      _interact = interact
+    global _interactive;    _interactive = interactive
     global _hide;          _hide = hide
     global _magic;         _magic = magic
 
-    if (fr.NOIPYTHON or fr.NTERACT) and (magic is None):
+    if (_front.NONE or _front.NTERACT) and (magic is None):
         mpl.use('Qt5Agg')
 
     mpl.rcParams.update({
@@ -129,7 +170,7 @@ def img(plot,
         dpi: int=None,
         preview_width: str=None,
         hide: bool=None,
-        interact: bool=None,
+        interactive: bool=None,
         ret: bool=False,
         ) -> str or None:
     """
@@ -155,7 +196,7 @@ def img(plot,
     hide :
         Whether to display / print plots or hide them.
         default ``False`` or the value set in ``ready()``
-    interact :
+    interactive :
         Whether to show interactive plot via Qt or Widget
         default ``True`` or the value set in ``ready()``
     ret :
@@ -172,7 +213,7 @@ def img(plot,
     ext = ext if (ext is not None) else _ext
     dpi = dpi if (dpi is not None) else _dpi
     preview_width = preview_width if (preview_width is not None) else _preview_width
-    interact = interact if (interact is not None) else _interact
+    interactive = interactive if (interactive is not None) else _interactive
     hide = hide if (hide is not None) else _hide
 
     if name is None:
@@ -205,19 +246,19 @@ def img(plot,
         image = f'![{caption}]({url})' + ('{' + attrs + '}' if attrs else '')
         cap = pypandoc.convert_text(f'[{caption}]{{{attrs}}}', 'html', format='md') if caption or attrs else ''
 
-        if fr.KNITTY:
+        if _front.KNITTY:
             print(image)
-        elif fr.NOIPYTHON or fr.NTERACT:
+        elif _front.NONE or _front.NTERACT:
             display(Markdown(f'<img src="{base64_url}" style="width: {preview_width};"/>'))
             # there were problems with ``display(HTML(...))``
             if cap:
                 display(HTML(cap))
-            if interact:
+            if interactive:
                 plot.show()
             else:
                 plot.close()
-        else:
-            if interact:
+        elif _front.LAB or _front.NOTEBOOK:
+            if interactive:
                 if cap:
                     display(HTML(cap))
             else:
@@ -227,8 +268,11 @@ def img(plot,
                     ipython.magic("matplotlib " + _magic)
                 else:
                     raise RuntimeError('Unknown bug: reached unreachable code.')
+        else:
+            raise RuntimeError('Unknown bug in `_front`.')
     else:
         plot.close()
+
     if ret:
         return url
 

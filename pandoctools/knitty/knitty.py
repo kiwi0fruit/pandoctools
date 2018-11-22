@@ -3,23 +3,26 @@ import sys
 from IPython import get_ipython
 from typing import NamedTuple
 
-NOIPYTHON = False
-NTERACT = False
 KNITTY = False
-JUPYTERLAB = False
+NONE = False
+NTERACT = False
+LAB = False
+NOTEBOOK = False
 
 if not get_ipython():
-    NOIPYTHON = True
+    NONE = True
 else:
     knitty = os.getenv('KNITTY', '').lower()
     if (knitty == 'true') or (knitty == 'knitty'):
         KNITTY = True
-    elif knitty == 'noipython':
-        NOIPYTHON = True
+    elif knitty == 'none':
+        NONE = True
     elif knitty == 'nteract':
         NTERACT = True
-    elif knitty == 'jupyterlab':
-        JUPYTERLAB = True
+    elif knitty == 'lab':
+        LAB = True
+    elif knitty == 'notebook':
+        NOTEBOOK = True
     else:
         PATH = os.getenv('PATH', '')
         atom_win = os.sep + 'atom' + os.sep + 'app-'
@@ -32,21 +35,26 @@ else:
             try:
                 import jupyterlab
                 import ipympl
-                JUPYTERLAB = True
+                LAB = True
             except ModuleNotFoundError:
-                pass
+                NOTEBOOK = True
 
 
 class Front(NamedTuple):
     """
     Only one of attributes is True.
     Can be changed by setting $KNITTY env var:
-    TRUE (or KNITTY), NOIPYTHON, NTERACT, JUPYTERLAB
+    TRUE (or KNITTY),
+    NONE (stands for neither IPython nor Jupyter),
+    NTERACT (stans for Nteract or Atom/Hydrogen),
+    LAB (stands for Jupyter Lab),
+    NOTEBOOK (stands for Jupyter Notebook).
     """
-    NOIPYTHON: bool
-    NTERACT: bool
     KNITTY: bool
-    JUPYTERLAB: bool
+    NONE: bool
+    NTERACT: bool
+    LAB: bool
+    NOTEBOOK: bool
 
 
-front = Front(NOIPYTHON, NTERACT, KNITTY, JUPYTERLAB)
+front = Front(KNITTY, NONE, NTERACT, LAB, NOTEBOOK)

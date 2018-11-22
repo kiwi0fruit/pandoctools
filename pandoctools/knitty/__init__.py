@@ -1,1 +1,1 @@
-from .knitty import front
+from .knitty import front, Front
