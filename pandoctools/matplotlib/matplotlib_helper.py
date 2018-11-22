@@ -10,6 +10,7 @@ import numpy as np
 import pandas as pd
 from typing import Tuple, Union
 import pypandoc
+from os import path as p
 
 from ..knitty import front as frontend, Front
 from IPython import get_ipython
@@ -142,12 +143,13 @@ def ready(ext: str='svg',
         mpl.rcParams["font.cursive"] = list_maybe(font_cursive)
     if mpl.__version__.startswith('2'):
         mpl.rc('text.latex', unicode=True)
-    print(__file__)
+
+    font_dirs = [p.join(p.dirname(__file__), 'fonts')]
     if font_dir is not None:
-        font_dirs = [font_dir, ]
-        font_files = font_manager.findSystemFonts(fontpaths=font_dirs)
-        font_list = font_manager.createFontList(font_files)
-        font_manager.fontManager.ttflist.extend(font_list)
+        font_dirs.append(font_dir)
+    font_files = font_manager.findSystemFonts(fontpaths=font_dirs)
+    font_list = font_manager.createFontList(font_files)
+    font_manager.fontManager.ttflist.extend(font_list)
 
 
 def img(plot,

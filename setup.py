@@ -43,7 +43,7 @@ setup(
 
     include_package_data=True,
     package_data={
-        'pandoctools': ['bat/*', 'sh/*'],
+        'pandoctools': ['bat/*', 'sh/*', 'matplotlib/fonts/*'],
     },
     entry_points={
         'console_scripts': [
