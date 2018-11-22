@@ -51,9 +51,6 @@ def ready(ext: str='svg',
           ):
     """
     Should be run before ``import matplotlib.pyplot``.
-    From ``knitty``, ``noipython``, ``nteract``, ``jupyterlab``
-    only one may be ``True`` (or none of them). If that's the case then
-    it overwrites defaults.
 
     Parameters
     ----------
