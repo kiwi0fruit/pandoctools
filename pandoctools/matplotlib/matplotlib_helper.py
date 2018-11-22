@@ -43,15 +43,16 @@ def ready(ext: str='svg',
           font_dir: str=None,
           font_size: float=12.8,
           font_family: str="serif",
-          font_serif: Union[str, list]="Libertinus Serif",
-          font_sans: Union[str, list]="Segoe UI",
-          font_cursive: Union[str, list]="Comic Sans MS",
-          font_mono: Union[str, list]="Consolas",
-          fontm_calig: Union[str, list]="MJ_Cal",
-          fontm_regular: Union[str, list]="MJ",
-          fontm_italic: Union[str, list]="MJ_Mat",
-          fontm_bold: Union[str, list]="MJ",
-          fontm_itbold: Union[str, list]="MJ_Mat",
+          font_serif: Union[str, tuple]=('Libertinus Serif', 'PT Astra Serif', 'Libertinus Math'),
+          font_sans: Union[str, tuple]=('Segoe UI', 'Noto Sans', 'DejaVu Sans'),
+          font_cursive: Union[str, tuple]=None,
+          font_mono: Union[str, tuple]=('Open Mono', 'DejaVu Sans Mono'),
+          fontm_mono: str='Open Mono',
+          fontm_calig: str="MJ_Cal",
+          fontm_regular: str="MJ",
+          fontm_italic: str="MJ_Mat",
+          fontm_bold: str="MJ",
+          fontm_itbold: str="MJ_Mat",
           ):
     """
     Should be run before ``import matplotlib.pyplot``.
@@ -119,29 +120,29 @@ def ready(ext: str='svg',
     if (_front.NONE or _front.NTERACT) and (magic is None):
         mpl.use('Qt5Agg')
 
-    def it(s: str): return s + ":italic"
-    def bold(s: str): return s + ":bold"
-    def map_maybe(func, fonts: str or list):
-        return func(fonts) if isinstance(fonts, str) else list(map(func, fonts))
+    def list_maybe(fonts):
+        return fonts if isinstance(fonts, str) else list(fonts)
 
     mpl.rcParams.update({
         "text.usetex": False,
         "font.size": font_size,
         "font.family": font_family,
-        "font.serif": font_serif,
-        "font.sans-serif": font_sans,
-        "font.cursive": font_cursive,
-        "font.monospace": font_mono,
+        "font.serif": list_maybe(font_serif),
+        "font.sans-serif": list_maybe(font_sans),
+        "font.monospace": list_maybe(font_mono),
         "mathtext.fontset": "custom",  # cm
         "mathtext.cal": fontm_calig,
-        "mathtext.tt": font_mono,
+        "mathtext.tt": fontm_mono,
         "mathtext.rm": fontm_regular,
-        "mathtext.it": map_maybe(it, fontm_italic),
-        "mathtext.bf": map_maybe(bold, fontm_bold),
-        "mathtext.sf": map_maybe(lambda x: it(bold(x)), fontm_itbold)
+        "mathtext.it": fontm_italic + ":italic",
+        "mathtext.bf": fontm_bold + ":bold",
+        "mathtext.sf": fontm_itbold + ":bold:italic",
     })
+    if font_cursive is not None:
+        mpl.rcParams["font.cursive"] = list_maybe(font_cursive)
     if mpl.__version__.startswith('2'):
         mpl.rc('text.latex', unicode=True)
+    print(__file__)
     if font_dir is not None:
         font_dirs = [font_dir, ]
         font_files = font_manager.findSystemFonts(fontpaths=font_dirs)
