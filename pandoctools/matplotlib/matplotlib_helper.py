@@ -3,17 +3,20 @@ https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/matplotlib
 """
 import io
 import base64
+# noinspection PyUnresolvedReferences
 from sugartex import sugartex, stex
-from IPython.display import display, Markdown, HTML
+from IPython.display import display as _display, Markdown, HTML
 import numpy as np
 import pandas as pd
-from typing import Tuple
+from typing import Tuple, Union
 import pypandoc
 
-from ..knitty import front as _front, Front
+from ..knitty import front as frontend, Front
 from IPython import get_ipython
 
 ipython = get_ipython()
+# noinspection PyTypeChecker
+def display(x: object): return _display(x)
 
 GR = (1 + 5 ** 0.5) / 2
 sugartex.mpl_hack()
@@ -26,6 +29,7 @@ _readied = False
 _interactive = True
 _hide = False
 _magic = None
+_front = None
 
 
 # noinspection PyShadowingNames,PyIncorrectDocstring
@@ -39,55 +43,53 @@ def ready(ext: str='svg',
           font_dir: str=None,
           font_size: float=12.8,
           font_family: str="serif",
-          font_serif: str="Libertinus Serif",
-          font_sans: str="Segoe UI",
-          font_cursive: str="Comic Sans MS",
-          font_mono: str="Consolas",
-          fontm_calig: str="MJ_Cal",
-          fontm_regular: str="MJ",
-          fontm_italic: str="MJ_Mat",
-          fontm_bold: str="MJ",
-          fontm_itbold: str="MJ_Mat",
+          font_serif: Union[str, list]="Libertinus Serif",
+          font_sans: Union[str, list]="Segoe UI",
+          font_cursive: Union[str, list]="Comic Sans MS",
+          font_mono: Union[str, list]="Consolas",
+          fontm_calig: Union[str, list]="MJ_Cal",
+          fontm_regular: Union[str, list]="MJ",
+          fontm_italic: Union[str, list]="MJ_Mat",
+          fontm_bold: Union[str, list]="MJ",
+          fontm_itbold: Union[str, list]="MJ_Mat",
           ):
     """
     Should be run before ``import matplotlib.pyplot``.
 
+    ``magic`` defaults:
+        * In Knitty mode uses ``%matplotlib agg`` magic,
+        * In standard Jupyter mode uses ``%matplotlib notebook`` magic,
+        * In JupyterLab mode uses ``%matplotlib widget`` magic
+          (if ``jupyterlab`` and ``ipympl`` modules were found),
+        * In Hydrogen, Nteract and non-Jupyter (non-IPython) mode calls
+          ``matplotlib.use('Qt5Agg')``.
+        * Notable magic: ``%matplotlib qt5``.
+
+    ``front`` possible values:
+        * ``KNITTY``,
+        * ``NONE`` (stands for neither IPython nor Jupyter),
+        * ``NTERACT`` (stans for Nteract or Atom/Hydrogen),
+        * ``LAB`` (stands for Jupyter Lab),
+        * ``NOTEBOOK`` (stands for Jupyter Notebook).
+          Can also be changed by setting ``$KNITTY`` env var
+          to the values above
+          (additionally ``TRUE`` means ``KNITTY``).
+
     Parameters
     ----------
     magic :
-        matplotlib magic without ``%matplotlib `` prefix. Defaults:
-
-        1. In Knitty mode uses ``%matplotlib agg`` magic,
-        2. In standard Jupyter mode uses ``%matplotlib notebook`` magic,
-        3. In JupyterLab mode uses ``%matplotlib widget`` magic
-            (if ``jupyterlab`` and ``ipympl`` modules were found),
-        4. In Hydrogen, Nteract and non-Jupyter (non-IPython) mode calls
-            ``matplotlib.use('Qt5Agg')``.
-
-        Notable magic: ``%matplotlib qt5``.
-
+        matplotlib magic without ``%matplotlib `` prefix
     front :
-        Frontend. Default value is guessed automatically. Possible values:
-
-        1. ``KNITTY``,
-        2. ``NONE`` (stands for neither IPython nor Jupyter),
-        3. ``NTERACT`` (stans for Nteract or Atom/Hydrogen),
-        4. ``LAB`` (stands for Jupyter Lab),
-        5. ``NOTEBOOK`` (stands for Jupyter Notebook).
-
-        Can also be changed by setting ``$KNITTY`` env var
-        to the values above
-        (additionally ``TRUE`` means ``KNITTY``).
-
+        Frontend. Default value is guessed automatically.
     font_size :
         In pt. Default is 12.8pt ~ 17px
     """
-    # TODO: change single font to list of fallback fonts
-
     global _front
     front = front.lower() if isinstance(front, str) else ''
-    if front in _front.keys:
+    if front in frontend.keys:
         _front = Front(**{front: True})
+    else:
+        _front = frontend
 
     if magic is not None:
         pass
@@ -117,6 +119,11 @@ def ready(ext: str='svg',
     if (_front.NONE or _front.NTERACT) and (magic is None):
         mpl.use('Qt5Agg')
 
+    def it(s: str): return s + ":italic"
+    def bold(s: str): return s + ":bold"
+    def map_maybe(func, fonts: str or list):
+        return func(fonts) if isinstance(fonts, str) else list(map(func, fonts))
+
     mpl.rcParams.update({
         "text.usetex": False,
         "font.size": font_size,
@@ -129,9 +136,9 @@ def ready(ext: str='svg',
         "mathtext.cal": fontm_calig,
         "mathtext.tt": font_mono,
         "mathtext.rm": fontm_regular,
-        "mathtext.it": fontm_italic + ":italic",
-        "mathtext.bf": fontm_bold + ":bold",
-        "mathtext.sf": fontm_itbold + ":bold:italic"
+        "mathtext.it": map_maybe(it, fontm_italic),
+        "mathtext.bf": map_maybe(bold, fontm_bold),
+        "mathtext.sf": map_maybe(lambda x: it(bold(x)), fontm_itbold)
     })
     if mpl.__version__.startswith('2'):
         mpl.rc('text.latex', unicode=True)
@@ -247,12 +254,13 @@ def img(plot,
             else:
                 ipython.magic("matplotlib agg")
                 display(HTML(pypandoc.convert_text(image, 'html', format='md')))
-                if _magic:
+                if _magic is not None:
+                    # noinspection PyTypeChecker
                     ipython.magic("matplotlib " + _magic)
                 else:
-                    raise RuntimeError('Unknown bug: reached unreachable code.')
+                    raise RuntimeError('Unknown bug')
         else:
-            raise RuntimeError('Unknown bug in `_front`.')
+            raise RuntimeError('Unknown bug')
     else:
         plot.close()
 
