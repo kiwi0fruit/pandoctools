@@ -1,5 +1,4 @@
 import os
-import sys
 from IPython import get_ipython
 
 KNITTY = False
@@ -46,11 +45,11 @@ class Front:
 
     Can be changed by setting ``$KNITTY`` env var:
 
-    1. TRUE (or KNITTY),
-    2. NONE (stands for neither IPython nor Jupyter),
-    3. NTERACT (stans for Nteract or Atom/Hydrogen),
-    4. LAB (stands for Jupyter Lab),
-    5. NOTEBOOK (stands for Jupyter Notebook).
+    * ``TRUE`` (or ``KNITTY``),
+    * ``NONE`` (stands for neither IPython nor Jupyter),
+    * ``NTERACT`` (stans for Nteract or Atom/Hydrogen),
+    * ``LAB`` (stands for Jupyter Lab),
+    * ``NOTEBOOK`` (stands for Jupyter Notebook).
     """
     keys = ('knitty', 'none', 'nteract', 'lab', 'notebook')
 
