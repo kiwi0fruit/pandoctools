@@ -227,7 +227,10 @@ def img(plot,
         cap = pypandoc.convert_text(f'[{caption}]{{{attrs}}}', 'html', format='md') if caption or attrs else ''
 
         if _front.KNITTY:
-            print('\n\n' + image + '\n\n')
+            if ret:
+                return url
+            else:
+                print('\n\n' + image + '\n\n')
         elif _front.NONE or _front.NTERACT:
             display(Markdown(f'<img src="{base64_url}" style="width: {preview_width};"/>'))
             # there were problems with ``display(HTML(...))``
