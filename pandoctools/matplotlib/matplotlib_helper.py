@@ -61,7 +61,8 @@ def ready(ext: str='svg',
         2. In standard Jupyter mode uses ``%matplotlib notebook`` magic,
         3. In JupyterLab mode uses ``%matplotlib widget`` magic
             (if ``jupyterlab`` and ``ipympl`` modules were found),
-        4. In Hydrogen, Nteract and non-Jupyter (non-IPython) mode calls ``matplotlib.use('Qt5Agg')``.
+        4. In Hydrogen, Nteract and non-Jupyter (non-IPython) mode calls
+            ``matplotlib.use('Qt5Agg')``.
 
         Notable magic: ``%matplotlib qt5``.
 
@@ -73,6 +74,10 @@ def ready(ext: str='svg',
         3. ``NTERACT`` (stans for Nteract or Atom/Hydrogen),
         4. ``LAB`` (stands for Jupyter Lab),
         5. ``NOTEBOOK`` (stands for Jupyter Notebook).
+
+        Can also be changed by setting ``$KNITTY`` env var
+        to the values above
+        (additionally ``TRUE`` means ``KNITTY``).
 
     font_size :
         In pt. Default is 12.8pt ~ 17px

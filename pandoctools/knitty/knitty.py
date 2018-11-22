@@ -1,7 +1,6 @@
 import os
 import sys
 from IPython import get_ipython
-from typing import NamedTuple
 
 KNITTY = False
 NONE = False
@@ -42,20 +41,17 @@ else:
 
 class Front:
     """
-    Only one of attributes is True.
-    Can be changed by setting $KNITTY env var:
-    TRUE (or KNITTY),
-    NONE (stands for neither IPython nor Jupyter),
-    NTERACT (stans for Nteract or Atom/Hydrogen),
-    LAB (stands for Jupyter Lab),
-    NOTEBOOK (stands for Jupyter Notebook).
-    """
-    KNITTY = False
-    NONE = False
-    NTERACT = False
-    LAB = False
-    NOTEBOOK = False
+    Class for storing automatically determined
+    backend. Only one of attributes is ``True``.
 
+    Can be changed by setting ``$KNITTY`` env var:
+
+    1. TRUE (or KNITTY),
+    2. NONE (stands for neither IPython nor Jupyter),
+    3. NTERACT (stans for Nteract or Atom/Hydrogen),
+    4. LAB (stands for Jupyter Lab),
+    5. NOTEBOOK (stands for Jupyter Notebook).
+    """
     keys = ('knitty', 'none', 'nteract', 'lab', 'notebook')
 
     def __init__(self,
