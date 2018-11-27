@@ -15,7 +15,7 @@ Pandoctools is a combination of tools that help write reproducible markdown repo
 
 * Switch to bash profiles as batch profiles are no longer supported (and install bash if needed),
 * Add `meta_profile="${metas[0]}"` to all your custom profiles (also see changes in default profile and pipe),
-* 1.1.3: changed matplotlib helper API, updated docs to use **proper** `Markdown()` output.
+* v1.1.3: changed matplotlib helper API, updated docs to use **proper** `Markdown()` output.
 
 
 # Contents
