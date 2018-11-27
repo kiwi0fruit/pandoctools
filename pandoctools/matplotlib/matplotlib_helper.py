@@ -202,7 +202,7 @@ def img(plot,
 
     if name:
         file = p.normpath(p.expanduser(p.expandvars(name + "." + ext)))
-        file = file if p.abspath(file) else p.normpath(p.join(_folder, file))
+        file = file if p.isabs(file) else p.normpath(p.join(_folder, file))
         if ext.upper() == 'PNG':
             plot.savefig(file, dpi=dpi)
         else:
