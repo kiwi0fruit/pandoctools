@@ -28,11 +28,11 @@ Usage example that works both in Atom+Hydrogen and in Pandoctools+Knitty:
 ---
 pandoctools:
   profile: Default
-results: pandoc
 ...
 """
 
 # %% --------------------
+from IPython.display import Markdown
 from pandoctools import matplotlib as mh
 mh.ready(font_size=14)  # should be run before import matplotlib.pyplot
 import matplotlib.pyplot as plt
@@ -42,7 +42,8 @@ plt.figure(figsize=mh.figsize(w=6))
 plt.plot([1, 2, 3, 4])
 plt.ylabel(mh.stex('ˎ∇ ⋅ [ ⃗E]ˎ, V/m'))
 
-mh.img(plt, caption='My beautiful figure', attrs='#fig:1')
+# this code in knitty would be parsed by pandoc:
+Markdown(f'![My beautiful figure]({mh.img(plt)}){{#fig:1}}')
 ```
 
 Qt backend gives [interactive plots in Atom/Hydrogen](https://nteract.gitbooks.io/hydrogen/docs/Usage/Examples.html#interactive-plots-using-matplotlib).

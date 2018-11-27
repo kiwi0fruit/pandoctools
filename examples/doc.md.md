@@ -2,13 +2,13 @@
 ---
 pandoctools:
   profile: Default
-  out: "~/*.ipynb"
+  out: "*.ipynb"
 input: True
 eval: False
 ...
 ```
 
-```md
+````md
 # Markdown to Jupyter notebook example
 
 Here is a SugarTeX example with @eq:max and @fig:img.
@@ -30,20 +30,28 @@ where ˎ[ ⃗B], [ ⃗E], [ ⃗j]: ℝ⁴ → ℝ³ˎ – vector functions
 
 ![Sample image with cross-references.](https://avatars3.githubusercontent.com/u/19735117?s=460&v=4){#fig:img}
 
-In this version of Pandoc image caption @fig:img works but for some reason this text is not inside `<p></p>`...
+In this version of Pandoc image caption @fig:img works but for some reason this text is not inside:
+
+@{input=False}
+```html
+<p></p>
 ```
+````
 
 `````py
-@{input=False, eval=True, results=pandoc}
+@{input=False, eval=True}
 ```py
+from IPython.display import Markdown
 import pandas as pd
 import numpy as np
 from pandoctools import pandas as th
 
 df = pd.DataFrame(np.random.random(16).reshape(4, 4))
 
-print(th.md_table(df))
-print(': Table {#tbl:table1}')
+Markdown(f'''
+{th.md_table(df)}
+: Table {{#tbl:table1}}
+''')
 ```
 
 Text and @tbl:table1
