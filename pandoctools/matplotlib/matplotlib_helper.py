@@ -142,8 +142,10 @@ def ready(ext: str='svg',
 
     # Create prefix folder if needed:
     # -------------------------------
-    if not p.isdir(folder) and folder:
-        os.makedirs(folder)
+    if folder != '':
+        folder = p.normpath(p.expanduser(p.expandvars(folder)))
+        if not p.isdir(folder):
+            os.makedirs(folder)
 
     # Export globals:
     # ---------------
@@ -164,9 +166,9 @@ def img(plot,
         ) -> str:
     """
     * If ``name`` is ``None`` then do not save an image.
-    * If ``name`` is without path separators then the image
-      would be saved to the ``folder`` set in ``ready()``
-      (if specified).
+    * If ``name`` is a relative path then it's relative
+      with respect to the ``folder`` if it was specified
+      in ``ready()`` otherwise - to the CWD.
 
     Parameters
     ----------
@@ -199,17 +201,18 @@ def img(plot,
     hide = hide if (hide is not None) else _hide
 
     if name:
-        file_name = p.join(_folder, name + "." + ext)
+        file = p.normpath(p.expanduser(p.expandvars(name + "." + ext)))
+        file = file if p.abspath(file) else p.normpath(p.join(_folder, file))
         if ext.upper() == 'PNG':
-            plot.savefig(file_name, dpi=dpi)
+            plot.savefig(file, dpi=dpi)
         else:
-            plot.savefig(file_name)
-        with open(file_name, "rb") as f:
+            plot.savefig(file)
+        with open(file, "rb") as f:
             image = f.read()
-        if not p.abspath(file_name):
-            file_name = file_name.replace('\\', '/')
+        if not p.abspath(file):
+            file = file.replace('\\', '/')
     else:
-        file_name = None
+        file = None
         with io.BytesIO() as f:
             plot.savefig(f, format=ext)
             image = f.getvalue()
@@ -228,7 +231,7 @@ def img(plot,
         plot.show()
 
     if return_path and name:
-        return file_name
+        return file
     else:
         return base64_url
 
