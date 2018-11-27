@@ -5,40 +5,27 @@ import io
 import base64
 # noinspection PyUnresolvedReferences
 from sugartex import sugartex, stex
-from IPython.display import display as _display, Markdown, HTML
 import numpy as np
 import pandas as pd
-from typing import Tuple, Union
-import pypandoc
+from typing import Tuple, Union, Iterable
+import os
 from os import path as p
 
-from ..knitty import front as frontend, Front
+from ..knitty import front as _front, fronts
 from IPython import get_ipython
 
 ipython = get_ipython()
-# noinspection PyTypeChecker
-def display(x: object): return _display(x)
-
+_readied = False
 GR = (1 + 5 ** 0.5) / 2
 sugartex.mpl_hack()
 sugartex.ready()
 
-_ext = 'svg'
-_dpi = 300
-_preview_width = '600px'
-_readied = False
-_interactive = True
-_hide = False
-_magic = None
-_front = None
 
-
-# noinspection PyShadowingNames,PyIncorrectDocstring
+# noinspection PyIncorrectDocstring
 def ready(ext: str='svg',
           dpi: int=300,
-          preview_width: str='600px',
+          folder: str='',
           hide: bool=False,
-          interactive: bool=True,
           magic: str=None,
           front: str=None,
           font_dir: str=None,
@@ -80,51 +67,49 @@ def ready(ext: str='svg',
 
     Parameters
     ----------
+    folder :
+        folder to save images to.
     magic :
-        matplotlib magic without ``%matplotlib `` prefix
+        matplotlib magic without "%matplotlib " prefix.
     front :
         Frontend. Default value is guessed automatically.
     font_size :
-        In pt. Default is 12.8pt ~ 17px
+        In pt. Default is 12.8pt ~ 17px.
     fontm_set :
-        ``'cm'`` is also a good option.
+        'cm' is also a good option.
     """
-    global _front
+    # Set mpl backend:
+    # ----------------
     front = front.lower() if isinstance(front, str) else ''
-    if front in frontend.keys:
-        _front = Front(**{front: True})
-    else:
-        _front = frontend
+    front = front if (front in fronts) else _front
 
     if magic is not None:
         pass
-    elif _front.KNITTY:
+    elif front == fronts.KNITTY:
         magic = "agg"
-    elif _front.NONE or _front.NTERACT:
-        pass  # magic is None
-    elif _front.LAB:
+    elif front == fronts.HYDROGEN or front == fronts.NTERACT:
+        magic = "qt5"
+    elif front == fronts.LAB:
         magic = "widget"
-    elif _front.NOTEBOOK:
+    elif front == fronts.NOTEBOOK:
         magic = "notebook"
+    elif front == fronts.NONE:
+        pass
 
-    if magic is not None:
+    if (magic is None) or (front == fronts.NONE):
+        import matplotlib as mpl
+        mpl.use('Qt5Agg')
+        qt5 = True
+    else:
         ipython.magic("matplotlib " + magic)
+        import matplotlib as mpl
+        qt5 = (magic == 'qt5')
 
     from matplotlib import font_manager
-    import matplotlib as mpl
 
-    global _readied;       _readied = True
-    global _ext;           _ext = ext
-    global _dpi;           _dpi = dpi
-    global _preview_width; _preview_width = preview_width
-    global _interactive;    _interactive = interactive
-    global _hide;          _hide = hide
-    global _magic;         _magic = magic
-
-    if (_front.NONE or _front.NTERACT) and (magic is None):
-        mpl.use('Qt5Agg')
-
-    def list_maybe(fonts):
+    # Set mpl fonts:
+    # ----------------------
+    def list_maybe(fonts: Union[str, Iterable]):
         return fonts if isinstance(fonts, str) else list(fonts)
 
     mpl.rcParams.update({
@@ -144,6 +129,7 @@ def ready(ext: str='svg',
     })
     if font_cursive is not None:
         mpl.rcParams["font.cursive"] = list_maybe(font_cursive)
+
     if mpl.__version__.startswith('2'):
         mpl.rc('text.latex', unicode=True)
 
@@ -154,73 +140,79 @@ def ready(ext: str='svg',
     font_list = font_manager.createFontList(font_files)
     font_manager.fontManager.ttflist.extend(font_list)
 
+    # Create prefix folder if needed:
+    # -------------------------------
+    if not p.isdir(folder) and folder:
+        os.makedirs(folder)
+
+    # Export globals:
+    # ---------------
+    global _readied; _readied = True
+    global _ext;     _ext = ext
+    global _dpi;     _dpi = dpi
+    global _hide;    _hide = hide
+    global _qt5;     _qt5 = qt5
+    global _folder;  _folder = folder
+
 
 def img(plot,
-        caption: str='',
-        attrs: str='',
         name: str=None,
         ext: str=None,
         dpi: int=None,
-        preview_width: str=None,
         hide: bool=None,
-        interactive: bool=None,
-        ret: bool=False,
-        ) -> str or None:
+        return_path: bool=False
+        ) -> str:
     """
+    * If ``name`` is ``None`` then do not save an image.
+    * If ``name`` is without path separators then the image
+      would be saved to the ``folder`` set in ``ready()``
+      (if specified).
+
     Parameters
     ----------
     plot :
         matplotlib.pyplot
-    caption :
-        Markdown image caption inside square brackets ![...](...){...}
-    attrs :
-        Markdown image attributes inside curly brackets ![...](...){...}
     name :
-        File name to store image (without extension). If None then use base64 encoding.
+        File name to store image (without extension).
     ext :
-        File extension
-        default ``'svg'`` or the value set in ``ready()``
+        File extension (or base64 format).
+        [Default is 'svg' or the value set in `ready()`]
     dpi :
         DPI for PNG
-        default ``300`` or the value set in ``ready()``
-    preview_width :
-        Hydrogen or nteract image preview width
-        default ``'600px'`` or the value set in ``ready()``
+        [Default is 300 or the value set in `ready()`]
     hide :
-        Whether to display / print plots or hide them.
-        default ``False`` or the value set in ``ready()``
-    interactive :
-        Whether to show interactive plot via Qt or Widget
-        default ``True`` or the value set in ``ready()``
-    ret :
-        Whether to return image URL string
+        Whether to hide interactive plot via Qt or Widget or not.
+        [Default is False or the value set in `ready()`]
+    return_path :
+        Whether to return file path instead of base64 if `name` was given
 
     Returns
     ------
     url :
-        Image URL if ret else None
+        Image base64 URL (or file path if `return_path`).
     """
     if not _readied:
         ready()
 
     ext = ext if (ext is not None) else _ext
     dpi = dpi if (dpi is not None) else _dpi
-    preview_width = preview_width if (preview_width is not None) else _preview_width
-    interactive = interactive if (interactive is not None) else _interactive
     hide = hide if (hide is not None) else _hide
 
-    if name is None:
-        with io.BytesIO() as f:
-            plot.savefig(f, format=ext)
-            image = f.getvalue()
-    else:
-        file_name = name + "." + ext
+    if name:
+        file_name = p.join(_folder, name + "." + ext)
         if ext.upper() == 'PNG':
             plot.savefig(file_name, dpi=dpi)
         else:
             plot.savefig(file_name)
         with open(file_name, "rb") as f:
             image = f.read()
+        if not p.abspath(file_name):
+            file_name = file_name.replace('\\', '/')
+    else:
+        file_name = None
+        with io.BytesIO() as f:
+            plot.savefig(f, format=ext)
+            image = f.getvalue()
 
     base64_url = 'data:image/{};base64,' + base64.b64encode(image).decode("utf-8")
     if ext.upper() == 'PNG':
@@ -228,50 +220,54 @@ def img(plot,
     elif ext.upper() == 'SVG':
         base64_url = base64_url.format('svg+xml')
     else:
-        raise ValueError('{} extension is not supported by matplotlib helper.'.format(ext))
+        raise ValueError(f'{ext} extension is not supported by matplotlib helper.')
 
-    if name is None:
-        url = base64_url
+    if hide:
+        plot.close()  # works in Jupyter too
+    elif _qt5:
+        plot.show()
+
+    if return_path and name:
+        return file_name
     else:
-        url = name + "." + ext
+        return base64_url
 
-    if not hide:
-        image = f'![{caption}]({url})' + ('{' + attrs + '}' if attrs else '')
-        cap = pypandoc.convert_text(f'[{caption}]{{{attrs}}}', 'html', format='md') if caption or attrs else ''
 
-        if _front.KNITTY:
-            if ret:
-                return url
-            else:
-                print('\n\n' + image + '\n\n')
-        elif _front.NONE or _front.NTERACT:
-            display(Markdown(f'<img src="{base64_url}" style="width: {preview_width};"/>'))
-            # there were problems with ``display(HTML(...))``
-            if cap:
-                display(HTML(cap))
-            if interactive:
-                plot.show()
-            else:
-                plot.close()
-        elif _front.LAB or _front.NOTEBOOK:
-            if interactive:
-                if cap:
-                    display(HTML(cap))
-            else:
-                ipython.magic("matplotlib agg")
-                display(HTML(pypandoc.convert_text(image, 'html', format='md')))
-                if _magic is not None:
-                    # noinspection PyTypeChecker
-                    ipython.magic("matplotlib " + _magic)
-                else:
-                    raise RuntimeError('Unknown bug')
-        else:
-            raise RuntimeError('Unknown bug')
-    else:
-        plot.close()
+def img_path(plot,
+             name: str,
+             ext: str=None,
+             dpi: int=None,
+             hide: bool=None,
+             ) -> str:
+    """
+    If ``name`` is without path separators then the image
+    would be saved to the ``folder`` set in ``ready()``
+    (if specified).
 
-    if ret:
-        return url
+    Parameters
+    ----------
+    plot :
+        matplotlib.pyplot
+    name :
+        File name to store image (without extension).
+    ext :
+        File extension (or base64 format).
+        [Default is 'svg' or the value set in `ready()`]
+    dpi :
+        DPI for PNG
+        [Default is 300 or the value set in `ready()`]
+    hide :
+        Whether to hide interactive plot via Qt or Widget or not.
+        [Default is False or the value set in `ready()`]
+
+    Returns
+    ------
+    url :
+        Image path
+    """
+    if not name:
+        raise ValueError('Invalid name: ' + name)
+    return img(plot, name, ext, dpi, hide, return_path=True)
 
 
 # noinspection PyPep8Naming
