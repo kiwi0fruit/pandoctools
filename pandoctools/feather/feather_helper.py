@@ -4,27 +4,24 @@ from os import path as p
 import feather
 import numpy as np
 
-_dir = ""
-_cwd = ""
+_dir = None
+_cwd = None
+
+
+def setdir(dir_: str='./feather'):
+    global _dir
+    _dir = p.abspath(p.normpath(p.expanduser(p.expandvars(dir_))))
+    if not p.isdir(_dir):
+        os.makedirs(_dir)
 
 
 def name(name_: str):
     global _cwd, _dir
-    if _dir == "":
-        _dir = p.join('.', 'feather')
-        if not p.isdir(_dir):
-            os.makedirs(_dir)
+    if _dir is None:
+        setdir()
     _cwd = p.join(_dir, name_)
     if not p.isdir(_cwd):
         os.makedirs(_cwd)
-
-
-def setdir(dir_: str):
-    global _dir, _cwd
-    _dir = p.abspath(p.expandvars(dir_))
-    if not p.isdir(_dir):
-        os.makedirs(_dir)
-    name('default')
 
 
 class FeatherHelperError(Exception):
@@ -36,6 +33,9 @@ def push(*data_frames, e: Exception=''):
     Stores data frames. Prints exception ``e`` if it's not empty.
     """
     global _cwd
+    if _cwd is None:
+        name('default')
+
     if str(e):
         print(e)
 
@@ -54,8 +54,11 @@ def push(*data_frames, e: Exception=''):
     _cwd = p.join(_dir, 'default')
 
 
-def pull():
+def pull(ret_len: int=None):
     global _cwd
+    if _cwd is None:
+        name('default')
+
     file_names = sorted([p.basename(os.fsdecode(file))  # may be p.basename() is redundant
                          for file in os.listdir(os.fsencode(_cwd))],
                         key=lambda filename: int(p.splitext(filename)[0]))
@@ -71,7 +74,8 @@ def pull():
             ret.append(df)
         else:
             raise FeatherHelperError('Wrong file ext in {}'.format(_cwd))
-    if not ret:
+    if not ret or (len(ret) != ret_len and ret_len):
         raise FeatherHelperError()
     _cwd = p.join(_dir, 'default')
+
     return ret if (len(ret) > 1) else ret[0]
