@@ -25,5 +25,7 @@ print(f"""
 
 : Table {{#tbl:table1}}
 
-""")
+{th.md_header(df)}
+
+""")  # appended header is useful when very long table
 ```
