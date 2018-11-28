@@ -61,7 +61,7 @@ def get_front() -> str:
 
 def import_matplotlib(magic: str or None):
     """
-    Returns tuple: (matplotlib, qt5).
+    Returns matplotlib
     """
     front = get_front()
 
@@ -79,17 +79,14 @@ def import_matplotlib(magic: str or None):
 
     if magic is None:
         import matplotlib as mpl
-        qt5 = False
     elif magic == 'Qt5Agg':
         import matplotlib as mpl
         mpl.use('Qt5Agg')
-        qt5 = True
     else:
         get_ipython().magic("matplotlib " + magic)
         import matplotlib as mpl
-        qt5 = (magic == 'qt5')
 
-    return mpl, qt5
+    return mpl
 
 
 _readied = False
@@ -144,7 +141,7 @@ def ready(ext: str='svg',
     """
     # Set mpl backend:
     # ----------------
-    mpl, qt5 = import_matplotlib(magic)
+    mpl = import_matplotlib(magic)
     from matplotlib import font_manager
 
     # Set mpl fonts:
@@ -193,7 +190,6 @@ def ready(ext: str='svg',
     global _ext;     _ext = ext
     global _dpi;     _dpi = dpi
     global _hide;    _hide = hide
-    global _qt5;     _qt5 = qt5
     global _folder;  _folder = folder
 
 
@@ -267,7 +263,7 @@ def img(plot,
 
     if hide:
         plot.close()  # works in Jupyter too
-    elif _qt5:
+    else:
         plot.show()
 
     if return_path and name:
