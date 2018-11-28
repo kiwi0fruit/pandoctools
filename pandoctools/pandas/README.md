@@ -19,6 +19,8 @@ from pandoctools import pandas as th
 
 df = pd.DataFrame(np.random.random(16).reshape(4, 4))
 
+# appended header is useful when very long table
+# (can display `df.iloc[[0]]` in hydrogen)
 Markdown(f"""
 
 {th.md_table(df)}
@@ -27,5 +29,5 @@ Markdown(f"""
 
 {th.md_header(df)}
 
-""")  # appended header is useful when very long table
+""")
 ```

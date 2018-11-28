@@ -1,4 +1,5 @@
 import pandas as pd
+import re
 
 
 def md_table(df: pd.DataFrame) -> str:
@@ -23,5 +24,5 @@ def md_header(df: pd.DataFrame) -> str:
         Markdown table header + empty row
     """
     md = md_table(df.iloc[[0]]).split('\n')
-    md[2] = md[1].replace('---', ' ')
+    md[2] = re.sub(r'[^\s\|]', '   ', md[2])
     return '\n'.join(md)
