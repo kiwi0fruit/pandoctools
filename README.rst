@@ -22,9 +22,11 @@ Update info
 -----------
 
 -  Switch to bash profiles as batch profiles are no longer supported
-   (and install bash if needed).
+   (and install bash if needed),
 -  Add ``meta_profile="${metas[0]}"`` to all your custom profiles (also
-   see changes in default profile and pipe).
+   see changes in default profile and pipe),
+-  v1.1.3, v1.1.4: changed matplotlib and pandas helpers API, updated
+   docs to use **proper** ``Markdown()`` output.
 
 Contents
 ========
