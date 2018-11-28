@@ -26,7 +26,7 @@ def is_notebook_or_qtconsole():
     if shell == 'ZMQInteractiveShell':
         return True   # Jupyter notebook or qtconsole
     elif shell == 'TerminalInteractiveShell':
-        return False  #  IPython Terminal
+        return False  # IPython Terminal
     elif shell == 'NoneType':
         return False  # Python interpreter
     else:
@@ -40,12 +40,12 @@ def get_front() -> str:
         return F.KNITTY
 
     if is_notebook_or_qtconsole():
-        PATH = os.getenv('PATH', '')
+        path = os.getenv('PATH', '')
         atom_win = os.sep + 'atom' + os.sep + 'app-'
         atom_lin = os.sep + 'atom' + os.pathsep
         nteract_win = os.sep + 'nteract' + os.pathsep
         nteract_lin = '_nterac'
-        if (nteract_win in PATH) or (nteract_lin in PATH) or (atom_win in PATH) or (atom_lin in PATH):
+        if (nteract_win in path) or (nteract_lin in path) or (atom_win in path) or (atom_lin in path):
             return F.NTERACT
 
         try:
@@ -59,7 +59,7 @@ def get_front() -> str:
     return F.OTHER
 
 
-def import_matplotlib(magic: str or None) -> Tuple[object, bool]:
+def import_matplotlib(magic: str or None):
     """
     Returns tuple: (matplotlib, qt5).
     """
@@ -77,11 +77,10 @@ def import_matplotlib(magic: str or None) -> Tuple[object, bool]:
     elif (magic == 'qt') and (front == F.PYTHON):
         magic = 'Qt5Agg'  # special case
 
-
     if magic is None:
         import matplotlib as mpl
         qt5 = False
-    elif magic == 'Qt5Agg'
+    elif magic == 'Qt5Agg':
         import matplotlib as mpl
         mpl.use('Qt5Agg')
         qt5 = True
