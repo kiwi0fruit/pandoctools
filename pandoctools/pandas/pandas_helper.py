@@ -1,4 +1,3 @@
-from IPython.display import display
 import pandas as pd
 
 
@@ -26,7 +25,3 @@ def md_header(df: pd.DataFrame) -> str:
     md = md_table(df.iloc[[0]]).split('\n')
     md[2] = md[1].replace('---', ' ')
     return '\n'.join(md)
-
-
-def display_header(df: pd.DataFrame):
-    display(df.iloc[[0]].drop(index=0))
