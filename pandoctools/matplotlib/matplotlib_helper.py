@@ -10,11 +10,89 @@ import pandas as pd
 from typing import Tuple, Union, Iterable
 import os
 from os import path as p
-
-from ..knitty import front as _front, fronts
 from IPython import get_ipython
 
-ipython = get_ipython()
+
+class F:
+    KNITTY = 'knitty'
+    PYTHON = 'python'
+    NTERACT = 'nteract'
+    LAB = 'lab'
+    OTHER = 'other'
+
+
+def is_notebook_or_qtconsole():
+    shell = get_ipython().__class__.__name__
+    if shell == 'ZMQInteractiveShell':
+        return True   # Jupyter notebook or qtconsole
+    elif shell == 'TerminalInteractiveShell':
+        return False  #  IPython Terminal
+    elif shell == 'NoneType':
+        return False  # Python interpreter
+    else:
+        return False
+
+
+def get_front() -> str:
+    if not get_ipython():
+        return F.PYTHON
+    if os.getenv('KNITTY', '').lower() == 'true':
+        return F.KNITTY
+
+    if is_notebook_or_qtconsole():
+        PATH = os.getenv('PATH', '')
+        atom_win = os.sep + 'atom' + os.sep + 'app-'
+        atom_lin = os.sep + 'atom' + os.pathsep
+        nteract_win = os.sep + 'nteract' + os.pathsep
+        nteract_lin = '_nterac'
+        if (nteract_win in PATH) or (nteract_lin in PATH) or (atom_win in PATH) or (atom_lin in PATH):
+            return F.NTERACT
+
+        try:
+            import jupyterlab
+            import ipympl
+
+            return F.LAB
+        except ModuleNotFoundError:
+            pass
+
+    return F.OTHER
+
+
+def import_matplotlib(magic: str or None) -> Tuple[object, bool]:
+    """
+    Returns tuple: (matplotlib, qt5).
+    """
+    front = get_front()
+
+    if magic == 'auto':
+        if front == F.KNITTY:
+            magic = "agg"
+        elif front == F.NTERACT:
+            magic = "qt5"
+        elif front == F.LAB:
+            magic = "widget"
+        elif front == F.PYTHON:
+            magic = 'Qt5Agg'  # special case
+    elif (magic == 'qt') and (front == F.PYTHON):
+        magic = 'Qt5Agg'  # special case
+
+
+    if magic is None:
+        import matplotlib as mpl
+        qt5 = False
+    elif magic == 'Qt5Agg'
+        import matplotlib as mpl
+        mpl.use('Qt5Agg')
+        qt5 = True
+    else:
+        get_ipython().magic("matplotlib " + magic)
+        import matplotlib as mpl
+        qt5 = (magic == 'qt5')
+
+    return mpl, qt5
+
+
 _readied = False
 GR = (1 + 5 ** 0.5) / 2
 sugartex.mpl_hack()
@@ -24,10 +102,9 @@ sugartex.ready()
 # noinspection PyIncorrectDocstring
 def ready(ext: str='svg',
           dpi: int=300,
-          folder: str='',
+          folder: str='./pic',
           hide: bool=False,
-          magic: str=None,
-          front: str=None,
+          magic: str='auto',
           font_dir: str=None,
           font_size: float=12.8,
           font_family: str="serif",
@@ -46,33 +123,21 @@ def ready(ext: str='svg',
     """
     Should be run before ``import matplotlib.pyplot``.
 
-    ``magic`` defaults:
-        * In Knitty mode uses ``%matplotlib agg`` magic,
-        * In standard Jupyter mode uses ``%matplotlib notebook`` magic,
-        * In JupyterLab mode uses ``%matplotlib widget`` magic
+    ``magic`` auto-detect for ``f'%matplotlib {magic}'`` (if ``'auto'``):
+        * In Knitty mode uses ``agg`` (if ``$KNITTY`` env var is ``TRUE``),
+        * In JupyterLab mode uses ``widget``
           (if ``jupyterlab`` and ``ipympl`` modules were found),
-        * In Hydrogen, Nteract and non-Jupyter (non-IPython) mode calls
-          ``matplotlib.use('Qt5Agg')``.
-        * Notable magic: ``%matplotlib qt5``.
-
-    ``front`` possible values:
-        * ``KNITTY``,
-        * ``NONE`` (stands for neither IPython nor Jupyter),
-        * ``NTERACT`` (stans for Nteract or Atom/Hydrogen),
-        * ``LAB`` (stands for Jupyter Lab),
-        * ``NOTEBOOK`` (stands for Jupyter Notebook).
-          Can also be changed by setting ``$KNITTY`` env var
-          to the values above
-          (additionally ``TRUE`` means ``KNITTY``).
+        * In Hydrogen and Nteract modes uses ``qt5`` magic,
+        * In non-Jupyter and non-IPython modes calls ``matplotlib.use('Qt5Agg')``.
 
     Parameters
     ----------
     folder :
         folder to save images to.
     magic :
-        matplotlib magic without "%matplotlib " prefix.
-    front :
-        Frontend. Default value is guessed automatically.
+        matplotlib magic without "%matplotlib " prefix
+        or None for not changing matplotlib backend
+        ("qt5" magic can work even without IPython/Jupyter).
     font_size :
         In pt. Default is 12.8pt ~ 17px.
     fontm_set :
@@ -80,31 +145,7 @@ def ready(ext: str='svg',
     """
     # Set mpl backend:
     # ----------------
-    front = front.lower() if isinstance(front, str) else ''
-    front = front if (front in fronts) else _front
-
-    if magic is not None:
-        pass
-    elif front == fronts.KNITTY:
-        magic = "agg"
-    elif front == fronts.HYDROGEN or front == fronts.NTERACT:
-        magic = "qt5"
-    elif front == fronts.LAB:
-        magic = "widget"
-    elif front == fronts.NOTEBOOK:
-        magic = "notebook"
-    elif front == fronts.NONE:
-        pass
-
-    if (magic is None) or (front == fronts.NONE):
-        import matplotlib as mpl
-        mpl.use('Qt5Agg')
-        qt5 = True
-    else:
-        ipython.magic("matplotlib " + magic)
-        import matplotlib as mpl
-        qt5 = (magic == 'qt5')
-
+    mpl, qt5 = import_matplotlib(magic)
     from matplotlib import font_manager
 
     # Set mpl fonts:
@@ -243,9 +284,9 @@ def img_path(plot,
              hide: bool=None,
              ) -> str:
     """
-    If ``name`` is without path separators then the image
-    would be saved to the ``folder`` set in ``ready()``
-    (if specified).
+    If ``name`` is a relative path then it's relative
+    with respect to the ``folder`` if it was specified
+    in ``ready()`` otherwise - to the CWD.
 
     Parameters
     ----------
