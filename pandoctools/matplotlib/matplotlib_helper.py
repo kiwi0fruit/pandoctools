@@ -78,15 +78,15 @@ def import_matplotlib(magic: str or None):
         magic = 'Qt5Agg'  # special case
 
     if magic is None:
-        import matplotlib as mpl
+        import matplotlib
     elif magic == 'Qt5Agg':
-        import matplotlib as mpl
-        mpl.use('Qt5Agg')
+        import matplotlib
+        matplotlib.use('Qt5Agg')
     else:
         get_ipython().magic("matplotlib " + magic)
-        import matplotlib as mpl
+        import matplotlib
 
-    return mpl
+    return matplotlib
 
 
 _readied = False
@@ -141,6 +141,7 @@ def ready(ext: str='svg',
     """
     # Set mpl backend:
     # ----------------
+    global mpl
     mpl = import_matplotlib(magic)
     from matplotlib import font_manager
 
@@ -186,11 +187,8 @@ def ready(ext: str='svg',
 
     # Export globals:
     # ---------------
-    global _readied; _readied = True
-    global _ext;     _ext = ext
-    global _dpi;     _dpi = dpi
-    global _hide;    _hide = hide
-    global _folder;  _folder = folder
+    global _ext, _dpi, _hide, _folder, _readied
+    _ext, _dpi, _hide, _folder, _readied = ext, dpi, hide, folder, True
 
 
 def img(plot,
@@ -263,7 +261,7 @@ def img(plot,
 
     if hide:
         plot.close()  # works in Jupyter too
-    else:
+    elif mpl.get_backend() != 'agg':
         plot.show()
 
     if return_path and name:
@@ -304,8 +302,8 @@ def img_path(plot,
     url :
         Image path
     """
-    if not name:
-        raise ValueError('Invalid name: ' + name)
+    if not (name and isinstance(name, str)):
+        raise ValueError(f"Invalid name: '{name}'")
     return img(plot, name, ext, dpi, hide, return_path=True)
 
 
