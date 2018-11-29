@@ -55,3 +55,8 @@ conda install jupyterlab jupyterlab_server tk nodejs
 pip install ipympl
 jupyter labextension install @jupyter-widgets/jupyterlab-manager jupyter-matplotlib
 ```
+Instead of `pip install ipympl` you can also try:
+```
+conda install -c defaults -c conda-forge ipympl
+conda update --all
+```
