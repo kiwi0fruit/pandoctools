@@ -57,6 +57,7 @@ jupyter labextension install @jupyter-widgets/jupyterlab-manager jupyter-matplot
 ```
 Instead of `pip install ipympl` you can also try:
 ```
+conda update --all
 conda install -c defaults -c conda-forge ipympl
 conda update --all
 ```
