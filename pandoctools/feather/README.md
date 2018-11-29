@@ -12,7 +12,7 @@ fh.setdir("~/feather/mydoc")  # optional
 fh.name('id1')
 try:
     # raise Exception  # <- this is a switch
-    df, A = fh.pull()  # control len can be set: fh.pull(N)
+    df, A = fh.pull()  # control length can be set: fh.pull(N)
 except Exception as e:
     print('push')  # calculate stuff:
     df = pd.DataFrame(np.random.random(16).reshape(4, 4))
