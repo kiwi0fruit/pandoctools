@@ -3,6 +3,7 @@ import os
 from os import path as p
 import feather
 import numpy as np
+from typing import Union
 
 _dir = None
 _cwd = None
@@ -28,7 +29,7 @@ class FeatherHelperError(Exception):
     pass
 
 
-def push(*data_frames, e: Exception=''):
+def push(*data_frames: Union[np.ndarray, pd.DataFrame], e: Exception=''):
     """
     Stores data frames. Prints exception ``e`` if it's not empty.
     """
