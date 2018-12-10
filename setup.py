@@ -55,9 +55,9 @@ setup(
     scripts=[
         'scripts/pandoctools-import',
         'scripts/pandoctools-resolve',
-        'scripts/path-source',
-        'scripts/path-pyprep',
-        'scripts/path-pyprep-win',
+        'scripts/pandoctools-path-source',
+        'scripts/pandoctools-path-pyprep',
+        'scripts/pandoctools-path-pyprep-win',
         'scripts/pandoctools-cygpath',
     ],
 )

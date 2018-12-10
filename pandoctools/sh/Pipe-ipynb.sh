@@ -10,4 +10,4 @@ sugartex "$sugartex" | \
 pandoc-crossref "$t" | \
 pandoc -f json "${writer_args[@]}" | \
 knotedown --match=in --nomagic | \
-jupyter nbconvert --to notebook --execute --stdin --stdout
+jupyter nbconvert "${nbconvert_args[@]}"

@@ -3,6 +3,7 @@
 
 prof=Kiwi
 . "$import" Args-Main
+# (see docs on available and used env vars there)
 
 inputs=(stdin)
 stdin_plus=(stdin "${metas[@]}")
@@ -10,6 +11,7 @@ meta_profile="${metas[0]}"
 reader_args=(-f "$from" "${reader_args[@]}")
 writer_args=(--standalone --self-contained -t "$to" "${writer_args[@]}")
 sugartex="--kiwi"
+nbconvert_args=(--to notebook --execute --stdin --stdout)
 
 pipe=Main
 if [ "${out_ext}" == "ipynb" ]; then

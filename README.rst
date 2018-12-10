@@ -14,17 +14,25 @@ markdown reports. They rely on Pandoc and Jupyter kernels.
    ipynb) <https://github.com/kiwi0fruit/pandoctools/blob/master/atom_jupyter_pandoc_markdown.md>`__.
 
 “Glueing” part of pandoctools is a profile manager of text processing
-pipelines. It stores short shell (bash or batch) scripts that define
-chain operations over text. They are mostly Pandoc filters but any CLI
-text filter is OK.
+pipelines. It stores short crossplatform bash scripts that define chain
+operations over text. They are mostly Pandoc filters but any CLI text
+filter is OK.
 
 Update info
 -----------
+
+Instructions:
 
 -  Switch to bash profiles as batch profiles are no longer supported
    (and install bash if needed),
 -  Add ``meta_profile="${metas[0]}"`` to all your custom profiles (also
    see changes in default profile and pipe),
+-  1.1.5: Add
+   ``nbconvert_args=(--to notebook --execute --stdin --stdout)`` to all
+   your custom profiles.
+
+Info:
+
 -  v1.1.3, v1.1.4: changed matplotlib and pandas helpers API, updated
    docs to use **proper** ``Markdown()`` output.
 
