@@ -5,13 +5,18 @@ Install to conda environment:
 
     conda install -c defaults -c conda-forge twine "pandoc>=2.2.1"
 
+* On Windows install Git together with Bash.
+
 
 Scripts:
 
-* run `update_version.bat` to update version
+To run the script open terminal, then type `.` (dot with space), then
+drag and drop the script to the terminal (the script will change CWD itself).
+
+* run `update_version` to update version
 * open terminal with activated environment
-  * to update rst drag and drop `update_rst.bat` to the terminal
-  * to upload package to pypi drag and drop `upload.bat` to the terminal
+  * to update rst run `update_rst`
+  * to upload package to pypi run `upload`
 
 
 Hint: Easily create shortcut to activated environment via Shortcutter:
@@ -21,3 +26,4 @@ Hint: Easily create shortcut to activated environment via Shortcutter:
 * Cross-platform installation:
     pip install shortcutter
     shortcutter --terminal
+* To start Bash on windows type `%b%` in the terminal created via Shortcutter
