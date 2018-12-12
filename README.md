@@ -21,7 +21,8 @@ Instructions:
 
 Info:
 
-* v1.1.3, v1.1.4: changed matplotlib and pandas helpers API, updated docs to use **proper** `Markdown()` output.
+* v1.1.3, v1.1.4: changed matplotlib and pandas helpers API, updated docs to use **proper** `Markdown()` output,
+* v1.1.6: moved matplotlib helper to separate optional `matplotlibhelper` [module](https://github.com/kiwi0fruit/matplotlibhelper).
 
 
 # Contents
@@ -42,9 +43,9 @@ Info:
 * [**Pandoctools CLI app**](https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/cli): profile manager of text processing pipelines. It stores short bash scripts - called profiles - that define chain operations over text. They are mostly Pandoc filters but any CLI text filter is OK. Profiles can be used to convert any document of choise in the specified manner.
 * [**Knitty**](https://github.com/kiwi0fruit/knitty) (dependence): Knitty is another CLI for Stitch/Knotr: reproducible report generation tool via Jupyter, Pandoc and Markdown. Insert python code (or other Jupyter kernel code) to the Markdown document and have code's results in the output document. Can even export to Jupyter ipynb notebooks.
 * [**SugarTeX**](https://github.com/kiwi0fruit/sugartex) (dependence): SugarTeX is a more readable LaTeX language extension and transcompiler to LaTeX.
-* [**Feather Helper**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/feather) helps to cache 2D numpy arrays and pandas dataframes.
-* [**Matplotlib Helper**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/matplotlib) is my custom helper to tune Matplotlib experience.
 * [**Pandas Helper**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/pandas) helps print dataframes to Markdown.
+* (_optional_) [**Matplotlib Helper**](https://github.com/kiwi0fruit/matplotlibhelper) (dependence): custom helper to tune Matplotlib experience in Atom/Hydrogen and Pandoctools/Knitty.
+* [**Feather Helper**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/feather): concise interface to cache 2D numpy arrays and pandas dataframes.
 
 Pandoctools is a tool for converting markdown document. But we also need tools for writing markdown and deploying python/Jupyter code blocks.  
 And the best one for it is:
@@ -79,7 +80,7 @@ Here are [**examples**](https://github.com/kiwi0fruit/pandoctools/blob/master/ex
   call activate myenv
   conda update python pip setuptools
 
-  conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" matplotlib ^
+  conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" ^
   feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters ^
   pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future ^
   shutilwhich cython pywin32 pandas
@@ -118,7 +119,7 @@ Via conda:
   source activate myenv
   conda update python pip setuptools
 
-  conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" matplotlib \
+  conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" \
   feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters \
   pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future \
   shutilwhich cython pandas

@@ -1,6 +1,6 @@
 # Feather Helper
 
-Feather Helper helps to cache 2D numpy arrays and pandas dataframes. Usage example in Atom/Hydrogen:
+Feather Helper is a concise interface to cache 2D numpy arrays and pandas dataframes. Usage example in Atom/Hydrogen:
 
 ```py
 import pandas as pd

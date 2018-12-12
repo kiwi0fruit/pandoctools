@@ -34,7 +34,10 @@ Instructions:
 Info:
 
 -  v1.1.3, v1.1.4: changed matplotlib and pandas helpers API, updated
-   docs to use **proper** ``Markdown()`` output.
+   docs to use **proper** ``Markdown()`` output,
+-  v1.1.6: moved matplotlib helper to separate optional
+   ``matplotlibhelper``
+   `module <https://github.com/kiwi0fruit/matplotlibhelper>`__.
 
 Contents
 ========
@@ -74,15 +77,16 @@ Notable parts of Pandoctools
 -  `SugarTeX <https://github.com/kiwi0fruit/sugartex>`__ (dependence):
    SugarTeX is a more readable LaTeX language extension and
    transcompiler to LaTeX.
--  `Feather
-   Helper <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/feather>`__
-   helps to cache 2D numpy arrays and pandas dataframes.
--  `Matplotlib
-   Helper <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/matplotlib>`__
-   is my custom helper to tune Matplotlib experience.
 -  `Pandas
    Helper <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/pandas>`__
    helps print dataframes to Markdown.
+-  (_optional_) `Matplotlib
+   Helper <https://github.com/kiwi0fruit/matplotlibhelper>`__
+   (dependence): custom helper to tune Matplotlib experience in
+   Atom/Hydrogen and Pandoctools/Knitty.
+-  `Feather
+   Helper <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/feather>`__:
+   concise interface to cache 2D numpy arrays and pandas dataframes.
 
 | Pandoctools is a tool for converting markdown document. But we also
   need tools for writing markdown and deploying python/Jupyter code
@@ -139,7 +143,7 @@ Windows:
       call activate myenv
       conda update python pip setuptools
 
-      conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" matplotlib ^
+      conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" ^
       feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters ^
       pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future ^
       shutilwhich cython pywin32 pandas
@@ -191,7 +195,7 @@ Via conda:
       source activate myenv
       conda update python pip setuptools
 
-      conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" matplotlib \
+      conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" \
       feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters \
       pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future \
       shutilwhich cython pandas

@@ -1,5 +1,4 @@
 include pandoctools/*
 include pandoctools/bat/*
 include pandoctools/sh/*
-include pandoctools/matplotlib/fonts/*
 include versioneer.py

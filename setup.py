@@ -38,12 +38,12 @@ setup(
     packages=find_packages(exclude=['docs', 'tests']),
 
     install_requires=['click', 'pyyaml', 'panflute>=1.10.6', 'knitty>=0.4.2', 'pandas',
-                      'sugartex>=0.1.10', 'matplotlib', 'feather-format',
+                      'sugartex>=0.1.10', 'feather-format',
                       'notebook', 'jupyter', 'shortcutter>=0.1.8'],
 
     include_package_data=True,
     package_data={
-        'pandoctools': ['bat/*', 'sh/*', 'matplotlib/fonts/*'],
+        'pandoctools': ['bat/*', 'sh/*'],
     },
     entry_points={
         'console_scripts': [
