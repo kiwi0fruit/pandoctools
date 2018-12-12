@@ -18,38 +18,33 @@ pipelines. It stores short crossplatform bash scripts that define chain
 operations over text. They are mostly Pandoc filters but any CLI text
 filter is OK.
 
-Update info
------------
+Update instructions
+-------------------
 
-Instructions:
-
--  Switch to bash profiles as batch profiles are no longer supported
-   (and install bash if needed),
--  Add ``meta_profile="${metas[0]}"`` to all your custom profiles (also
-   see changes in default profile and pipe),
+-  0.4.21: Switch to bash profiles as batch profiles are no longer
+   supported (and install bash if needed),
+-  1.1.0: Add ``meta_profile="${metas[0]}"`` to all your custom profiles
+   (also see changes in default profile and pipe),
 -  1.1.5: Add
    ``nbconvert_args=(--to notebook --execute --stdin --stdout)`` to all
    your custom profiles.
-
-Info:
-
--  v1.1.3, v1.1.4: changed matplotlib and pandas helpers API, updated
-   docs to use **proper** ``Markdown()`` output,
--  v1.1.6: moved matplotlib helper to separate optional
-   ``matplotlibhelper``
-   `module <https://github.com/kiwi0fruit/matplotlibhelper>`__.
+-  1.1.6: Now import matplotlib and feather helpers from separate
+   modules:
+   ```matplotlibhelper`` <https://github.com/kiwi0fruit/matplotlibhelper>`__,
+   ```featherhelper`` <https://github.com/kiwi0fruit/featherhelper>`__.
 
 Contents
 ========
 
 -  `Pandoctools <#pandoctools>`__
 
-   -  `Update info <#update-info>`__
+   -  `Update instructions <#update-instructions>`__
 
 -  `Contents <#contents>`__
 -  `Notable parts of Pandoctools <#notable-parts-of-pandoctools>`__
 -  `Examples markdown to ipynb <#examples-markdown-to-ipynb>`__
 -  `Install <#install>`__
+-  `Update info <#update-info>`__
 -  `Useful tips (reload imported modules in Hydrogen, R kernel,
    LyX) <#useful-tips-reload-imported-modules-in-hydrogen-r-kernel-lyx>`__
 -  `Alternatives to R Markdown (Markdown-based Literate
@@ -80,13 +75,13 @@ Notable parts of Pandoctools
 -  `Pandas
    Helper <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/pandas>`__
    helps print dataframes to Markdown.
--  (_optional_) `Matplotlib
-   Helper <https://github.com/kiwi0fruit/matplotlibhelper>`__
-   (dependence): custom helper to tune Matplotlib experience in
-   Atom/Hydrogen and Pandoctools/Knitty.
--  `Feather
-   Helper <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/feather>`__:
-   concise interface to cache 2D numpy arrays and pandas dataframes.
+-  (*optional*) `Matplotlib
+   Helper <https://github.com/kiwi0fruit/matplotlibhelper>`__: custom
+   helper to tune Matplotlib experience in Atom/Hydrogen and
+   Pandoctools/Knitty.
+-  (*optional*) `Feather
+   Helper <https://github.com/kiwi0fruit/featherhelper>`__: concise
+   interface to cache 2D numpy arrays and pandas dataframes.
 
 | Pandoctools is a tool for converting markdown document. But we also
   need tools for writing markdown and deploying python/Jupyter code
@@ -144,9 +139,9 @@ Windows:
       conda update python pip setuptools
 
       conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" ^
-      feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters ^
-      pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future ^
-      shutilwhich cython pywin32 pandas
+      jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters ^
+      pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook ^
+      jupyter future shutilwhich cython pywin32 pandas
 
       pip install panflute knitty sugartex shortcutter pandoctools pandoctools-ready
 
@@ -196,9 +191,9 @@ Via conda:
       conda update python pip setuptools
 
       conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" \
-      feather-format jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters \
-      pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook jupyter future \
-      shutilwhich cython pandas
+      jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters \
+      pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook \
+      jupyter future shutilwhich cython pandas
 
       pip install panflute knitty sugartex shortcutter pandoctools pandoctools-ready
 
@@ -225,6 +220,22 @@ Via pip:
    `pandoc-crossref <https://github.com/lierdakil/pandoc-crossref/releases>`__
    (compatible with pandoc version) to
    ``<miniconda-path>/envs/myenv/bin``.
+
+Update info:
+============
+
+-  0.4.21: Switch to bash profiles as batch profiles are no longer
+   supported (and install bash if needed),
+-  1.1.0: Add ``meta_profile="${metas[0]}"`` to all your custom profiles
+   (also see changes in default profile and pipe),
+-  1.1.3, 1.1.4: changed matplotlib and pandas helpers API, updated docs
+   to use **proper** ``Markdown()`` output,
+-  1.1.5: Add
+   ``nbconvert_args=(--to notebook --execute --stdin --stdout)`` to all
+   your custom profiles,
+-  1.1.6: moved matplotlib and feather helpers to separate modules:
+   ```matplotlibhelper`` <https://github.com/kiwi0fruit/matplotlibhelper>`__,
+   ```featherhelper`` <https://github.com/kiwi0fruit/featherhelper>`__.
 
 Useful tips (reload imported modules in Hydrogen, R kernel, LyX)
 ================================================================
