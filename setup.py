@@ -42,7 +42,7 @@ setup(
 
     include_package_data=True,
     package_data={
-        'pandoctools': ['bat/*', 'sh/*'],
+        'pandoctools': ['sh/*'],
     },
     entry_points={
         'console_scripts': [
