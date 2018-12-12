@@ -10,8 +10,8 @@ Install to conda environment:
 
 Scripts:
 
-To run the script open terminal, then type `.` (dot with space), then
-drag and drop the script to the terminal (the script will change CWD itself).
+To run the script open Bash terminal, then type `.` (dot with space), then
+drag and drop the script to the Bash terminal (the script will change CWD itself).
 
 * run `update_version` to update version
 * open terminal with activated environment
