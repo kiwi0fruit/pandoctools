@@ -28,7 +28,7 @@ Pandoctools is a combination of tools that help write reproducible markdown repo
 * [Notable parts of Pandoctools](#notable-parts-of-pandoctools)
 * [Examples markdown to ipynb](#examples-markdown-to-ipynb)
 * [Install](#install)
-* [Update info](#update-info)
+
 * [Useful tips (reload imported modules in Hydrogen, R kernel, LyX)](#useful-tips-reload-imported-modules-in-hydrogen-r-kernel-lyx)
 * [Alternatives to R Markdown (Markdown-based Literate Programming)](#alternatives-to-r-markdown-markdown-based-literate-programming)
 
@@ -135,15 +135,6 @@ Via pip:
   pip install pandoctools pandoctools-ready
   ```
 * Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) (compatible with pandoc version) to `<miniconda-path>/envs/myenv/bin`.
-
-
-# Update info:
-
-* 0.4.21: Switch to bash profiles as batch profiles are no longer supported (and install bash if needed),
-* 1.1.0: Add `meta_profile="${metas[0]}"` to all your custom profiles (also see changes in default profile and pipe),
-* 1.1.3, 1.1.4: changed matplotlib and pandas helpers API, updated docs to use **proper** `Markdown()` output,
-* 1.1.5: Add `nbconvert_args=(--to notebook --execute --stdin --stdout)` to all your custom profiles,
-* 1.1.6: moved matplotlib and feather helpers to separate modules: [`matplotlibhelper`](https://github.com/kiwi0fruit/matplotlibhelper), [`featherhelper`](https://github.com/kiwi0fruit/featherhelper).
 
 
 # Useful tips (reload imported modules in Hydrogen, R kernel, LyX)
