@@ -55,7 +55,7 @@ import re
               help="Search filters in default user data directory listed in `pandoc --version` " +
                    "(in it's `filters` subfolder actually). It's appended to the search list.")
 @click.option('--no-sys-path', is_flag=True, default=False,
-              help="Disable search filters in python's `sys.path` (current working directory removed) " +
+              help="Disable search filters in python's `sys.path` (I tried to remove current working directory either way) " +
               "that is appended to the search list.")
 def main(filters, to, dirs, data_dir, no_sys_path):
     if len(sys.argv) > 1:
@@ -89,7 +89,7 @@ def autorun_filters(filters: list, doc, search_path: list, data_dir: bool, sys_p
         else:
             search_path.append(os.path.join(os.environ["HOME"], ".pandoc", "filters"))
     if sys_path:
-        search_path += [dir for dir in sys.path if (dir != '')]
+        search_path += [dir_ for dir_ in sys.path if (dir_ != '') and (dir_ != '.') and os.path.isdir(dir_)]
 
     filenames = OrderedDict()
 
