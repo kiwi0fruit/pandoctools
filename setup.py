@@ -48,7 +48,6 @@ setup(
         'console_scripts': [
             'cat-md=pandoctools.cat_md.cat_md:cat_md',
             'pandoctools=pandoctools.cli.cli:pandoctools',
-            'panfl=pandoctools.panfl.panfl:main',
         ],
     },
     scripts=[

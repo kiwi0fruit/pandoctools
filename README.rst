@@ -8,10 +8,10 @@ markdown reports. They rely on Pandoc and Jupyter kernels.
 
 -  `Best Python/Jupyter/PyCharm experience + report generation with
    Pandoc
-   filters <https://github.com/kiwi0fruit/pandoctools/blob/master/best_python_jupyter_pycharm_experience.md>`__.
+   filters <https://github.com/kiwi0fruit/pandoctools/blob/master/docs/best_python_jupyter_pycharm_experience.md>`__.
 -  `Convenient and easily tweakable Atom+Markdown+Pandoc+Jupyter
    experience (can export to
-   ipynb) <https://github.com/kiwi0fruit/pandoctools/blob/master/atom_jupyter_pandoc_markdown.md>`__.
+   ipynb) <https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom_jupyter_pandoc_markdown.md>`__.
 
 “Glueing” part of pandoctools is a profile manager of text processing
 pipelines. It stores short crossplatform bash scripts that define chain
@@ -25,6 +25,9 @@ Update instructions
    supported (and install bash if needed),
 -  1.1.0: Add ``meta_profile="${metas[0]}"`` to all your custom profiles
    (also see changes in default profile and pipe),
+-  1.1.4: ``results=pandoc`` was a misunderstanding. The right way to
+   output Markdown is to use
+   ``from IPython.display import Markdown; Markdown('hello')``.
 -  1.1.5: Add
    ``nbconvert_args=(--to notebook --execute --stdin --stdout)`` to all
    your custom profiles.
@@ -44,7 +47,6 @@ Contents
 -  `Notable parts of Pandoctools <#notable-parts-of-pandoctools>`__
 -  `Examples markdown to ipynb <#examples-markdown-to-ipynb>`__
 -  `Install <#install>`__
--  `Update info <#update-info>`__
 -  `Useful tips (reload imported modules in Hydrogen, R kernel,
    LyX) <#useful-tips-reload-imported-modules-in-hydrogen-r-kernel-lyx>`__
 -  `Alternatives to R Markdown (Markdown-based Literate
@@ -75,11 +77,11 @@ Notable parts of Pandoctools
 -  `Pandas
    Helper <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/pandas>`__
    helps print dataframes to Markdown.
--  (*optional*) `Matplotlib
+-  (_optional_) `Matplotlib
    Helper <https://github.com/kiwi0fruit/matplotlibhelper>`__: custom
    helper to tune Matplotlib experience in Atom/Hydrogen and
    Pandoctools/Knitty.
--  (*optional*) `Feather
+-  (_optional_) `Feather
    Helper <https://github.com/kiwi0fruit/featherhelper>`__: concise
    interface to cache 2D numpy arrays and pandas dataframes.
 
@@ -89,18 +91,18 @@ Notable parts of Pandoctools
 | And the best one for it is:
 
 -  `Atom editor with
-   plugins <https://github.com/kiwi0fruit/pandoctools/blob/master/atom.md>`__.
+   plugins <https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom.md>`__.
    It helps easily type Unicode, interactively run highlighed
    python/Jupyter code blocks and instantly see results (+ completions
    from the running Jupyter kernel), can convert basic pandoc markdown
    to html with live preview.
 -  Must have plugins: `SugarTeX
-   Completions <https://github.com/kiwi0fruit/pandoctools/blob/master/atom.md#sugartex-completions>`__,
+   Completions <https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom.md#sugartex-completions>`__,
    `Unix
-   Filter <https://github.com/kiwi0fruit/pandoctools/blob/master/atom.md#unix-filter>`__,
-   `Hydrogen <https://github.com/kiwi0fruit/pandoctools/blob/master/atom.md#hydrogen>`__,
+   Filter <https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom.md#unix-filter>`__,
+   `Hydrogen <https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom.md#hydrogen>`__,
    `Markdown Preview
-   Plus <https://github.com/kiwi0fruit/pandoctools/blob/master/atom.md#markdown-preview-plus>`__
+   Plus <https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom.md#markdown-preview-plus>`__
 
 Examples markdown to ipynb
 ==========================
@@ -221,30 +223,14 @@ Via pip:
    (compatible with pandoc version) to
    ``<miniconda-path>/envs/myenv/bin``.
 
-Update info:
-============
-
--  0.4.21: Switch to bash profiles as batch profiles are no longer
-   supported (and install bash if needed),
--  1.1.0: Add ``meta_profile="${metas[0]}"`` to all your custom profiles
-   (also see changes in default profile and pipe),
--  1.1.3, 1.1.4: changed matplotlib and pandas helpers API, updated docs
-   to use **proper** ``Markdown()`` output,
--  1.1.5: Add
-   ``nbconvert_args=(--to notebook --execute --stdin --stdout)`` to all
-   your custom profiles,
--  1.1.6: moved matplotlib and feather helpers to separate modules:
-   ```matplotlibhelper`` <https://github.com/kiwi0fruit/matplotlibhelper>`__,
-   ```featherhelper`` <https://github.com/kiwi0fruit/featherhelper>`__.
-
 Useful tips (reload imported modules in Hydrogen, R kernel, LyX)
 ================================================================
 
 `Useful
-tips <https://github.com/kiwi0fruit/pandoctools/blob/master/tips.md>`__
+tips <https://github.com/kiwi0fruit/pandoctools/blob/master/docs/tips.md>`__
 
 Alternatives to R Markdown (Markdown-based Literate Programming)
 ================================================================
 
 `Alternatives to R
-Markdown <https://github.com/kiwi0fruit/pandoctools/blob/master/alternatives_to_r_markdown.md>`__
+Markdown <https://github.com/kiwi0fruit/pandoctools/blob/master/docs/alternatives_to_r_markdown.md>`__

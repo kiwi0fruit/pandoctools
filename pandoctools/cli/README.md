@@ -105,8 +105,8 @@ Pandoctools stores some settings in [`Defaults.ini`](../sh/Defaults.ini) file. T
 
 Pandoctools comes with convenience CLI apps:
 
-* [**panfl**](https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/panfl) allows [Panflute](https://github.com/sergiocorreia/panflute) to be run as a command line script so it can be used in Pandoctools shell scripts.
-* [**cat-md**](https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/cat_md) is a simple CLI tool that concatenates input files with stdin input (joins them with double new lines) and prints to stdout.
+* [**panfl**](../../docs/panfl.md) allows [Panflute](https://github.com/sergiocorreia/panflute) to be run as a command line script so it can be used in Pandoctools shell scripts.
+* [**cat-md**](../cat_md) is a simple CLI tool that concatenates input files with stdin input (joins them with double new lines) and prints to stdout.
 
 
 ## Environment variables predefined in Pandoctools CLI application:

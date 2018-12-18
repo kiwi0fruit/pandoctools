@@ -4,8 +4,8 @@ Pandoctools is a combination of tools that help write reproducible markdown repo
 
 **Introduction articles**:
 
-* [**Best Python/Jupyter/PyCharm experience + report generation with Pandoc filters**](https://github.com/kiwi0fruit/pandoctools/blob/master/best_python_jupyter_pycharm_experience.md).
-* [**Convenient and easily tweakable Atom+Markdown+Pandoc+Jupyter experience (can export to ipynb)**](https://github.com/kiwi0fruit/pandoctools/blob/master/atom_jupyter_pandoc_markdown.md).  
+* [**Best Python/Jupyter/PyCharm experience + report generation with Pandoc filters**](https://github.com/kiwi0fruit/pandoctools/blob/master/docs/best_python_jupyter_pycharm_experience.md).
+* [**Convenient and easily tweakable Atom+Markdown+Pandoc+Jupyter experience (can export to ipynb)**](https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom_jupyter_pandoc_markdown.md).  
 
 
 “Glueing” part of pandoctools is a profile manager of text processing pipelines. It stores short crossplatform bash scripts that define chain operations over text. They are mostly Pandoc filters but any CLI text filter is OK.
@@ -45,8 +45,8 @@ Pandoctools is a combination of tools that help write reproducible markdown repo
 Pandoctools is a tool for converting markdown document. But we also need tools for writing markdown and deploying python/Jupyter code blocks.  
 And the best one for it is:
 
-* [**Atom editor with plugins**](https://github.com/kiwi0fruit/pandoctools/blob/master/atom.md). It helps easily type Unicode, interactively run highlighed python/Jupyter code blocks and instantly see results (+ completions from the running Jupyter kernel), can convert basic pandoc markdown to html with live preview.
-* Must have plugins: [**SugarTeX Completions**](https://github.com/kiwi0fruit/pandoctools/blob/master/atom.md#sugartex-completions), [**Unix Filter**](https://github.com/kiwi0fruit/pandoctools/blob/master/atom.md#unix-filter), [**Hydrogen**](https://github.com/kiwi0fruit/pandoctools/blob/master/atom.md#hydrogen), [**Markdown Preview Plus**](https://github.com/kiwi0fruit/pandoctools/blob/master/atom.md#markdown-preview-plus)
+* [**Atom editor with plugins**](https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom.md). It helps easily type Unicode, interactively run highlighed python/Jupyter code blocks and instantly see results (+ completions from the running Jupyter kernel), can convert basic pandoc markdown to html with live preview.
+* Must have plugins: [**SugarTeX Completions**](https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom.md#sugartex-completions), [**Unix Filter**](https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom.md#unix-filter), [**Hydrogen**](https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom.md#hydrogen), [**Markdown Preview Plus**](https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom.md#markdown-preview-plus)
 
 
 # Examples markdown to ipynb
@@ -138,9 +138,9 @@ Via pip:
 
 # Useful tips (reload imported modules in Hydrogen, R kernel, LyX)
 
-[Useful tips](https://github.com/kiwi0fruit/pandoctools/blob/master/tips.md)
+[Useful tips](https://github.com/kiwi0fruit/pandoctools/blob/master/docs/tips.md)
 
 
 # Alternatives to R Markdown (Markdown-based Literate Programming)
 
-[Alternatives to R Markdown](https://github.com/kiwi0fruit/pandoctools/blob/master/alternatives_to_r_markdown.md)
+[Alternatives to R Markdown](https://github.com/kiwi0fruit/pandoctools/blob/master/docs/alternatives_to_r_markdown.md)
