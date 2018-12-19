@@ -37,8 +37,8 @@ setup(
     # keywords='sample setuptools development',
     packages=find_packages(exclude=['docs', 'tests']),
 
-    install_requires=['click', 'pyyaml', 'panflute>1.11.0', 'knitty>=0.4.2', 'pandas',
-                      'sugartex>=0.1.11', 'notebook', 'jupyter', 'shortcutter>=0.1.8'],
+    install_requires=['click', 'pyyaml', 'panflute>=1.11.0', 'knitty>=0.4.2', 'pandas',
+                      'sugartex>0.1.11', 'notebook', 'jupyter', 'shortcutter>=0.1.8'],
 
     include_package_data=True,
     package_data={
