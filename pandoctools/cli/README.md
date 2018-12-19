@@ -107,6 +107,7 @@ Pandoctools comes with convenience CLI apps:
 
 * [**panfl**](../../docs/panfl.md) allows [Panflute](https://github.com/sergiocorreia/panflute) to be run as a command line script so it can be used in Pandoctools shell scripts.
 * [**cat-md**](../cat_md) is a simple CLI tool that concatenates input files with stdin input (joins them with double new lines) and prints to stdout.
+* [**pandoc-filter-arg**](../pandoc_filter_arg) is a CLI interface that prints argument that is passed by Pandoc to it's filters.
 
 
 ## Environment variables predefined in Pandoctools CLI application:
