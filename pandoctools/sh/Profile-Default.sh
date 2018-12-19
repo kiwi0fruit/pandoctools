@@ -5,14 +5,12 @@ prof=Default
 . "$import" Args-Main
 # (see docs on available and used env vars there)
 
-# ---- Can be overriden: ----
-# inputs=(stdin)
-# stdin_plus=(stdin "${metas[@]}")
-# meta_profile="${meta_profile}"
-# reader_args=(-f "$from" "${reader_args[@]}")
-# writer_args=(--standalone --self-contained -t "$to" "${writer_args[@]}")
-# nbconvert_args=(--to notebook --execute --stdin --stdout)
-# panfl_args=(-t "$t" sugartex)
+# Defaults preset or set in Args-Main can be overriden:
+# -----------------------------------------------------
+# from, to, t, reader_args, writer_args,
+# inputs, meta_profile, metas, stdin_plus,
+# nbconvert_args, panfl_args
+# input_file, output_file
 
 pipe=Main
 if [ "${out_ext}" == "ipynb" ]; then
