@@ -14,9 +14,10 @@ Pandoctools is a combination of tools that help write reproducible markdown repo
 ## Update instructions
 
 * 0.4.21: Switch to bash profiles as batch profiles are no longer supported (and install bash if needed),
-* 1.1.4: `results=pandoc` was a misunderstanding. The right way to output Markdown is to use `from IPython.display import Markdown; Markdown('hello')`.
+* 1.1.4: `results=pandoc` was a misunderstanding. The right way to output Markdown is to use  
+  `from IPython.display import Markdown; Markdown('hello')`.
 * 1.1.6: Now import matplotlib and feather helpers from separate modules: [`matplotlibhelper`](https://github.com/kiwi0fruit/matplotlibhelper), [`featherhelper`](https://github.com/kiwi0fruit/featherhelper),
-* 1.1.8: Update `Args-Main.sh` if you have a custom one, uninstall pandoctools before updating,
+* 1.1.8: Update `Args-Main.sh` if you have a custom one. Uninstall pandoctools before updating,
 
 
 # Contents
