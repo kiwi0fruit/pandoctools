@@ -1,4 +1,4 @@
 include pandoctools/*
-include pandoctools/bat/*
 include pandoctools/sh/*
+include pandoctools/pandoc_filter_arg/pandoc_filter_arg/*
 include versioneer.py
