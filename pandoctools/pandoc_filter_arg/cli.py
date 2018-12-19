@@ -12,7 +12,7 @@ class PandocFilterArgError(Exception):
 
 
 def run_err(*args: str, stdin: str) -> str:
-    return subprocess.run(args, stdout=PIPE, stderr=PIPE, input=stdin, encoding='utf-8').stderr
+    return subprocess.run(args, stderr=PIPE, input=stdin, encoding='utf-8').stderr
 
 
 def where(executable: str) -> str:
@@ -48,10 +48,15 @@ def cli():
         return
     to = to if to else None
     pandoc, panfl = (where('pandoc'), where('panfl')) if (os.name == 'nt') else ('pandoc', 'panfl')
-    args = [pandoc, '-f', 'markdown', '--filter', panfl]
+    args = [pandoc, '-f', 'markdown', '--filter', panfl, '-o', 'dummy_file']
     if to is not None:
         args += ['-t', to]
-    for match in re.findall(r'(?<=\$\$\$).+?(?=\$\$\$)', run_err(*args, stdin=doc)):
+
+    match = None
+    err = run_err(*args, stdin=doc)
+    for match in re.findall(r'(?<=\$\$\$).+?(?=\$\$\$)', err):
         pass
-    # noinspection PyUnboundLocalVariable
-    sys.stdout.write(match)
+    if match is None:
+        raise PandocFilterArgError(f'stderr output to parse: {err}')
+    else:
+        sys.stdout.write(match)
