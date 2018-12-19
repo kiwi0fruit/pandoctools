@@ -76,11 +76,11 @@ elif [ "${out_ext}" == "md" ]; then
 
 elif [ "${out_ext_full: -8}" == ".r.ipynb" ]; then
     to="${_jupymd}"
-    metas=("${metas[@]}" "${_meta_ipynb_R}")
+    metas=("${_meta_ipynb_R}" "${metas[@]}")
 
 elif [ "${out_ext}" == "ipynb" ]; then
     to="${_jupymd}"
-    metas=("${metas[@]}" "${_meta_ipynb}")
+    metas=("${_meta_ipynb}" "${metas[@]}")
 
 elif [ "${out_ext}" == "docx" ]; then
     writer_args=(--reference-doc="${_templ_docx}" -o "${output_file}" "${writer_args[@]}")
