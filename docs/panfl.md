@@ -1,6 +1,7 @@
 # panfl
 
-**panfl** is installed with [Panflute](https://github.com/sergiocorreia/panflute) and allows Panflute to be run as a command line script so it can be used in Pandoctools shell scripts. It actually actomatically searches for provided Panflute filters in provided directories (python's `sys.path` is the default place to search and I tried to remove current working directory from it). See `panfl --help` for options details and format info.  
+**panfl** is installed with [Panflute](https://github.com/sergiocorreia/panflute) and allows Panflute to be run as a command line script so it can be used in Pandoctools shell scripts. It actually actomatically searches for provided Panflute filters in provided directories (python's `sys.path` is the default place to search and I tried to remove current working directory from it). See `panfl --help` for options details and format info. **panfl** works almost the same as [Panflute automation interface in metadata](http://scorreia.com/software/panflute/guide.html#running-filters-automatically) (the differtences can be understood from `panfl --help`).
+
 Usage: `panfl -t markdown -d "~/dir" -d "./dir" filter1 filter2`
 
 ```
