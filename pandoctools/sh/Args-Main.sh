@@ -27,18 +27,16 @@
 #   $t (argument for filters)
 #   ${reader_args}
 #   ${writer_args}
-#   $metas (additional metadata files, first is the profile metadata)
+#   $metas (additional metadata files incl. profile metadata)
+#   ${meta_profile} (profile metadata)
+# Also sets defaults for pipes (see 'set defaults' section below)
+# that can be overriden in the profiles
 
 
 out_ext_full=".${out_ext_full}"
 writer_args=()
 reader_args=()
 t=""
-
-_meta_profile="$(. "$resolve" Meta-$prof.yaml)"
-_meta_ipynb_R="$(. "$resolve" Meta-ipynb-R.yaml)"
-_meta_ipynb="$(. "$resolve" Meta-ipynb-py3.yaml)"
-_templ_docx="$(. "$resolve" Template-$prof.docx)"
 
 
 if   [ "${in_ext}" == "" ]; then
@@ -56,7 +54,12 @@ fi
 
 
 _jupymd="markdown-bracketed_spans-fenced_divs-link_attributes-simple_tables-multiline_tables-grid_tables-pipe_tables-fenced_code_attributes-markdown_in_html_blocks-table_captions-smart"
-metas=("${_meta_profile}")
+_meta_ipynb_R="$(. "$resolve" Meta-ipynb-R.yaml)"
+_meta_ipynb="$(. "$resolve" Meta-ipynb-py3.yaml)"
+_templ_docx="$(. "$resolve" Template-$prof.docx)"
+
+meta_profile="$(. "$resolve" Meta-$prof.yaml)"
+metas=("${meta_profile}")
 to="${out_ext}"
 
 if   [ "${out_ext}" == "" ]; then
@@ -82,3 +85,13 @@ fi
 if [ "$t" == "" ]; then
     t="$to"
 fi
+
+
+# set defaults:
+inputs=(stdin)
+stdin_plus=(stdin "${metas[@]}")
+# meta_profile="${meta_profile}"
+reader_args=(-f "$from" "${reader_args[@]}")
+writer_args=(--standalone --self-contained -t "$to" "${writer_args[@]}")
+nbconvert_args=(--to notebook --execute --stdin --stdout)
+panfl_args=(-t "$t" sugartex)

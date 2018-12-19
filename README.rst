@@ -34,7 +34,8 @@ Update instructions
 -  1.1.6: Now import matplotlib and feather helpers from separate
    modules:
    ```matplotlibhelper`` <https://github.com/kiwi0fruit/matplotlibhelper>`__,
-   ```featherhelper`` <https://github.com/kiwi0fruit/featherhelper>`__.
+   ```featherhelper`` <https://github.com/kiwi0fruit/featherhelper>`__,
+-  1.1.8: Update ``Args-Main.sh`` if you have a custom one,
 
 Contents
 ========
