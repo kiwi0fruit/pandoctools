@@ -129,10 +129,8 @@ Pandoctools comes with convenience CLI apps:
 * `env_path` - root dir of python installation where pandoctools was installed
 * `input_file` - absolute path to input file (?may be broken when no CWD was specified and python can't resolve relative path)
 * `output_file` - absolute path to output file (?may be broken when no CWD)
-* `in_ext` - input file extension
-* `in_ext_full` - input file full extension like `tar.gz` or `r.ipynb` or `md.md.html`
-* `out_ext` - output file extension
-* `out_ext_full` - output file full extension
+* `in_ext` - input file extension without dot
+* `out_ext` - output file extension without dot
 * `_core_config` - [sh folder in python module](../sh)
 * `_user_config` - `%APPDATA%\pandoc\pandoctools` on Windows, `~/.pandoc/pandoctools` on Unix
 * `root_env` - root dir of main Miniconda/Anaconda installation (empty if wasn't specified in INI and Pandoctools cannot guess it)
