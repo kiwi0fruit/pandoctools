@@ -6,7 +6,7 @@ Pandoctools CLI application is a profile manager of text processing pipelines. I
 ---
 pandoctools:
   profile: Default
-  out: "*.md.md"
+  out: "*.html"
   from: markdown
   to: html
 ...
