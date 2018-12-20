@@ -25,7 +25,7 @@ def run_err(*args: str, stdin: str) -> str:
     return subprocess.run(args, stderr=PIPE, input=stdin, encoding='utf-8').stderr
 
 
-def where(executable: str, search_dirs: Iterable[str]=()) -> str:
+def where(executable: str, search_dirs: Iterable[str]=None) -> str:
     """
     :param executable: exec name without .exe
     :param search_dirs: extra dirs to look for executables
@@ -37,7 +37,7 @@ def where(executable: str, search_dirs: Iterable[str]=()) -> str:
     def exe(_exe): return f'{_exe}.exe' if (os.name == 'nt') else _exe
     def is_exe(_exe): return True if (os.name == 'nt') else os.access(_exe, os.X_OK)
 
-    for _dir in search_dirs:
+    for _dir in (search_dirs if search_dirs else ()):
         _exec = p.normpath(p.join(_dir, exe(executable)))
         if p.isfile(_exec):
             if is_exe(_exec):
