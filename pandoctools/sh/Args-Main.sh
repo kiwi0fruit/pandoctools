@@ -27,17 +27,17 @@
 #   $t    (argument for pandoc filters)
 #   ${reader_args}    (pandoc reader args)
 #   ${writer_args}    (pandoc writer args)
-#   ${extra_reader_args}    (format specific part of the pandoc reader args)
-#   ${extra_writer_args}    (format specific part of the pandoc writer args)
 
 #   $inputs
 #   $metadata    (profile metadata file)
-#   ${extra_inputs}    (format specific part of the middle inputs -
-#                       metadata, other files)
 #   ${middle_inputs}   (inputs after preprocess filters and before pandoc)
-
 #   ${nbconvert_args}
 #   ${panfl_args}
+
+#   ${extra_reader_args}    (format specific part of the pandoc reader args)
+#   ${extra_writer_args}    (format specific part of the pandoc writer args)
+#   ${extra_inputs}    (format specific part of the middle inputs -
+#                       metadata, other files)
 
 
 extra_inputs=()
