@@ -136,5 +136,7 @@ Pandoctools comes with convenience CLI apps:
 * `_core_config` - [sh folder in python module](../sh)
 * `_user_config` - `%APPDATA%\pandoc\pandoctools` on Windows, `~/.pandoc/pandoctools` on Unix
 * `root_env` - root dir of main Miniconda/Anaconda installation (empty if wasn't specified in INI and Pandoctools cannot guess it)
+* `from` - Pandoc reader format + custom Pandoctools formats
+* `to` - Pandoc writer format + custom Pandoctools formats
 * `PYTHONIOENCODING` (win) = `utf-8`
 * `LANG` (win) = `C.UTF-8`
