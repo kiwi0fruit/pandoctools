@@ -1,12 +1,14 @@
 # Pandoctools CLI application
 
-Pandoctools CLI application is a profile manager of text processing pipelines. It stores short bash scripts - called profiles - that define chain operations over text. They are mostly Pandoc filters but any CLI text filter is OK. Profiles can be used to convert any document of choise in the specified manner. Simply add metadata section to markdown:
+Pandoctools CLI application is a profile manager of text processing pipelines. It stores short bash scripts - called profiles - that define chain operations over text. They are mostly Pandoc filters but any CLI text filter is OK. Profiles can be used to convert any document of choise in the specified manner. Simply add metadata section to markdown (all settings are optional - pandoctools would use defaults if needed):
 
 ```yaml
 ---
 pandoctools:
   profile: Default
-  out: "*.md.md"
+  out: "*.html"
+  from: markdown
+  to: html
 ...
 ```
 
@@ -36,46 +38,53 @@ Usage: pandoctools [OPTIONS] [INPUT_FILE]
   (default INPUT_FILE is "Untitled").
 
   Profiles are searched in user data: "%APPDATA%\pandoc\pandoctools" then in
-  python module: "d:\user\python\miniconda3_x64\envs\research\lib\site-
-  packages\pandoctools\bat". Profiles read from stdin and write to stdout
-  (usually).
+  python module: "<miniconda3>\envs\<env>\lib\site-packages\pandoctools\sh".
+  Profiles read from stdin and write to stdout (usually).
 
-  Some options can be set in document metadata:
+  Some options can be set in document metadata (all are optional):
 
   ---
   pandoctools:
     prof: Default
     out: *.html
+    from: markdown
+    to: html
   ...
 
   May be (?) for security concerns the user data folder should be set to
   write-allowed only as administrator.
 
 Options:
-  -p, --profile TEXT  Pandoctools profile name or file path (default is
-                      "Default").
-  -o, --out TEXT      Output file path like "./out/doc.html" or input file
-                      path transformation like "*.html", "./out/*.r.ipynb"
-                      (default is "*.html").
-                      In --stdio mode only full
-                      extension is considered: "doc.r.ipynb" > "r.ipynb".
-  --stdio             Read document form stdin and write to stdout in a silent
-                      mode. INPUT_FILE only gives a file path. If --stdio was
-                      set but stdout output was empty then the profile (not
-                      Pandoctools itself) always writes output file to disc
-                      and doesn't write to stdout with these options.
-  --stdin             Same as --stdio but always writes output file to disc
-                      (suppresses --stdio).
-  --cwd               Use real CWD everywhere (instead of input file directory
-                      as default).
-  --detailed-out      With this option when in --stdio and --stdin modes
-                      pandoctools stdout consist of yaml metadata section
-                      ---... with 'outpath' and 'output' keys that is followed
-                      by profile stdout (when --stdin or profile stdout output
-                      was empty then key 'output: None').
-  --debug             Debug mode.
-  --help              Show this message and exit.
-
+  -p, --profile TEXT           Pandoctools profile name or file path (default
+                               is "Default").
+  -o, --out TEXT               Output file path like "./out/doc.html" or input
+                               file path transformation like "*.html",
+                               "./out/*.ipynb" (default is "*.html").
+                               In
+                               --stdio mode only extension is considered:
+                               "doc.ipynb" > ".ipynb".
+  -f, -r, --from, --read TEXT  Pandoc reader option (extended with custom
+                               formats).
+  -t, -w, --to, --write TEXT   Pandoc writer option (extended with custom
+                               formats).
+  --stdio                      Read document form stdin and write to stdout in
+                               a silent mode. INPUT_FILE only gives a file
+                               path. If --stdio was set but stdout output was
+                               empty then the profile (not Pandoctools itself)
+                               always writes output file to disc and doesn't
+                               write to stdout with these options.
+  --stdin                      Same as --stdio but always writes output file
+                               to disc (suppresses --stdio).
+  --cwd                        Use real CWD everywhere (instead of input file
+                               directory as default).
+  --detailed-out               With this option when in --stdio and --stdin
+                               modes pandoctools stdout consist of yaml
+                               metadata section ---... with 'outpath' and
+                               'output' keys that is followed by profile
+                               stdout (when --stdin or profile stdout output
+                               was empty then key 'output: None').
+  --debug                      Debug mode.
+  --help                       Show this message and exit.
 ```
 When run without arguments pandoctools would print:
 
