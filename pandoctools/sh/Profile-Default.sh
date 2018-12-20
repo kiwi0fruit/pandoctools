@@ -5,10 +5,10 @@ prof=Default
 . "$import" Args-Main
 # (see docs on available and used env vars there)
 
-# Defaults preset or set in Args-Main can be overriden:
+# Defaults preset or set in Args-Main.sh can be overriden:
 # -----------------------------------------------------
-# from, to, t, reader_args, writer_args,
-# inputs, meta_profile, metas, stdin_plus,
+# t, reader_args, writer_args,
+# inputs, metadata, middle_inputs,
 # nbconvert_args, panfl_args
 # input_file, output_file
 

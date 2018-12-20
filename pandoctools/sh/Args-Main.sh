@@ -25,28 +25,24 @@
 #   $from    (pandoc reader format without custom formats)
 #   $to    (pandoc writer format without custom formats)
 #   $t    (argument for pandoc filters)
-#   ${reader_args}    (pandoc args without custom formats)
-#   ${writer_args}    (pandoc args without custom formats)
+#   ${reader_args}    (pandoc reader args)
+#   ${writer_args}    (pandoc writer args)
+#   ${extra_reader_args}    (format specific part of the pandoc reader args)
+#   ${extra_writer_args}    (format specific part of the pandoc writer args)
 
 #   $inputs
-#   ${meta_profile}    (profile metadata file)
-#   $metas    (additional metadata files)
-#   ${stdin_plus}
+#   $metadata    (profile metadata file)
+#   ${extra_inputs}    (format specific part of the middle inputs -
+#                       metadata, other files)
+#   ${middle_inputs}   (inputs after preprocess filters and before pandoc)
 
 #   ${nbconvert_args}
 #   ${panfl_args}
 
 
-metas=()
-reader_args=()
-writer_args=()
-
-
-_jupymd="markdown-bracketed_spans-fenced_divs-link_attributes-simple_tables-multiline_tables-grid_tables-pipe_tables-fenced_code_attributes-markdown_in_html_blocks-table_captions-smart"
-_meta_ipynb_R="$(. "$resolve" Meta-ipynb-R.yaml)"
-_meta_ipynb_py3="$(. "$resolve" Meta-ipynb-py3.yaml)"
-_templ_docx="$(. "$resolve" Template-$prof.docx)"
-_meta_profile="$(. "$resolve" Meta-$prof.yaml)"
+extra_inputs=()
+extra_reader_args=()
+extra_writer_args=()
 
 
 # deal with reader formats:
@@ -59,30 +55,35 @@ fi
 
 # deal with writer formats:
 # ---------------------------
+_jupymd="markdown-bracketed_spans-fenced_divs-link_attributes-simple_tables-multiline_tables-grid_tables-pipe_tables-fenced_code_attributes-markdown_in_html_blocks-table_captions-smart"
+_meta_ipynb_R="$(. "$resolve" Meta-ipynb-R.yaml)"
+_meta_ipynb_py3="$(. "$resolve" Meta-ipynb-py3.yaml)"
+_templ_docx="$(. "$resolve" Template-$prof.docx)"
+
 #   predefined $to is always lowercase
 #   note custom $to format: r.ipynb
 if [ "$to" == "r.ipynb" ] && [ "${out_ext}" == "ipynb" ]; then
     to="${_jupymd}"
-    metas=("${metas[@]}" "${_meta_ipynb_R}")
+    extra_inputs=("${_meta_ipynb_R}" "${extra_inputs[@]}")
 
 elif [ "${out_ext}" == "ipynb" ]; then
     to="${_jupymd}"
-    metas=("${metas[@]}" "${_meta_ipynb_py3}")
+    extra_inputs=("${_meta_ipynb_py3}" "${extra_inputs[@]}")
 
 elif [ "${out_ext}" == "docx" ]; then
-    writer_args=(--reference-doc "${_templ_docx}" -o "${output_file}" "${writer_args[@]}")
+    extra_writer_args=(--reference-doc "${_templ_docx}" -o "${output_file}" "${extra_writer_args[@]}")
 fi
 
 
 # set other defaults:
 # ---------------------
-reader_args=(-f "$from" "${reader_args[@]}")
-writer_args=(--standalone --self-contained -t "$to" "${writer_args[@]}")
+reader_args=(-f "$from" "${extra_reader_args[@]}")
+writer_args=(--standalone --self-contained -t "$to" "${extra_writer_args[@]}")
 t="$(pandoc-filter-arg "${writer_args[@]}")"
 
 inputs=(stdin)
-meta_profile="${_meta_profile}"
-stdin_plus=(stdin "${meta_profile}" "${metas[@]}")
+metadata="$(. "$resolve" Meta-$prof.yaml)"
+middle_inputs=(stdin "$metadata" "${extra_inputs[@]}")
 
 nbconvert_args=(--to notebook --execute --stdin --stdout)
 panfl_args=(-t "$t" sugartex)

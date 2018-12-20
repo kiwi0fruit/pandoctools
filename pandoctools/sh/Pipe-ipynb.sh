@@ -1,9 +1,9 @@
 export KNITTY=True
 
 cat-md "${inputs[@]}" | \
-pre-knitty "${input_file}" --yaml "${meta_profile}" | \
+pre-knitty "${input_file}" --yaml "$metadata" | \
 pre-sugartex | \
-cat-md "${stdin_plus[@]}" | \
+cat-md "${middle_inputs[@]}" | \
 pandoc "${reader_args[@]}" -t json | \
 knitty "${input_file}" "${reader_args[@]}" "${writer_args[@]}" --to-ipynb | \
 panfl "${panfl_args[@]}" | \
