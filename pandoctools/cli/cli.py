@@ -51,8 +51,7 @@ def get_ext_and_from(file_path: str, read: str=None):
     Returns extension and pandoc reader format like ('md', 'markdown')
     """
     ext = p.splitext(file_path)[1][1:]
-    read, _ext = read.lower(), ext.lower()
-    read = read if read else {'md': 'markdown', '': 'markdown'}.get(_ext, _ext)
+    read = read.lower() if read else {'md': 'markdown', '': 'markdown'}.get(ext.lower(), ext.lower())
     return ext, read
 
 
@@ -61,8 +60,7 @@ def get_ext_and_to(file_path: str, to: str=None):
     Returns extension and pandoc writer format like ('html', 'html5')
     """
     ext = p.splitext(file_path)[1][1:]
-    to = to.lower()
-    to = to if to else pandoc_filter_arg(output=f'file.{ext}' if ext else 'file')
+    to = to.lower() if to else pandoc_filter_arg(output=f'file.{ext}' if ext else 'file')
     return ext, to
 
 
