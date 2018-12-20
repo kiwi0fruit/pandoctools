@@ -89,9 +89,9 @@ fi
 
 # Set other defaults:
 # -------------------
-t="$(pandoc-filter-arg "$to")"
 reader_args=(-f "$from" "${reader_args[@]}")
 writer_args=(--standalone --self-contained -t "$to" "${writer_args[@]}")
+t="$(pandoc-filter-arg "${writer_args[@]}")"
 
 inputs=(stdin)
 meta_profile="${_meta_profile}"
