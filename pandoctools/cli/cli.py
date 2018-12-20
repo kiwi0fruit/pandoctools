@@ -8,6 +8,8 @@ import subprocess
 from subprocess import PIPE
 import configparser
 import io
+from ..pandoc_filter_arg import pandoc_filter_arg
+
 
 PROFILE = 'Default'
 OUT = '*.html'
@@ -44,12 +46,24 @@ def expand_pattern(pattern: str,  target_file: str,  cwd: bool) -> str:
     return p.abspath(file_path)
 
 
-def get_extensions(file_path: str):
-    """Get extension and full extension like 'tag.gz'."""
+def get_ext_and_from(file_path: str, read: str=None):
+    """
+    Returns extension and pandoc reader format like ('md', 'markdown')
+    """
     ext = p.splitext(file_path)[1][1:]
-    match = re.search(r'[.]([.0-9a-zA-Z]*)$', p.basename(file_path))
-    ext_full = match.group(1) if match else ""
-    return ext, ext_full
+    read, _ext = read.lower(), ext.lower()
+    read = read if read else {'md': 'markdown', '': 'markdown'}.get(_ext, _ext)
+    return ext, read
+
+
+def get_ext_and_to(file_path: str, to: str=None):
+    """
+    Returns extension and pandoc writer format like ('html', 'html5')
+    """
+    ext = p.splitext(file_path)[1][1:]
+    to = to.lower()
+    to = to if to else pandoc_filter_arg(output=f'file.{ext}' if ext else 'file')
+    return ext, to
 
 
 def get_profile_path(profile: str,
@@ -92,9 +106,9 @@ def read_ini(ini: str,  dir1: str,  dir2: str):
     else:
         ini_path = ini
 
-    config = configparser.ConfigParser(interpolation=None)
-    config.read(ini_path)
-    return config
+    _config = configparser.ConfigParser(interpolation=None)
+    _config.read(ini_path)
+    return _config
 
 
 # noinspection PyShadowingNames
@@ -165,11 +179,13 @@ help_str = f"""Pandoctools is a Pandoc profile manager that stores CLI filter pi
 Profiles are searched in user data: "{pandoctools_user_data}" then in python module: "{pandoctools_core}".
 Profiles read from stdin and write to stdout (usually).
 
-Some options can be set in document metadata:\n
+Some options can be set in document metadata (all are optional):\n
 ---\n
 pandoctools:\n
   prof: Default\n
   out: *.html\n
+  from: markdown\n
+  to: html\n
 ...\n
 May be (?) for security concerns the user data folder should be set to write-allowed only as administrator.
 """
@@ -181,8 +197,12 @@ May be (?) for security concerns the user data folder should be set to write-all
               help='Pandoctools profile name or file path (default is "Default").')
 @click.option('-o', '--out', type=str, default=None,
               help='Output file path like "./out/doc.html" ' +
-                   'or input file path transformation like "*.html", "./out/*.r.ipynb" (default is "*.html").\n' +
-                   'In --stdio mode only full extension is considered: "doc.r.ipynb" > "r.ipynb".')
+                   'or input file path transformation like "*.html", "./out/*.ipynb" (default is "*.html").\n' +
+                   'In --stdio mode only extension is considered: "doc.ipynb" > ".ipynb".')
+@click.option('-f', '-r', '--from', '--read', 'read', type=str, default=None,
+              help="Pandoc reader option (extended with custom formats).")
+@click.option('-t', '-w', '--to', '--write', 'to', type=str, default=None,
+              help="Pandoc writer option (extended with custom formats).")
 @click.option('--stdio', is_flag=True, default=False,
               help="Read document form stdin and write to stdout in a silent mode. " +
                    "INPUT_FILE only gives a file path. If --stdio was set but stdout output was empty " +
@@ -197,7 +217,7 @@ May be (?) for security concerns the user data folder should be set to write-all
               "metadata section ---... with 'outpath' and 'output' keys that is followed by profile stdout " +
               "(when --stdin or profile stdout output was empty then key 'output: None').")
 @click.option('--debug', is_flag=True, default=False, help="Debug mode.")
-def pandoctools(input_file, profile, out, stdio, stdin, cwd, detailed_out, debug):
+def pandoctools(input_file, profile, out, read, to, stdio, stdin, cwd, detailed_out, debug):
     """
     Sets environment variables:
     * scripts, import, source
@@ -212,7 +232,7 @@ def pandoctools(input_file, profile, out, stdio, stdin, cwd, detailed_out, debug
         input_stream = io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8')
         doc = input_stream.read()  # doc = sys.stdin.read()
     else:
-        if input_file is None:
+        if not input_file:
             print("Input file was not provided.\n" + 
                   "Recommended ways to run Pandoctools are to:\n" +
                   "- add it to 'Open With' applications for desired file format,\n" +
@@ -225,9 +245,9 @@ def pandoctools(input_file, profile, out, stdio, stdin, cwd, detailed_out, debug
             return None
         with open(expandvars(input_file), 'r', encoding="utf-8") as file:
             doc = file.read()
-    input_file = "untitled" if (input_file is None) else input_file
+    input_file = input_file if input_file else "untitled"
 
-    if (profile is None) or (out is None):
+    if not (profile and out and read and to):
         # Read metadata:
         m = re.search(r'(?:^|\n)---\n(.+?\n)(?:---|\.\.\.)(?:\n|$)', doc, re.DOTALL)
         metadata = yaml.load(m.group(1)) if m else None
@@ -235,16 +255,20 @@ def pandoctools(input_file, profile, out, stdio, stdin, cwd, detailed_out, debug
         if not isinstance(pandoctools_meta, dict):
             pandoctools_meta = {}
         # Mod options if needed:
-        profile = pandoctools_meta.get('profile') if (profile is None) else profile
-        out = pandoctools_meta.get('out') if (out is None) else out
+        profile = profile if profile else pandoctools_meta.get('profile')
+        out = out if out else pandoctools_meta.get('out')
+        read = read if read else pandoctools_meta.get('from')
+        to = to if to else pandoctools_meta.get('to')
 
     # #
     if (win_bash is None) and (os.name == 'nt'):
         raise ValueError('Bash was not found by the path provided in INI file.')
 
     # Read from INI config (Read profile, 'out'):
-    profile = config.get('Default', 'profile', fallback=PROFILE) if (profile is None) else profile
-    out = config.get('Default', 'out', fallback=OUT) if (out is None) else out
+    profile = profile if profile else config.get('Default', 'profile', fallback=PROFILE)
+    out = out if out else config.get('Default', 'out', fallback=OUT)
+    profile = profile if profile else PROFILE
+    out = out if out else OUT
 
     # Expand environment vars and get abs path:
     input_file = p.abspath(expandvars(input_file))
@@ -276,7 +300,8 @@ def pandoctools(input_file, profile, out, stdio, stdin, cwd, detailed_out, debug
 
     env_vars['import'] = p.join(scripts_bin, 'pandoctools-import')
     env_vars['source'] = p.join(scripts_bin, 'pandoctools-path-source')
-    env_vars['pyprepPATH'] = p.join(scripts_bin, 'pandoctools-path-pyprep' if (os.name != 'nt') else 'pandoctools-path-pyprep-win')
+    env_vars['pyprepPATH'] = (p.join(scripts_bin, 'pandoctools-path-pyprep'
+                              if (os.name != 'nt') else 'pandoctools-path-pyprep-win'))
     env_vars['resolve'] = p.join(scripts_bin, 'pandoctools-resolve')
 
     env_vars['_user_config'] = pandoctools_user
@@ -285,8 +310,8 @@ def pandoctools(input_file, profile, out, stdio, stdin, cwd, detailed_out, debug
     env_vars['env_path'] = env_path
     env_vars['input_file'] = input_file
     env_vars['output_file'] = output_file
-    env_vars['in_ext'], env_vars['in_ext_full'] = get_extensions(input_file)
-    env_vars['out_ext'], env_vars['out_ext_full'] = get_extensions(output_file)
+    env_vars['in_ext'], env_vars['from'] = get_ext_and_from(input_file, read)
+    env_vars['out_ext'], env_vars['to'] = get_ext_and_to(output_file, to)
     env_vars['root_env'] = root_env
 
     # convert win-paths to unix-paths if needed:
@@ -311,7 +336,7 @@ def pandoctools(input_file, profile, out, stdio, stdin, cwd, detailed_out, debug
     if debug:
         vars_ = ['scripts', 'import', 'source', 'pyprepPATH', 'resolve',
                  'env_path', '_core_config', '_user_config', 'input_file', 'output_file',
-                 'root_env', 'in_ext', 'in_ext_full', 'out_ext', 'out_ext_full', 'PYTHONIOENCODING', 'LANG']
+                 'root_env', 'in_ext', 'from', 'out_ext', 'to', 'PYTHONIOENCODING', 'LANG']
         for var in vars_:
             print('{}: {}'.format(var, env_vars.get(var)))
         print('win_bash: ', win_bash, '\n')
