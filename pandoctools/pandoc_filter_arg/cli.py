@@ -29,22 +29,33 @@ def where(executable: str, search_dirs: Iterable[str]=None) -> str:
     """
     :param executable: exec name without .exe
     :param search_dirs: extra dirs to look for executables
-    :return: absolute path to the exec that was found in the $PATH
+    :return: On Windows: absolute path to the exec that was found
+      in the search_dirs or in the $PATH.
+      On Unix: absolute path to the exec that was found in the search_dirs
+      or executable arg unchanged.
     """
-    kwargs = {}
+    def exe(_exe): return f'{_exe}.exe' if (os.name == 'nt') else _exe
+    def is_exe(_exe): return True if (os.name == 'nt') else os.access(_exe, os.X_OK)
+
     if search_dirs:
-        env = dict(os.environ)
-        env['PATH'] = os.pathsep.join(list(search_dirs) + [env['PATH']])
-        kwargs['env'] = env
-        print(env, file=open(r'D:\log.txt', 'a'))
+        for _dir in search_dirs:
+            _exec = p.normpath(p.join(_dir, exe(executable)))
+            if p.isfile(_exec):
+                if is_exe(_exec):
+                    return p.abspath(_exec)
+
     if os.name == 'nt':
-        exec_abs_path = subprocess.run(
+        exec_abs = subprocess.run(
             [p.expandvars(r'%WINDIR%\System32\where.exe'), f'$PATH:{executable}.exe'],
-            stdout=PIPE, encoding='utf-8', **kwargs
+            stdout=PIPE, encoding='utf-8',
         ).stdout.split('\n')[0].strip('\r')
-    if not p.isfile(exec_abs_path):
-        raise PandocFilterArgError(f"'{executable}' wasn't found in the $PATH")
-    return exec_abs_path
+
+        if p.isfile(exec_abs):
+            return exec_abs
+        else:
+            raise PandocFilterArgError(f"'{executable}' wasn't found in the {search_dirs} and in the $PATH.")
+    else:
+        return executable
 
 
 doc = '''---
