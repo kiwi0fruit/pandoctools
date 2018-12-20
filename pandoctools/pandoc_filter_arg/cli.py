@@ -6,6 +6,7 @@ from subprocess import PIPE
 import re
 import sys
 import click
+from typing import Iterable
 
 
 class PandocFilterArgError(Exception):
@@ -24,21 +25,26 @@ def run_err(*args: str, stdin: str) -> str:
     return subprocess.run(args, stderr=PIPE, input=stdin, encoding='utf-8').stderr
 
 
-def win_where(executable: str) -> str:
+def where(executable: str, search_dirs: Iterable[str]=None) -> str:
     """
     :param executable: exec name without .exe
-    :return:
-        1. on Windows: absolute path to the exec that was found in the $PATH
-        2. on Unix: executable arg untouched
+    :param search_dirs: extra dirs to look for executables
+    :return: absolute path to the exec that was found in the $PATH
     """
+    kwargs = {}
+    if search_dirs:
+        env = dict(os.environ)
+        env['PATH'] = os.pathsep.join(list(search_dirs) + [env['PATH']])
+        kwargs['env'] = env
+        print(env, file=open(r'D:\log.txt', 'a'))
     if os.name == 'nt':
-        executable = subprocess.run(
+        exec_abs_path = subprocess.run(
             [p.expandvars(r'%WINDIR%\System32\where.exe'), f'$PATH:{executable}.exe'],
-            stdout=PIPE, encoding='utf-8'
+            stdout=PIPE, encoding='utf-8', **kwargs
         ).stdout.split('\n')[0].strip('\r')
-        if not p.isfile(executable):
-            raise PandocFilterArgError(f"'{executable}' wasn't found in the $PATH")
-    return executable
+    if not p.isfile(exec_abs_path):
+        raise PandocFilterArgError(f"'{executable}' wasn't found in the $PATH")
+    return exec_abs_path
 
 
 doc = '''---
@@ -48,14 +54,15 @@ x
 '''.format(p.join(p.dirname(p.abspath(__file__)), 'pandoc_filter_arg', 'pandoc_filter_arg.py'))
 
 
-def pandoc_filter_arg(output: str=None, to: str=None) -> str:
+def pandoc_filter_arg(output: str=None, to: str=None, search_dirs: Iterable[str]=None) -> str:
     """
     :param output: Pandoc writer option
     :param to: Pandoc writer option
+    :param search_dirs: extra dirs to look for executables
     :return: argument that is passed by Pandoc to it's filters
         Uses Pandoc's defaults.
     """
-    pandoc, panfl = win_where('pandoc'), win_where('panfl')
+    pandoc, panfl = where('pandoc', search_dirs), where('panfl', search_dirs)
     args = [pandoc, '-f', 'markdown', '--filter', panfl, '-o', (output if output else '-')]
     if to:
         args += ['-t', to]

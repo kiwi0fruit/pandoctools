@@ -60,7 +60,8 @@ def get_ext_and_to(file_path: str, to: str=None):
     Returns extension and pandoc writer format like ('html', 'html5')
     """
     ext = p.splitext(file_path)[1][1:]
-    to = to.lower() if to else pandoc_filter_arg(output=f'file.{ext}' if ext else 'file')
+    to = to.lower() if to else pandoc_filter_arg(output=f'file.{ext}' if ext else 'file',
+                                                 search_dirs=search_dirs)
     return ext, to
 
 
@@ -146,12 +147,14 @@ if os.name == 'nt':
     env_path = p.dirname(sys.executable)
     scripts_bin = p.join(env_path, "Scripts")
     pandoctools_bin = p.join(scripts_bin, "pandoctools.exe")
+    search_dirs = [env_path, scripts_bin, p.join(env_path, 'Library', 'bin')]
 else:
     pandoctools_user_data = "$HOME/.pandoc/pandoctools"
     pandoctools_user = p.join(os.environ["HOME"], ".pandoc", "pandoctools")
     scripts_bin = p.dirname(sys.executable)
-    env_path = p.normpath(p.join(scripts_bin, ".."))
+    env_path = p.dirname(scripts_bin)
     pandoctools_bin = p.join(scripts_bin, "pandoctools")
+    search_dirs = [env_path, scripts_bin]
     win_bash = None
 
 # Read from INI config:
