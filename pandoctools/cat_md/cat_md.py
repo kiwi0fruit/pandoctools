@@ -1,4 +1,5 @@
 import sys
+import os
 
 
 def cat_md():
@@ -6,7 +7,7 @@ def cat_md():
     cat-md CLI joins markdown files with "\n\n" separator and writes
     to stdout. If one of the files is "stdin" then reads it from stdin
     (can use the same stdin text several times).
-    Also replaces all "\r\n" with "\n".
+    Also replaces all "\r\n" with "\n" on Unix.
 
     OPTIONS:
 
@@ -21,7 +22,7 @@ def cat_md():
     args = sys.argv[1:]
     n = len(args)
     args = [arg for arg in args if arg.lower() != '--keep-cr']
-    keep_CR = (len(args) != n)
+    keep_CR = (len(args) != n) or (os.name == 'nt')
 
     def del_CR(text): return text if keep_CR else text.replace('\r\n', '\n')
 
@@ -34,4 +35,5 @@ def cat_md():
         else:
             with open(file, "r", encoding="utf-8") as f:
                 sources_list.append(del_CR(f.read()))
-    sys.stdout.write('\n\n'.join(sources_list))
+    out = '\n\n'.join(sources_list)
+    sys.stdout.write(out)
