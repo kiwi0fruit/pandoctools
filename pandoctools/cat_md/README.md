@@ -5,13 +5,12 @@
 Usage: `cat-md stdin metadata.yaml`
 
 ```
-cat-md CLI joins markdown files with "\n\n" separator and writes
-to stdout. If one of the files is "stdin" then reads it from stdin
-(can use the same stdin text several times).
-Also replaces all "\r\n" with "\n" on Unix.
+Usage: cat-md [OPTIONS] [INPUT_FILES]
 
-OPTIONS:
+  cat-md CLI joins markdown files with "\n\n" separator and writes
+  to stdout. If one of the files is "stdin" then reads it from stdin
+  (can use the same stdin text several times).
 
---keep-cr    doesn't replace "\r" (carriage return)
---help       shows this message and exits
+Options:
+  --help    Show this message and exit.
 ```
