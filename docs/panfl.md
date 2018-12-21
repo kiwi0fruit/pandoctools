@@ -42,4 +42,4 @@ Options:
 
 P.S:
 
-`panfl` CLI appends user data dir after all user provided dirs (if `--data-dir`), then appends `sys.path` last (if not `--no-sys-path` flag). In comparison `panflute` CLI appends `'.'` after all user provided dirs (always), then appends user data dir (always), then appends `sys.path` last (if "--no-sys-path" not in the dirs metadata).
+`panfl` CLI appends user data dir after all user provided dirs (if `--data-dir`), then appends `sys.path` last (if not `--no-sys-path`). In comparison `panflute` CLI appends `'.'` after all user provided dirs (always), then appends user data dir (always), then appends `sys.path` last (if `"--no-sys-path"` not in the dirs metadata).
