@@ -21,21 +21,22 @@ filter is OK.
 Update instructions
 -------------------
 
--  0.4.21: Switch to bash profiles as batch profiles are no longer
-   supported (and install bash if needed),
--  1.1.0: Add ``meta_profile="${metas[0]}"`` to all your custom profiles
-   (also see changes in default profile and pipe),
--  1.1.4: ``results=pandoc`` was a misunderstanding. The right way to
-   output Markdown is to use
+(*Update instructions to v.1.2.0*)
+
+-  Switch to bash profiles as batch profiles are no longer supported
+   (and install bash if needed),
+-  ``results=pandoc`` was a misunderstanding. The right way to output
+   Markdown is to use
    ``from IPython.display import Markdown; Markdown('hello')``.
--  1.1.5: Add
-   ``nbconvert_args=(--to notebook --execute --stdin --stdout)`` to all
-   your custom profiles.
--  1.1.6: Now import matplotlib and feather helpers from separate
-   modules:
+-  Import matplotlib and feather helpers from separate modules:
    ```matplotlibhelper`` <https://github.com/kiwi0fruit/matplotlibhelper>`__,
    ```featherhelper`` <https://github.com/kiwi0fruit/featherhelper>`__,
--  1.1.8: Update ``Args-Main.sh`` if you have a custom one,
+-  v1.2.0 is not backward compatible but profiles can be easily fixed.
+   Uninstall Pandoctools before updating. Update your custom bash
+   scripts as names and logic changed. References:
+   ```Args-Main.sh`` <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Args-Main.sh>`__,
+   ```Profile-Kiwi.sh`` <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Profile-Kiwi.sh>`__,
+   ```Pipe-ipynb.sh`` <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Pipe-ipynb.sh>`__.
 
 Contents
 ========
@@ -78,11 +79,11 @@ Notable parts of Pandoctools
 -  `Pandas
    Helper <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/pandas>`__
    helps print dataframes to Markdown.
--  (_optional_) `Matplotlib
+-  (*optional*) `Matplotlib
    Helper <https://github.com/kiwi0fruit/matplotlibhelper>`__: custom
    helper to tune Matplotlib experience in Atom/Hydrogen and
    Pandoctools/Knitty.
--  (_optional_) `Feather
+-  (*optional*) `Feather
    Helper <https://github.com/kiwi0fruit/featherhelper>`__: concise
    interface to cache 2D numpy arrays and pandas dataframes.
 
