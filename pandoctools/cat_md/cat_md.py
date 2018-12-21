@@ -1,22 +1,16 @@
 import sys
 
-_help = r"""cat-md joins markdown files with "\n\n" separator and writes to stdout.
-If one of the files is "stdin" then reads it from stdin
-(can use the same stdin text several times).
-Also replaces all "\r\n" with "\n".
-"""
-
 
 def cat_md():
-    """
-    Joins markdown files with "\n\n" separator and writes to stdout.
+    r"""
+    cat-md CLI joins markdown files with "\n\n" separator and writes to stdout.
     If one of the files is "stdin" then reads it from stdin
     (can use the same stdin text several times).
     Also replaces all "\r\n" with "\n".
     """
     if len(sys.argv) > 1:
         if sys.argv[1] == '--help':
-            print(_help)
+            print(cat_md.__doc__)
             return
 
     sources_list, stdin = [], None
