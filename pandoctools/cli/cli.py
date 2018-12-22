@@ -8,7 +8,7 @@ import subprocess
 from subprocess import PIPE
 import configparser
 import io
-from ..pandoc_filter_arg import pandoc_filter_arg
+from ..pandoc_filter_arg import pandoc_filter_arg, is_bin_ext_maybe
 
 
 PROFILE = 'Default'
@@ -313,6 +313,7 @@ def pandoctools(input_file, profile, out, read, to, stdio, stdin, cwd, detailed_
     env_vars['output_file'] = output_file
     env_vars['in_ext'], env_vars['from'] = get_ext_and_from(input_file, read)
     env_vars['out_ext'], env_vars['to'] = get_ext_and_to(output_file, to)
+    env_vars['is_bin_ext_maybe'] = str(is_bin_ext_maybe(output_file, to, search_dirs=search_dirs)).lower()
     env_vars['root_env'] = root_env
 
     # convert win-paths to unix-paths if needed:
@@ -337,7 +338,8 @@ def pandoctools(input_file, profile, out, read, to, stdio, stdin, cwd, detailed_
     if debug:
         vars_ = ['scripts', 'import', 'source', 'pyprepPATH', 'resolve',
                  'env_path', '_core_config', '_user_config', 'input_file', 'output_file',
-                 'root_env', 'in_ext', 'from', 'out_ext', 'to', 'PYTHONIOENCODING', 'LANG']
+                 'root_env', 'in_ext', 'from', 'out_ext', 'to', 'is_bin_ext_maybe',
+                 'PYTHONIOENCODING', 'LANG']
         for var in vars_:
             print('{}: {}'.format(var, env_vars.get(var)))
         print('win_bash: ', win_bash, '\n')

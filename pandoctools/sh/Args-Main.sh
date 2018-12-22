@@ -8,6 +8,9 @@
 #   ${output_file}    (output file path with extension)
 #   $from    (pandoc reader format + custom pandoctools formats)
 #   $to    (pandoc writer format + custom pandoctools formats)
+#   ${is_bin_ext_maybe}    (pandoctools nice guess if the ${output_file} extension
+#                           (or $to if no ext) means that pandoc needs adding 
+#                           `-o "${output_file}"` option)
 
 #   $source    (source bash script from PATH but not CWD)
 #   $import    (try source bash script from pandoctools folder
@@ -72,6 +75,9 @@ elif [ "${out_ext}" == "ipynb" ]; then
 
 elif [ "${out_ext}" == "docx" ]; then
     extra_writer_args=(--reference-doc "${_templ_docx}" -o "${output_file}" "${extra_writer_args[@]}")
+
+elif [ "${is_bin_ext_maybe}" == "true" ]; then
+    extra_writer_args=(-o "${output_file}" "${extra_writer_args[@]}")
 fi
 
 
