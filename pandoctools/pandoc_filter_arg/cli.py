@@ -19,7 +19,6 @@ def run_err(*args: str, stdin: str) -> str:
 
     :param args: CLI args
     :param stdin:
-    :param stdout:
     :return: stderr
     """
     return subprocess.run(args, stderr=PIPE, input=stdin, encoding='utf-8').stderr
