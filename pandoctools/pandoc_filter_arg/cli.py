@@ -1,4 +1,3 @@
-# import sys
 import os
 import os.path as p
 import subprocess
@@ -88,24 +87,31 @@ def pandoc_filter_arg(output: str=None, to: str=None, search_dirs: Iterable[str]
         return match
 
 
-def is_bin_ext_maybe(output: str, to: str=None, search_dirs: Iterable[str]=None) -> bool:
+def is_bin_ext_maybe(output: str, to: str=None, search_dirs: Iterable[str]=None,
+                     force_pandoc: bool=False) -> bool:
     """
     :param output: Pandoc writer option
-    :param to: Pandoc writer option
+    :param to: Pandoc writer option.
+        Used only if output doesn't have an extension
     :param search_dirs: extra dirs to look for executables
+    :param force_pandoc: ignore hardcoded logic and always "ask" Pandoc.
+        Useful for testing hardcoded logic.
     :return: argument that is passed by Pandoc to it's filters
         Uses Pandoc's defaults.
     """
     ext = p.splitext(p.basename(output))[1][1:]
-    ext = ext if ext else to
+    if not ext:
+        ext = to
 
-    if ext in ('pdf', 'docx', 'epub', 'odt'):
-        return True  # TODO add more, test empty list
+    if not ext:
+        return False
+    elif ext in ('pdf', 'docx', 'epub', 'odt') and (not force_pandoc):  # TODO add more
+        return True
     else:
         pandoc, panfl = where('pandoc', search_dirs), where('panfl', search_dirs)
         err = subprocess.run([pandoc, '-f', 'markdown', '--filter', panfl, '-t', ext],
                              stderr=PIPE, stdout=PIPE, input=doc, encoding='utf-8').stderr
-        if re.match(r"(Cannot write \w+ output to terminal|specify an output file)", err):
+        if re.search(r"(Cannot write \w+ output to terminal|specify an output file)", str(err)):
             return True
         else:
             return False
