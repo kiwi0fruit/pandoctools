@@ -8,6 +8,9 @@ import sys
 import click
 from typing import Iterable
 
+bin_ext_regex = re.compile(r"(Cannot write \w+ output to terminal|specify an output file)")
+BIN_EXTENSIONS = ('pdf', 'docx', 'epub', 'odt')  # TODO add more, test empty list
+
 
 class PandocFilterArgError(Exception):
     pass
@@ -88,23 +91,27 @@ def pandoc_filter_arg(output: str=None, to: str=None, search_dirs: Iterable[str]
         return match
 
 
-def presumably_binary_format(output: str, search_dirs: Iterable[str]=None) -> bool:
+def is_bin_ext_maybe(output: str, to: str=None, search_dirs: Iterable[str]=None) -> bool:
     """
     :param output: Pandoc writer option
+    :param to: Pandoc writer option
     :param search_dirs: extra dirs to look for executables
     :return: argument that is passed by Pandoc to it's filters
         Uses Pandoc's defaults.
     """
     ext = p.splitext(p.basename(output))[1][1:]
-    if not ext:
-        return False
-    elif ext == 'pdf':
+    ext = ext if ext else to
+
+    if ext in BIN_EXTENSIONS:
         return True
     else:
         pandoc, panfl = where('pandoc', search_dirs), where('panfl', search_dirs)
         err = subprocess.run([pandoc, '-f', 'markdown', '--filter', panfl, '-t', ext],
                              stderr=PIPE, stdout=PIPE, input=doc, encoding='utf-8').stderr
-        return __
+        if bin_ext_regex.match(err):
+            return True
+        else:
+            return False
 
 
 # noinspection PyUnusedLocal
