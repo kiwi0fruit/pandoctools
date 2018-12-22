@@ -8,9 +8,6 @@ import sys
 import click
 from typing import Iterable
 
-bin_ext_regex = re.compile(r"(Cannot write \w+ output to terminal|specify an output file)")
-BIN_EXTENSIONS = ('pdf', 'docx', 'epub', 'odt')  # TODO add more, test empty list
-
 
 class PandocFilterArgError(Exception):
     pass
@@ -102,13 +99,13 @@ def is_bin_ext_maybe(output: str, to: str=None, search_dirs: Iterable[str]=None)
     ext = p.splitext(p.basename(output))[1][1:]
     ext = ext if ext else to
 
-    if ext in BIN_EXTENSIONS:
-        return True
+    if ext in ('pdf', 'docx', 'epub', 'odt'):
+        return True  # TODO add more, test empty list
     else:
         pandoc, panfl = where('pandoc', search_dirs), where('panfl', search_dirs)
         err = subprocess.run([pandoc, '-f', 'markdown', '--filter', panfl, '-t', ext],
                              stderr=PIPE, stdout=PIPE, input=doc, encoding='utf-8').stderr
-        if bin_ext_regex.match(err):
+        if re.match(r"(Cannot write \w+ output to terminal|specify an output file)", err):
             return True
         else:
             return False
