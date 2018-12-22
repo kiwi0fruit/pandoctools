@@ -20,6 +20,7 @@ def run_err(*args: str, stdin: str) -> str:
 
     :param args: CLI args
     :param stdin:
+    :param stdout:
     :return: stderr
     """
     return subprocess.run(args, stderr=PIPE, input=stdin, encoding='utf-8').stderr
@@ -85,6 +86,25 @@ def pandoc_filter_arg(output: str=None, to: str=None, search_dirs: Iterable[str]
         raise PandocFilterArgError(f'stderr output to parse: {err}')
     else:
         return match
+
+
+def presumably_binary_format(output: str, search_dirs: Iterable[str]=None) -> bool:
+    """
+    :param output: Pandoc writer option
+    :param search_dirs: extra dirs to look for executables
+    :return: argument that is passed by Pandoc to it's filters
+        Uses Pandoc's defaults.
+    """
+    ext = p.splitext(p.basename(output))[1][1:]
+    if not ext:
+        return False
+    elif ext == 'pdf':
+        return True
+    else:
+        pandoc, panfl = where('pandoc', search_dirs), where('panfl', search_dirs)
+        err = subprocess.run([pandoc, '-f', 'markdown', '--filter', panfl, '-t', ext],
+                             stderr=PIPE, stdout=PIPE, input=doc, encoding='utf-8').stderr
+        return __
 
 
 # noinspection PyUnusedLocal
