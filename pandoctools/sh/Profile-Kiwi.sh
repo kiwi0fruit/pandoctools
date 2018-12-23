@@ -5,7 +5,6 @@ prof=Kiwi
 panfl_args=(-t "$t" sugartex.kiwi)
 pipe=Main
 if [ "${out_ext}" == "ipynb" ]; then
-    pipe=ipynb
-fi
+    pipe=ipynb; fi
 . "$import" "Pipe-$pipe"
 . "$source" deactivate

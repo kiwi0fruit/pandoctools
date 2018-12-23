@@ -283,13 +283,10 @@ def pandoctools(input_file, profile, out, read, to, stdio, stdin, cwd, detailed_
     # Run profile confirmation:
     if not stdio and not stdin:
         with open(profile_path, 'r') as file:
-            print('\nProfile code:\n\n{}\n'.format(file.read()))
-        message = ("Type 'y/yes' to continue with:\n" +
-                   f"    Profile: {profile}\n" +
-                   f"    Profile path: {profile_path}\n\n" +
-                   f"    Out: {out}\n" +
-                   f"    Out path: {output_file}\n\n" +
-                   "Or type 'n/no' to exit. Then press Enter.")
+            print(f'Profile code:\n\n{file.read().strip()}\n')
+        message = ("Type y/yes to continue with the profile or type n/no to exit. Then press Enter.\n"
+                   f"    Profile: {profile} | Path: {profile_path}\n"
+                   f"    Out: {out} | Path: {output_file}\n")
         if not user_yes_no_query(message):
             return None
 
