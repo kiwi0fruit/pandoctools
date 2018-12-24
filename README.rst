@@ -37,6 +37,9 @@ Update instructions
    ```Args-Main.sh`` <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Args-Main.sh>`__,
    ```Profile-Kiwi.sh`` <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Profile-Kiwi.sh>`__,
    ```Pipe-ipynb.sh`` <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Pipe-ipynb.sh>`__.
+-  1.2.3: update
+   ```Pipe-ipynb.sh`` <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Pipe-ipynb.sh>`__
+   (see line ``post-knitty --to-ipynb``).
 
 Contents
 ========

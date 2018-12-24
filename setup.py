@@ -30,14 +30,13 @@ setup(
         'License :: OSI Approved :: MIT License',
 
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
     ],
 
     # keywords='sample setuptools development',
     packages=find_packages(exclude=['docs', 'tests']),
 
-    install_requires=['click', 'pyyaml', 'panflute>=1.11.1', 'knitty>=0.4.6', 'pandas',
+    install_requires=['click', 'pyyaml', 'panflute>=1.11.1', 'knitty>=0.4.7', 'pandas',
                       'sugartex>=0.1.12', 'notebook', 'jupyter', 'shortcutter>=0.1.8'],
 
     include_package_data=True,

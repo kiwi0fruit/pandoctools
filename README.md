@@ -20,6 +20,7 @@ Pandoctools is a combination of tools that help write reproducible markdown repo
   `from IPython.display import Markdown; Markdown('hello')`.
 * Import matplotlib and feather helpers from separate modules: [`matplotlibhelper`](https://github.com/kiwi0fruit/matplotlibhelper), [`featherhelper`](https://github.com/kiwi0fruit/featherhelper),
 * v1.2.0 is not backward compatible but profiles can be easily fixed. Uninstall Pandoctools before updating. Update your custom bash scripts as names and logic changed. References: [`Args-Main.sh`](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Args-Main.sh), [`Profile-Kiwi.sh`](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Profile-Kiwi.sh), [`Pipe-ipynb.sh`](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Pipe-ipynb.sh).
+* 1.2.3: update [`Pipe-ipynb.sh`](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Pipe-ipynb.sh) (see line `post-knitty --to-ipynb`).
 
 
 # Contents
