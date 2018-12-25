@@ -1,1 +1,1 @@
-from .cat_md import cat_md  # noqa
+from .cat_md import main, cli  # noqa

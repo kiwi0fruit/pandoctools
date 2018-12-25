@@ -15,7 +15,7 @@ pandoctools:
 from IPython.display import Markdown
 import pandas as pd
 import numpy as np
-from pandoctools import pandas as th
+from pandoctools import pandas_helper as th
 
 df = pd.DataFrame(np.random.random(16).reshape(4, 4))
 

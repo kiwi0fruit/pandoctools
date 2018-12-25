@@ -24,5 +24,5 @@ def md_header(df: pd.DataFrame) -> str:
         Markdown table header + empty row
     """
     md = md_table(df.iloc[[0]]).split('\n')
-    md[2] = re.sub(r'[^\s\|]', '   ', md[2])
+    md[2] = re.sub(r'[^\s|]', '   ', md[2])
     return '\n'.join(md)
