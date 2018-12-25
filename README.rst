@@ -37,7 +37,7 @@ Update instructions
    ```Args-Main.sh`` <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Args-Main.sh>`__,
    ```Profile-Kiwi.sh`` <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Profile-Kiwi.sh>`__,
    ```Pipe-ipynb.sh`` <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Pipe-ipynb.sh>`__.
--  1.2.3: update
+-  v1.2.3: update
    ```Pipe-ipynb.sh`` <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Pipe-ipynb.sh>`__
    (see line ``post-knitty --to-ipynb``).
 
@@ -80,13 +80,13 @@ Notable parts of Pandoctools
    SugarTeX is a more readable LaTeX language extension and
    transcompiler to LaTeX.
 -  `Pandas
-   Helper <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/pandas>`__
+   Helper <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/pandas_helper>`__
    helps print dataframes to Markdown.
--  (*optional*) `Matplotlib
+-  (_optional_) `Matplotlib
    Helper <https://github.com/kiwi0fruit/matplotlibhelper>`__: custom
    helper to tune Matplotlib experience in Atom/Hydrogen and
    Pandoctools/Knitty.
--  (*optional*) `Feather
+-  (_optional_) `Feather
    Helper <https://github.com/kiwi0fruit/featherhelper>`__: concise
    interface to cache 2D numpy arrays and pandas dataframes.
 
