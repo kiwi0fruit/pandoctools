@@ -4,6 +4,7 @@ pandoctools:
   out: "*.ipynb"
 input: True
 eval: False
+error: raise
 ...
 
 # Markdown to Jupyter notebook example
@@ -38,7 +39,7 @@ In this version of Pandoc image caption @fig:img works but for some reason this 
 from IPython.display import Markdown
 import pandas as pd
 import numpy as np
-from pandoctools import pandas as th
+from pandoctools import pandas_helper as th
 
 df = pd.DataFrame(np.random.random(16).reshape(4, 4))
 
