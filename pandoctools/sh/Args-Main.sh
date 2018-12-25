@@ -8,6 +8,8 @@
 #   ${output_file}    (output file path with extension)
 #   $from    (pandoc reader format + custom pandoctools formats)
 #   $to    (pandoc writer format + custom pandoctools formats)
+#   ${important_from}    (bool: "true" "false". Whether `$from` was set by user)
+#   ${important_to}    (bool: "true" "false". Whether `$to` was set by user)
 #   ${is_bin_ext_maybe}    (pandoctools nice guess if the ${output_file} extension
 #                           (or $to if no ext) means that pandoc needs adding 
 #                           `-o "${output_file}"` option)
@@ -51,7 +53,9 @@ extra_writer_args=()
 # deal with reader formats:
 # ---------------------------
 #   predefined $from is always lowercase
-if   [ "${in_ext}" == "py" ]; then
+if   [ "${important_from}" == "true" ]; then
+    :;
+elif [ "${in_ext}" == "py" ]; then
     from=markdown
 fi
 
@@ -65,12 +69,17 @@ _templ_docx="$(. "$resolve" Template-$prof.docx)"
 
 #   predefined $to is always lowercase
 #   note custom $to format: r.ipynb
+if   [ "${important_to}" == "true" ]; then
+    :;
+elif [ "${out_ext}" == "ipynb" ]; then
+    to="${_jupymd}"
+fi
+
 if [ "$to" == "r.ipynb" ] && [ "${out_ext}" == "ipynb" ]; then
     to="${_jupymd}"
     extra_inputs=("${_meta_ipynb_R}" "${extra_inputs[@]}")
 
 elif [ "${out_ext}" == "ipynb" ]; then
-    to="${_jupymd}"
     extra_inputs=("${_meta_ipynb_py3}" "${extra_inputs[@]}")
 
 elif [ "${out_ext}" == "docx" ]; then

@@ -136,6 +136,8 @@ Pandoctools comes with convenience CLI apps:
 * `root_env` - root dir of main Miniconda/Anaconda installation (empty if wasn't specified in INI and Pandoctools cannot guess it)
 * `from` - Pandoc reader format + custom Pandoctools formats
 * `to` - Pandoc writer format + custom Pandoctools formats
+* `important_from` - bool: whether `from` was set by user
+* `important_to` - bool: whether `to` was set by user
 * `is_bin_ext_maybe` - Pandoctools nice guess if the `output_file` extension (or `to` if no ext) means that Pandoc needs adding `-o "${output_file}"` option
 * `PYTHONIOENCODING` (win) = `utf-8`
 * `LANG` (win) = `C.UTF-8`

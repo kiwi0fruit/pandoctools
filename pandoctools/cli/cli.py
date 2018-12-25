@@ -48,21 +48,23 @@ def expand_pattern(pattern: str,  target_file: str,  cwd: bool) -> str:
 
 def get_ext_and_from(file_path: str, read: str=None):
     """
-    Returns extension and pandoc reader format like ('md', 'markdown')
+    Returns extension and pandoc reader format like ('md', 'markdown', 'true')
     """
     ext = p.splitext(file_path)[1][1:]
+    important_from = 'true' if read else 'false'
     read = read.lower() if read else {'md': 'markdown', '': 'markdown'}.get(ext.lower(), ext.lower())
-    return ext, read
+    return ext, read, important_from
 
 
 def get_ext_and_to(file_path: str, to: str=None):
     """
-    Returns extension and pandoc writer format like ('html', 'html5')
+    Returns extension and pandoc writer format like ('html', 'html5', 'true')
     """
     ext = p.splitext(file_path)[1][1:]
+    important_to = 'true' if to else 'false'
     to = to.lower() if to else pandoc_filter_arg(output=f'file.{ext}' if ext else 'file',
                                                  search_dirs=search_dirs)
-    return ext, to
+    return ext, to, important_to
 
 
 def get_profile_path(profile: str,
@@ -308,8 +310,8 @@ def pandoctools(input_file, profile, out, read, to, stdio, stdin, cwd, detailed_
     env_vars['env_path'] = env_path
     env_vars['input_file'] = input_file
     env_vars['output_file'] = output_file
-    env_vars['in_ext'], env_vars['from'] = get_ext_and_from(input_file, read)
-    env_vars['out_ext'], env_vars['to'] = get_ext_and_to(output_file, to)
+    env_vars['in_ext'], env_vars['from'], env_vars['important_from'] = get_ext_and_from(input_file, read)
+    env_vars['out_ext'], env_vars['to'], env_vars['important_to'] = get_ext_and_to(output_file, to)
     env_vars['is_bin_ext_maybe'] = str(is_bin_ext_maybe(output_file, to, search_dirs=search_dirs)).lower()
     env_vars['root_env'] = root_env
 
@@ -336,7 +338,7 @@ def pandoctools(input_file, profile, out, read, to, stdio, stdin, cwd, detailed_
         vars_ = ['scripts', 'import', 'source', 'pyprepPATH', 'resolve',
                  'env_path', '_core_config', '_user_config', 'input_file', 'output_file',
                  'root_env', 'in_ext', 'from', 'out_ext', 'to', 'is_bin_ext_maybe',
-                 'PYTHONIOENCODING', 'LANG']
+                 'PYTHONIOENCODING', 'LANG', 'important_from', 'important_to']
         for var in vars_:
             print('{}: {}'.format(var, env_vars.get(var)))
         print('win_bash: ', win_bash, '\n')
