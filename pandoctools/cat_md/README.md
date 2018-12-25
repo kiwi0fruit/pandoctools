@@ -7,10 +7,11 @@ Usage: `cat-md stdin metadata.yaml`
 ```
 Usage: cat-md [OPTIONS] [INPUT_FILES]
 
-  cat-md CLI joins markdown files with "\n\n" separator and writes
+  Joins markdown files with "\n\n" separator and writes
   to stdout. If one of the files is "stdin" then reads it from stdin
   (can use the same stdin text several times).
+  If no markdown files provided then default is 'stdin'.
 
 Options:
-  --help    Show this message and exit.
+  --help   Show this message and exit.
 ```

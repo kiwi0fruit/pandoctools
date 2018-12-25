@@ -12,8 +12,6 @@ def main(markdown_files: Iterable[str], input_stream: io.StringIO=sys.stdin) -> 
     :param input_stream:
     :return: joined Markdown files with "\n\n" separator
     """
-    if not markdown_files:
-        markdown_files = ['stdin']
     sources_list, _stdin = [], None
     for file in markdown_files:
         if file == 'stdin':
@@ -23,6 +21,9 @@ def main(markdown_files: Iterable[str], input_stream: io.StringIO=sys.stdin) -> 
         else:
             with open(file, "r", encoding="utf-8") as f:
                 sources_list.append(f.read())
+    if not sources_list:
+        sources_list.append(input_stream.read())
+
     return '\n\n'.join(sources_list)
 
 
