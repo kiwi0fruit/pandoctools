@@ -9,5 +9,6 @@ knitty "${input_file}" "${reader_args[@]}" "${writer_args[@]}" --to-ipynb | \
 panfl "${panfl_args[@]}" | \
 pandoc-crossref "$t" | \
 pandoc -f json "${writer_args[@]}" | \
+cat-md "${post_inputs[@]}" | \
 post-knitty --to-ipynb | \
 jupyter nbconvert "${nbconvert_args[@]}"

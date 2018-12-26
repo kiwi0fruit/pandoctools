@@ -43,7 +43,7 @@
 #   ${extra_writer_args}    (format specific part of the pandoc writer args)
 #   ${extra_inputs}    (format specific part of the middle inputs -
 #                       metadata, other files)
-
+#   ${post_inputs}    (inputs for to ipynb conversion)
 
 extra_inputs=()
 extra_reader_args=()
@@ -68,17 +68,19 @@ _meta_ipynb_py3="$(. "$resolve" Meta-ipynb-py3.yaml)"
 _templ_docx="$(. "$resolve" Template-$prof.docx)"
 
 #   predefined $to is always lowercase
-#   note custom $to format: r.ipynb
 if   [ "${important_to}" == "true" ]; then
     :;
 elif [ "${out_ext}" == "ipynb" ]; then
     to="${_jupymd}"
 fi
 
-if [ "$to" == "r.ipynb" ] && [ "${out_ext}" == "ipynb" ]; then
-    to="${_jupymd}"
+# custom $to format: "r.ipynb" or "r.ipynb:format"
+if   [ "${to:0:7}" == "r.ipynb" ]; then
     extra_inputs=("${_meta_ipynb_R}" "${extra_inputs[@]}")
-
+    if [ "${to:8}" != "" ]; then
+        to="${to:8}"
+    else
+        to="${_jupymd}"; fi
 elif [ "${out_ext}" == "ipynb" ]; then
     extra_inputs=("${_meta_ipynb_py3}" "${extra_inputs[@]}")
 
@@ -99,6 +101,7 @@ t="$(pandoc-filter-arg "${writer_args[@]}")"
 inputs=(stdin)
 metadata="$(. "$resolve" Meta-$prof.yaml)"
 middle_inputs=(stdin "$metadata" "${extra_inputs[@]}")
+post_inputs=(stdin)
 
 nbconvert_args=(--to notebook --execute --stdin --stdout)
 panfl_args=(-t "$t" sugartex)
