@@ -8,12 +8,13 @@ import subprocess
 from subprocess import PIPE
 import configparser
 import io
+from typing import Tuple
 from ..pandoc_filter_arg import pandoc_filter_arg, is_bin_ext_maybe
 from ..shared_vars import pandoctools_user, pandoctools_user_data, pandoctools_core
 
 
 PROFILE = 'Default'
-OUT = '*.html'
+OUT = '*.*.md'
 
 
 def expandvars(file_path):
@@ -72,20 +73,26 @@ def get_profile_path(profile: str,
                      user_dir: str,
                      core_dir: str,
                      input_file: str,
-                     cwd: bool) -> str:
+                     cwd: bool) -> Tuple[str, bool]:
     """
     Find profile path by profile name/profile path.
-    In profile name is given (not profile path) then search in folder1, then in folder2.
+    In profile name is given (not profile path) then search in user_dir, then in core_dir.
+
+    returns tuple(profile_path, safe_location)
     """
     if p.splitext(p.basename(profile))[0] == profile:
         for dir_ in (user_dir, core_dir):
             profile_path = p.join(dir_, profile)
             if p.isfile(profile_path):
-                return profile_path
+                return profile_path, True
         else:
             raise ValueError(f"Profile '{profile}' was not found in\n{user_dir}\nand\n{core_dir}")
-    else:
-        return expand_pattern(profile, input_file, cwd)
+
+    profile_path = expand_pattern(profile, input_file, cwd)
+    if not p.isfile(profile_path):
+        raise ValueError(f"Profile '{profile}' was not found in\n{profile_path}")
+
+    return profile_path, False
 
 
 def read_ini(ini: str,  dir1: str,  dir2: str):
@@ -134,7 +141,7 @@ def user_yes_no_query(message: str):
         elif answer in no:
             return False
         else:
-            print("Please respond with 'y' or 'n'.")
+            print("Please respond with one of: 'y', 'yes', 'n', 'no'.")
 
 
 # Set some vars and env vars:
@@ -167,10 +174,23 @@ root_env = expandvars(root_env)
 root_env = root_env if p.isabs(root_env) and p.isdir(root_env) else guess_root_env(env_path)
 
 
-help_str = f"""Pandoctools is a Pandoc profile manager that stores CLI filter pipelines.
-(default INPUT_FILE is "Untitled").
+bash_error = ("\nERROR: Bash was not found by the path provided in INI file.\n"
+              if (win_bash is None) and (os.name == 'nt')
+              else "")
+
+
+@click.command(help=f"""
+Pandoctools is a Pandoc profile manager that stores CLI filter pipelines.
+(default INPUT_FILE is "untitled").
+{bash_error}
+Recommended ways to run Pandoctools are to:\n
+- add it to 'Open With' applications for desired file format,\n
+- drag and drop file over pandoctools shortcut,\n" +
+- run it from console
 
 Profiles are searched in user data: "{pandoctools_user_data}" then in python module: "{pandoctools_core}".
+When profile is given by path then Pandoctools asks for confirmation
+(in stdin mode prints confirmation to stdout and exits).
 Profiles read from stdin and write to stdout (usually).
 
 Some options can be set in document metadata (all are optional):\n
@@ -182,65 +202,79 @@ pandoctools:\n
   to: html\n
 ...\n
 May be (?) for security concerns the user data folder should be set to write-allowed only as administrator.
-"""
-
-
-@click.command(help=help_str)
+""")
 @click.argument('input_file', type=str, default=None, required=False)
+@click.option('-i', '--in', input_file_stdin, type=str, default=None,
+              help='Input file path for when INPUT_FILE argument wasn't provided and we read from stdin ' +
+                   '(INPUT_FILE has a priority).')
 @click.option('-p', '--profile', type=str, default=None,
               help='Pandoctools profile name or file path (default is "Default").')
 @click.option('-o', '--out', type=str, default=None,
               help='Output file path like "./out/doc.html" ' +
-                   'or input file path transformation like "*.html", "./out/*.ipynb" (default is "*.html").\n' +
-                   'In --stdio mode only extension is considered: "doc.ipynb" > ".ipynb".')
+                   'or input file path transformation like "./out/*.ipynb" (default is "*.*.md"). ' +
+                   '`-o "-"` switches output to stdout but doesn't override `out:` in metadata.')
 @click.option('-f', '-r', '--from', '--read', 'read', type=str, default=None,
               help="Pandoc reader option (extended with custom formats).")
 @click.option('-t', '-w', '--to', '--write', 'to', type=str, default=None,
               help="Pandoc writer option (extended with custom formats).")
-@click.option('--stdio', is_flag=True, default=False,
-              help="Read document form stdin and write to stdout in a silent mode. " +
-                   "INPUT_FILE only gives a file path. If --stdio was set but stdout output was empty " +
-                   "then the profile (not Pandoctools itself) always writes output file to disc and doesn't write " + 
-                   "to stdout with these options.")
-@click.option('--stdin', is_flag=True, default=False,
-              help="Same as --stdio but always writes output file to disc (suppresses --stdio).")
+@click.option('-s', '--stdout', type=str, default=None,
+              help="Same as --out but write document to stdout (has a priority over --out). " +
+                   '`-s "-"` switches output to stdout but doesn't override `out: x` in metadata.' +
+                   "If --stdout but stdout output was empty then the profile (not Pandoctools itself) " +
+                   "always writes output file to disc and doesn't write " + 
+                   "to stdout with the particular options.")
+@click.option('--yes', is_flag=True, default=False,
+              help="Run without confirmation of profile if it was going to happen.")
 @click.option('--cwd', is_flag=True, default=False,
               help="Use real CWD everywhere (instead of input file directory as default).")
 @click.option('--detailed-out', is_flag=True, default=False,
-              help="With this option when in --stdio and --stdin modes pandoctools stdout consist of yaml " +
+              help="With this option when in --stdout mode pandoctools stdout consist of yaml " +
               "metadata section ---... with 'outpath' and 'output' keys that is followed by profile stdout " +
-              "(when --stdin or profile stdout output was empty then key 'output: None').")
+              "(when not --stdout or profile stdout output was empty then key 'output: None').")
 @click.option('--debug', is_flag=True, default=False, help="Debug mode.")
-def pandoctools(input_file, profile, out, read, to, stdio, stdin, cwd, detailed_out, debug):
+def pandoctools(input_file, input_file_stdin, profile, out, read, to, stdout, yes, cwd, detailed_out, debug):
     """
     Sets environment variables:
-    * scripts, import, source
-    * r (win), set_resolve (win), resolve (unix)
-    * env_path, _core_config, _user_config
-    * input_file, output_file
-    * in_ext, in_ext_full
-    * out_ext, out_ext_full
+      * scripts, source, resolve
+      * env_path, python_to_PATH, root_env
+      * input_file, output_file, from, to
+      * important_from, important_to
+      * in_ext, out_ext, is_bin_ext_maybe
+      * Windows only: PYTHONIOENCODING, LANG
     """
-    # Read document and mod input_file if needed:
-    if stdio or stdin:
-        input_stream = io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8')
-        doc = input_stream.read()  # doc = sys.stdin.read()
-    else:
-        if not input_file:
-            print("Input file was not provided.\n" + 
-                  "Recommended ways to run Pandoctools are to:\n" +
-                  "- add it to 'Open With' applications for desired file format,\n" +
-                  "- drag and drop file over pandoctools shortcut,\n" +
-                  "- run it from console, see: pandoctools --help\n" +
-                  ("\nERROR: Bash was not found by the path provided in INI file.\n"
-                   if (win_bash is None) and (os.name == 'nt')
-                   else ""))
-            input("Press Enter to exit.")
-            return None
+    if bash_error:
+        raise ValueError(bash_error)
+
+    # Read document and mod input_file if needed:   
+    if input_file:
+        stdin = False
         with open(expandvars(input_file), 'r', encoding="utf-8") as file:
             doc = file.read()
-    input_file = input_file if input_file else "untitled"
+    else:
+        stdin = True
+        input_stream = io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8')
+        doc = input_stream.read()  # sys.stdin.read()
 
+        if input_file_stdin:
+            input_file = input_file_stdin
+        else:
+            input_file = 'untitled'
+
+    if stdout == '-':
+        stdout = True
+        out = None
+    elif stdout:
+        stdout = True
+        out = stdout
+    elif out == '-':
+        stdout = True
+        out = None
+    else:
+        stdout = False
+
+    # now both stdin and stdout are bools
+
+    # #
     if not (profile and out and read and to):
         # Read metadata:
         m = re.search(r'(?:^|\n)---\n(.+?\n)(?:---|\.\.\.)(?:\n|$)', doc, re.DOTALL)
@@ -253,10 +287,6 @@ def pandoctools(input_file, profile, out, read, to, stdio, stdin, cwd, detailed_
         out = out if out else pandoctools_meta.get('out')
         read = read if read else pandoctools_meta.get('from')
         to = to if to else pandoctools_meta.get('to')
-
-    # #
-    if (win_bash is None) and (os.name == 'nt'):
-        raise ValueError('Bash was not found by the path provided in INI file.')
 
     # Read from INI config (Read profile, 'out'):
     profile = profile if profile else config.get('Default', 'profile', fallback=PROFILE)
@@ -271,17 +301,25 @@ def pandoctools(input_file, profile, out, read, to, stdio, stdin, cwd, detailed_
 
     # Expand custom patterns:
     output_file = expand_pattern(out, input_file, cwd)
-    profile_path = get_profile_path(profile, pandoctools_user, pandoctools_core, input_file, cwd)
+    profile_path, safe_location = get_profile_path(profile, pandoctools_user, pandoctools_core, input_file, cwd)
 
     # Run profile confirmation:
-    if not stdio and not stdin:
+    if not (yes or safe_location):
         with open(profile_path, 'r') as file:
-            print(f'Profile code:\n\n{file.read().strip()}\n')
-        message = ("Type y/yes to continue with the profile or type n/no to exit. Then press Enter.\n"
-                   f"    Profile: {profile} | Path: {profile_path}\n"
-                   f"    Out: {out} | Path: {output_file}\n")
-        if not user_yes_no_query(message):
-            return None
+            print(f'Profile code:\n\n{file.read().strip()}')
+        print("--------------------------\n" +
+              f"  Profile: {profile} | Path: {profile_path}\n" +
+              f"  Out: {out} | Path: {output_file}\n" +
+              "--------------------------")
+
+        if not stdin:
+            if not user_yes_no_query(
+                "Type y/yes to continue with the profile or type n/no to exit. Then press Enter.\n"
+            ):
+                return
+        else:
+            print('Run pandoctools with the same parameters and --yes option to confirm the profile.')
+            return
 
     # Set environment vars to dict:
     env_vars = {}
@@ -343,35 +381,34 @@ def pandoctools(input_file, profile, out, read, to, stdio, stdin, cwd, detailed_
         print(proc.stderr, file=sys.stderr)
 
     # forward output:
-    stdout = proc.stdout if (proc.stdout is not None) else ''
+    prof_stdout = proc.stdout if proc.stdout else ''
     if detailed_out:
         with io.StringIO() as f:
             dic = {'outpath': output_file}
-            if stdin or (stdout == ''):
+            if not (stdout and prof_stdout):
                 dic['output'] = 'None'
             yaml.dump(dic, f, default_flow_style=False)
             meta = '---\n' + f.getvalue() + '...\n'
     else:
         meta = ''
 
-    output_stream = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
-    if not stdio or stdin:
-        def _print(s):
-            if not stdin:
+    if not stdout:
+        if prof_stdout:
+            print(prof_stdout, end='', file=open(output_file, 'w', encoding='utf-8'))
+
+        if not (stdin or yes):
+            def safe_print(s):
                 try:
                     print(s)
                 except UnicodeEncodeError:
                     print(str(s).encode('utf-8'))
 
-        if detailed_out:
-            output_stream.write(meta)
-
-        if stdout != '':
-            print(stdout, end='', file=open(output_file, 'w', encoding='utf-8'))
-            _print("Pandoctools wrote profile's stdout to:\n    " + output_file)
-        else:
-            _print("Profile's stdout is empty. Presumably profile wrote to:\n    " + output_file)
-        if not stdin:
+            if prof_stdout:
+                safe_print("Pandoctools wrote profile's stdout to:\n    " + output_file)
+            else:
+                safe_print("Profile's stdout is empty. Presumably profile wrote to:\n    " + output_file)
             input('Press Enter to continue...')
     else:
-        output_stream.write(meta + stdout)  # sys.stdout.write(proc.stdout)
+        output_stream = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+        output_stream.write(meta + prof_stdout)
+        # sys.stdout.write(meta + prof_stdout)
