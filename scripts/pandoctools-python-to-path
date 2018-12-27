@@ -1,4 +1,10 @@
 #!/bin/bash
+# Usage in Pandoctools profiles:
+#   . "${python_to_PATH}" /python/root/dir
+#   (${python_to_PATH} contains absolute path)
+# General usage:
+#   . pandoctools-python-to-path /python/root/dir
+
 if [ "$1" != "" ]; then
     case "$(uname -s)" in
         MINGW*)

@@ -1,8 +1,8 @@
-See available and used env vars in `Args-Main.sh` comments.
+See available and used env vars in `Default_args` comments.
 
-Env vars defaults preset or set in `Args-Main.sh` and used in pipes
-(like in `Pipe-Main.sh`) can be overriden in profiles
-(like in `Profile-Default.sh`):
+Env vars defaults preset or set in `Default_args` and used in pipes
+(like in `Default_pipe`) can be overriden in profiles
+(like in `Default`):
 
 `t, reader_args, writer_args,
 inputs, metadata, middle_inputs,

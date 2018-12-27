@@ -122,17 +122,14 @@ Pandoctools comes with convenience CLI apps:
 ## Environment variables predefined in Pandoctools CLI application:
 
 * `scripts` - `<python_env>\Scripts` folder on Windows, `<python_env>/bin` on Unix
-* `import` - `source` bash script (provided without extension!) from folder in user data first, then from [folder in python module](../sh)
 * `source` - `source` bash script from PATH only (without current working dir)
-* `resolve` - echoes the resolved fullpath to file given. File is searched in the folder in user data first, then in the [folder in python module](../sh)
-* `pyprepPATH` - prepends PATH with all necessary python folders. Argument is the root dir of python installation (root env or created env). Runs only if argument is not empty.
+* `resolve` - echoes the resolved fullpath to file given. File is searched in the folder in user data first (`%APPDATA%\pandoc\pandoctools` on Windows, `~/.pandoc/pandoctools` on Unix), then in the [folder in python module](../sh)
+* `python_to_PATH` - prepends PATH with all necessary python folders. Argument is the root dir of python installation (root env or created env). Runs only if argument is not empty.
 * `env_path` - root dir of python installation where pandoctools was installed
 * `input_file` - absolute path to input file (?may be broken when no CWD was specified and python can't resolve relative path)
 * `output_file` - absolute path to output file (?may be broken when no CWD)
 * `in_ext` - input file extension without dot
 * `out_ext` - output file extension without dot
-* `_core_config` - [sh folder in python module](../sh)
-* `_user_config` - `%APPDATA%\pandoc\pandoctools` on Windows, `~/.pandoc/pandoctools` on Unix
 * `root_env` - root dir of main Miniconda/Anaconda installation (empty if wasn't specified in INI and Pandoctools cannot guess it)
 * `from` - Pandoc reader format + custom Pandoctools formats
 * `to` - Pandoc writer format + custom Pandoctools formats

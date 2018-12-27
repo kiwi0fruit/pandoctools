@@ -1,0 +1,8 @@
+#!/bin/bash
+profile=Kiwi
+source "${python_to_PATH}" "${root_env}"
+source "$source" activate "${env_path}"
+source "$("$resolve" ${profile}_args --else Default_args)"
+panfl_args=(-t "$t" sugartex.kiwi)
+source "$("$resolve" ${profile}_pipe --else Default_pipe)"
+source "$source" deactivate

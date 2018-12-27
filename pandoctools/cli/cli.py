@@ -78,13 +78,10 @@ def get_profile_path(profile: str,
     In profile name is given (not profile path) then search in folder1, then in folder2.
     """
     if p.splitext(p.basename(profile))[0] == profile:
-        ext = p.basename(core_dir)[-3:]
-        profile1 = p.join(user_dir, f'Profile-{profile}.{ext}')
-        profile2 = p.join(core_dir, f'Profile-{profile}.{ext}')
-        if p.isfile(profile1):
-            return profile1
-        elif p.isfile(profile2):
-            return profile2
+        for dir_ in (user_dir, core_dir):
+            profile_path = p.join(dir_, profile)
+            if p.isfile(profile_path):
+                return profile_path
         else:
             raise ValueError(f"Profile '{profile}' was not found in\n{user_dir}\nand\n{core_dir}")
     else:
@@ -94,15 +91,13 @@ def get_profile_path(profile: str,
 def read_ini(ini: str,  dir1: str,  dir2: str):
     """
     Read ini file by ini name/ini path.
-    If ini name is given (not ini path) then search in folder1, then in folder2.
+    If ini name is given (not ini path) then search in dir1, then in dir2.
     """
     if p.splitext(p.basename(ini))[0] == ini:
-        ini1 = p.join(dir1, f'{ini}.ini')
-        ini2 = p.join(dir2, f'{ini}.ini')
-        if p.isfile(ini1):
-            ini_path = ini1
-        elif p.isfile(ini2):
-            ini_path = ini2
+        for dir_ in (dir1, dir2):
+            ini_path = p.join(dir_, f'{ini}.ini')
+            if p.isfile(ini_path):
+                break
         else:
             raise ValueError(f"INI '{ini}' was not found.")
     else:
@@ -294,8 +289,8 @@ def pandoctools(input_file, profile, out, read, to, stdio, stdin, cwd, detailed_
         env_vars['PYTHONIOENCODING'] = 'utf-8'
         env_vars['LANG'] = 'C.UTF-8'
 
-    env_vars['source'] = p.join(scripts_bin, 'pandoctools-path-source')
-    env_vars['pyprepPATH'] = p.join(scripts_bin, 'pandoctools-path-pyprep')
+    env_vars['source'] = p.join(scripts_bin, 'pandoctools-source')
+    env_vars['python_to_PATH'] = p.join(scripts_bin, 'pandoctools-python-to-path')
     env_vars['resolve'] = p.join(scripts_bin, 'pandoctools-resolve')
     env_vars['scripts'] = scripts_bin
     env_vars['env_path'] = env_path
@@ -308,7 +303,7 @@ def pandoctools(input_file, profile, out, read, to, stdio, stdin, cwd, detailed_
 
     # convert win-paths to unix-paths if needed:
     if os.name == 'nt':
-        vars_ = ["source", "scripts", "resolve", "pyprepPATH",
+        vars_ = ["source", "scripts", "resolve", "python_to_PATH",
                  "env_path", "input_file", "output_file", "root_env"]
         vars_ = [var for var in vars_ if env_vars[var] != '']
         args = [win_bash, p.join(scripts_bin, 'pandoctools-cygpath')] + [env_vars[var] for var in vars_]
@@ -325,12 +320,12 @@ def pandoctools(input_file, profile, out, read, to, stdio, stdin, cwd, detailed_
 
     # debug env vars:
     if debug:
-        vars_ = ['scripts', 'source', 'pyprepPATH', 'resolve', 'env_path',
+        vars_ = ['scripts', 'source', 'python_to_PATH', 'resolve', 'env_path',
                  'input_file', 'output_file', 'root_env', 'in_ext', 'from', 'out_ext',
                  'to', 'is_bin_ext_maybe', 'important_from', 'important_to',
                  'PYTHONIOENCODING', 'LANG']
         for var in vars_:
-            print('{}: {}'.format(var, env_vars.get(var)))
+            print(f'{var}: {env_vars.get(var)}')
         print('win_bash: ', win_bash, '\n')
         print(os.environ["PATH"], '\n')
         print(dict(os.environ))

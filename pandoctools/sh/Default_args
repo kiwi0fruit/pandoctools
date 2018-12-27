@@ -1,5 +1,6 @@
+#!/bin/bash
 # May use variables predefined in the profile:
-#   $prof (profile name)
+#   $profile (profile name)
 
 # May use variables predefined in pandoctools:
 #   ${in_ext}    (input file extension like "md")
@@ -15,16 +16,14 @@
 #                           `-o "${output_file}"` option)
 
 #   $source    (source bash script from PATH but not CWD)
-#   $import    (try source bash script from pandoctools folder
-#               in user data. Then source from pandoctools module)
 #   $resolve    (echoes resolved path to a file. Searches in 
 #                `$HOME/.pandoc/pandoctools` or `%APPDATA%\pandoc\pandoctools`
 #                then in `<...>/site-packages/pandoctools/sh` folders)
-#   $pyprepPATH    (prepend PATH with python environment)
+#   ${python_to_PATH}    (prepend PATH with python environment)
 
-#   $scripts    (conda? environment bin folder)
-#   ${root_env}    (root conda? environment folder)
-#   ${env_path}    (conda? environment folder)
+#   $scripts    (conda or venv environment bin folder)
+#   ${root_env}    (root conda environment folder)
+#   ${env_path}    (conda or venv environment folder)
 
 # Exports vars:
 #   $from    (pandoc reader format without custom formats)
@@ -63,9 +62,9 @@ fi
 # deal with writer formats:
 # ---------------------------
 _jupymd="markdown-bracketed_spans-fenced_divs-link_attributes-simple_tables-multiline_tables-grid_tables-pipe_tables-fenced_code_attributes-markdown_in_html_blocks-table_captions-smart"
-_meta_ipynb_R="$(. "$resolve" Meta-ipynb-R.yaml)"
-_meta_ipynb_py3="$(. "$resolve" Meta-ipynb-py3.yaml)"
-_templ_docx="$(. "$resolve" Template-$prof.docx)"
+_meta_ipynb_R="$("$resolve" _ipynb_R.yml)"
+_meta_ipynb_py3="$("$resolve" _ipynb_py3.yml)"
+_templ_docx="$("$resolve" "$profile.docx" --else Default.docx)"
 
 #   predefined $to is always lowercase
 if   [ "${important_to}" == "true" ]; then
@@ -99,7 +98,7 @@ writer_args=(--standalone --self-contained -t "$to" "${extra_writer_args[@]}")
 t="$(pandoc-filter-arg "${writer_args[@]}")"
 
 inputs=(stdin)
-metadata="$(. "$resolve" Meta-$prof.yaml)"
+metadata="$("$resolve" "$profile.yml" --else Default.yml)"
 middle_inputs=(stdin "$metadata" "${extra_inputs[@]}")
 post_inputs=(stdin)
 

@@ -52,8 +52,8 @@ setup(
         ],
     },
     scripts=[
-        'scripts/pandoctools-path-source',
-        'scripts/pandoctools-path-pyprep',
+        'scripts/pandoctools-source',
+        'scripts/pandoctools-python-to-path',
         'scripts/pandoctools-cygpath',
     ] + ([
         'scripts/pandoctools-resolve',
