@@ -9,6 +9,7 @@ from subprocess import PIPE
 import configparser
 import io
 from ..pandoc_filter_arg import pandoc_filter_arg, is_bin_ext_maybe
+from ..shared_vars import pandoctools_user, pandoctools_user_data, pandoctools_core
 
 
 PROFILE = 'Default'
@@ -141,18 +142,13 @@ def user_yes_no_query(message: str):
             print("Please respond with 'y' or 'n'.")
 
 
-#   Set env vars and python vars:
-pandoctools_core = p.normpath(p.join(p.dirname(p.abspath(__file__)), '..', 'sh'))
+# Set some vars and env vars:
 if os.name == 'nt':
-    pandoctools_user_data = r"%APPDATA%\pandoc\pandoctools"
-    pandoctools_user = p.join(os.environ["APPDATA"], "pandoc", "pandoctools")
     env_path = p.dirname(sys.executable)
     scripts_bin = p.join(env_path, "Scripts")
     pandoctools_bin = p.join(scripts_bin, "pandoctools.exe")
     search_dirs = [env_path, scripts_bin, p.join(env_path, 'Library', 'bin')]
 else:
-    pandoctools_user_data = "$HOME/.pandoc/pandoctools"
-    pandoctools_user = p.join(os.environ["HOME"], ".pandoc", "pandoctools")
     scripts_bin = p.dirname(sys.executable)
     env_path = p.dirname(scripts_bin)
     pandoctools_bin = p.join(scripts_bin, "pandoctools")
@@ -298,14 +294,11 @@ def pandoctools(input_file, profile, out, read, to, stdio, stdin, cwd, detailed_
         env_vars['PYTHONIOENCODING'] = 'utf-8'
         env_vars['LANG'] = 'C.UTF-8'
 
-    env_vars['import'] = p.join(scripts_bin, 'pandoctools-import')
     env_vars['source'] = p.join(scripts_bin, 'pandoctools-path-source')
-    env_vars['pyprepPATH'] = (p.join(scripts_bin, 'pandoctools-path-pyprep'
-                              if (os.name != 'nt') else 'pandoctools-path-pyprep-win'))
-    env_vars['resolve'] = p.join(scripts_bin, 'pandoctools-resolve')
-
-    env_vars['_user_config'] = pandoctools_user
-    env_vars['_core_config'] = pandoctools_core
+    env_vars['pyprepPATH'] = p.join(scripts_bin, 'pandoctools-path-pyprep' +
+                                                 ('-win' if os.name == 'nt' else ''))
+    env_vars['resolve'] = p.join(scripts_bin, 'pandoctools-resolve' +
+                                              ('.exe' if os.name == 'nt' else ''))
     env_vars['scripts'] = scripts_bin
     env_vars['env_path'] = env_path
     env_vars['input_file'] = input_file
@@ -317,9 +310,8 @@ def pandoctools(input_file, profile, out, read, to, stdio, stdin, cwd, detailed_
 
     # convert win-paths to unix-paths if needed:
     if os.name == 'nt':
-        vars_ = ["import", "source", "scripts", "resolve", "pyprepPATH",
-                 "env_path", "input_file", "output_file", "_core_config",
-                 "_user_config", "root_env"]
+        vars_ = ["source", "scripts", "resolve", "pyprepPATH",
+                 "env_path", "input_file", "output_file", "root_env"]
         vars_ = [var for var in vars_ if env_vars[var] != '']
         args = [win_bash, p.join(scripts_bin, 'pandoctools-cygpath')] + [env_vars[var] for var in vars_]
 
@@ -335,10 +327,10 @@ def pandoctools(input_file, profile, out, read, to, stdio, stdin, cwd, detailed_
 
     # debug env vars:
     if debug:
-        vars_ = ['scripts', 'import', 'source', 'pyprepPATH', 'resolve',
-                 'env_path', '_core_config', '_user_config', 'input_file', 'output_file',
-                 'root_env', 'in_ext', 'from', 'out_ext', 'to', 'is_bin_ext_maybe',
-                 'PYTHONIOENCODING', 'LANG', 'important_from', 'important_to']
+        vars_ = ['scripts', 'source', 'pyprepPATH', 'resolve', 'env_path',
+                 'input_file', 'output_file', 'root_env', 'in_ext', 'from', 'out_ext',
+                 'to', 'is_bin_ext_maybe', 'important_from', 'important_to',
+                 'PYTHONIOENCODING', 'LANG']
         for var in vars_:
             print('{}: {}'.format(var, env_vars.get(var)))
         print('win_bash: ', win_bash, '\n')
