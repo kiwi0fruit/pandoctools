@@ -295,10 +295,8 @@ def pandoctools(input_file, profile, out, read, to, stdio, stdin, cwd, detailed_
         env_vars['LANG'] = 'C.UTF-8'
 
     env_vars['source'] = p.join(scripts_bin, 'pandoctools-path-source')
-    env_vars['pyprepPATH'] = p.join(scripts_bin, 'pandoctools-path-pyprep' +
-                                                 ('-win' if os.name == 'nt' else ''))
-    env_vars['resolve'] = p.join(scripts_bin, 'pandoctools-resolve' +
-                                              ('.exe' if os.name == 'nt' else ''))
+    env_vars['pyprepPATH'] = p.join(scripts_bin, 'pandoctools-path-pyprep')
+    env_vars['resolve'] = p.join(scripts_bin, 'pandoctools-resolve')
     env_vars['scripts'] = scripts_bin
     env_vars['env_path'] = env_path
     env_vars['input_file'] = input_file

@@ -1,4 +1,9 @@
 #!/bin/bash
 if [ "$1" != "" ]; then
-    PATH="$1/bin:$PATH"
+    case "$(uname -s)" in
+        MINGW*)
+            PATH="$1:$1/Scripts:$1/Library/bin:$PATH" ;;
+        *)
+            PATH="$1/bin:$PATH" ;;
+    esac
 fi

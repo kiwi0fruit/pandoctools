@@ -1,13 +1,2 @@
 #!/bin/bash
-# Usage in Pandoctools profiles (for Meta-Default.yaml):
-#   x="$(. "$resolve" Meta-Default.yaml)"
-
-# Uses predefined absolute path variables:
-#   ${_core_config} (<...>/site-packages/pandoctools/sh)
-#   ${_user_config} ($HOME/.pandoc/pandoctools)
-
-if [ -f "${_user_config}/$1" ]; then
-    echo "${_user_config}/$1"
-else
-    echo "${_core_config}/$1"
-fi
+cygpath "$(pandoctools-resolve.exe "$@")"

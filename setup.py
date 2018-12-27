@@ -54,7 +54,8 @@ setup(
     scripts=[
         'scripts/pandoctools-path-source',
         'scripts/pandoctools-path-pyprep',
-        'scripts/pandoctools-path-pyprep-win',
         'scripts/pandoctools-cygpath',
-    ],
+    ] + ([
+        'scripts/pandoctools-resolve',
+    ] if os.name == 'nt' else []),
 )
