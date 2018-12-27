@@ -48,11 +48,10 @@ setup(
             'cat-md=pandoctools.cat_md.cat_md:cli',
             'pandoctools=pandoctools.cli.cli:pandoctools',
             'pandoc-filter-arg=pandoctools.pandoc_filter_arg.cli:cli',
+            'pandoctools-resolve=pandoctools.pandoctools_resolve.resolve:cli',
         ],
     },
     scripts=[
-        'scripts/pandoctools-import',
-        'scripts/pandoctools-resolve',
         'scripts/pandoctools-path-source',
         'scripts/pandoctools-path-pyprep',
         'scripts/pandoctools-path-pyprep-win',
