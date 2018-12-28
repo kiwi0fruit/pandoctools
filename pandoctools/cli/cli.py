@@ -144,28 +144,27 @@ def user_yes_no_query(message: str):
             print("Please respond with one of: 'y', 'yes', 'n', 'no'.")
 
 
-# Set some vars and env vars:
+# Set some vars and env vars. Read from INI config:
+config = read_ini('Defaults', pandoctools_user, pandoctools_core)
 if os.name == 'nt':
     env_path = p.dirname(sys.executable)
     scripts_bin = p.join(env_path, "Scripts")
     pandoctools_bin = p.join(scripts_bin, "pandoctools.exe")
     search_dirs = [env_path, scripts_bin, p.join(env_path, 'Library', 'bin')]
-else:
-    scripts_bin = p.dirname(sys.executable)
-    env_path = p.dirname(scripts_bin)
-    pandoctools_bin = p.join(scripts_bin, "pandoctools")
-    search_dirs = [env_path, scripts_bin]
-    win_bash = None
-
-# Read from INI config:
-config = read_ini('Defaults', pandoctools_user, pandoctools_core)
-if os.name == 'nt':
     # Find bash on Windows:
     win_bash = expandvars(config.get('Default', 'win_bash', fallback=''))
     if not p.isfile(win_bash):
         # here we implicitly use the fact that ini from core sh folder
         # (pandoctools_core) has path to git's bash
         win_bash = None
+else:
+    scripts_bin = p.dirname(sys.executable)
+    env_path = p.dirname(scripts_bin)
+    pandoctools_bin = p.join(scripts_bin, "pandoctools")
+    search_dirs = [env_path, scripts_bin]
+    #
+    win_bash = None
+
 
 # Find python root env:
 root_env = config.get('Default', 'root_env', fallback='')
