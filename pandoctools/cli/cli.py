@@ -185,7 +185,7 @@ Pandoctools is a Pandoc profile manager that stores CLI filter pipelines.
 {bash_error}
 Recommended ways to run Pandoctools are to:\n
 - add it to 'Open With' applications for desired file format,\n
-- drag and drop file over pandoctools shortcut,\n" +
+- drag and drop file over pandoctools shortcut,\n
 - run it from console
 
 Profiles are searched in user data: "{pandoctools_user_data}" then in python module: "{pandoctools_core}".
@@ -204,7 +204,7 @@ pandoctools:\n
 May be (?) for security concerns the user data folder should be set to write-allowed only as administrator.
 """)
 @click.argument('input_file', type=str, default=None, required=False)
-@click.option('-i', '--in', input_file_stdin, type=str, default=None,
+@click.option('-i', '--in', 'input_file_stdin', type=str, default=None,
               help="Input file path for when INPUT_FILE argument wasn't provided and we read from stdin " +
                    '(INPUT_FILE has a priority).')
 @click.option('-p', '--profile', type=str, default=None,
@@ -213,18 +213,18 @@ May be (?) for security concerns the user data folder should be set to write-all
               help='Output file path like "./out/doc.html" ' +
                    'or input file path transformation like "./out/*.ipynb" (default is in INI: "*.*.md"). ' +
                    '`-o "-"` switches output to stdout but doesn\'t override `out: x` in metadata.')
+@click.option('-s', '--stdout', type=str, default=None,
+              help="Same as --out but write document to stdout (has a priority over --out). " +
+                   '`-s "-"` switches output to stdout but doesn\'t override `out: x` in metadata. ' +
+                   "If switched to stdout but stdout output was empty then the profile (not Pandoctools itself) " +
+                   "always writes output file to disc and doesn't write " + 
+                   "to stdout with the particular options.")
 @click.option('-f', '-r', '--from', '--read', 'read', type=str, default=None,
               help="Pandoc reader option (can be extended with custom formats handled in profiles).")
 @click.option('-t', '-w', '--to', '--write', 'to', type=str, default=None,
               help="Pandoc writer option (can be extended with custom formats handled in profiles).")
-@click.option('-s', '--stdout', type=str, default=None,
-              help="Same as --out but write document to stdout (has a priority over --out). " +
-                   '`-s "-"` switches output to stdout but doesn\'t override `out: x` in metadata.' +
-                   "If switched to stdout but stdout output was empty then the profile (not Pandoctools itself) " +
-                   "always writes output file to disc and doesn't write " + 
-                   "to stdout with the particular options.")
 @click.option('--yes', is_flag=True, default=False,
-              help="Run without confirmation of profile if it was going to happen.")
+              help="Run without confirmation of the profile if it was going to happen.")
 @click.option('--cwd', is_flag=True, default=False,
               help="Use real CWD everywhere (instead of input file directory as default).")
 @click.option('--detailed-out', is_flag=True, default=False,
