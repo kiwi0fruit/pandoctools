@@ -304,10 +304,12 @@ def pandoctools(input_file, input_file_stdin, profile, out, read, to, stdout, ye
     # Run profile confirmation:
     if not (yes or safe_location):
         with open(profile_path, 'r') as file:
-            print(f'Profile code:\n\n{file.read().strip()}')
+            print('Profile code:\n' +
+                  '--------------------------\n' +
+                  file.read().strip())
         print("--------------------------\n" +
-              f"  Profile: {profile} | Path: {profile_path}\n" +
-              f"  Out: {out} | Path: {output_file}\n" +
+              f"Profile: {profile} | Path: {profile_path}\n" +
+              f"Out: {out} | Path: {output_file}\n" +
               "--------------------------")
 
         if not stdin:
