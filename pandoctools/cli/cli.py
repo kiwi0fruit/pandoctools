@@ -11,6 +11,7 @@ import io
 from typing import Tuple
 from ..pandoc_filter_arg import pandoc_filter_arg, is_bin_ext_maybe
 from ..shared_vars import pandoctools_user, pandoctools_user_data, pandoctools_core
+from knitty.tools import get, load_yaml
 
 
 PROFILE = 'Default'
@@ -276,9 +277,7 @@ def pandoctools(input_file, input_file_stdin, profile, out, read, to, stdout, ye
     # #
     if not (profile and out and read and to):
         # Read metadata:
-        m = re.search(r'(?:^|\n)---\n(.+?\n)(?:---|\.\.\.)(?:\n|$)', doc, re.DOTALL)
-        metadata = yaml.load(m.group(1)) if m else None
-        pandoctools_meta = metadata.get('pandoctools', None) if isinstance(metadata, dict) else None
+        pandoctools_meta = get(load_yaml(doc), 'pandoctools')
         if not isinstance(pandoctools_meta, dict):
             pandoctools_meta = {}
         # Mod options if needed:
