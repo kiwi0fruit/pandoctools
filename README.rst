@@ -21,7 +21,7 @@ filter is OK.
 Update instructions
 -------------------
 
-(*Update instructions to v.1.2.0*)
+(*Update instructions to*\ **v.1.3.0**)
 
 -  Switch to bash profiles as batch profiles are no longer supported
    (and install bash if needed),
@@ -31,15 +31,13 @@ Update instructions
 -  Import matplotlib and feather helpers from separate modules:
    ```matplotlibhelper`` <https://github.com/kiwi0fruit/matplotlibhelper>`__,
    ```featherhelper`` <https://github.com/kiwi0fruit/featherhelper>`__,
--  v1.2.0 is not backward compatible but profiles can be easily fixed.
-   Uninstall Pandoctools before updating. Update your custom bash
+-  **v1.3.0** is not backward compatible but profiles can be easily
+   fixed. Uninstall Pandoctools before updating. Update your custom bash
    scripts as names and logic changed. References:
-   ```Args-Main.sh`` <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Args-Main.sh>`__,
-   ```Profile-Kiwi.sh`` <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Profile-Kiwi.sh>`__,
-   ```Pipe-ipynb.sh`` <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Pipe-ipynb.sh>`__.
--  v1.2.3: update
-   ```Pipe-ipynb.sh`` <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Pipe-ipynb.sh>`__
-   (see line ``post-knitty --to-ipynb``).
+   ```Default_args`` <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_args>`__,
+   ```Kiwi`` <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Kiwi>`__
+   (profile),
+   ```Default_pipe`` <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_pipe>`__.
 
 Contents
 ========
@@ -75,7 +73,9 @@ Notable parts of Pandoctools
    generation tool via Jupyter, Pandoc and Markdown. Insert python code
    (or other Jupyter kernel code) to the Markdown document and have
    code’s results in the output document. Can even export to Jupyter
-   ipynb notebooks.
+   ipynb notebooks. You can use
+   `vscode-ipynb-py-converter <https://github.com/nojvek/vscode-ipynb-py-converter>`__
+   to convert .ipynb to .py to use with Knitty.
 -  `SugarTeX <https://github.com/kiwi0fruit/sugartex>`__ (dependence):
    SugarTeX is a more readable LaTeX language extension and
    transcompiler to LaTeX.
