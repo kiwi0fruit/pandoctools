@@ -13,14 +13,13 @@ Pandoctools is a combination of tools that help write reproducible markdown repo
 
 ## Update instructions
 
-(*Update instructions to v.1.2.0*)
+(*Update instructions to __v.1.3.0__*)
 
 * Switch to bash profiles as batch profiles are no longer supported (and install bash if needed),
 * `results=pandoc` was a misunderstanding. The right way to output Markdown is to use  
   `from IPython.display import Markdown; Markdown('hello')`.
 * Import matplotlib and feather helpers from separate modules: [`matplotlibhelper`](https://github.com/kiwi0fruit/matplotlibhelper), [`featherhelper`](https://github.com/kiwi0fruit/featherhelper),
-* v1.2.0 is not backward compatible but profiles can be easily fixed. Uninstall Pandoctools before updating. Update your custom bash scripts as names and logic changed. References: [`Args-Main.sh`](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Args-Main.sh), [`Profile-Kiwi.sh`](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Profile-Kiwi.sh), [`Pipe-ipynb.sh`](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Pipe-ipynb.sh).
-* v1.2.3: update [`Pipe-ipynb.sh`](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Pipe-ipynb.sh) (see line `post-knitty --to-ipynb`).
+* **v1.3.0** is not backward compatible but profiles can be easily fixed. Uninstall Pandoctools before updating. Update your custom bash scripts as names and logic changed. References: [`Default_args`](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_args), [`Kiwi`](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Kiwi) (profile), [`Default_pipe`](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_pipe).
 
 
 # Contents

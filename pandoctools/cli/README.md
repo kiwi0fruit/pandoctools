@@ -14,9 +14,9 @@ pandoctools:
 
 You can use special shortcuts in `profile` and `out` definitions: `*` mean input file basename without extension, `*.*` mean input file basename with extension.
 
-Pandoctools automatically searches for [`Profile-Default.sh`](../sh/Profile-Default.sh) in special folders: first - folder in user data, then - [folder in python module](../sh) (actually all files defined in shell scripts and `Defaults.ini` are searched in that order, so you can replace a file in a chain simply by putting it to the folder in user data). Folder in user data is `%APPDATA%\pandoc\pandoctools` on Windows, `~/.pandoc/pandoctools` on Unix.
+Pandoctools automatically searches for [`Default`](../sh/Default) profile in special folders: first - folder in user data, then - [folder in python module](../sh) (actually all files defined in shell scripts and `Defaults.ini` are searched in that order, so you can replace a file in a chain simply by putting it to the folder in user data). Folder in user data is `%APPDATA%\pandoc\pandoctools` on Windows, `~/.pandoc/pandoctools` on Unix.
 
-Shortcuts to these folders are created on the desktop. Profile can import other shell scripts from that special folders and read files from there. For example [this one](../sh/Args-Main.sh) defines CLI options depending on output format, and [that one](../sh/Pipe-Main.sh) defines text convertion pipeline with CLI text filters. Moreover, profiles can use environment variables defined in Pandoctools CLI application - this shortens shell scripts and makes them more readable.
+Shortcuts to these folders are created on the desktop. Profile can import other shell scripts from that special folders and read files from there. For example [this one](../sh/Default_args) defines CLI options depending on output format, and [that one](../sh/Default_pipe) defines text convertion pipeline with CLI text filters. Moreover, profiles can use environment variables defined in Pandoctools CLI application - this shortens shell scripts and makes them more readable.
 
 I tried to make shell scripts short and transparent so you can easily copy/tune them.
 
@@ -35,7 +35,7 @@ After installation you would have a shortcut on the desktop. Recommended ways to
 Usage: pandoctools [OPTIONS] [INPUT_FILE]
 
   Pandoctools is a Pandoc profile manager that stores CLI filter pipelines.
-  (default INPUT_FILE is "Untitled").
+  (default INPUT_FILE is "untitled").
 
   Profiles are searched in user data: "%APPDATA%\pandoc\pandoctools" then in
   python module: "<miniconda3>\envs\<env>\lib\site-packages\pandoctools\sh".
@@ -86,15 +86,7 @@ Options:
   --debug                      Debug mode.
   --help                       Show this message and exit.
 ```
-When run without arguments pandoctools would print:
 
-```
-Input file was not provided. 
-Recommended ways to run Pandoctools are to:
-- add it to 'Open With' applications for desired file format,
-- drag and drop file over pandoctools shortcut,
-- run it from console, see: pandoctools --help
-```
 (optional on Windows):
 ```
 ERROR: Bash was not found by the path provided in INI file.
