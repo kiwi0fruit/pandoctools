@@ -1,2 +1,2 @@
 #!/bin/bash
-cygpath "$(pandoctools-resolve.exe "$@")"
+cygpath "$(pandoctools-resolve-win.exe "$@")"
