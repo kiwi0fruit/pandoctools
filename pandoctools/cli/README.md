@@ -120,6 +120,7 @@ Pandoctools comes with convenience CLI apps:
 * [**panfl**](../../docs/panfl.md) allows [Panflute](https://github.com/sergiocorreia/panflute) to be run as a command line script so it can be used in Pandoctools shell scripts.
 * [**cat-md**](../cat_md) is a simple CLI tool that concatenates input files with stdin input (joins them with double new lines) and prints to stdout.
 * [**pandoc-filter-arg**](../pandoc_filter_arg) is a CLI interface that prints argument that is passed by Pandoc to it's filters.
+* [**pandoctools-resolve**](../pandoctools_resolve) is a CLI tool that resolves and echoes absolute path to the file by its basename by searching in two Pandoctools folders.
 
 
 ## Environment variables predefined in Pandoctools CLI application:
@@ -139,5 +140,5 @@ Pandoctools comes with convenience CLI apps:
 * `important_from` - bool: whether `from` was set by user
 * `important_to` - bool: whether `to` was set by user
 * `is_bin_ext_maybe` - Pandoctools nice guess if the `output_file` extension (or `to` if no ext) means that Pandoc needs adding `-o "${output_file}"` option
-* `PYTHONIOENCODING` (win) = `utf-8`
-* `LANG` (win) = `C.UTF-8`
+* `PYTHONIOENCODING` = `utf-8` (Windows only)
+* `LANG` = `C.UTF-8` (Windows only)

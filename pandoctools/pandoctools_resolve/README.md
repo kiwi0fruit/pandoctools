@@ -1,7 +1,7 @@
 # pandoctools-resolve
 
 ```
-Usage: pandoctools-resolve-win [OPTIONS] FILE_BASENAME
+Usage: pandoctools-resolve [OPTIONS] FILE_BASENAME
 
   Inside Pandoctools shell scripts use alias: $resolve
 
@@ -18,5 +18,5 @@ Options:
 
 Usage examples:
 
-* `yml="$($resolve profile.yml --else default.yml)"`
-* `source "$($resolve profile --else default)"`
+* `yml="$($resolve Profile.yml --else Default.yml)"`
+* `source "$($resolve Profile --else Default)"`
