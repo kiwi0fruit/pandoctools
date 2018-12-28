@@ -277,7 +277,7 @@ def pandoctools(input_file, input_file_stdin, profile, out, read, to, stdout, ye
     # #
     if not (profile and out and read and to):
         # Read metadata:
-        pandoctools_meta = get(load_yaml(doc), 'pandoctools')
+        pandoctools_meta = get(load_yaml(doc)[1], 'pandoctools')
         if not isinstance(pandoctools_meta, dict):
             pandoctools_meta = {}
         # Mod options if needed:
