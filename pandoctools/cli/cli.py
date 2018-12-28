@@ -205,22 +205,22 @@ May be (?) for security concerns the user data folder should be set to write-all
 """)
 @click.argument('input_file', type=str, default=None, required=False)
 @click.option('-i', '--in', input_file_stdin, type=str, default=None,
-              help='Input file path for when INPUT_FILE argument wasn't provided and we read from stdin ' +
+              help="Input file path for when INPUT_FILE argument wasn't provided and we read from stdin " +
                    '(INPUT_FILE has a priority).')
 @click.option('-p', '--profile', type=str, default=None,
-              help='Pandoctools profile name or file path (default is "Default").')
+              help='Pandoctools profile name or file path (default is in INI: "Default").')
 @click.option('-o', '--out', type=str, default=None,
               help='Output file path like "./out/doc.html" ' +
-                   'or input file path transformation like "./out/*.ipynb" (default is "*.*.md"). ' +
-                   '`-o "-"` switches output to stdout but doesn't override `out:` in metadata.')
+                   'or input file path transformation like "./out/*.ipynb" (default is in INI: "*.*.md"). ' +
+                   '`-o "-"` switches output to stdout but doesn\'t override `out: x` in metadata.')
 @click.option('-f', '-r', '--from', '--read', 'read', type=str, default=None,
-              help="Pandoc reader option (extended with custom formats).")
+              help="Pandoc reader option (can be extended with custom formats handled in profiles).")
 @click.option('-t', '-w', '--to', '--write', 'to', type=str, default=None,
-              help="Pandoc writer option (extended with custom formats).")
+              help="Pandoc writer option (can be extended with custom formats handled in profiles).")
 @click.option('-s', '--stdout', type=str, default=None,
               help="Same as --out but write document to stdout (has a priority over --out). " +
-                   '`-s "-"` switches output to stdout but doesn't override `out: x` in metadata.' +
-                   "If --stdout but stdout output was empty then the profile (not Pandoctools itself) " +
+                   '`-s "-"` switches output to stdout but doesn\'t override `out: x` in metadata.' +
+                   "If switched to stdout but stdout output was empty then the profile (not Pandoctools itself) " +
                    "always writes output file to disc and doesn't write " + 
                    "to stdout with the particular options.")
 @click.option('--yes', is_flag=True, default=False,
@@ -228,9 +228,9 @@ May be (?) for security concerns the user data folder should be set to write-all
 @click.option('--cwd', is_flag=True, default=False,
               help="Use real CWD everywhere (instead of input file directory as default).")
 @click.option('--detailed-out', is_flag=True, default=False,
-              help="With this option when in --stdout mode pandoctools stdout consist of yaml " +
+              help="With this option when in stdout mode pandoctools stdout consist of yaml " +
               "metadata section ---... with 'outpath' and 'output' keys that is followed by profile stdout " +
-              "(when not --stdout or profile stdout output was empty then key 'output: None').")
+              "(when not in stdout mode or profile stdout output was empty then key 'output: None').")
 @click.option('--debug', is_flag=True, default=False, help="Debug mode.")
 def pandoctools(input_file, input_file_stdin, profile, out, read, to, stdout, yes, cwd, detailed_out, debug):
     """
