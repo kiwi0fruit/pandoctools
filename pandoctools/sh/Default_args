@@ -52,9 +52,9 @@ extra_writer_args=()
 # deal with reader formats:
 # ---------------------------
 #   predefined $from is always lowercase
-if   [ "${important_from}" == "true" ]; then
+if   [[ "${important_from}" == "true" ]]; then
     :;
-elif [ "${in_ext}" == "py" ]; then
+elif [[ "${in_ext}" == "py" ]]; then
     from=markdown
 fi
 
@@ -67,26 +67,26 @@ _meta_ipynb_py3="$("$resolve" _ipynb_py3.yml)"
 _templ_docx="$("$resolve" "$profile.docx" --else Default.docx)"
 
 #   predefined $to is always lowercase
-if   [ "${important_to}" == "true" ]; then
+if   [[ "${important_to}" == "true" ]]; then
     :;
-elif [ "${out_ext}" == "ipynb" ]; then
+elif [[ "${out_ext}" == "ipynb" ]]; then
     to="${_jupymd}"
 fi
 
 # custom $to format: "r.ipynb" or "r.ipynb:format"
-if   [ "${to:0:7}" == "r.ipynb" ]; then
+if   [[ "${to:0:7}" == "r.ipynb" ]]; then
     extra_inputs=("${_meta_ipynb_R}" "${extra_inputs[@]}")
-    if [ "${to:8}" != "" ]; then
+    if [[ "${to:8}" != "" ]]; then
         to="${to:8}"
     else
         to="${_jupymd}"; fi
-elif [ "${out_ext}" == "ipynb" ]; then
+elif [[ "${out_ext}" == "ipynb" ]]; then
     extra_inputs=("${_meta_ipynb_py3}" "${extra_inputs[@]}")
 
-elif [ "${out_ext}" == "docx" ]; then
+elif [[ "${out_ext}" == "docx" ]]; then
     extra_writer_args=(--reference-doc "${_templ_docx}" -o "${output_file}" "${extra_writer_args[@]}")
 
-elif [ "${is_bin_ext_maybe}" == "true" ]; then
+elif [[ "${is_bin_ext_maybe}" == "true" ]]; then
     extra_writer_args=(-o "${output_file}" "${extra_writer_args[@]}")
 fi
 

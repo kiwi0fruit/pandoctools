@@ -12,7 +12,7 @@ full_path="$(type -p "$1")"
 all_but_first="${@:2}"
 
 
-if [ -f "${full_path}" ]; then
+if [[ -f "${full_path}" ]]; then
     source "${full_path}" "${all_but_first}"
 else
     echo "$1 was not found in \$PATH or is not a file."
