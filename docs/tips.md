@@ -65,6 +65,6 @@ If you are not satisfied with [SugarTeX](sugartex.md) and standard LaTeX you may
 
 # Install Typescript
 
-* First install [zeromq](https://github.com/zeromq/zeromq.js/) (I on Windows used from source installation: [Visual C++ Build Tools](http://go.microsoft.com/fwlink/?LinkId=691126) with `npm config set msvs_version 2015` and creating conda environment for python 2: `conda create -n python2 python=2.7`),
+* First install [zeromq](https://github.com/zeromq/zeromq.js/) (on Windows I used from source installation: [Microsoft Visual C++ Build Tools 2015](http://go.microsoft.com/fwlink/?LinkId=691126) or [Build Tools for Visual Studio 2017](https://www.visualstudio.com/thank-you-downloading-visual-studio/?sku=BuildTools&rel=15) - I don't remember what was installed - with `npm config set msvs_version 2015` and creating conda environment for python 2: `conda create -n python2 python=2.7`),
 * Then install [itypescript](https://www.npmjs.com/package/itypescript).
 
