@@ -3,6 +3,7 @@
 * [Reload imported modules in Hydrogen](#reload-imported-modules-in-hydrogen)
 * [Install R](#install-r)
 * [Install LyX](#install-lyx)
+* [Install Typescript](#install-typescript)
 
 
 # Reload imported modules in Hydrogen
@@ -60,3 +61,10 @@ If you are not satisfied with [SugarTeX](sugartex.md) and standard LaTeX you may
 * In order to edit formulas between `$$...$$` again you need to copy the code with only two `$...$` and paste it into LyX display formula object (**Insert** → **Display Formula**).
 * **LyX** needs [**MiKTeX**](https://miktex.org/download). So you should install it as well (MiKTeX is bundled with one of the LyX installers).
 * Tip: `Ctrl+Enter` creates a new line in LyX.
+
+
+# Install Typescript
+
+* First install [zeromq](https://github.com/zeromq/zeromq.js/) (don't forget `npm config set msvs_version 2015`),
+* Then install [itypescript](https://www.npmjs.com/package/itypescript).
+
