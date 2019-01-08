@@ -103,11 +103,4 @@ Optionally install some useful Atom packages:
 * [**file-watcher**](https://atom.io/packages/file-watcher) (by *lwblackledge*): helps simultaneously open and edit files in two editors. To use it with PyCharm you should disable PyCharm "safe write" (**Settings → Appearance and Behavior → System Settings → Synchronization → Use "safe write"**).
 * [**git-time-machine**](https://atom.io/packages/git-time-machine) (by *littlebee*): see difference with any older Git commit (if you add markdown document to the Git repository). This can be useful for authoring edits (7zip the whole repository and send).
 * [**language-batchfile**](https://atom.io/packages/language-batchfile) (by *mmims*): syntax highlighting and snippets for batch files.
-* [**highlight-bad-chars**](https://github.com/kiwi0fruit/atom-highlight-bad-chars) (by *ohanhi*) (v1.4.1 - latest Unicode compatible): highlights some Unicode characters that can be confused with standard ANSI (like no-break spaces). Install:
-  ```
-  apm install https://github.com/kiwi0fruit/atom-highlight-bad-chars
-  # if unlink bug then repeat:
-  apm uninstall highlight-bad-chars
-  apm install https://github.com/kiwi0fruit/atom-highlight-bad-chars
-  ```
-  The package might be buggy so you may need to periodically edit the file to make the package work.
+* [**highlight-bad-chars-bl**](https://atom.io/packages/highlight-bad-chars-bl) (by *ohanhi* and *kiw0fruit*): highlights some Unicode characters that can be confused with standard ANSI (like no-break spaces). The package might be buggy so you may need to periodically edit the file to make the package work.
