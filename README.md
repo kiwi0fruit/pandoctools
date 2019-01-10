@@ -28,7 +28,7 @@ Pandoctools is a combination of tools that help write reproducible markdown repo
   * [Update instructions](#update-instructions)
 * [Contents](#contents)
 * [Notable parts of Pandoctools](#notable-parts-of-pandoctools)
-* [Examples markdown to ipynb](#examples-markdown-to-ipynb)
+* [Examples](#examples)
 * [Install](#install)
 * [Useful tips (reload imported modules in Hydrogen, R kernel, LyX)](#useful-tips-reload-imported-modules-in-hydrogen-r-kernel-lyx)
 * [Alternatives to R Markdown (Markdown-based Literate Programming)](#alternatives-to-r-markdown-markdown-based-literate-programming)
@@ -51,7 +51,7 @@ And the best one for it is:
 * Must have plugins: [**SugarTeX Completions**](https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom.md#sugartex-completions), [**Unix Filter**](https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom.md#unix-filter), [**Hydrogen**](https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom.md#hydrogen), [**Markdown Preview Plus**](https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom.md#markdown-preview-plus)
 
 
-# Examples markdown to ipynb
+# Examples
 
 Here are [**examples**](https://github.com/kiwi0fruit/pandoctools/blob/master/examples) that demonstrate converting documents:
 
