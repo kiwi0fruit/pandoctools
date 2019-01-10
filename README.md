@@ -58,6 +58,8 @@ Here are [**examples**](https://github.com/kiwi0fruit/pandoctools/blob/master/ex
 * from markdown `.md` with Jupyter python code blocks, SugarTeX math and cross-references to `ipynb` notebook.
 * from Hydrogen/python notebook `.py` with Atom/Hydrogen code cells, Knitty markdown incerts (again with SugarTeX math and cross-references) to `.ipynb` notebook.
 
+**Examples are given for to .ipynb conversion but Pandoctools surely capable of conversion to .html, .pdf, .md.md or any Pandoc output format.**
+
 
 # Install
 
