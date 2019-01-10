@@ -60,6 +60,10 @@ Here are [**examples**](https://github.com/kiwi0fruit/pandoctools/blob/master/ex
 
 **Examples are given for to .ipynb conversion but Pandoctools surely capable of conversion to .html, .pdf, .md.md or any Pandoc output format.**
 
+Extras:
+
+* If you need to capture Matplotlib plots please see [matplotlibhelper](https://github.com/kiwi0fruit/matplotlibhelper) (the approach showed in examples there can be used with other plot libraries).
+
 
 # Install
 
