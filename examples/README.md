@@ -4,3 +4,7 @@ Here are examples that demonstrate converting documents:
 * from [Atom+Hydrogen python notebook](notebook.py) `notebook.py` with Hydrogen code cells and Knitty markdown inserts (again with SugarTeX math and cross-references) to `.ipynb` [notebook](https://nbviewer.jupyter.org/github/kiwi0fruit/pandoctools/blob/master/examples/notebook.ipynb).
 
 **Examples are given for to .ipynb conversion but Pandoctools surely capable of conversion to .html, .pdf, .md.md or any Pandoc output format.**
+
+Extras:
+
+* If you need to capture Matplotlib plots please see [matplotlibhelper](https://github.com/kiwi0fruit/matplotlibhelper) (the approach showed in examples there can be used with other plot libraries).
