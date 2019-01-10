@@ -1,3 +1,5 @@
+# Examples
+
 Here are examples that demonstrate converting documents:
 
 * from [markdown](doc.md.md) `doc.md` with Jupyter python code blocks, SugarTeX math and cross-references to `ipynb` [notebook](https://nbviewer.jupyter.org/github/kiwi0fruit/pandoctools/blob/master/examples/doc.ipynb).
