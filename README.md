@@ -74,19 +74,17 @@ Extras:
 * Install [Miniconda](https://conda.io/miniconda.html),
 * Install [Git together with Bash](https://git-scm.com/downloads).  
   Git is needed for writing text conversion profiles in cross-platform bash language,
-* :
-  ```
-  :: fresh install preparations:
-  :: ---------------------------
+* Fresh install preparations (incl. creating "myenv" conda environment):
+  ```bat
   call activate root
   conda update conda
   conda create -n myenv python=3 pip setuptools
 
   call activate myenv
   conda update python pip setuptools
-
-  :: pandoctools installation:
-  :: -------------------------
+  ```
+* Pandoctools installation:
+  ```bat
   conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" ^
   jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters ^
   pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook ^
@@ -117,19 +115,18 @@ Extras:
 Via conda:
 
 * Install [Miniconda](https://conda.io/miniconda.html),
-* :
-  ```
-  # fresh install preparations:
-  # ---------------------------
+* Fresh install preparations (incl. creating "myenv" conda environment):
+  ```bash
   source activate root
   conda update conda
   conda create -n myenv python=3 pip setuptools
 
   source activate myenv
   conda update python pip setuptools
+  ```
 
-  # pandoctools installation:
-  # -------------------------
+* Pandoctools installation:
+  ```bash
   conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" \
   jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters \
   pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook \
