@@ -77,6 +77,7 @@ Extras:
 * :
   ```
   :: fresh install preparations:
+  :: ---------------------------
   call activate root
   conda update conda
   conda create -n myenv python=3 pip setuptools
@@ -85,12 +86,13 @@ Extras:
   conda update python pip setuptools
 
   :: pandoctools installation:
+  :: -------------------------
   conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" ^
   jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters ^
   pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook ^
   jupyter future shutilwhich cython pywin32 pandas
 
-  pip install panflute knitty sugartex shortcutter pandoctools pandoctools-ready
+  pip install pandoctools pandoctools-ready
   ```
 * Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) (compatible with pandoc version) to `<miniconda-path>/envs/myenv/Library/bin`,
 * Tips:
@@ -118,6 +120,7 @@ Via conda:
 * :
   ```
   # fresh install preparations:
+  # ---------------------------
   source activate root
   conda update conda
   conda create -n myenv python=3 pip setuptools
@@ -126,12 +129,13 @@ Via conda:
   conda update python pip setuptools
 
   # pandoctools installation:
+  # -------------------------
   conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" \
   jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters \
   pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook \
   jupyter future shutilwhich cython pandas
 
-  pip install panflute knitty sugartex shortcutter pandoctools pandoctools-ready
+  pip install pandoctools pandoctools-ready
   ```
 * Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) (compatible with pandoc version) to `<miniconda-path>/envs/myenv/bin`,
 * Tips:
