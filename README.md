@@ -107,7 +107,7 @@ Extras:
   ```
   pip install pandoctools pandoctools-ready
   ```
-* Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) (compatible with pandoc version) to `<miniconda-path>/envs/myenv/Scripts`,
+* Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) (compatible with pandoc version) to virtual environment's `.\Scripts` folder.
 
 
 ## Unix:
@@ -146,7 +146,7 @@ Via pip:
   ```
   pip install pandoctools pandoctools-ready
   ```
-* Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) (compatible with pandoc version) to `<miniconda-path>/envs/myenv/bin`.
+* Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) (compatible with pandoc version) to virtual environment's `./bin` folder.
 
 
 # Useful tips (reload imported modules in Hydrogen, R kernel, LyX)
