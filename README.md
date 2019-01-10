@@ -76,6 +76,7 @@ Extras:
   Git is needed for writing text conversion profiles in cross-platform bash language,
 * :
   ```
+  :: fresh install preparations:
   call activate root
   conda update conda
   conda create -n myenv python=3 pip setuptools
@@ -83,6 +84,7 @@ Extras:
   call activate myenv
   conda update python pip setuptools
 
+  :: pandoctools installation:
   conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" ^
   jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters ^
   pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook ^
@@ -115,6 +117,7 @@ Via conda:
 * Install [Miniconda](https://conda.io/miniconda.html),
 * :
   ```
+  # fresh install preparations:
   source activate root
   conda update conda
   conda create -n myenv python=3 pip setuptools
@@ -122,6 +125,7 @@ Via conda:
   source activate myenv
   conda update python pip setuptools
 
+  # pandoctools installation:
   conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" \
   jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters \
   pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook \
