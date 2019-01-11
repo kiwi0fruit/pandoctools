@@ -1,6 +1,7 @@
 import pandas as pd
 import re
 from typing import Iterable, Union
+from tabulate import tabulate
 
 
 def md_table(df: pd.DataFrame, format_: Union[dict, str, Iterable[str]]=None) -> str:
@@ -16,31 +17,35 @@ def md_table(df: pd.DataFrame, format_: Union[dict, str, Iterable[str]]=None) ->
     """
     # Process format_:
     # ----------------
-    L = len(df.columns)
     DEFAULT = '---'
-
+    columns = list(df.columns)
     if format_ is None:
-        format_ = [DEFAULT for i in range(L)]
+        format_ = {}
     elif isinstance(format_, dict):
         try:
             tmp_format = {}
-            for key in format_.keys():
-                ikey = int(key)  # can raise ValueError exception
-                if ikey >= 0:
-                    tmp_format[key] = format_[key]
-                elif -ikey <= L:
-                    tmp_format[str(L + ikey)] = format_[key]
+            L = len(df.columns)
+            for int_key in format_.keys():
+                i = int(int_key)  # can raise ValueError exception
+                if i >= 0:
+                    tmp_format[columns[i]] = format_[int_key]
+                elif -i <= L:
+                    tmp_format[columns[L + i]] = format_[int_key]
             # can no longer raise ValueError exception
-            format_ = [tmp_format.get(str(i), DEFAULT) for i in range(L)]
+            format_ = tmp_format
         except ValueError:
             # there is a non int key in the format_ dict
-            format_ = [format_.get(key, DEFAULT) for key in list(df.columns)]
+            format_ = {key: format_.get(key) for key in columns if format_.get(key)}
     else:
         if isinstance(format_, str):
             format_ = filter(None, format_.split('|'))
         format_ = list(format_)
-        format_ = [(format_[i] if i < len(format_) else DEFAULT) for i in range(L)]
+        format_ = {key: format_[i] for i, key in enumerate(columns) if i < len(format_)}
 
+    # [DEFAULT for i in range(L)]
+    # format_ = [tmp_format.get(str(i), DEFAULT) for i in range(L)]
+    # format_ = [format_.get(key, DEFAULT) for key in list(df.columns)]
+    # format_ = [(format_[i] if i < len(format_) else DEFAULT) for i in range(L)]
     # Check format_:
     # --------------
     regex = re.compile(r'^:?-+:?$')
@@ -53,6 +58,7 @@ def md_table(df: pd.DataFrame, format_: Union[dict, str, Iterable[str]]=None) ->
 
     # Convert:
     # --------
+    tabulate(df, headers=df.columns, tablefmt="pipe")
     df_format = pd.DataFrame([format_], columns=df.columns)
     df_formatted = pd.concat([df_format, df])
     return df_formatted.to_csv(sep='|', index=False, na_rep='NaN')
