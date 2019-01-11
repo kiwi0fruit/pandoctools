@@ -4,81 +4,144 @@ from typing import Iterable, Union
 from tabulate import tabulate
 
 
-def md_table(df: pd.DataFrame, format_: Union[dict, str, Iterable[str]]=None) -> str:
+class TabulateHelperError(Exception):
+    pass
+
+
+def md_table(tabular_data: Union[pd.DataFrame, object],
+             headers: tuple = None,
+             format_: Union[dict, str, Iterable[str]] = None,
+             **kwargs) -> str:
     """
-    Converts Pandas dataframe to Markdown table.
+    Converts tabular data like Pandas dataframe to
+    GitHub Flavored Markdown table.
 
     Markdown table format examples:
 
     * ``{'0': '-:', '-1': ':-:'}`` - only int keys
     * ``dict(foo='-:', bar=':-:', **{'-1': ':-'})`` -
-      any keys that incl. column names (has priority
-      if all keys match column names that are ints)
+      any keys that incl. column names (has priority if
+      all keys are from column names that are integers)
     * ``'--|-:|--'`` or ``'|--|-:|--|'``
     * ``['--', '-:', '--']`` - iterable
+
+    Parameters
+    ----------
+    tabular_data :
+        tabulate.tabulate(tabular_data[,...]) argument
+    headers :
+        tabulate.tabulate(..., headers[,...]) argument.
+        If tabular_data is pd.DataFrame then default is
+        tabular_data.columns converted to Tuple[str]
+    format_ :
+        GitHub Flavored Markdown table align format
+    kwargs :
+        Other tabulate.tabulate(...) keyword arguments
     """
-    # Process format_:
-    # ----------------
-    DEFAULT = '---'
-    columns = list(df.columns)
+    if (headers is None) and isinstance(tabular_data, pd.DataFrame):
+        headers = tuple(map(str, tabular_data.columns))
 
-    if format_ is None:
-        format_ = {}
-    elif isinstance(format_, dict):
-        if all(key in columns for key in format_.keys()):
+    if headers is not None:
+        kwargs['headers'] = headers
+    kwargs['tablefmt'] = "pipe"
+
+    md_tbl = tabulate(tabular_data, **kwargs)
+
+    def apply_format(m):
+        nonlocal headers, format_
+        string = m.group(0)
+
+        default_formats = string.split('|')
+        width = len(default_formats)
+
+        # Determine if headers can be used as keys if format_ is a dict:
+        # ---------------------------------------------
+        good_headers = False
+        if headers is None:
             pass
-        else:
-            try:
-                tmp_format = {}
-                L = len(columns)
-                for int_key in format_.keys():
-                    # can raise ValueError exception:
-                    i = int(int_key)
-                    if i >= 0:
-                        tmp_format[columns[i]] = format_[int_key]
-                    elif -i <= L:
-                        tmp_format[columns[L + i]] = format_[int_key]
-                # can no longer raise ValueError exception
-                format_ = tmp_format
-            except ValueError:
-                # there is a non int key in the format_ dict
-                format_ = {key: format_.get(key) for key in columns if format_.get(key)}
-    else:
-        if isinstance(format_, str):
-            format_ = filter(None, format_.split('|'))
-        format_ = list(format_)
-        format_ = {key: format_[i] for i, key in enumerate(columns) if i < len(format_)}
+        elif (
+            len(default_formats) == len(set(headers)) and
+            all(isinstance(hdr, str) for hdr in headers)
+        ):
+            good_headers = True
 
-    # [DEFAULT for i in range(L)]
-    # format_ = [tmp_format.get(str(i), DEFAULT) for i in range(L)]
-    # format_ = [format_.get(key, DEFAULT) for key in list(df.columns)]
-    # format_ = [(format_[i] if i < len(format_) else DEFAULT) for i in range(L)]
-    # Check format_:
-    # --------------
-    regex = re.compile(r'^:?-+:?$')
-    for key, fmt in format_.items():
-        try:
-            if not regex.match(fmt):
-                raise ValueError("Incorrect Markdown table format: '{}'".format(fmt))
-        except TypeError as e:
-            raise TypeError("Incorrect Markdown table format: '{}'. {}".format(fmt, e))
+        # Process format_ to formats:
+        # ---------------------------------------------
+        if isinstance(format_, dict):
+            _headers = tuple(headers)
+            if good_headers and all(key in _headers for key in format_.keys()):
+                formats = [format_.get(key, '') for key in headers]
+            else:
+                try:
+                    formats = [''] * width
+                    for ikey in format_.keys():
+                        i = int(ikey)  # can raise ValueError
+                        if (i >= 0) and (i < width):
+                            formats[i] = format_[ikey]
+                        elif (i < 0) and (-i <= width):
+                            formats[width + i] = format_[ikey]
+                except ValueError:
+                    # there is a non int key in the format_ dict
+                    formats = [format_.get(key, '') for key in headers] if good_headers else [''] * width
+
+        elif format_ is None:
+            formats = [''] * width
+        else:
+            if isinstance(format_, str):
+                fmts = format_.split('|')
+                fmts = fmts[(1 if fmts[0] == '' else 0):(-1 if fmts[-1] == '' else None)]
+            else:
+                fmts = list(format_)
+            formats = (fmts + [''] * width)[:width]
+
+        # Check formats:
+        # ---------------------------------------------
+        for fmt in formats:
+            try:
+                if not re.match(r'^:?-+:?$', fmt):
+                    raise ValueError("Incorrect Markdown table format: '{}'".format(fmt))
+            except TypeError as e:
+                raise TypeError("Incorrect Markdown table format: '{}'. {}".format(fmt, e))
+
+        # Apply custom formats to default_formats:
+        # ---------------------------------------------
+        formats = (fmt[0] + def_fmt[1:-1] + fmt[-1] if fmt else def_fmt
+                   for fmt, def_fmt in zip(formats, default_formats))
+        return '|'.join(formats)
 
     # Convert:
     # --------
-    md_tbl = tabulate(df, headers=columns, tablefmt="pipe")
-    md_tbl = re.sub(r'(?<=\n)[^\r\n]+(?=\r?\n)', apply_format, md_tbl, count=1)
-    df_format = pd.DataFrame([format_], columns=df.columns)
-    df_formatted = pd.concat([df_format, df])
-    return df_formatted.to_csv(sep='|', index=False, na_rep='NaN')
+    return re.sub(r'(?<=\n\|):?-+:?(\|:?-+:?)*(?=\|\r?\n)', apply_format, md_tbl, count=1)
 
 
-def md_header(df: pd.DataFrame) -> str:
+def md_header(tabular_data: Union[pd.DataFrame, object],
+              headers: tuple = None,
+              **kwargs) -> str:
     """
+    Converts tabular data like Pandas dataframe to
+    GitHub Flavored Markdown table
+
+    **but** prints only table header + empty row.
+
+    Parameters
+    ----------
+    tabular_data :
+        tabulate.tabulate(tabular_data[,...]) argument
+    headers :
+        tabulate.tabulate(..., headers[,...]) argument.
+        If tabular_data is pd.DataFrame then default is
+        tabular_data.columns converted to Tuple[str]
+    kwargs :
+        Other tabulate.tabulate(...) keyword arguments
+
     Returns
     -------
     md :
         Markdown table header + empty row
     """
-    md = md_table(df.iloc[[0]]).split('\n')
-    md[2] = re.sub(r'[^\s|]', '   ', md[2])
-    return '\n'.join(md)
+    iter_rows = re.finditer(r'(^|(?<=\n))[^\r\n]*((?=\r?\n)|$)',
+                            md_table(tabular_data, headers, **kwargs))
+    # noinspection PyUnusedLocal
+    rows = [next(iter_rows).group(0) for i in (0, 1)]
+    rows.append(re.sub(r'[^ |]', ' ', rows[1]))
+    return '\n'.join(rows)
