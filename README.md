@@ -86,9 +86,9 @@ Extras:
 * Pandoctools installation:
   ```bat
   conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" ^
+  click pyyaml pandas notebook jupyter future shutilwhich ^
   jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters ^
-  pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook ^
-  jupyter future shutilwhich cython pywin32 pandas
+  pypandoc psutil nbformat pandoc-attributes pywin32
 
   pip install pandoctools pandoctools-ready
   ```
@@ -128,9 +128,9 @@ Via conda:
 * Pandoctools installation:
   ```bash
   conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" \
+  click pyyaml pandas notebook jupyter future shutilwhich \
   jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters \
-  pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook \
-  jupyter future shutilwhich cython pandas
+  pypandoc psutil nbformat pandoc-attributes
 
   pip install pandoctools pandoctools-ready
   ```
