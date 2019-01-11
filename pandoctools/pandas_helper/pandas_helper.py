@@ -11,31 +11,38 @@ def md_table(df: pd.DataFrame, format_: Union[dict, str, Iterable[str]]=None) ->
     Markdown table format examples:
 
     * ``{'0': '-:', '-1': ':-:'}`` - only int keys
-    * ``dict(foo='-:', bar=':-:')`` - non int keys that are column names
+    * ``dict(foo='-:', bar=':-:', **{'-1': ':-'})`` -
+      any keys that incl. column names (has priority
+      if all keys match column names that are ints)
     * ``'--|-:|--'`` or ``'|--|-:|--|'``
-    * ``['--', '-:', '--']`` - list
+    * ``['--', '-:', '--']`` - iterable
     """
     # Process format_:
     # ----------------
     DEFAULT = '---'
     columns = list(df.columns)
+
     if format_ is None:
         format_ = {}
     elif isinstance(format_, dict):
-        try:
-            tmp_format = {}
-            L = len(df.columns)
-            for int_key in format_.keys():
-                i = int(int_key)  # can raise ValueError exception
-                if i >= 0:
-                    tmp_format[columns[i]] = format_[int_key]
-                elif -i <= L:
-                    tmp_format[columns[L + i]] = format_[int_key]
-            # can no longer raise ValueError exception
-            format_ = tmp_format
-        except ValueError:
-            # there is a non int key in the format_ dict
-            format_ = {key: format_.get(key) for key in columns if format_.get(key)}
+        if all(key in columns for key in format_.keys()):
+            pass
+        else:
+            try:
+                tmp_format = {}
+                L = len(columns)
+                for int_key in format_.keys():
+                    # can raise ValueError exception:
+                    i = int(int_key)
+                    if i >= 0:
+                        tmp_format[columns[i]] = format_[int_key]
+                    elif -i <= L:
+                        tmp_format[columns[L + i]] = format_[int_key]
+                # can no longer raise ValueError exception
+                format_ = tmp_format
+            except ValueError:
+                # there is a non int key in the format_ dict
+                format_ = {key: format_.get(key) for key in columns if format_.get(key)}
     else:
         if isinstance(format_, str):
             format_ = filter(None, format_.split('|'))
@@ -49,7 +56,7 @@ def md_table(df: pd.DataFrame, format_: Union[dict, str, Iterable[str]]=None) ->
     # Check format_:
     # --------------
     regex = re.compile(r'^:?-+:?$')
-    for fmt in format_:
+    for key, fmt in format_.items():
         try:
             if not regex.match(fmt):
                 raise ValueError("Incorrect Markdown table format: '{}'".format(fmt))
@@ -58,7 +65,8 @@ def md_table(df: pd.DataFrame, format_: Union[dict, str, Iterable[str]]=None) ->
 
     # Convert:
     # --------
-    tabulate(df, headers=df.columns, tablefmt="pipe")
+    md_tbl = tabulate(df, headers=columns, tablefmt="pipe")
+    md_tbl = re.sub(r'(?<=\n)[^\r\n]+(?=\r?\n)', apply_format, md_tbl, count=1)
     df_format = pd.DataFrame([format_], columns=df.columns)
     df_formatted = pd.concat([df_format, df])
     return df_formatted.to_csv(sep='|', index=False, na_rep='NaN')
