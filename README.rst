@@ -21,7 +21,7 @@ filter is OK.
 Update instructions
 -------------------
 
-(*Update instructions to*\ **v.1.3.0**)
+(*Update instructions to v.1.3.0*)
 
 -  Switch to bash profiles as batch profiles are no longer supported
    (and install bash if needed),
@@ -29,15 +29,15 @@ Update instructions
    Markdown is to use
    ``from IPython.display import Markdown; Markdown('hello')``.
 -  Import matplotlib and feather helpers from separate modules:
-   ```matplotlibhelper`` <https://github.com/kiwi0fruit/matplotlibhelper>`__,
-   ```featherhelper`` <https://github.com/kiwi0fruit/featherhelper>`__,
+   `matplotlibhelper <https://github.com/kiwi0fruit/matplotlibhelper>`__,
+   `featherhelper <https://github.com/kiwi0fruit/featherhelper>`__,
 -  **v1.3.0** is not backward compatible but profiles can be easily
    fixed. Uninstall Pandoctools before updating. Update your custom bash
    scripts as names and logic changed. References:
-   ```Default_args`` <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_args>`__,
-   ```Kiwi`` <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Kiwi>`__
+   `Default_args <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_args>`__,
+   `Kiwi <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Kiwi>`__
    (profile),
-   ```Default_pipe`` <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_pipe>`__.
+   `Default_pipe <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_pipe>`__.
 
 Contents
 ========
@@ -48,7 +48,7 @@ Contents
 
 -  `Contents <#contents>`__
 -  `Notable parts of Pandoctools <#notable-parts-of-pandoctools>`__
--  `Examples markdown to ipynb <#examples-markdown-to-ipynb>`__
+-  `Examples <#examples>`__
 -  `Install <#install>`__
 -  `Useful tips (reload imported modules in Hydrogen, R kernel,
    LyX) <#useful-tips-reload-imported-modules-in-hydrogen-r-kernel-lyx>`__
@@ -69,11 +69,11 @@ Notable parts of Pandoctools
    Profiles can be used to convert any document of choise in the
    specified manner.
 -  `Knitty <https://github.com/kiwi0fruit/knitty>`__ (dependence):
-   Knitty is another CLI for Stitch/Knotr: reproducible report
-   generation tool via Jupyter, Pandoc and Markdown. Insert python code
-   (or other Jupyter kernel code) to the Markdown document and have
-   code’s results in the output document. Can even export to Jupyter
-   ipynb notebooks. You can use
+   Knitty is a Pandoc filter and another CLI for Stitch/Knotr:
+   reproducible report generation tool via Jupyter, Pandoc and Markdown.
+   Insert python code (or other Jupyter kernel code) to the Markdown
+   document and have code’s results in the output document. Can even
+   export to Jupyter ipynb notebooks. You can use
    `vscode-ipynb-py-converter <https://github.com/nojvek/vscode-ipynb-py-converter>`__
    to convert .ipynb to .py to use with Knitty.
 -  `SugarTeX <https://github.com/kiwi0fruit/sugartex>`__ (dependence):
@@ -82,11 +82,11 @@ Notable parts of Pandoctools
 -  `Pandas
    Helper <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/pandas_helper>`__
    helps print dataframes to Markdown.
--  (_optional_) `Matplotlib
+-  (*optional*) `Matplotlib
    Helper <https://github.com/kiwi0fruit/matplotlibhelper>`__: custom
    helper to tune Matplotlib experience in Atom/Hydrogen and
    Pandoctools/Knitty.
--  (_optional_) `Feather
+-  (*optional*) `Feather
    Helper <https://github.com/kiwi0fruit/featherhelper>`__: concise
    interface to cache 2D numpy arrays and pandas dataframes.
 
@@ -109,8 +109,8 @@ Notable parts of Pandoctools
    `Markdown Preview
    Plus <https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom.md#markdown-preview-plus>`__
 
-Examples markdown to ipynb
-==========================
+Examples
+========
 
 Here are
 `examples <https://github.com/kiwi0fruit/pandoctools/blob/master/examples>`__
@@ -121,6 +121,17 @@ that demonstrate converting documents:
 -  from Hydrogen/python notebook ``.py`` with Atom/Hydrogen code cells,
    Knitty markdown incerts (again with SugarTeX math and
    cross-references) to ``.ipynb`` notebook.
+
+**Examples are given for to .ipynb conversion but Pandoctools surely
+capable of conversion to .html, .pdf, .md.md or any Pandoc output
+format.**
+
+Extras:
+
+-  If you need to capture Matplotlib plots please see
+   `matplotlibhelper <https://github.com/kiwi0fruit/matplotlibhelper>`__
+   (the approach showed in examples there can be used with other plot
+   libraries).
 
 Install
 =======
@@ -134,9 +145,10 @@ Windows:
 -  Install `Git together with Bash <https://git-scm.com/downloads>`__.
    Git is needed for writing text conversion profiles in cross-platform
    bash language,
--  :
+-  Fresh install preparations (incl. creating “myenv” conda
+   environment):
 
-   ::
+   .. code:: bat
 
       call activate root
       conda update conda
@@ -145,12 +157,16 @@ Windows:
       call activate myenv
       conda update python pip setuptools
 
+-  Pandoctools installation:
+
+   .. code:: bat
+
       conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" ^
       jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters ^
       pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook ^
       jupyter future shutilwhich cython pywin32 pandas
 
-      pip install panflute knitty sugartex shortcutter pandoctools pandoctools-ready
+      pip install pandoctools pandoctools-ready
 
 -  Install latest stable
    `pandoc-crossref <https://github.com/lierdakil/pandoc-crossref/releases>`__
@@ -177,8 +193,8 @@ Windows:
 
 -  Install latest stable
    `pandoc-crossref <https://github.com/lierdakil/pandoc-crossref/releases>`__
-   (compatible with pandoc version) to
-   ``<miniconda-path>/envs/myenv/Scripts``,
+   (compatible with pandoc version) to virtual environment’s
+   ``.\Scripts`` folder.
 
 Unix:
 -----
@@ -186,9 +202,10 @@ Unix:
 Via conda:
 
 -  Install `Miniconda <https://conda.io/miniconda.html>`__,
--  :
+-  Fresh install preparations (incl. creating “myenv” conda
+   environment):
 
-   ::
+   .. code:: bash
 
       source activate root
       conda update conda
@@ -197,12 +214,16 @@ Via conda:
       source activate myenv
       conda update python pip setuptools
 
+-  Pandoctools installation:
+
+   .. code:: bash
+
       conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" \
       jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters \
       pypandoc click psutil nbformat pandoc-attributes six pyyaml notebook \
       jupyter future shutilwhich cython pandas
 
-      pip install panflute knitty sugartex shortcutter pandoctools pandoctools-ready
+      pip install pandoctools pandoctools-ready
 
 -  Install latest stable
    `pandoc-crossref <https://github.com/lierdakil/pandoc-crossref/releases>`__
@@ -225,8 +246,8 @@ Via pip:
 
 -  Install latest stable
    `pandoc-crossref <https://github.com/lierdakil/pandoc-crossref/releases>`__
-   (compatible with pandoc version) to
-   ``<miniconda-path>/envs/myenv/bin``.
+   (compatible with pandoc version) to virtual environment’s ``./bin``
+   folder.
 
 Useful tips (reload imported modules in Hydrogen, R kernel, LyX)
 ================================================================
