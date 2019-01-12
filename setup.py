@@ -36,10 +36,10 @@ setup(
     # keywords='sample setuptools development',
     packages=find_packages(exclude=['docs', 'tests']),
 
-    install_requires=['click', 'pyyaml', 'pandas', 'notebook', 'jupyter',
+    install_requires=['click', 'pyyaml', 'notebook', 'jupyter',
                       'panflute>=1.11.1', 'knitty>=0.4.14',
                       'sugartex>=0.1.13', 'shortcutter>=0.1.8'],
-    # pandoctools: "pip>=10.0.1" "pandoc>=2.3.1" click pyyaml pandas notebook jupyter
+    # pandoctools: "pip>=10.0.1" "pandoc>=2.3.1" click pyyaml notebook jupyter
     # shortcutter: pywin32 {win}
     # panflute: future shutilwhich [click pyyaml]
     # knitty: jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters

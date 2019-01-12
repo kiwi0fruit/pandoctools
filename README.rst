@@ -6,12 +6,12 @@ markdown reports. They rely on Pandoc and Jupyter kernels.
 
 **Introduction articles**:
 
--  `Best Python/Jupyter/PyCharm experience + report generation with
+-  `**Best Python/Jupyter/PyCharm experience + report generation with
    Pandoc
-   filters <https://github.com/kiwi0fruit/pandoctools/blob/master/docs/best_python_jupyter_pycharm_experience.md>`__.
--  `Convenient and easily tweakable Atom+Markdown+Pandoc+Jupyter
+   filters** <https://github.com/kiwi0fruit/pandoctools/blob/master/docs/best_python_jupyter_pycharm_experience.md>`__.
+-  `**Convenient and easily tweakable Atom+Markdown+Pandoc+Jupyter
    experience (can export to
-   ipynb) <https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom_jupyter_pandoc_markdown.md>`__.
+   ipynb)** <https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom_jupyter_pandoc_markdown.md>`__.
 
 “Glueing” part of pandoctools is a profile manager of text processing
 pipelines. It stores short crossplatform bash scripts that define chain
@@ -28,16 +28,17 @@ Update instructions
 -  ``results=pandoc`` was a misunderstanding. The right way to output
    Markdown is to use
    ``from IPython.display import Markdown; Markdown('hello')``.
--  Import matplotlib and feather helpers from separate modules:
+-  Import pandas, matplotlib and feather helpers from separate modules:
    `matplotlibhelper <https://github.com/kiwi0fruit/matplotlibhelper>`__,
    `featherhelper <https://github.com/kiwi0fruit/featherhelper>`__,
+   `tabulatehelper <https://github.com/kiwi0fruit/tabulatehelper>`__,
 -  **v1.3.0** is not backward compatible but profiles can be easily
    fixed. Uninstall Pandoctools before updating. Update your custom bash
    scripts as names and logic changed. References:
-   `Default_args <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_args>`__,
-   `Kiwi <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Kiwi>`__
+   `**Default_args** <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_args>`__,
+   `**Kiwi** <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Kiwi>`__
    (profile),
-   `Default_pipe <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_pipe>`__.
+   `**Default_pipe** <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_pipe>`__.
 
 Contents
 ========
@@ -58,17 +59,18 @@ Contents
 Notable parts of Pandoctools
 ============================
 
--  `Pandoc <https://pandoc.org/>`__, `Jupyter <http://jupyter.org/>`__,
-   `pandoc-crossref <https://github.com/lierdakil/pandoc-crossref>`__
+-  `**Pandoc** <https://pandoc.org/>`__,
+   `**Jupyter** <http://jupyter.org/>`__,
+   `**pandoc-crossref** <https://github.com/lierdakil/pandoc-crossref>`__
    (dependence) - classical tools.
--  `Pandoctools CLI
-   app <https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/cli>`__:
+-  `**Pandoctools CLI
+   app** <https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/cli>`__:
    profile manager of text processing pipelines. It stores short bash
    scripts - called profiles - that define chain operations over text.
    They are mostly Pandoc filters but any CLI text filter is OK.
    Profiles can be used to convert any document of choise in the
    specified manner.
--  `Knitty <https://github.com/kiwi0fruit/knitty>`__ (dependence):
+-  `**Knitty** <https://github.com/kiwi0fruit/knitty>`__ (dependence):
    Knitty is a Pandoc filter and another CLI for Stitch/Knotr:
    reproducible report generation tool via Jupyter, Pandoc and Markdown.
    Insert python code (or other Jupyter kernel code) to the Markdown
@@ -76,18 +78,19 @@ Notable parts of Pandoctools
    export to Jupyter ipynb notebooks. You can use
    `vscode-ipynb-py-converter <https://github.com/nojvek/vscode-ipynb-py-converter>`__
    to convert .ipynb to .py to use with Knitty.
--  `SugarTeX <https://github.com/kiwi0fruit/sugartex>`__ (dependence):
-   SugarTeX is a more readable LaTeX language extension and
-   transcompiler to LaTeX.
--  `Pandas
-   Helper <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/pandas_helper>`__
-   helps print dataframes to Markdown.
--  (*optional*) `Matplotlib
-   Helper <https://github.com/kiwi0fruit/matplotlibhelper>`__: custom
+-  `**SugarTeX** <https://github.com/kiwi0fruit/sugartex>`__
+   (dependence): SugarTeX is a more readable LaTeX language extension
+   and transcompiler to LaTeX.
+-  (*optional*) `**Tabulate
+   Helper** <https://github.com/kiwi0fruit/tabulatehelper>`__ converts
+   tabular data like Pandas dataframe to GitHub Flavored Markdown pipe
+   table.
+-  (*optional*) `**Matplotlib
+   Helper** <https://github.com/kiwi0fruit/matplotlibhelper>`__: custom
    helper to tune Matplotlib experience in Atom/Hydrogen and
    Pandoctools/Knitty.
--  (*optional*) `Feather
-   Helper <https://github.com/kiwi0fruit/featherhelper>`__: concise
+-  (*optional*) `**Feather
+   Helper** <https://github.com/kiwi0fruit/featherhelper>`__: concise
    interface to cache 2D numpy arrays and pandas dataframes.
 
 | Pandoctools is a tool for converting markdown document. But we also
@@ -95,25 +98,25 @@ Notable parts of Pandoctools
   blocks.
 | And the best one for it is:
 
--  `Atom editor with
-   plugins <https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom.md>`__.
+-  `**Atom editor with
+   plugins** <https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom.md>`__.
    It helps easily type Unicode, interactively run highlighed
    python/Jupyter code blocks and instantly see results (+ completions
    from the running Jupyter kernel), can convert basic pandoc markdown
    to html with live preview.
--  Must have plugins: `SugarTeX
-   Completions <https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom.md#sugartex-completions>`__,
-   `Unix
-   Filter <https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom.md#unix-filter>`__,
-   `Hydrogen <https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom.md#hydrogen>`__,
-   `Markdown Preview
-   Plus <https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom.md#markdown-preview-plus>`__
+-  Must have plugins: `**SugarTeX
+   Completions** <https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom.md#sugartex-completions>`__,
+   `**Unix
+   Filter** <https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom.md#unix-filter>`__,
+   `**Hydrogen** <https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom.md#hydrogen>`__,
+   `**Markdown Preview
+   Plus** <https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom.md#markdown-preview-plus>`__
 
 Examples
 ========
 
 Here are
-`examples <https://github.com/kiwi0fruit/pandoctools/blob/master/examples>`__
+`**examples** <https://github.com/kiwi0fruit/pandoctools/blob/master/examples>`__
 that demonstrate converting documents:
 
 -  from markdown ``.md`` with Jupyter python code blocks, SugarTeX math
@@ -139,7 +142,7 @@ Install
 Windows:
 --------
 
-**Via conda**:
+***Via conda***:
 
 -  Install `Miniconda <https://conda.io/miniconda.html>`__,
 -  Install `Git together with Bash <https://git-scm.com/downloads>`__.
@@ -150,23 +153,23 @@ Windows:
 
    .. code:: bat
 
-      call activate root
-      conda update conda
-      conda create -n myenv python=3 pip setuptools
+       call activate root
+       conda update conda
+       conda create -n myenv python=3 pip setuptools
 
-      call activate myenv
-      conda update python pip setuptools
+       call activate myenv
+       conda update python pip setuptools
 
 -  Pandoctools installation:
 
    .. code:: bat
 
-      conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" ^
-      click pyyaml pandas notebook jupyter future shutilwhich ^
-      jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters ^
-      pypandoc psutil nbformat pandoc-attributes pywin32
+       conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" ^
+       click pyyaml notebook jupyter future shutilwhich ^
+       jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters ^
+       pypandoc psutil nbformat pandoc-attributes pywin32
 
-      pip install pandoctools pandoctools-ready
+       pip install pandoctools pandoctools-ready
 
 -  Install latest stable
    `pandoc-crossref <https://github.com/lierdakil/pandoc-crossref/releases>`__
@@ -180,7 +183,7 @@ Windows:
    -  Should be ``"conda>=4.5.4"`` (``conda update conda`` should be
       enough).
 
-**Via pip**:
+***Via pip***:
 
 -  Install `Git together with Bash <https://git-scm.com/downloads>`__.
    Git is needed for writing text conversion profiles in cross-platform
@@ -189,7 +192,7 @@ Windows:
 
    ::
 
-      pip install pandoctools pandoctools-ready
+       pip install pandoctools pandoctools-ready
 
 -  Install latest stable
    `pandoc-crossref <https://github.com/lierdakil/pandoc-crossref/releases>`__
@@ -207,23 +210,23 @@ Via conda:
 
    .. code:: bash
 
-      source activate root
-      conda update conda
-      conda create -n myenv python=3 pip setuptools
+       source activate root
+       conda update conda
+       conda create -n myenv python=3 pip setuptools
 
-      source activate myenv
-      conda update python pip setuptools
+       source activate myenv
+       conda update python pip setuptools
 
 -  Pandoctools installation:
 
    .. code:: bash
 
-      conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" \
-      click pyyaml pandas notebook jupyter future shutilwhich \
-      jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters \
-      pypandoc psutil nbformat pandoc-attributes
+       conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" \
+       click pyyaml notebook jupyter future shutilwhich \
+       jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters \
+       pypandoc psutil nbformat pandoc-attributes
 
-      pip install pandoctools pandoctools-ready
+       pip install pandoctools pandoctools-ready
 
 -  Install latest stable
    `pandoc-crossref <https://github.com/lierdakil/pandoc-crossref/releases>`__
@@ -242,7 +245,7 @@ Via pip:
 
    ::
 
-      pip install pandoctools pandoctools-ready
+       pip install pandoctools pandoctools-ready
 
 -  Install latest stable
    `pandoc-crossref <https://github.com/lierdakil/pandoc-crossref/releases>`__
