@@ -3,6 +3,8 @@ import re
 from typing import Iterable, Union, Tuple
 from tabulate import tabulate
 
+first_two_lines = re.compile(r'^(?P<first_line>[^\r\n]*)\r?\n([^\r\n]*(?=\r?\n)|[^\r\n]+$)')
+
 
 class TabulateHelperError(Exception):
     pass
@@ -43,7 +45,7 @@ def get_headers_and_formats(string: str) -> Tuple[Tuple[str, ...], ...]:
 def md_table(tabular_data: Union[pd.DataFrame, object],
              headers: tuple = None,
              showindex: Union[bool, None] = False,
-             format_: Union[dict, str, Iterable[str]] = None,
+             formats: Union[dict, str, Iterable[str]] = None,
              **kwargs) -> str:
     """
     Converts tabular data like Pandas dataframe to
@@ -71,7 +73,7 @@ def md_table(tabular_data: Union[pd.DataFrame, object],
         then add blank header).
     showindex :
         tabulate.tabulate(..., showindex[,...]) optional argument.
-    format_ :
+    formats :
         GitHub Flavored Markdown table align format
     kwargs :
         Other tabulate.tabulate(...) optional keyword arguments
@@ -98,38 +100,45 @@ def md_table(tabular_data: Union[pd.DataFrame, object],
         width = len(default_formats)
         # Determine if headers can be used as keys if format_ is a dict:
         good_headers = len(default_formats) == len(set(_headers))
+        # Set headers Markdown code:
+        if _headers:
+            md_headers = m.group('first_line') + '\n'
+        elif headers is None:
+            md_headers = re.sub(r'[^|]', ' ', join_row(default_formats)) + '\n'
+        else:
+            md_headers = ''
 
         # Process format_ to custom formats:
         # ---------------------------------------------
-        if isinstance(format_, dict):
-            if good_headers and all(key in _headers for key in format_.keys()):
-                formats = [format_.get(key, '') for key in _headers]
+        if isinstance(formats, dict):
+            if good_headers and all(key in _headers for key in formats.keys()):
+                _formats = [formats.get(key, '') for key in _headers]
             else:
                 try:
-                    formats = [''] * width
-                    for ikey in format_.keys():
+                    _formats = [''] * width
+                    for ikey in formats.keys():
                         i = int(ikey)  # can raise ValueError
                         if (i >= 0) and (i < width):
-                            formats[i] = format_[ikey]
+                            _formats[i] = formats[ikey]
                         elif (i < 0) and (-i <= width):
-                            formats[width + i] = format_[ikey]
+                            _formats[width + i] = formats[ikey]
                 except ValueError:
                     # there is a non int key in the format_ dict
-                    formats = [format_.get(key, '') for key in _headers] if good_headers else [''] * width
+                    _formats = [formats.get(key, '') for key in _headers] if good_headers else [''] * width
 
-        elif format_ is None:
-            formats = [''] * width
+        elif formats is None:
+            _formats = [''] * width
         else:
-            if isinstance(format_, str):
-                fmts = format_.split('|')
+            if isinstance(formats, str):
+                fmts = formats.split('|')
                 fmts = fmts[(1 if fmts[0] == '' else 0):(-1 if fmts[-1] == '' else None)]
             else:
-                fmts = list(format_)
-            formats = ([''] * (width - len(fmts)) + fmts)[:width]
+                fmts = list(formats)
+            _formats = ([''] * (width - len(fmts)) + fmts)[:width]
 
         # Check custom formats:
         # ---------------------------------------------
-        for fmt in formats:
+        for fmt in _formats:
             try:
                 if not re.match(r'^:?-+:?$', fmt) and fmt:
                     raise ValueError("Incorrect Markdown table format: '{}'".format(fmt))
@@ -138,23 +147,23 @@ def md_table(tabular_data: Union[pd.DataFrame, object],
 
         # Apply custom formats to default_formats:
         # ---------------------------------------------
-        formats = join_row(fmt[0] + def_fmt[1:-1] + fmt[-1] if fmt else def_fmt
-                           for fmt, def_fmt in zip(formats, default_formats))
+        _formats = join_row(fmt[0] + def_fmt[1:-1] + fmt[-1] if fmt else def_fmt
+                            for fmt, def_fmt in zip(_formats, default_formats))
         # ---------------------------------------------
-        if not _headers and (headers is None):
-            return re.sub(r'[^|]', ' ', formats) + '\n' + formats
-        else:
-            return formats
+        return md_headers + _formats
 
     # Convert:
     # --------
-    return re.sub(r'^(?P<first>[^\r\n]*\r?\n)[^\r\n]*((?=\r?\n)|$)', apply_format, md_tbl, count=1)
+    if first_two_lines.match(md_tbl):
+        return first_two_lines.sub(apply_format, md_tbl, count=1)
+    else:
+        raise TabulateHelperError('tabulate helper cannot find two lines in tabulate output')
 
 
 def md_header(tabular_data: Union[pd.DataFrame, object],
               headers: tuple = None,
               showindex: Union[bool, None] = False,
-              format_: Union[dict, str, Iterable[str]] = None,
+              formats: Union[dict, str, Iterable[str]] = None,
               **kwargs) -> str:
     """
     Converts tabular data like Pandas dataframe to
@@ -185,7 +194,7 @@ def md_header(tabular_data: Union[pd.DataFrame, object],
         then add blank header).
     showindex :
         tabulate.tabulate(..., showindex[,...]) optional argument.
-    format_ :
+    formats :
         GitHub Flavored Markdown table align format
     kwargs :
         Other tabulate.tabulate(...) optional keyword arguments
@@ -196,11 +205,13 @@ def md_header(tabular_data: Union[pd.DataFrame, object],
         Markdown table header + empty row
     """
     md_tbl = md_table(tabular_data, headers=headers, showindex=showindex,
-                      format_=format_, **kwargs)
-    headers_fmts = get_headers_and_formats(md_tbl)
+                      formats=formats, **kwargs)
+    match = first_two_lines.match(md_tbl)
+    headers_fmts = get_headers_and_formats(match.group(0))
     if len(headers_fmts) == 1:
         return ''
     else:
-        rows = list(map(join_row, headers_fmts))
+        # noinspection PyListCreation
+        rows = [match.group('first_line'), join_row(headers_fmts[-1])]
         rows.append(re.sub(r'[^ |]', ' ', rows[1]))
         return '\n'.join(rows)
