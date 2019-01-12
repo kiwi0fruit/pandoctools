@@ -98,7 +98,7 @@ def md_table(tabular_data: Union[pd.DataFrame, object],
         _headers = '' if (len(headers_fmts) == 1) else headers_fmts[0]
         default_formats = headers_fmts[-1]
         width = len(default_formats)
-        # Determine if headers can be used as keys if format_ is a dict:
+        # Determine if headers can be used as keys if formats is a dict:
         good_headers = len(default_formats) == len(set(_headers))
         # Set headers Markdown code:
         if _headers:
@@ -108,7 +108,7 @@ def md_table(tabular_data: Union[pd.DataFrame, object],
         else:
             md_headers = ''
 
-        # Process format_ to custom formats:
+        # Process formats to custom formats:
         # ---------------------------------------------
         if isinstance(formats, dict):
             if good_headers and all(key in _headers for key in formats.keys()):
@@ -123,7 +123,7 @@ def md_table(tabular_data: Union[pd.DataFrame, object],
                         elif (i < 0) and (-i <= width):
                             _formats[width + i] = formats[ikey]
                 except ValueError:
-                    # there is a non int key in the format_ dict
+                    # there is a non int key in the formats dict
                     _formats = [formats.get(key, '') for key in _headers] if good_headers else [''] * width
 
         elif formats is None:
