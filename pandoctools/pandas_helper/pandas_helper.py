@@ -1,9 +1,43 @@
 import pandas as pd
 import re
-from typing import Iterable, Union
+from typing import Iterable, Union, Tuple
 from tabulate import tabulate
 
-line_regex = re.compile(r'(^|(?<=\n))[^\r\n]*((?=\r?\n)|$)')
+
+class TabulateHelperError(Exception):
+    pass
+
+
+def join_row(row: Iterable[str]) -> str:
+    return '|' + '|'.join(row) + '|'
+
+
+def get_headers_and_formats(string: str) -> Tuple[Tuple[str, ...], ...]:
+    """
+    Returns (headers, formats).
+    Or (formats,) if header is absent.
+    """
+    err = 'tabulate returned GFM pipe table with invalid first two lines: {}'
+    lines = list(map(lambda s: s.rstrip('\r'), string.split('\n', 2)[:2]))
+    ret, formats = [], None
+    for line in reversed(lines):
+        if formats:
+            match = re.match(r'^\|.*[^\\]\|$', line)
+            headers = tuple(map(
+                lambda s: s.strip(' '),
+                re.split(r'(?<=[^\\])\|', line[1:-1])
+            ))
+            if match and len(headers) == len(formats):
+                ret = [headers] + ret
+            else:
+                raise TabulateHelperError(err.format(lines))
+        elif re.match(r'^\|:?-+:?(\|:?-+:?)*\|$', line):
+            formats = tuple(line[1:-1].split('|'))
+            ret.append(formats)
+    if ret:
+        return tuple(ret)
+    else:
+        raise TabulateHelperError(err.format(lines))
 
 
 def md_table(tabular_data: Union[pd.DataFrame, object],
@@ -56,28 +90,20 @@ def md_table(tabular_data: Union[pd.DataFrame, object],
     kwargs['showindex'] = showindex
 
     md_tbl = tabulate(tabular_data, **kwargs)
-    headers = tuple(map(
-        lambda s: s.strip(' '),
-        re.split(r'(?<=[^\\])\|', line_regex.search(md_tbl).group(0)[1:-1])
-    ))
 
     def apply_format(m):
-        nonlocal headers, format_
-        default_formats = tuple(m.group(0)[1:-1].split('|'))
+        headers_fmts = get_headers_and_formats(m.group(0))
+        _headers = '' if (len(headers_fmts) == 1) else headers_fmts[0]
+        default_formats = headers_fmts[-1]
         width = len(default_formats)
-
         # Determine if headers can be used as keys if format_ is a dict:
-        # ---------------------------------------------
-        if len(default_formats) == len(set(headers)) and default_formats != headers:
-            good_headers = True
-        else:
-            good_headers = False
+        good_headers = len(default_formats) == len(set(_headers))
 
-        # Process format_ to formats:
+        # Process format_ to custom formats:
         # ---------------------------------------------
         if isinstance(format_, dict):
-            if good_headers and all(key in headers for key in format_.keys()):
-                formats = [format_.get(key, '') for key in headers]
+            if good_headers and all(key in _headers for key in format_.keys()):
+                formats = [format_.get(key, '') for key in _headers]
             else:
                 try:
                     formats = [''] * width
@@ -89,7 +115,7 @@ def md_table(tabular_data: Union[pd.DataFrame, object],
                             formats[width + i] = format_[ikey]
                 except ValueError:
                     # there is a non int key in the format_ dict
-                    formats = [format_.get(key, '') for key in headers] if good_headers else [''] * width
+                    formats = [format_.get(key, '') for key in _headers] if good_headers else [''] * width
 
         elif format_ is None:
             formats = [''] * width
@@ -99,9 +125,9 @@ def md_table(tabular_data: Union[pd.DataFrame, object],
                 fmts = fmts[(1 if fmts[0] == '' else 0):(-1 if fmts[-1] == '' else None)]
             else:
                 fmts = list(format_)
-            formats = ([''] * width + fmts)[-width:]
+            formats = ([''] * (width - len(fmts)) + fmts)[:width]
 
-        # Check formats:
+        # Check custom formats:
         # ---------------------------------------------
         for fmt in formats:
             try:
@@ -112,17 +138,17 @@ def md_table(tabular_data: Union[pd.DataFrame, object],
 
         # Apply custom formats to default_formats:
         # ---------------------------------------------
-        formats = (fmt[0] + def_fmt[1:-1] + fmt[-1] if fmt else def_fmt
-                   for fmt, def_fmt in zip(formats, default_formats))
-        formats = '|' + '|'.join(formats) + '|'
-        if (default_formats == headers) and not ('headers' in kwargs):
+        formats = join_row(fmt[0] + def_fmt[1:-1] + fmt[-1] if fmt else def_fmt
+                           for fmt, def_fmt in zip(formats, default_formats))
+        # ---------------------------------------------
+        if not _headers and (headers is None):
             return re.sub(r'[^|]', ' ', formats) + '\n' + formats
         else:
             return formats
 
     # Convert:
     # --------
-    return re.sub(r'(^|(?<=\n))\|:?-+:?(\|:?-+:?)*\|(?=\r?\n)', apply_format, md_tbl, count=1)
+    return re.sub(r'^(?P<first>[^\r\n]*\r?\n)[^\r\n]*((?=\r?\n)|$)', apply_format, md_tbl, count=1)
 
 
 def md_header(tabular_data: Union[pd.DataFrame, object],
@@ -135,6 +161,7 @@ def md_header(tabular_data: Union[pd.DataFrame, object],
     GitHub Flavored Markdown table
 
     **but** prints only table header + empty row.
+    If header is absent then returns empty string.
 
     Markdown table format examples:
 
@@ -168,9 +195,12 @@ def md_header(tabular_data: Union[pd.DataFrame, object],
     md :
         Markdown table header + empty row
     """
-    iter_rows = line_regex.finditer(md_table(tabular_data, headers=headers,
-                                             showindex=showindex, format_=format_, **kwargs))
-    # noinspection PyUnusedLocal
-    rows = [next(iter_rows).group(0) for i in (0, 1)]
-    rows.append(re.sub(r'[^ |]', ' ', rows[1]))
-    return '\n'.join(rows)
+    md_tbl = md_table(tabular_data, headers=headers, showindex=showindex,
+                      format_=format_, **kwargs)
+    headers_fmts = get_headers_and_formats(md_tbl)
+    if len(headers_fmts) == 1:
+        return ''
+    else:
+        rows = list(map(join_row, headers_fmts))
+        rows.append(re.sub(r'[^ |]', ' ', rows[1]))
+        return '\n'.join(rows)
