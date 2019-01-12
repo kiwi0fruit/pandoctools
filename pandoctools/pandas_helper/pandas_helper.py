@@ -49,7 +49,7 @@ def md_table(tabular_data: Union[pd.DataFrame, object],
     Converts tabular data like Pandas dataframe to
     GitHub Flavored Markdown table.
 
-    Markdown table format examples:
+    Markdown table ``formats`` examples:
 
     * ``{'0': '-:', '-1': ':-:'}`` - only int keys
     * ``dict(foo='-:', bar=':-:', **{'-1': ':-'})`` -
@@ -65,14 +65,14 @@ def md_table(tabular_data: Union[pd.DataFrame, object],
     headers :
         tabulate.tabulate(..., headers[,...]) optional argument.
         If None and tabular_data is pd.DataFrame then default is
-        tabular_data.columns converted to Tuple[str].
+        tabular_data.columns converted to Tuple[str, ...].
         If None then use tabulate.tabulate(...) default
         (but in this particular case if it's absent in the output
         then add blank header).
     showindex :
         tabulate.tabulate(..., showindex[,...]) optional argument.
     formats :
-        GitHub Flavored Markdown table align format
+        GitHub Flavored Markdown table align formats
     kwargs :
         Other tabulate.tabulate(...) optional keyword arguments
 
@@ -100,7 +100,7 @@ def md_table(tabular_data: Union[pd.DataFrame, object],
         if not _headers and (headers is None):
             md_headers = re.sub(r'[^|]', ' ', join_row(default_formats)) + '\n'
 
-        # Process formats to custom formats:
+        # Process formats to custom _formats:
         # ---------------------------------------------
         if isinstance(formats, dict):
             if good_headers and all(key in _headers for key in formats.keys()):
@@ -128,7 +128,7 @@ def md_table(tabular_data: Union[pd.DataFrame, object],
                 fmts = list(formats)
             _formats = ([''] * (width - len(fmts)) + fmts)[:width]
 
-        # Check custom formats:
+        # Check custom _formats:
         # ---------------------------------------------
         for fmt in _formats:
             try:
@@ -137,7 +137,7 @@ def md_table(tabular_data: Union[pd.DataFrame, object],
             except TypeError as e:
                 raise TypeError("Incorrect Markdown table format: '{}'. {}".format(fmt, e))
 
-        # Apply custom formats to default_formats:
+        # Apply custom _formats to default_formats:
         # ---------------------------------------------
         _formats = join_row(fmt[0] + def_fmt[1:-1] + fmt[-1] if fmt else def_fmt
                             for fmt, def_fmt in zip(_formats, default_formats))
@@ -169,7 +169,7 @@ def md_header(tabular_data: Union[pd.DataFrame, object],
     **but** prints only table header + empty row.
     If header is absent then returns empty string.
 
-    Markdown table format examples:
+    Markdown table ``formats`` examples:
 
     * ``{'0': '-:', '-1': ':-:'}`` - only int keys
     * ``dict(foo='-:', bar=':-:', **{'-1': ':-'})`` -
@@ -185,14 +185,14 @@ def md_header(tabular_data: Union[pd.DataFrame, object],
     headers :
         tabulate.tabulate(..., headers[,...]) optional argument.
         If None and tabular_data is pd.DataFrame then default is
-        tabular_data.columns converted to Tuple[str].
+        tabular_data.columns converted to Tuple[str, ...].
         If None then use tabulate.tabulate(...) default
         (but in this particular case if it's absent in the output
         then add blank header).
     showindex :
         tabulate.tabulate(..., showindex[,...]) optional argument.
     formats :
-        GitHub Flavored Markdown table align format
+        GitHub Flavored Markdown table align formats
     kwargs :
         Other tabulate.tabulate(...) optional keyword arguments
 
