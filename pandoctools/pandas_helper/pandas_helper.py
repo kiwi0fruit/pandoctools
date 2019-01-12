@@ -3,8 +3,6 @@ import re
 from typing import Iterable, Union, Tuple
 from tabulate import tabulate
 
-first_two_lines = re.compile(r'^(?P<first_line>[^\r\n]*)\r?\n([^\r\n]*(?=\r?\n)|[^\r\n]+$)')
-
 
 class TabulateHelperError(Exception):
     pass
@@ -14,14 +12,15 @@ def join_row(row: Iterable[str]) -> str:
     return '|' + '|'.join(row) + '|'
 
 
-def get_headers_and_formats(string: str) -> Tuple[Tuple[str, ...], ...]:
+def get_headers_and_formats(string: str) -> Tuple[str, Tuple[str, ...], Tuple[str, ...]]:
     """
-    Returns (headers, formats).
-    Or (formats,) if header is absent.
+    Returns ``(md_headers, headers, formats)``.
+    First is a pipe format str, second is a tuple of str keys.
+    Or returns ``('', (), formats)`` if header is absent.
     """
     err = 'tabulate returned GFM pipe table with invalid first two lines: {}'
     lines = list(map(lambda s: s.rstrip('\r'), string.split('\n', 2)[:2]))
-    ret, formats = [], None
+    md_headers, headers, formats = '', (), None
     for line in reversed(lines):
         if formats:
             match = re.match(r'^\|.*[^\\]\|$', line)
@@ -30,14 +29,13 @@ def get_headers_and_formats(string: str) -> Tuple[Tuple[str, ...], ...]:
                 re.split(r'(?<=[^\\])\|', line[1:-1])
             ))
             if match and len(headers) == len(formats):
-                ret = [headers] + ret
+                md_headers = line
             else:
                 raise TabulateHelperError(err.format(lines))
         elif re.match(r'^\|:?-+:?(\|:?-+:?)*\|$', line):
             formats = tuple(line[1:-1].split('|'))
-            ret.append(formats)
-    if ret:
-        return tuple(ret)
+    if formats:
+        return md_headers, headers, formats
     else:
         raise TabulateHelperError(err.format(lines))
 
@@ -94,19 +92,13 @@ def md_table(tabular_data: Union[pd.DataFrame, object],
     md_tbl = tabulate(tabular_data, **kwargs)
 
     def apply_format(m):
-        headers_fmts = get_headers_and_formats(m.group(0))
-        _headers = '' if (len(headers_fmts) == 1) else headers_fmts[0]
-        default_formats = headers_fmts[-1]
+        md_headers, _headers, default_formats = get_headers_and_formats(m.group(0))
         width = len(default_formats)
         # Determine if headers can be used as keys if formats is a dict:
         good_headers = len(default_formats) == len(set(_headers))
         # Set headers Markdown code:
-        if _headers:
-            md_headers = m.group('first_line') + '\n'
-        elif headers is None:
+        if not _headers and (headers is None):
             md_headers = re.sub(r'[^|]', ' ', join_row(default_formats)) + '\n'
-        else:
-            md_headers = ''
 
         # Process formats to custom formats:
         # ---------------------------------------------
@@ -150,12 +142,17 @@ def md_table(tabular_data: Union[pd.DataFrame, object],
         _formats = join_row(fmt[0] + def_fmt[1:-1] + fmt[-1] if fmt else def_fmt
                             for fmt, def_fmt in zip(_formats, default_formats))
         # ---------------------------------------------
-        return md_headers + _formats
+        nonlocal found
+        found = True
+        return md_headers + ('\n' if md_headers else '') + _formats
 
     # Convert:
     # --------
-    if first_two_lines.match(md_tbl):
-        return first_two_lines.sub(apply_format, md_tbl, count=1)
+    found = False
+    ret = re.sub(r'^([^\r\n]*)\r?\n([^\r\n]*(?=\r?\n)|[^\r\n]+$)',
+                 apply_format, md_tbl, count=1)
+    if found:
+        return ret
     else:
         raise TabulateHelperError('tabulate helper cannot find two lines in tabulate output')
 
@@ -206,12 +203,9 @@ def md_header(tabular_data: Union[pd.DataFrame, object],
     """
     md_tbl = md_table(tabular_data, headers=headers, showindex=showindex,
                       formats=formats, **kwargs)
-    match = first_two_lines.match(md_tbl)
-    headers_fmts = get_headers_and_formats(match.group(0))
-    if len(headers_fmts) == 1:
+    md_headers, headers, fmts = get_headers_and_formats(md_tbl)
+    if not headers:
         return ''
     else:
-        # noinspection PyListCreation
-        rows = [match.group('first_line'), join_row(headers_fmts[-1])]
-        rows.append(re.sub(r'[^ |]', ' ', rows[1]))
-        return '\n'.join(rows)
+        fmts = join_row(fmts)
+        return '\n'.join((md_headers, fmts, re.sub(r'[^ |]', ' ', fmts)))
