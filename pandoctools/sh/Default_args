@@ -39,12 +39,10 @@
 #   ${extra_writer_args}    (format specific part of the pandoc writer args)
 #   ${extra_inputs}    (format specific part of the middle inputs -
 #                       metadata, other files)
-#   ${extra_knitty}
 
 extra_inputs=()
 extra_reader_args=()
 extra_writer_args=()
-extra_knitty=()
 from2="$from"
 to2="$to"
 
@@ -76,14 +74,12 @@ fi
 # custom $to format: "r.ipynb" or "r.ipynb:format"
 if   [[ "${to:0:7}" == "r.ipynb" ]]; then
     extra_inputs=("${_meta_ipynb_R}")
-    extra_knitty=("--to-ipynb")
     if [[ "${to:8}" != "" ]]; then
         to2="${to:8}"
     else
         to2="${_jupymd}"; fi
 elif [[ "${out_ext}" == "ipynb" ]]; then
     extra_inputs=("${_meta_ipynb_py3}")
-    extra_knitty=("--to-ipynb")
 
 elif [[ "${out_ext}" == "docx" ]]; then
     extra_writer_args=(--reference-doc "${_templ_docx}" -o "${output_file}")
@@ -101,3 +97,6 @@ t="$(pandoc-filter-arg "${writer_args[@]}")"
 
 metadata="$("$resolve" "$profile.yml" --else Default.yml)"
 panfl_args=(-t "$t" sugartex)
+
+# panfl -t $t sugartex == sugartex $t == sugartex
+# panfl -t $t sugartex.kiwi == sugartex --kiwi

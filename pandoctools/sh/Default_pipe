@@ -2,28 +2,22 @@
 export KNITTY=True
 
 if [[ "${out_ext}" == "ipynb" ]]; then
-    cat-md stdin | \
-    pre-knitty "${input_file}" --yaml "$metadata" | \
-    pre-sugartex | \
-    cat-md stdin "$metadata" "${extra_inputs[@]}" | \
-    pandoc "${reader_args[@]}" -t json | \
-    knitty "${input_file}" "${reader_args[@]}" "${writer_args[@]}" "${extra_knitty[@]}" | \
-    panfl "${panfl_args[@]}" | \
-    pandoc-crossref "$t" | \
-    pandoc -f json "${writer_args[@]}" | \
-    post-knitty --to-ipynb | \
+    extra_knitty=("--to-ipynb")
+else
+    extra_knitty=(); fi
+
+cat |
+pre-knitty "${input_file}" --yaml "$metadata" |
+pre-sugartex |
+cat-md stdin "$metadata" "${extra_inputs[@]}" |
+pandoc "${reader_args[@]}" -t json |
+knitty "${input_file}" "${reader_args[@]}" \
+    "${writer_args[@]}" "${extra_knitty[@]}" |
+panfl "${panfl_args[@]}" |
+pandoc-crossref "$t" |
+pandoc -f json "${writer_args[@]}" |
+if [[ "${out_ext}" == "ipynb" ]]; then
+    post-knitty --to-ipynb |
     jupyter nbconvert --to notebook --execute --stdin --stdout
 else
-    cat-md stdin | \
-    pre-knitty "${input_file}" --yaml "$metadata" | \
-    pre-sugartex | \
-    cat-md stdin "$metadata" "${extra_inputs[@]}" | \
-    pandoc "${reader_args[@]}" -t json | \
-    knitty "${input_file}" "${reader_args[@]}" "${writer_args[@]}" "${extra_knitty[@]}" | \
-    panfl "${panfl_args[@]}" | \
-    pandoc-crossref "$t" | \
-    pandoc -f json "${writer_args[@]}"
-fi
-
-# panfl -t $t sugartex == sugartex $t == sugartex
-# panfl -t $t sugartex.kiwi == sugartex --kiwi
+    cat; fi
