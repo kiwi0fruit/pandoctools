@@ -137,7 +137,7 @@ Pandoctools comes with convenience CLI apps:
 
 ## Custom Pandoctools formats
 
-See [Default_args](../sh/Default_args) for details. You can easily add your custom formats to the bash script by sourcing [Default_args2](../sh/Default_args) in the custom profile.
+See [Default_args](../sh/Default_args) for details. You can easily add your custom formats to the bash script by re-setting appropriate vars from `Default_args`.
 
 ### input extensions
 

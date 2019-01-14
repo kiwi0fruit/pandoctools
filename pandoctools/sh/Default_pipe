@@ -2,25 +2,24 @@
 export KNITTY=True
 
 if [[ "${out_ext}" == "ipynb" ]]; then
-    cat-md "${inputs[@]}" | \
+    cat-md stdin | \
     pre-knitty "${input_file}" --yaml "$metadata" | \
     pre-sugartex | \
-    cat-md "${middle_inputs[@]}" | \
+    cat-md stdin "$metadata" "${extra_inputs[@]}" | \
     pandoc "${reader_args[@]}" -t json | \
-    knitty "${input_file}" "${reader_args[@]}" "${writer_args[@]}" --to-ipynb | \
+    knitty "${input_file}" "${reader_args[@]}" "${writer_args[@]}" "${extra_knitty[@]}" | \
     panfl "${panfl_args[@]}" | \
     pandoc-crossref "$t" | \
     pandoc -f json "${writer_args[@]}" | \
-    cat-md "${post_inputs[@]}" | \
     post-knitty --to-ipynb | \
-    jupyter nbconvert "${nbconvert_args[@]}"
+    jupyter nbconvert --to notebook --execute --stdin --stdout
 else
-    cat-md "${inputs[@]}" | \
+    cat-md stdin | \
     pre-knitty "${input_file}" --yaml "$metadata" | \
     pre-sugartex | \
-    cat-md "${middle_inputs[@]}" | \
+    cat-md stdin "$metadata" "${extra_inputs[@]}" | \
     pandoc "${reader_args[@]}" -t json | \
-    knitty "${input_file}" "${reader_args[@]}" "${writer_args[@]}" | \
+    knitty "${input_file}" "${reader_args[@]}" "${writer_args[@]}" "${extra_knitty[@]}" | \
     panfl "${panfl_args[@]}" | \
     pandoc-crossref "$t" | \
     pandoc -f json "${writer_args[@]}"

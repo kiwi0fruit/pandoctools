@@ -32,21 +32,19 @@
 #   ${reader_args}    (pandoc reader args)
 #   ${writer_args}    (pandoc writer args)
 
-#   $inputs
 #   $metadata    (profile metadata file)
-#   ${middle_inputs}   (inputs after preprocess filters and before pandoc)
-#   ${nbconvert_args}
 #   ${panfl_args}
 
 #   ${extra_reader_args}    (format specific part of the pandoc reader args)
 #   ${extra_writer_args}    (format specific part of the pandoc writer args)
 #   ${extra_inputs}    (format specific part of the middle inputs -
 #                       metadata, other files)
-#   ${post_inputs}    (inputs for to ipynb conversion)
+#   ${extra_knitty}
 
 extra_inputs=()
 extra_reader_args=()
 extra_writer_args=()
+extra_knitty=()
 from2="$from"
 to2="$to"
 
@@ -77,19 +75,21 @@ fi
 
 # custom $to format: "r.ipynb" or "r.ipynb:format"
 if   [[ "${to:0:7}" == "r.ipynb" ]]; then
-    extra_inputs=("${_meta_ipynb_R}" "${extra_inputs[@]}")
+    extra_inputs=("${_meta_ipynb_R}")
+    extra_knitty=("--to-ipynb")
     if [[ "${to:8}" != "" ]]; then
         to2="${to:8}"
     else
         to2="${_jupymd}"; fi
 elif [[ "${out_ext}" == "ipynb" ]]; then
-    extra_inputs=("${_meta_ipynb_py3}" "${extra_inputs[@]}")
+    extra_inputs=("${_meta_ipynb_py3}")
+    extra_knitty=("--to-ipynb")
 
 elif [[ "${out_ext}" == "docx" ]]; then
-    extra_writer_args=(--reference-doc "${_templ_docx}" -o "${output_file}" "${extra_writer_args[@]}")
+    extra_writer_args=(--reference-doc "${_templ_docx}" -o "${output_file}")
 
 elif [[ "${is_bin_ext_maybe}" == "true" ]]; then
-    extra_writer_args=(-o "${output_file}" "${extra_writer_args[@]}")
+    extra_writer_args=(-o "${output_file}")
 fi
 
 
@@ -99,10 +99,5 @@ reader_args=(-f "$from2" "${extra_reader_args[@]}")
 writer_args=(--standalone --self-contained -t "$to2" "${extra_writer_args[@]}")
 t="$(pandoc-filter-arg "${writer_args[@]}")"
 
-inputs=(stdin)
 metadata="$("$resolve" "$profile.yml" --else Default.yml)"
-middle_inputs=(stdin "$metadata" "${extra_inputs[@]}")
-post_inputs=(stdin)
-
-nbconvert_args=(--to notebook --execute --stdin --stdout)
 panfl_args=(-t "$t" sugartex)
