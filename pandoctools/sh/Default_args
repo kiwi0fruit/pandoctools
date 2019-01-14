@@ -26,8 +26,8 @@
 #   ${env_path}    (conda or venv environment folder)
 
 # Exports vars:
-#   $from    (pandoc reader format without custom formats)
-#   $to    (pandoc writer format without custom formats)
+#   $from2    (pandoc reader format without custom formats)
+#   $to2    (pandoc writer format without custom formats)
 #   $t    (argument for pandoc filters)
 #   ${reader_args}    (pandoc reader args)
 #   ${writer_args}    (pandoc writer args)
@@ -47,6 +47,8 @@
 extra_inputs=()
 extra_reader_args=()
 extra_writer_args=()
+from2="$from"
+to2="$to"
 
 
 # deal with reader formats:
@@ -55,7 +57,7 @@ extra_writer_args=()
 if   [[ "${important_from}" == "true" ]]; then
     :;
 elif [[ "${in_ext}" == "py" ]]; then
-    from=markdown
+    from2=markdown
 fi
 
 
@@ -70,16 +72,16 @@ _templ_docx="$("$resolve" "$profile.docx" --else Default.docx)"
 if   [[ "${important_to}" == "true" ]]; then
     :;
 elif [[ "${out_ext}" == "ipynb" ]]; then
-    to="${_jupymd}"
+    to2="${_jupymd}"
 fi
 
 # custom $to format: "r.ipynb" or "r.ipynb:format"
 if   [[ "${to:0:7}" == "r.ipynb" ]]; then
     extra_inputs=("${_meta_ipynb_R}" "${extra_inputs[@]}")
     if [[ "${to:8}" != "" ]]; then
-        to="${to:8}"
+        to2="${to:8}"
     else
-        to="${_jupymd}"; fi
+        to2="${_jupymd}"; fi
 elif [[ "${out_ext}" == "ipynb" ]]; then
     extra_inputs=("${_meta_ipynb_py3}" "${extra_inputs[@]}")
 
@@ -93,8 +95,8 @@ fi
 
 # set other defaults:
 # ---------------------
-reader_args=(-f "$from" "${extra_reader_args[@]}")
-writer_args=(--standalone --self-contained -t "$to" "${extra_writer_args[@]}")
+reader_args=(-f "$from2" "${extra_reader_args[@]}")
+writer_args=(--standalone --self-contained -t "$to2" "${extra_writer_args[@]}")
 t="$(pandoc-filter-arg "${writer_args[@]}")"
 
 inputs=(stdin)
