@@ -1,4 +1,5 @@
-# Use this scripts to set other defaults after Default_args again.
+#!/bin/bash
+# Use this script to re-set other defaults after Default_args
 # For example after adding custom formats (by default this file is not used).
 
 reader_args=(-f "$from2" "${extra_reader_args[@]}")
