@@ -145,11 +145,11 @@ See [Default_args](../sh/Default_args) for details. You can easily add your cust
 
 ### output extensions
 
-* `.ipynb` (sets special Markdown dialect and concatenates `_ipynb_py3.yml`)
+* `.ipynb` (sets special Markdown output dialect and concatenates `_ipynb_py3.yml`)
 
 ### to
 
-* `r.ipynb` or `r.ipynb:format` (sets special Markdown dialect and concatenates `_ipynb_R.yml`). Where `format` should be valid Pandoc `to`/`write` option.
+* `r.ipynb` or `r.ipynb:format` (sets special Markdown output dialect and concatenates `_ipynb_R.yml`). Where `format` should be valid Pandoc `to`/`write` option.
 
 
 ## Environment variables predefined in Pandoctools CLI application:
