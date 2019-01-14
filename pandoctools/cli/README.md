@@ -141,7 +141,7 @@ Pandoctools comes with convenience CLI apps:
 
 * [Default](../sh/Default) - default profile that only works with special Knitty Markdown or other Markdown input,
 * [Kiwi](../sh/Kiwi) - same as Default but with Kiwi flavor,
-* [NotMarkdown](../sh/NotMarkdown) - profile that works with any Pandoc input,
+* [NotMarkdown](../sh/NotMarkdown) - profile that works with any Pandoc input. In this case main input file may not support yaml metadata so options can be set in the `pandoctools` CLI,
 * [Simple](../sh/Simple) - sample of a very simple profile.
 
 ### Extra input extensions
