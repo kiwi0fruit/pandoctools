@@ -90,7 +90,7 @@ Notable parts of Pandoctools
    Pandoctools/Knitty.
 -  (*optional*) `Feather
    Helper <https://github.com/kiwi0fruit/featherhelper>`__: concise
-   interface to cache 2D numpy arrays and pandas dataframes.
+   interface to cache numpy arrays and pandas dataframes.
 
 | Pandoctools is a tool for converting markdown document. But we also
   need tools for writing markdown and deploying python/Jupyter code
@@ -147,7 +147,7 @@ Windows:
 -  Install `Git together with Bash <https://git-scm.com/downloads>`__.
    Git is needed for writing text conversion profiles in cross-platform
    bash language,
--  Fresh install preparations (incl. creating “myenv” conda
+-  Fresh install preparations (incl. creating “myenv” conda
    environment):
 
    .. code:: bat
@@ -204,7 +204,7 @@ Unix:
 Via conda:
 
 -  Install `Miniconda <https://conda.io/miniconda.html>`__,
--  Fresh install preparations (incl. creating “myenv” conda
+-  Fresh install preparations (incl. creating “myenv” conda
    environment):
 
    .. code:: bash
