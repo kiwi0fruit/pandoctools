@@ -18,5 +18,11 @@ pandoc -f json "${writer_args2[@]}" |
 if [[ "${out_ext}" == "ipynb" ]]; then
     post-knitty --to-ipynb |
     jupyter nbconvert --to notebook --execute --stdin --stdout
+elif [[ "${out_ext}" == "html" ]]; then
+    python -c 'import sys; import re; sys.stdout.write(re.sub(\
+        "<script[^<]+?[Mm]ath[Jj]ax[^\u0000]+?</script>",\
+        "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/" +\
+        "mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML\" async></script>",\
+        sys.stdin.read()))'
 else
     cat; fi

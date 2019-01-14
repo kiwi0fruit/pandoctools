@@ -83,6 +83,9 @@ elif [[ "${out_ext}" == "ipynb" ]]; then
 elif [[ "${out_ext}" == "docx" ]]; then
     writer_args=(--reference-doc "${_templ_docx}" -o "${output_file}")
 
+elif [[ "${out_ext}" == "html" ]]; then
+    writer_args=(--mathjax)
+
 elif [[ "${is_bin_ext_maybe}" == "true" ]]; then
     writer_args=(-o "${output_file}"); fi
 
