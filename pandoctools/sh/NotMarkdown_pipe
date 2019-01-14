@@ -6,11 +6,9 @@ if [[ "${out_ext}" == "ipynb" ]]; then
     extra_knitty=("--to-ipynb")
 fi
 
-cat |
-pre-knitty "${input_file}" --yaml "$metadata" |
-pre-sugartex |
+pandoc -f "$from2" "${reader_args[@]}" -t markdown |
 cat-md stdin "$metadata" "${extra_inputs[@]}" |
-pandoc -f "$from2" "${reader_args[@]}" -t json |
+pandoc -f markdown -t json |
 knitty "${input_file}" -f "$from2" "${reader_args[@]}" \
     "${extra_knitty[@]}" "${writer_args2[@]}" |
 panfl "${panfl_args[@]}" |

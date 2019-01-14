@@ -1,0 +1,7 @@
+#!/bin/bash
+profile=NotMarkdown
+source "${python_to_PATH}" "${root_env}"
+source "$source" activate "${env_path}"
+source "$("$resolve" ${profile}_args --else Default_args)"
+source "$("$resolve" ${profile}_pipe --else Default_pipe)"
+source "$source" deactivate

@@ -29,20 +29,19 @@
 #   $from2    (pandoc reader format without custom formats)
 #   $to2    (pandoc writer format without custom formats)
 #   $t    (argument for pandoc filters)
-#   ${reader_args}    (pandoc reader args)
-#   ${writer_args}    (pandoc writer args)
 
 #   $metadata    (profile metadata file)
 #   ${panfl_args}
 
-#   ${extra_reader_args}    (format specific part of the pandoc reader args)
-#   ${extra_writer_args}    (format specific part of the pandoc writer args)
+#   ${reader_args}    (format specific part of the pandoc reader args)
+#   ${writer_args}    (format specific part of the pandoc writer args)
 #   ${extra_inputs}    (format specific part of the middle inputs -
 #                       metadata, other files)
+#   ${writer_args2}    (all pandoc writer args)
 
 extra_inputs=()
-extra_reader_args=()
-extra_writer_args=()
+reader_args=()
+writer_args=()
 from2="$from"
 to2="$to"
 
@@ -82,20 +81,18 @@ elif [[ "${out_ext}" == "ipynb" ]]; then
     extra_inputs=("${_meta_ipynb_py3}")
 
 elif [[ "${out_ext}" == "docx" ]]; then
-    extra_writer_args=(--reference-doc "${_templ_docx}" -o "${output_file}")
+    writer_args=(--reference-doc "${_templ_docx}" -o "${output_file}")
 
 elif [[ "${is_bin_ext_maybe}" == "true" ]]; then
-    extra_writer_args=(-o "${output_file}")
+    writer_args=(-o "${output_file}")
 fi
 
 
 # set other defaults:
 # ---------------------
-reader_args=(-f "$from2" "${extra_reader_args[@]}")
-writer_args=(--standalone --self-contained -t "$to2" "${extra_writer_args[@]}")
-t="$(pandoc-filter-arg "${writer_args[@]}")"
-
 metadata="$("$resolve" "$profile.yml" --else Default.yml)"
+writer_args2=(--standalone --self-contained -t "$to2" "${writer_args[@]}")
+t="$(pandoc-filter-arg "${writer_args2[@]}")"
 panfl_args=(-t "$t" sugartex)
 
 # panfl -t $t sugartex == sugartex $t == sugartex

@@ -2,4 +2,4 @@
 profile=Simple
 source "${python_to_PATH}" "${env_path}"
 source "$("$resolve" ${profile}_args --else Default_args)"
-pandoc "${reader_args[@]}" "${writer_args[@]}"
+pandoc -f "$from2" "${reader_args[@]}" "${writer_args2[@]}"
