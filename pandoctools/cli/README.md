@@ -1,6 +1,18 @@
 # Pandoctools CLI application
 
-Pandoctools CLI application is a profile manager of text processing pipelines. It stores short bash scripts - called profiles - that define chain operations over text. They are mostly Pandoc filters but any CLI text filter is OK. Profiles can be used to convert any document of choise in the specified manner. Simply add metadata section to markdown (all settings are optional - pandoctools would use defaults if needed):
+Pandoctools CLI application is a profile manager of text processing pipelines. It stores short bash scripts - called profiles - that define chain operations over text. They are mostly Pandoc filters but any CLI text filter is OK. Profiles can be used to convert any document of choise in the specified manner. 
+
+* [Info](#info)
+* [How to use](#how-to-use)
+* [Defaults.ini](#defaults.ini)
+* [New CLI apps](#new-cli-apps)
+* [Custom Pandoctools formats](#custom-pandoctools-formats)
+* [Environment variables predefined in Pandoctools CLI application](#environment-variables-predefined-in-pandoctools-cli-application)
+
+
+## Info
+
+Simply add metadata section to markdown (all settings are optional - pandoctools would use defaults if needed):
 
 ```yaml
 ---
@@ -121,6 +133,23 @@ Pandoctools comes with convenience CLI apps:
 * [**cat-md**](../cat_md) is a simple CLI tool that concatenates input files with stdin input (joins them with double new lines) and prints to stdout.
 * [**pandoc-filter-arg**](../pandoc_filter_arg) is a CLI interface that prints argument that is passed by Pandoc to it's filters.
 * [**pandoctools-resolve**](../pandoctools_resolve) is a CLI tool that resolves and echoes absolute path to the file by its basename by searching in two Pandoctools folders.
+
+
+## Custom Pandoctools formats
+
+See [Default_args](../sh/Default_args) for details.
+
+### input extensions
+
+* `.py` (assumes Markdown in special block comments)
+
+### output extensions
+
+* `.ipynb` (sets special Markdown dialect and concatenates `_ipynb_py3.yml`)
+
+### to
+
+* `r.ipynb` or `r.ipynb:format` (sets special Markdown dialect and concatenates `_ipynb_R.yml`). Where `format` should be valid Pandoc `to`/`write` option.
 
 
 ## Environment variables predefined in Pandoctools CLI application:
