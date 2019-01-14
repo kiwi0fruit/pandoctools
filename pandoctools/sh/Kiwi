@@ -1,5 +1,8 @@
 #!/bin/bash
-profile=Kiwi
+profile="$(basename "${BASH_SOURCE[0]}")"
+if [[ "${important_from}" != "true" ]]; then
+    from=markdown
+    important_from=true; fi
 source "${python_to_PATH}" "${root_env}"
 source "$source" activate "${env_path}"
 source "$("$resolve" ${profile}_args --else Default_args)"

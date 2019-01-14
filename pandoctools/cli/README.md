@@ -6,7 +6,7 @@ Pandoctools CLI application is a profile manager of text processing pipelines. I
 * [How to use](#how-to-use)
 * [Defaults.ini](#defaultsini)
 * [New CLI apps](#new-cli-apps)
-* [Custom Pandoctools formats](#custom-pandoctools-formats)
+* [Predefined Pandoctools profiles and custom formats](#predefined-pandoctools-profiles-and-custom-formats)
 * [Environment variables predefined in Pandoctools CLI application](#environment-variables-predefined-in-pandoctools-cli-application)
 
 
@@ -135,21 +135,32 @@ Pandoctools comes with convenience CLI apps:
 * [**pandoctools-resolve**](../pandoctools_resolve) is a CLI tool that resolves and echoes absolute path to the file by its basename by searching in two Pandoctools folders.
 
 
-## Custom Pandoctools formats
+## Predefined Pandoctools profiles and custom formats
 
-See [Default_args](../sh/Default_args) for details. You can easily add your custom formats to the bash script by re-setting appropriate vars from `Default_args`.
+### Profiles
 
-### input extensions
+* [Default](../sh/Default) - default profile that only works with special Knitty Markdown or other Markdown input,
+* [Kiwi](../sh/Kiwi) - same as Default but with Kiwi flavor,
+* [NotMarkdown](../sh/NotMarkdown) - profile that works with any Pandoc input,
+* [Simple](../sh/Simple) - sample of a very simple profile.
 
-* `.py` (assumes Pandoc Markdown in special block comments)
+### Extra input extensions
 
-### output extensions
+Nothing special.
+
+### Extra output extensions
 
 * `.ipynb` (sets special Markdown output dialect and concatenates `_ipynb_py3.yml`)
 
-### to
+### Extra from formats
+
+Nothing special.
+
+### Extra to formats
 
 * `r.ipynb` or `r.ipynb:format` (sets special Markdown output dialect and concatenates `_ipynb_R.yml`). Where `format` should be valid Pandoc `to`/`write` option.
+
+See [Default_args](../sh/Default_args) for details. You can easily add your custom formats to the bash script by re-setting appropriate vars from `Default_args`.
 
 
 ## Environment variables predefined in Pandoctools CLI application:

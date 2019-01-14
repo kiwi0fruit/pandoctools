@@ -21,7 +21,7 @@ filter is OK.
 Update instructions
 -------------------
 
-(*Update instructions to v.1.3.0*)
+(*Update instructions to v.1.3.5*)
 
 -  Switch to bash profiles as batch profiles are no longer supported
    (and install bash if needed),
@@ -32,11 +32,11 @@ Update instructions
    `matplotlibhelper <https://github.com/kiwi0fruit/matplotlibhelper>`__,
    `featherhelper <https://github.com/kiwi0fruit/featherhelper>`__,
    `tabulatehelper <https://github.com/kiwi0fruit/tabulatehelper>`__,
--  **v1.3.0** is not backward compatible but profiles can be easily
+-  **v1.3.5** is not backward compatible but profiles can be easily
    fixed. Uninstall Pandoctools before updating. Update your custom bash
    scripts as names and logic changed. References:
    `Default_args <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_args>`__,
-   `Kiwi <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Kiwi>`__
+   `Default <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default>`__
    (profile),
    `Default_pipe <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_pipe>`__.
 
@@ -147,7 +147,7 @@ Windows:
 -  Install `Git together with Bash <https://git-scm.com/downloads>`__.
    Git is needed for writing text conversion profiles in cross-platform
    bash language,
--  Fresh install preparations (incl. creating “myenv” conda
+-  Fresh install preparations (incl. creating “myenv” conda
    environment):
 
    .. code:: bat
@@ -204,7 +204,7 @@ Unix:
 Via conda:
 
 -  Install `Miniconda <https://conda.io/miniconda.html>`__,
--  Fresh install preparations (incl. creating “myenv” conda
+-  Fresh install preparations (incl. creating “myenv” conda
    environment):
 
    .. code:: bash

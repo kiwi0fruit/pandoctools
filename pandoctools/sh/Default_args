@@ -7,8 +7,8 @@
 #   ${out_ext}    (output file extension like "md")
 #   ${input_file}    (input file path with extension)
 #   ${output_file}    (output file path with extension)
-#   $from    (pandoc reader format + custom pandoctools formats)
-#   $to    (pandoc writer format + custom pandoctools formats)
+#   $from    (always lowercase. pandoc reader format + custom pandoctools formats)
+#   $to    (always lowercase. pandoc writer format + custom pandoctools formats)
 #   ${important_from}    (bool: "true" "false". Whether `$from` was set by user)
 #   ${important_to}    (bool: "true" "false". Whether `$to` was set by user)
 #   ${is_bin_ext_maybe}    (pandoctools nice guess if the ${output_file} extension
@@ -48,30 +48,30 @@ to2="$to"
 
 # deal with reader formats:
 # ---------------------------
-#   predefined $from is always lowercase
-if   [[ "${important_from}" == "true" ]]; then
-    :;
-elif [[ "${in_ext}" == "py" ]]; then
-    from2=markdown
-fi
+# if [[ "${important_from}" == "true" ]]; then
+#     :;
+# elif [[ "${in_ext}" == "xxx" ]]; then
+#     from2=markdown; fi
 
 
 # deal with writer formats:
 # ---------------------------
-_jupymd="markdown-bracketed_spans-fenced_divs-link_attributes-simple_tables-multiline_tables-grid_tables-pipe_tables-fenced_code_attributes-markdown_in_html_blocks-table_captions-smart"
+_jupymd="markdown-bracketed_spans-fenced_divs-link_attributes\
+-simple_tables-multiline_tables-grid_tables-pipe_tables\
+-fenced_code_attributes-markdown_in_html_blocks-table_captions-smart"
 _meta_ipynb_R="$("$resolve" _ipynb_R.yml)"
 _meta_ipynb_py3="$("$resolve" _ipynb_py3.yml)"
 _templ_docx="$("$resolve" "$profile.docx" --else Default.docx)"
 
-#   predefined $to is always lowercase
-if   [[ "${important_to}" == "true" ]]; then
+# mod $to only if it was autoset by pandoctools
+# (keep $to set by user):
+if [[ "${important_to}" == "true" ]]; then
     :;
 elif [[ "${out_ext}" == "ipynb" ]]; then
-    to2="${_jupymd}"
-fi
+    to2="${_jupymd}"; fi
 
 # custom $to format: "r.ipynb" or "r.ipynb:format"
-if   [[ "${to:0:7}" == "r.ipynb" ]]; then
+if [[ "${to:0:7}" == "r.ipynb" ]]; then
     extra_inputs=("${_meta_ipynb_R}")
     if [[ "${to:8}" != "" ]]; then
         to2="${to:8}"
@@ -84,8 +84,7 @@ elif [[ "${out_ext}" == "docx" ]]; then
     writer_args=(--reference-doc "${_templ_docx}" -o "${output_file}")
 
 elif [[ "${is_bin_ext_maybe}" == "true" ]]; then
-    writer_args=(-o "${output_file}")
-fi
+    writer_args=(-o "${output_file}"); fi
 
 
 # set other defaults:

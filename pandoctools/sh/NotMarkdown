@@ -1,5 +1,5 @@
 #!/bin/bash
-profile=NotMarkdown
+profile="$(basename "${BASH_SOURCE[0]}")"
 source "${python_to_PATH}" "${root_env}"
 source "$source" activate "${env_path}"
 source "$("$resolve" ${profile}_args --else Default_args)"
