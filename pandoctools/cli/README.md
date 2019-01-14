@@ -4,7 +4,7 @@ Pandoctools CLI application is a profile manager of text processing pipelines. I
 
 * [Info](#info)
 * [How to use](#how-to-use)
-* [Defaults.ini](#defaults.ini)
+* [Defaults.ini](#defaultsini)
 * [New CLI apps](#new-cli-apps)
 * [Custom Pandoctools formats](#custom-pandoctools-formats)
 * [Environment variables predefined in Pandoctools CLI application](#environment-variables-predefined-in-pandoctools-cli-application)
@@ -137,11 +137,11 @@ Pandoctools comes with convenience CLI apps:
 
 ## Custom Pandoctools formats
 
-See [Default_args](../sh/Default_args) for details.
+See [Default_args](../sh/Default_args) for details. You can easily add your custom formats to the bash script.
 
 ### input extensions
 
-* `.py` (assumes Markdown in special block comments)
+* `.py` (assumes Pandoc Markdown in special block comments)
 
 ### output extensions
 
