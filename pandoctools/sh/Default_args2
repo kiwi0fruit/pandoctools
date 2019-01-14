@@ -1,0 +1,14 @@
+# Use this scripts to set other defaults after Default_args again.
+# For example after adding custom formats (by default this file is not used).
+
+reader_args=(-f "$from2" "${extra_reader_args[@]}")
+writer_args=(--standalone --self-contained -t "$to2" "${extra_writer_args[@]}")
+t="$(pandoc-filter-arg "${writer_args[@]}")"
+
+inputs=(stdin)
+metadata="$("$resolve" "$profile.yml" --else Default.yml)"
+middle_inputs=(stdin "$metadata" "${extra_inputs[@]}")
+post_inputs=(stdin)
+
+nbconvert_args=(--to notebook --execute --stdin --stdout)
+panfl_args=(-t "$t" sugartex)
