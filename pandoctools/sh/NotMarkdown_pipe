@@ -17,9 +17,6 @@ if [[ "${out_ext}" == "ipynb" ]]; then
     post-knitty --to-ipynb |
     jupyter nbconvert --to notebook --execute --stdin --stdout
 elif [[ "${out_ext}" == "html" ]]; then
-    python -c 'import sys; import re; sys.stdout.write(re.sub(\
-        "<script[^<]+?[Mm]ath[Jj]ax.+?</script>",\
-        "<script src=\"${mathjax_url}\" async></script>",\
-        sys.stdin.read(), re.DOTALL))'
+    python -c "${replace_mathjax}" "${mathjax_url}"
 else
     cat; fi

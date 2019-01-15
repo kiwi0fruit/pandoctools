@@ -40,6 +40,7 @@
 #                       metadata, other files)
 #   ${writer_args2}    (all pandoc writer args)
 #   ${mathjax_url}
+#   ${replace_mathjax}
 
 
 extra_inputs=()
@@ -102,6 +103,10 @@ t="$(pandoc-filter-arg "${writer_args2[@]}")"
 panfl_args=(-t "$t" sugartex)
 
 mathjax_url="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+replace_mathjax='\
+import sys; import re;\
+sys.stdout.write(re.compile(r"<script[^<]+?[Mm]ath[Jj]ax.+?</script>", re.DOTALL).sub(\
+    "<script src=\"{}\" async></script>".format(sys.argv[1]), sys.stdin.read()))'
 
 # panfl -t $t sugartex == sugartex $t == sugartex
 # panfl -t $t sugartex.kiwi == sugartex --kiwi
