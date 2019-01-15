@@ -160,7 +160,21 @@ Nothing special.
 
 * `r.ipynb` or `r.ipynb:format` (sets special Markdown output dialect and concatenates `_ipynb_R.yml`). Where `format` should be valid Pandoc `to`/`write` option.
 
-See [Default_args](../sh/Default_args) for details. You can easily add your custom formats to the bash script by re-setting appropriate vars from `Default_args`.
+See [Default_args](../sh/Default_args) for details. You can easily add your custom formats to the bash script by re-setting appropriate vars from `Default_args`. Example of the `$HOME/.pandoc/pandoctools/Kiwi2` custom profile that overrides some vars:
+
+```bash
+#!/bin/bash
+profile=Kiwi
+md_input_only=true
+source "${python_to_PATH}" "${root_env}"
+source "$source" activate "${env_path}"
+source "$("$resolve" ${profile}_args --else Default_args)"
+writer_args=(--standalone --self-contained --toc "${writer_args0[@]}")
+panfl_args=(-t "$t" sugartex.kiwi)
+nbconvert_args=(--to notebook --stdin --stdout)
+source "$("$resolve" ${profile}_pipe --else Default_pipe)"
+source "$source" deactivate
+```
 
 
 ## Environment variables predefined in Pandoctools CLI application:
