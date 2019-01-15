@@ -52,9 +52,8 @@ def patch_pyppeteer():
     import pyppeteer.connection
     _connect = pyppeteer.connection.websockets.client.connect
 
-    def connect(*args, ping_interval=None, ping_timeout=None,
-                **kwargs):
-        return _connect(*args, ping_interval=ping_interval,
+    def connect(*args, ping_interval=None, ping_timeout=None, **kwargs):
+        return _connect(*args, ping_interval=ping_interval, 
                         ping_timeout=ping_timeout, **kwargs)
 
     pyppeteer.connection.websockets.client.connect = connect
