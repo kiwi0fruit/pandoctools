@@ -1,5 +1,6 @@
 #!/bin/bash
 profile="$(basename "${BASH_SOURCE[0]}")"
+md_input_only=false
 source "${python_to_PATH}" "${root_env}"
 source "$source" activate "${env_path}"
 source "$("$resolve" ${profile}_args --else Default_args)"

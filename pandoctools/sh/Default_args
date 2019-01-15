@@ -1,6 +1,7 @@
 #!/bin/bash
 # May use variables predefined in the profile:
 #   $profile (profile name)
+#   ${md_input_only}
 
 # May use variables predefined in pandoctools:
 #   ${in_ext}    (input file extension like "md")
@@ -38,6 +39,8 @@
 #   ${extra_inputs}    (format specific part of the middle inputs -
 #                       metadata, other files)
 #   ${writer_args2}    (all pandoc writer args)
+#   ${mathjax_url}
+
 
 extra_inputs=()
 reader_args=()
@@ -48,10 +51,11 @@ to2="$to"
 
 # deal with reader formats:
 # ---------------------------
-# if [[ "${important_from}" == "true" ]]; then
-#     :;
-# elif [[ "${in_ext}" == "xxx" ]]; then
-#     from2=markdown; fi
+# mod $from only if it was autoset by pandoctools
+if [[ "${important_from}" == "true" ]]; then
+    :;
+elif [[ "${md_input_only}" == "true" ]]; then
+    from2=markdown; fi
 
 
 # deal with writer formats:
@@ -96,6 +100,8 @@ metadata="$("$resolve" "$profile.yml" --else Default.yml)"
 writer_args2=(--standalone --self-contained -t "$to2" "${writer_args[@]}")
 t="$(pandoc-filter-arg "${writer_args2[@]}")"
 panfl_args=(-t "$t" sugartex)
+
+mathjax_url="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
 
 # panfl -t $t sugartex == sugartex $t == sugartex
 # panfl -t $t sugartex.kiwi == sugartex --kiwi
