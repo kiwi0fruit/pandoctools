@@ -21,7 +21,7 @@ filter is OK.
 Update instructions
 -------------------
 
-(*Update instructions to v.1.3.5*)
+(*Update instructions to v.1.3.7*)
 
 -  Switch to bash profiles as batch profiles are no longer supported
    (and install bash if needed),
@@ -32,7 +32,7 @@ Update instructions
    `matplotlibhelper <https://github.com/kiwi0fruit/matplotlibhelper>`__,
    `featherhelper <https://github.com/kiwi0fruit/featherhelper>`__,
    `tabulatehelper <https://github.com/kiwi0fruit/tabulatehelper>`__,
--  **v1.3.5** is not backward compatible but profiles can be easily
+-  **v1.3.7** is not backward compatible but profiles can be easily
    fixed. Uninstall Pandoctools before updating. Update your custom bash
    scripts as names and logic changed. References:
    `Default_args <https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_args>`__,
