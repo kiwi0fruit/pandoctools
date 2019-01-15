@@ -147,7 +147,7 @@ Windows:
 -  Install `Git together with Bash <https://git-scm.com/downloads>`__.
    Git is needed for writing text conversion profiles in cross-platform
    bash language,
--  Fresh install preparations (incl. creating “myenv” conda
+-  Fresh install preparations (incl. creating “myenv” conda
    environment):
 
    .. code:: bat
@@ -165,6 +165,7 @@ Windows:
 
       conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" ^
       click pyyaml notebook jupyter future shutilwhich ^
+      certifi websockets appdirs urllib3 tqdm ^
       jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters ^
       pypandoc psutil nbformat pandoc-attributes pywin32
 
@@ -204,7 +205,7 @@ Unix:
 Via conda:
 
 -  Install `Miniconda <https://conda.io/miniconda.html>`__,
--  Fresh install preparations (incl. creating “myenv” conda
+-  Fresh install preparations (incl. creating “myenv” conda
    environment):
 
    .. code:: bash
@@ -222,6 +223,7 @@ Via conda:
 
       conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" \
       click pyyaml notebook jupyter future shutilwhich \
+      certifi websockets appdirs urllib3 tqdm \
       jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters \
       pypandoc psutil nbformat pandoc-attributes
 

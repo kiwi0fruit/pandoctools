@@ -87,6 +87,7 @@ Extras:
   ```bat
   conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" ^
   click pyyaml notebook jupyter future shutilwhich ^
+  certifi websockets appdirs urllib3 tqdm ^
   jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters ^
   pypandoc psutil nbformat pandoc-attributes pywin32
 
@@ -129,6 +130,7 @@ Via conda:
   ```bash
   conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" \
   click pyyaml notebook jupyter future shutilwhich \
+  certifi websockets appdirs urllib3 tqdm \
   jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters \
   pypandoc psutil nbformat pandoc-attributes
 
