@@ -3,4 +3,4 @@ profile="$(basename "${BASH_SOURCE[0]}")"
 md_input_only=false
 source "${python_to_PATH}" "${env_path}"
 source "$("$resolve" ${profile}_args --else Default_args)"
-pandoc -f "$from2" "${reader_args[@]}" "${writer_args2[@]}"
+pandoc "${reader_args[@]}" "${writer_args[@]}"

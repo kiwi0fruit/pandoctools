@@ -147,7 +147,7 @@ Windows:
 -  Install `Git together with Bash <https://git-scm.com/downloads>`__.
    Git is needed for writing text conversion profiles in cross-platform
    bash language,
--  Fresh install preparations (incl. creating “myenv” conda
+-  Fresh install preparations (incl. creating “myenv” conda
    environment):
 
    .. code:: bat
@@ -204,7 +204,7 @@ Unix:
 Via conda:
 
 -  Install `Miniconda <https://conda.io/miniconda.html>`__,
--  Fresh install preparations (incl. creating “myenv” conda
+-  Fresh install preparations (incl. creating “myenv” conda
    environment):
 
    .. code:: bash

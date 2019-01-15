@@ -1,21 +1,20 @@
 #!/bin/bash
 export KNITTY=True
 
-extra_knitty=()
+_ipynb=()
 if [[ "${out_ext}" == "ipynb" ]]; then
-    extra_knitty=("--to-ipynb"); fi
+    _ipynb=("--to-ipynb"); fi
 
-pandoc -f "$from2" "${reader_args[@]}" -t markdown |
+pandoc "${reader_args[@]}" -t markdown |
 cat-md stdin "$metadata" "${extra_inputs[@]}" |
 pandoc -f markdown -t json |
-knitty "${input_file}" -f "$from2" "${reader_args[@]}" \
-    "${extra_knitty[@]}" "${writer_args2[@]}" |
+knitty "${input_file}" "${reader_args[@]}" "${writer_args[@]}" "${_ipynb[@]}" |
 panfl "${panfl_args[@]}" |
 pandoc-crossref "$t" |
-pandoc -f json "${writer_args2[@]}" |
+pandoc -f json "${writer_args[@]}" |
 if [[ "${out_ext}" == "ipynb" ]]; then
     post-knitty --to-ipynb |
-    jupyter nbconvert --to notebook --execute --stdin --stdout
+    jupyter nbconvert "${nbconvert_args[@]}"
 elif [[ "${out_ext}" == "html" ]]; then
     python -c "${replace_mathjax}" "${mathjax_url}"
 else
