@@ -1,17 +1,27 @@
 """
-Usage (in this particular order):
+# Usage (in this particular order):
 
-from pandotools.patch_pyppeteer import patch_pyppeteer
-patch_pyppeteer()
+# noinspection PyUnresolvedReferences
+import pandoctools.patch_pyppeteer
 from pyppeteer import launch
 """
-from pyppeteer.chromium_downloader import *
 import certifi
+from pyppeteer.chromium_downloader import *
 
 
 NO_PROGRESS_BAR = os.environ.get('PYPPETEER_NO_PROGRESS_BAR', '')
 if NO_PROGRESS_BAR.lower() in ('1', 'true'):
     NO_PROGRESS_BAR = True  # type: ignore
+
+win_postf = "win" if int(REVISION) > 591479 else "win32"
+downloadURLs.update({
+    'win32': f'{BASE_URL}/Win/{REVISION}/chrome-{win_postf}.zip',
+    'win64': f'{BASE_URL}/Win_x64/{REVISION}/chrome-{win_postf}.zip',
+})
+chromiumExecutable.update({
+    'win32': DOWNLOADS_FOLDER / REVISION / f'chrome-{win_postf}' / 'chrome.exe',
+    'win64': DOWNLOADS_FOLDER / REVISION / f'chrome-{win_postf}' / 'chrome.exe',
+})
 
 
 def download_zip(url: str) -> BytesIO:
@@ -47,14 +57,13 @@ def download_zip(url: str) -> BytesIO:
 
 def patch_pyppeteer():
     import pyppeteer.chromium_downloader
-    pyppeteer.chromium_downloader.download_zip = download_zip
-
     import pyppeteer.connection
+
+    pyppeteer.chromium_downloader.download_zip = download_zip
     _connect = pyppeteer.connection.websockets.client.connect
 
-    def connect(*args, ping_interval=None, ping_timeout=None,
-                **kwargs):
-        return _connect(*args, ping_interval=ping_interval,
+    def connect(*args, ping_interval=None, ping_timeout=None, **kwargs):
+        return _connect(*args, ping_interval=ping_interval, 
                         ping_timeout=ping_timeout, **kwargs)
 
     pyppeteer.connection.websockets.client.connect = connect
