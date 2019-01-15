@@ -160,7 +160,7 @@ Nothing special.
 
 * `r.ipynb` or `r.ipynb:format` (sets special Markdown output dialect and concatenates `_ipynb_R.yml`). Where `format` should be valid Pandoc `to`/`write` option.
 
-See [Default_args](../sh/Default_args) for details. You can easily add your custom formats to the bash script by re-setting appropriate vars from `Default_args`. Example of the `Kiwi2` custom profile that overrides some vars:
+See [Default_args](../sh/Default_args) for details. You can easily add your custom formats to the bash script by re-setting appropriate vars from `Default_args`. Example of the `$HOME/.pandoc/pandoctools/Kiwi2` custom profile that overrides some vars:
 
 ```bash
 #!/bin/bash
