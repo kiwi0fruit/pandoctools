@@ -16,7 +16,8 @@ if [[ "${out_ext}" == "ipynb" ]]; then
     post-knitty --to-ipynb |
     jupyter nbconvert "${nbconvert_args[@]}"
 elif [[ "$to" == "html" && "${out_ext}" == "pdf" ]]; then
-    python -c "${replace_mathjax}" | cat
+    python -c "${replace_mathjax}" |
+    pandoctools-pyppeteer-pdf "${output_file}" --dict "${pyppeteer_pdf}"
 elif [[ "${to:0:4}" == "html" ]]; then
     python -c "${replace_mathjax}"
 else

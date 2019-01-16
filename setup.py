@@ -56,6 +56,7 @@ setup(
             'cat-md=pandoctools.cat_md.cat_md:cli',
             'pandoctools=pandoctools.cli.cli:pandoctools',
             'pandoc-filter-arg=pandoctools.pandoc_filter_arg.cli:cli',
+            'pandoctools-pyppeteer-pdf=pandoctools.pyppeteer_pdf.pyppeteer_pdf:cli',
             'pandoctools-resolve{}=pandoctools.pandoctools_resolve.resolve:cli'.format(
                 '-win' if os.name == 'nt' else ''
             ),

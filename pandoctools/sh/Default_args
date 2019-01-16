@@ -122,6 +122,7 @@ t="$(pandoc-filter-arg "${writer_args[@]}")"
 
 panfl_args=(-t "$t" sugartex)
 nbconvert_args=(--to notebook --execute --stdin --stdout)
+
 export mathjax_url="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
 replace_mathjax='\
 import sys; import re; import os;\
@@ -129,6 +130,15 @@ sys.stdout.write(re.sub(\
     r"<script[^<]+?[Mm]ath[Jj]ax.+?</script>",\
     "<script src=\"{}\" async></script>".format(os.environ.get("mathjax_url")),\
     sys.stdin.read(), flags=re.DOTALL))'
+
+pyppeteer_pdf="\
+dict(\
+    goto=dict(waitUntil='networkidle0', timeout=100000),\
+    waitFor=(1,),\
+    pdf=dict(width='8.27in', printBackground=True,\
+             margin=dict(top='1in', right='1in',\
+                         bottom='1in', left='1in')),\
+)"
 
 # panfl -t $t sugartex == sugartex $t == sugartex
 # panfl -t $t sugartex.kiwi == sugartex --kiwi
