@@ -79,4 +79,4 @@ def main(args: Union[str, dict], inp: str, out: str):
                    'pdf=dict(printBackground=True))" goto and pdf values are dict, ' +
                    'waitFor value is a tuple.')
 def cli(output_path, args):
-    main(args, sys.stdout.read(), output_path)
+    main(args, sys.stdin.read(), output_path)
