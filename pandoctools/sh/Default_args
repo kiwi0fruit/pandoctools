@@ -71,6 +71,7 @@ _jupymd="markdown-bracketed_spans-fenced_divs-link_attributes\
 _meta_ipynb_R="$("$resolve" _ipynb_R.yml)"
 _meta_ipynb_py3="$("$resolve" _ipynb_py3.yml)"
 _templ_docx="$("$resolve" "$profile.docx" --else Default.docx)"
+_templ_pdf_html="$("$resolve" "${profile}_pdf.html" --else Default_pdf.html)"
 
 
 # ........
@@ -89,8 +90,8 @@ elif [[ "${out_ext}" == "pdf" ]]; then
 
 
 # ........
-if [[ "${to:0:4}" == "html" ]]; then
-    writer_args0=(--mathjax)
+if [[ "$to" == "html" && "${out_ext}" == "pdf" ]]; then
+    writer_args0=(--mathjax --template "${_templ_pdf_html}")
 
 # custom $to format: "r.ipynb" or "r.ipynb:format"
 elif [[ "${to0:0:7}" == "r.ipynb" ]]; then
@@ -99,6 +100,9 @@ elif [[ "${to0:0:7}" == "r.ipynb" ]]; then
         to="${to0:8}"
     else
         to="${_jupymd}"; fi
+
+elif [[ "${to:0:4}" == "html" ]]; then
+    writer_args0=(--mathjax)
 
 elif [[ "${out_ext}" == "ipynb" ]]; then
     extra_inputs=("${_meta_ipynb_py3}")
