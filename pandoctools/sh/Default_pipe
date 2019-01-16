@@ -17,7 +17,9 @@ pandoc -f json "${writer_args[@]}" |
 if [[ "${out_ext}" == "ipynb" ]]; then
     post-knitty --to-ipynb |
     jupyter nbconvert "${nbconvert_args[@]}"
-elif [[ "${out_ext}" == "html" ]]; then
+elif [[ "$to" == "html" && "${out_ext}" == "pdf" ]]; then
+    python -c "${replace_mathjax}" | cat
+elif [[ "${to:0:4}" == "html" ]]; then
     python -c "${replace_mathjax}"
 else
     cat; fi

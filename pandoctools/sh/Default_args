@@ -72,28 +72,39 @@ _meta_ipynb_R="$("$resolve" _ipynb_R.yml)"
 _meta_ipynb_py3="$("$resolve" _ipynb_py3.yml)"
 _templ_docx="$("$resolve" "$profile.docx" --else Default.docx)"
 
+
+# ........
 # mod $to only if it was autoset by pandoctools
 # (keep $to set by user):
 if [[ "${important_to}" == "true" ]]; then
     :;
+
 elif [[ "${out_ext}" == "ipynb" ]]; then
-    to="${_jupymd}"; fi
+    to="${_jupymd}"
+
+# pandoctools overrides `pandoc -t html -o doc.pdf` combination:
+# (use `pandoc -t html5 -o doc.pdf` for default pandoc behaviour)
+elif [[ "${out_ext}" == "pdf" ]]; then
+    to="html"; fi
+
+
+# ........
+if [[ "${to:0:4}" == "html" ]]; then
+    writer_args0=(--mathjax)
 
 # custom $to format: "r.ipynb" or "r.ipynb:format"
-if [[ "${to0:0:7}" == "r.ipynb" ]]; then
+elif [[ "${to0:0:7}" == "r.ipynb" ]]; then
     extra_inputs=("${_meta_ipynb_R}")
     if [[ "${to0:8}" != "" ]]; then
         to="${to0:8}"
     else
         to="${_jupymd}"; fi
+
 elif [[ "${out_ext}" == "ipynb" ]]; then
     extra_inputs=("${_meta_ipynb_py3}")
 
 elif [[ "${out_ext}" == "docx" ]]; then
     writer_args0=(--reference-doc "${_templ_docx}" -o "${output_file}")
-
-elif [[ "${out_ext}" == "html" ]]; then
-    writer_args0=(--mathjax)
 
 elif [[ "${is_bin_ext_maybe}" == "true" ]]; then
     writer_args0=(-o "${output_file}"); fi
