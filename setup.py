@@ -36,16 +36,16 @@ setup(
     # keywords='sample setuptools development',
     packages=find_packages(exclude=['docs', 'tests']),
 
-    install_requires=['click', 'pyyaml', 'notebook', 'jupyter', 'certifi', 
-                      'panflute>=1.11.1', 'knitty>=0.4.14', 'pyppeteer>=0.0.25',
+    install_requires=['click', 'pyyaml', 'notebook', 'jupyter',
+                      'panflute>=1.11.1', 'knitty>=0.4.14', 'pyppdf>=0.0.2',
                       'sugartex>=0.1.13', 'shortcutter>=0.1.8'],
     # pandoctools: "pip>=10.0.1" "pandoc>=2.3.1" click pyyaml notebook jupyter
     # shortcutter: pywin32 {win}
     # panflute: future shutilwhich [click pyyaml]
     # knitty: jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters
     #         pypandoc psutil nbformat pandoc-attributes [click pyyaml panflute]
-    # pyppeteer: websockets appdirs urllib3 tqdm [pyee]
     # pyppdf: certifi [click litereval pyppeteer]
+    # pyppeteer: websockets appdirs urllib3 tqdm [pyee]
     # pyee: --  # litereval: -- # sugartex: [panflute]
 
     include_package_data=True,
