@@ -80,6 +80,8 @@ Notable parts of Pandoctools
 -  `SugarTeX <https://github.com/kiwi0fruit/sugartex>`__ (dependence):
    SugarTeX is a more readable LaTeX language extension and
    transcompiler to LaTeX.
+-  `Pyppdf <https://github.com/kiwi0fruit/pyppdf>`__ (dependence):
+   Pyppeteer PDF. Prints html output to pdf via patched Pyppeteer.
 -  (*optional*) `Tabulate
    Helper <https://github.com/kiwi0fruit/tabulatehelper>`__ converts
    tabular data like Pandas dataframe to GitHub Flavored Markdown pipe
