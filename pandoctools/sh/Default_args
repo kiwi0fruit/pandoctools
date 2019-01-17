@@ -131,14 +131,5 @@ sys.stdout.write(re.sub(\
     "<script src=\"{}\" async></script>".format(os.environ.get("mathjax_url")),\
     sys.stdin.read(), flags=re.DOTALL))'
 
-pyppeteer_pdf="\
-dict(\
-    goto=dict(waitUntil='networkidle0', timeout=100000),\
-    waitFor=(1,),\
-    pdf=dict(width='8.27in', printBackground=True,\
-             margin=dict(top='1in', right='1in',\
-                         bottom='1in', left='1in')),\
-)"
-
 # panfl -t $t sugartex == sugartex $t == sugartex
 # panfl -t $t sugartex.kiwi == sugartex --kiwi

@@ -39,13 +39,14 @@ setup(
     install_requires=['click', 'pyyaml', 'notebook', 'jupyter', 'certifi', 
                       'panflute>=1.11.1', 'knitty>=0.4.14', 'pyppeteer>=0.0.25',
                       'sugartex>=0.1.13', 'shortcutter>=0.1.8'],
-    # pandoctools: "pip>=10.0.1" "pandoc>=2.3.1" click pyyaml notebook jupyter certifi
+    # pandoctools: "pip>=10.0.1" "pandoc>=2.3.1" click pyyaml notebook jupyter
     # shortcutter: pywin32 {win}
     # panflute: future shutilwhich [click pyyaml]
     # knitty: jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters
     #         pypandoc psutil nbformat pandoc-attributes [click pyyaml panflute]
     # pyppeteer: websockets appdirs urllib3 tqdm [pyee]
-    # pyee: --  # sugartex: [panflute]
+    # pyppdf: certifi [click litereval pyppeteer]
+    # pyee: --  # litereval: -- # sugartex: [panflute]
 
     include_package_data=True,
     package_data={
@@ -56,7 +57,6 @@ setup(
             'cat-md=pandoctools.cat_md.cat_md:cli',
             'pandoctools=pandoctools.cli.cli:pandoctools',
             'pandoc-filter-arg=pandoctools.pandoc_filter_arg.cli:cli',
-            'pandoctools-pyppeteer-pdf=pandoctools.pyppeteer_pdf.pyppeteer_pdf:cli',
             'pandoctools-resolve{}=pandoctools.pandoctools_resolve.resolve:cli'.format(
                 '-win' if os.name == 'nt' else ''
             ),

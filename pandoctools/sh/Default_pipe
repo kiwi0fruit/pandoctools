@@ -19,7 +19,7 @@ if [[ "${out_ext}" == "ipynb" ]]; then
     jupyter nbconvert "${nbconvert_args[@]}"
 elif [[ "$to" == "html" && "${out_ext}" == "pdf" ]]; then
     python -c "${replace_mathjax}" |
-    pandoctools-pyppeteer-pdf "${output_file}" --dict "${pyppeteer_pdf}"
+    pyppdf -o "${output_file}"
 elif [[ "${to:0:4}" == "html" ]]; then
     python -c "${replace_mathjax}"
 else
