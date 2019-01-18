@@ -17,7 +17,7 @@ if [[ "${out_ext}" == "ipynb" ]]; then
     jupyter nbconvert "${nbconvert_args[@]}"
 elif [[ "$to" == "html" && "${out_ext}" == "pdf" ]]; then
     python -c "${replace_mathjax}" |
-    pyppdf -o "${output_file}"
+    pyppdf --goto temp -o "${output_file}"
 elif [[ "${to:0:4}" == "html" ]]; then
     python -c "${replace_mathjax}"
 else
