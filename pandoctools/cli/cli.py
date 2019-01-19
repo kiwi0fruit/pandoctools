@@ -345,17 +345,19 @@ def pandoctools(input_file, input_file_stdin, profile, out, read, to, stdout, ye
                                    "env_path", "input_file", "output_file", "root_env")))
 
         def cygpath():
-            ret1 = p.join(p.dirname(win_bash), 'cygpath.exe')
-            if p.isfile(ret1):
-                return ret1
-            ret2 = p.join(p.dirname(p.dirname(win_bash)), 'usr', 'bin', 'cygpath.exe')
-            if p.isfile(ret2):
-                return ret2
-            raise PandotoolsError(f"'cygpath.exe' wasn't found in '{ret1}' and '{ret2}'")
+            bash_dir = p.dirname(win_bash)
+            cygpaths = (p.join(p.dirname(bash_dir), 'usr', 'bin', 'cygpath.exe'),
+                        p.join(bash_dir, 'usr', 'bin', 'cygpath.exe'),
+                        p.join(bash_dir, 'cygpath.exe'))
+            for _path in cygpaths:
+                if p.isfile(_path):
+                    return _path
+            else:
+                raise PandotoolsError(f"'cygpath.exe' wasn't found in {cygpaths}")
 
-        cygpaths = run([cygpath()] + [env_vars[var] for var in vars_],
-                       stdout=PIPE, input=doc, encoding='utf-8').stdout.strip().splitlines()
-        for var, pth in zip(vars_, cygpaths):
+        posix_paths = run([cygpath()] + [env_vars[var] for var in vars_],
+                          stdout=PIPE, input=doc, encoding='utf-8').stdout.strip().splitlines()
+        for var, pth in zip(vars_, posix_paths):
             env_vars[var] = pth
 
     # debug env vars:
