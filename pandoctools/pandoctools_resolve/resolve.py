@@ -23,9 +23,9 @@ def main(basename: str, fallback_basename: str=None) -> str:
         if p.isfile(abs_path):
             if os.name == 'nt':
                 from ..pandoc_filter_arg import where
-                import subprocess
-                return subprocess.run([where('cygpath'), abs_path],
-                                      stdout=subprocess.PIPE, encoding='utf-8').stdout
+                from subprocess import run, PIPE
+                return run([where('cygpath'), abs_path],
+                           stdout=PIPE, encoding='utf-8').stdout
             else:
                 return abs_path
     raise PandotoolsError(f"'{basename}' or fallback '{fallback_basename}'" +
