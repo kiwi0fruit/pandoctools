@@ -63,6 +63,5 @@ setup(
     scripts=[
         'scripts/pandoctools-source',
         'scripts/pandoctools-python-to-path',
-        'scripts/pandoctools-cygpath',
     ],
 )

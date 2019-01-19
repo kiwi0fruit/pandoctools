@@ -2,15 +2,13 @@ import sys
 import os
 from os import path as p
 import click
-import re
 import yaml
-import subprocess
-from subprocess import PIPE
+from subprocess import run, PIPE
 import configparser
 import io
 from typing import Tuple
 from ..pandoc_filter_arg import pandoc_filter_arg, is_bin_ext_maybe
-from ..shared_vars import pandoctools_user, pandoctools_user_data, pandoctools_core
+from ..shared_vars import pandoctools_user, pandoctools_user_data, pandoctools_core, PandotoolsError
 from knitty.tools import get, load_yaml
 
 
@@ -49,7 +47,7 @@ def expand_pattern(pattern: str,  target_file: str,  cwd: bool) -> str:
     return p.abspath(file_path)
 
 
-def get_ext_and_from(file_path: str, read: str=None):
+def get_ext_and_from(file_path: str, read: str = None):
     """
     Returns extension and pandoc reader format like ('md', 'markdown', 'true')
     """
@@ -59,7 +57,7 @@ def get_ext_and_from(file_path: str, read: str=None):
     return ext, read, important_from
 
 
-def get_ext_and_to(file_path: str, to: str=None):
+def get_ext_and_to(file_path: str, to: str = None):
     """
     Returns extension and pandoc writer format like ('html', 'html5', 'true')
     """
@@ -322,39 +320,43 @@ def pandoctools(input_file, input_file_stdin, profile, out, read, to, stdout, ye
             return
 
     # Set environment vars to dict:
-    env_vars = {}
+    dic = dict()
+    dic['in_ext'], dic['from'], dic['important_from'] = get_ext_and_from(input_file, read)
+    dic['out_ext'], dic['to'], dic['important_to'] = get_ext_and_to(output_file, to)
     if os.name == 'nt':
-        env_vars['PYTHONIOENCODING'] = 'utf-8'
-        env_vars['LANG'] = 'C.UTF-8'
-
-    env_vars['source'] = p.join(scripts_bin, 'pandoctools-source')
-    env_vars['python_to_PATH'] = p.join(scripts_bin, 'pandoctools-python-to-path')
-    env_vars['resolve'] = p.join(scripts_bin, 'pandoctools-resolve')
-    env_vars['scripts'] = scripts_bin
-    env_vars['env_path'] = env_path
-    env_vars['input_file'] = input_file
-    env_vars['output_file'] = output_file
-    env_vars['in_ext'], env_vars['from'], env_vars['important_from'] = get_ext_and_from(input_file, read)
-    env_vars['out_ext'], env_vars['to'], env_vars['important_to'] = get_ext_and_to(output_file, to)
-    env_vars['is_bin_ext_maybe'] = str(is_bin_ext_maybe(output_file, to, search_dirs=search_dirs)).lower()
-    env_vars['root_env'] = root_env
+        dic['PYTHONIOENCODING'] = 'utf-8'
+        dic['LANG'] = 'C.UTF-8'
+    env_vars = dict(
+        source=p.join(scripts_bin, 'pandoctools-source'),
+        python_to_PATH=p.join(scripts_bin, 'pandoctools-python-to-path'),
+        resolve=p.join(scripts_bin, 'pandoctools-resolve'),
+        scripts=scripts_bin,
+        env_path=env_path,
+        input_file=input_file,
+        output_file=output_file,
+        is_bin_ext_maybe=str(is_bin_ext_maybe(output_file, to, search_dirs=search_dirs)).lower(),
+        root_env=root_env,
+        **dic
+    )
 
     # convert win-paths to unix-paths if needed:
     if os.name == 'nt':
-        vars_ = ["source", "scripts", "resolve", "python_to_PATH",
-                 "env_path", "input_file", "output_file", "root_env"]
-        vars_ = [var for var in vars_ if env_vars[var] != '']
-        args = [win_bash, p.join(scripts_bin, 'pandoctools-cygpath')] + [env_vars[var] for var in vars_]
+        vars_ = list(filter(None, ("source", "scripts", "resolve", "python_to_PATH",
+                                   "env_path", "input_file", "output_file", "root_env")))
 
-        cygpath = subprocess.run(args, stdout=PIPE, input=doc, encoding='utf-8')
-        cygpaths = re.split(r'\r?\n', cygpath.stdout.strip())
-        for i, var in enumerate(vars_):
-            env_vars[var] = cygpaths[i]
+        def cygpath():
+            ret1 = p.join(p.dirname(win_bash), 'cygpath.exe')
+            if p.isfile(ret1):
+                return ret1
+            ret2 = p.join(p.dirname(p.dirname(win_bash)), 'usr', 'bin', 'cygpath.exe')
+            if p.isfile(ret2):
+                return ret2
+            raise PandotoolsError(f"'cygpath.exe' wasn't found in '{ret1}' and '{ret2}'")
 
-        if cygpath.stderr is not None:
-            # error_stream = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
-            # error_stream.write(cygpath.stderr)
-            print(cygpath.stderr, file=sys.stderr)
+        cygpaths = run([cygpath()] + [env_vars[var] for var in vars_],
+                       stdout=PIPE, input=doc, encoding='utf-8').stdout.strip().splitlines()
+        for var, pth in zip(vars_, cygpaths):
+            env_vars[var] = pth
 
     # debug env vars:
     if debug:
@@ -371,14 +373,9 @@ def pandoctools(input_file, input_file_stdin, profile, out, read, to, stdout, ye
     # run pandoctools:
     bash = win_bash if (os.name == 'nt') else 'bash'
     bash_cwd = None if cwd else p.dirname(input_file)
-    proc = subprocess.run([bash, profile_path], stdout=PIPE, input=doc,
-                          encoding='utf-8', cwd=bash_cwd,
-                          env={**dict(os.environ), **env_vars})
-
-    if proc.stderr is not None:
-        # error_stream = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
-        # error_stream.write(proc.stderr)
-        print(proc.stderr, file=sys.stderr)
+    proc = run([bash, profile_path], stdout=PIPE, input=doc,
+               encoding='utf-8', cwd=bash_cwd,
+               env={**dict(os.environ), **env_vars})
 
     # forward output:
     prof_stdout = proc.stdout if proc.stdout else ''
@@ -410,5 +407,4 @@ def pandoctools(input_file, input_file_stdin, profile, out, read, to, stdout, ye
             input('Press Enter to continue...')
     else:
         output_stream = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
-        output_stream.write(meta + prof_stdout)
-        # sys.stdout.write(meta + prof_stdout)
+        output_stream.write(meta + prof_stdout)  # sys.stdout.write()
