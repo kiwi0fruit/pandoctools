@@ -1,7 +1,8 @@
 import sys
+import os
 import os.path as p
 import click
-from ..shared_vars import pandoctools_user, pandoctools_user_data, pandoctools_core
+from ..shared_vars import pandoctools_user, pandoctools_user_data, pandoctools_core, PandotoolsError
 
 
 def main(basename: str, fallback_basename: str=None) -> str:
@@ -20,14 +21,21 @@ def main(basename: str, fallback_basename: str=None) -> str:
                      for dir_ in (pandoctools_user, pandoctools_core)
                      if name):
         if p.isfile(abs_path):
-            return abs_path
-    return ''
+            if os.name == 'nt':
+                from ..pandoc_filter_arg import where
+                import subprocess
+                return subprocess.run([where('cygpath'), abs_path],
+                                      stdout=subprocess.PIPE, encoding='utf-8').stdout
+            else:
+                return abs_path
+    raise PandotoolsError(f"'{basename}' or fallback '{fallback_basename}'" +
+                          f" wasn't found in '{pandoctools_user}' and '{pandoctools_core}'.")
 
 
 @click.command(help=f"""
 Inside Pandoctools shell scripts use alias: $resolve
 
-Resolves and echoes absolute path to the file by its basename (given with extension).
+Resolves and echoes Unix style absolute path to the file by its basename (given with extension).
 First searches in {pandoctools_user_data}, then in Pandoctools module directory:
 {pandoctools_core}
 """)

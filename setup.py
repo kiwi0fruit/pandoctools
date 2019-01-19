@@ -57,16 +57,12 @@ setup(
             'cat-md=pandoctools.cat_md.cat_md:cli',
             'pandoctools=pandoctools.cli.cli:pandoctools',
             'pandoc-filter-arg=pandoctools.pandoc_filter_arg.cli:cli',
-            'pandoctools-resolve{}=pandoctools.pandoctools_resolve.resolve:cli'.format(
-                '-win' if os.name == 'nt' else ''
-            ),
+            'pandoctools-resolve=pandoctools.pandoctools_resolve.resolve:cli',
         ],
     },
     scripts=[
         'scripts/pandoctools-source',
         'scripts/pandoctools-python-to-path',
         'scripts/pandoctools-cygpath',
-    ] + ([
-        'scripts/pandoctools-resolve',
-    ] if os.name == 'nt' else []),
+    ],
 )
