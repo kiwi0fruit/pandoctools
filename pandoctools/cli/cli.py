@@ -155,7 +155,11 @@ if os.name == 'nt':
     if not p.isfile(win_bash):
         # here we implicitly use the fact that ini from core sh folder
         # (pandoctools_core) has path to git's bash
-        win_bash = None
+        from ..pandoc_filter_arg import where, PandocFilterArgError
+        try:
+            win_bash = where('bash')
+        except PandocFilterArgError:
+            win_bash = None
 else:
     scripts_bin = p.dirname(sys.executable)
     env_path = p.dirname(scripts_bin)
@@ -172,7 +176,7 @@ root_env = expandvars(root_env)
 root_env = root_env if p.isabs(root_env) and p.isdir(root_env) else guess_root_env(env_path)
 
 
-bash_error = ("\nERROR: Bash was not found by the path provided in INI file.\n"
+bash_error = ("\nERROR: Bash was not found neither in the path provided in INI file nor in the $PATH.\n"
               if (win_bash is None) and (os.name == 'nt')
               else "")
 
@@ -241,7 +245,7 @@ def pandoctools(input_file, input_file_stdin, profile, out, read, to, stdout, ye
       * Windows only: PYTHONIOENCODING, LANG
     """
     if bash_error:
-        raise ValueError(bash_error)
+        raise PandotoolsError(bash_error)
 
     # Read document and mod input_file if needed:   
     if input_file:
