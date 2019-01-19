@@ -37,7 +37,7 @@ setup(
     packages=find_packages(exclude=['docs', 'tests']),
 
     install_requires=['click', 'pyyaml', 'notebook', 'jupyter',
-                      'panflute>=1.11.1', 'knitty>=0.4.14', 'pyppdf>=0.0.5',
+                      'panflute>=1.11.1', 'knitty>=0.4.14', 'pyppdf>=0.0.8',
                       'sugartex>=0.1.13', 'shortcutter>=0.1.8'],
     # pandoctools: "pip>=10.0.1" "pandoc>=2.3.1" click pyyaml notebook jupyter
     # shortcutter: pywin32 {win}
