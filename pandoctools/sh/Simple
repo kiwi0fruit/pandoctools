@@ -2,5 +2,6 @@
 profile="$(basename "${BASH_SOURCE[0]}")"
 md_input_only=false
 source "${python_to_PATH}" "${env_path}"
+export PATH="$PATH"
 source "$("$resolve" ${profile}_args --else Default_args)"
 pandoc "${reader_args[@]}" "${writer_args[@]}"
