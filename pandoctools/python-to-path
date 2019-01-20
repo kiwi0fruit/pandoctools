@@ -3,7 +3,7 @@
 #   . "${python_to_PATH}" /python/root/dir
 #   (${python_to_PATH} contains absolute path)
 # General usage:
-#   . pandoctools-python-to-path /python/root/dir
+#   . python-to-path /python/root/dir
 
 if [[ "$1" != "" ]]; then
     if [[ "$(uname -s)" == MINGW* ]]; then

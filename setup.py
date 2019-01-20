@@ -50,7 +50,7 @@ setup(
 
     include_package_data=True,
     package_data={
-        'pandoctools': ['sh/*'],
+        'pandoctools': ['sh/*', 'source-from-path', 'python-to-path'],
     },
     entry_points={
         'console_scripts': [
@@ -60,8 +60,4 @@ setup(
             'pandoctools-resolve=pandoctools.pandoctools_resolve.resolve:cli',
         ],
     },
-    scripts=[
-        'scripts/pandoctools-source',
-        'scripts/pandoctools-python-to-path',
-    ],
 )

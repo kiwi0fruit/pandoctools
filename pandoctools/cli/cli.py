@@ -331,8 +331,8 @@ def pandoctools(input_file, input_file_stdin, profile, out, read, to, stdout, ye
         dic['PYTHONIOENCODING'] = 'utf-8'
         dic['LANG'] = 'C.UTF-8'
     env_vars = dict(
-        source=p.join(scripts_bin, 'pandoctools-source'),
-        python_to_PATH=p.join(scripts_bin, 'pandoctools-python-to-path'),
+        source=p.join(p.dirname(pandoctools_core), 'source-from-path'),
+        python_to_PATH=p.join(p.dirname(pandoctools_core), 'python-to-path'),
         resolve=p.join(scripts_bin, 'pandoctools-resolve'),
         scripts=scripts_bin,
         env_path=env_path,

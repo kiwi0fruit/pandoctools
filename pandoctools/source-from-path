@@ -3,7 +3,7 @@
 #   . "$source" script
 #   ($source contains absolute path)
 # General usage:
-#   . pandoctools-source script
+#   . source-from-path script
 
 # Calls script ONLY from $PATH
 # In order to call script from CWD use: source ./script
