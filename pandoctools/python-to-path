@@ -7,8 +7,8 @@
 
 if [[ "$1" != "" ]]; then
     if [[ "$(uname -s)" == MINGW* ]]; then
-        export PATH="$1:$1/Scripts:$1/Library/bin:$PATH"
+        PATH="$1:$1/Scripts:$1/Library/bin:$PATH"
     else
-        export PATH="$1/bin:$PATH"
+        PATH="$1/bin:$PATH"
     fi
 fi
