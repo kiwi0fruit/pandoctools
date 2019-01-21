@@ -4,7 +4,7 @@ import os
 import versioneer
 
 here = os.path.abspath(os.path.dirname(__file__))
-with open(os.path.join(here, 'README.rst'), encoding='utf-8') as f:
+with open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 
@@ -15,6 +15,7 @@ setup(
 
     description='Profile manager of text processing pipelines: Pandoc filters, any text CLI filters. Atom+Markdown+Pandoc+Jupyter workflow, export to ipynb.',
     long_description=long_description,
+    long_description_content_type="text/markdown",
 
     url='https://github.com/kiwi0fruit/pandoctools',
 

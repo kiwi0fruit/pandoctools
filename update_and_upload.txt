@@ -15,7 +15,6 @@ drag and drop the script to the Bash terminal (the script will change CWD itself
 
 * run `update_version` to update version
 * open terminal with activated environment
-  * to update rst run `update_rst`
   * to upload package to pypi run `upload`
 
 
