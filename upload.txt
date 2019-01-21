@@ -14,7 +14,7 @@ To run the script open Bash terminal, then type <code>. </code> (dot with space)
 drag and drop the script to the Bash terminal (the script will change CWD itself).
 
 * open terminal with activated environment
-  * to upload package to pypi change version in `upload` and run `upload`
+  * to upload package to pypi change version in `upload`, push changes, run `upload`
 
 
 Hint: Easily create shortcut to activated environment via Shortcutter:
