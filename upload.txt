@@ -18,7 +18,7 @@ drag and drop the script to the Bash terminal (the script will change CWD itself
 
 Hint: Easily create shortcut to activated environment via Shortcutter:
 
-    conda install shortcutter
+    conda install -c defaults -c conda-forge shortcutter
     # pip install shortcutter
     shortcutter --terminal
 
