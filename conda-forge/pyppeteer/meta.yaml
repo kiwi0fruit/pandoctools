@@ -1,5 +1,5 @@
-{% set name = "litereval" %}
-{% set version = "0.0.7" %}
+{% set name = "pyppeteer" %}
+{% set version = "0.0.25" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,9 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 6ab900b532b9651b23780301a23e6e330c14076208b0c56300e09cc573a3546d
+  sha256: 51fe769b722a1718043b74d12c20420f29e0dd9eeea2b66652b7f93a9ad465dd
+  patches:
+    - setup.patch
 
 build:
   noarch: python
@@ -20,19 +22,24 @@ requirements:
     - pip
   run:
     - python >=3.6
+    - pyee
+    - websockets
+    - appdirs
+    - urllib3
+    - tqdm
 
 test:
   imports:
-    - litereval
+    - pyppeteer
 
 about:
-  home: https://github.com/kiwi0fruit/litereval
+  home: https://github.com/miyakogi/pyppeteer
   license: MIT
   license_family: MIT
   license_file: LICENSE
-  summary: "Wrapper around ast.literal_eval with new {foo='bar', key=None} dict syntax."
-  doc_url: https://github.com/kiwi0fruit/litereval
-  dev_url: https://github.com/kiwi0fruit/litereval
+  summary: "Headless chrome/chromium automation library (unofficial port of puppeteer)"
+  doc_url: https://miyakogi.github.io/pyppeteer
+  dev_url: https://github.com/miyakogi/pyppeteer
 
 extra:
   recipe-maintainers:
