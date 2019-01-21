@@ -13,7 +13,6 @@ Scripts:
 To run the script open Bash terminal, then type <code>. </code> (dot with space), then
 drag and drop the script to the Bash terminal (the script will change CWD itself).
 
-* run `update_version` to update version
 * open terminal with activated environment
   * to upload package to pypi run `upload`
 
