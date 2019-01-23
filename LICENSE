@@ -2,7 +2,7 @@ Copyright (c) 2019 Peter Zagubisalo
 
 * The module as a whole is licensed under GNU General Public License v2 or later (GPLv2+)
   because of using Pandoc.
-* All code (or even a whole module) that doesn't fall under restrictions of Pandoc GPLv2+ is
+* All code (or even the whole module) that doesn't fall under restrictions of Pandoc GPLv2+ is
   dual-licensed under MIT.
 * Text of the licenses is brovided below.
 
