@@ -83,7 +83,7 @@ Also see how to prepare conda environment:
   ```bat
   call activate root
   conda update conda
-  conda create -n pandoctools python=3.6 -c defaults -c conda-forge pandoctools
+  conda create -n pandoctools -c defaults -c conda-forge python=3.6 pandoctools
   call activate pandoctools
   pip install pandoctools-ready
   ```
