@@ -151,23 +151,25 @@ if os.name == 'nt':
     pandoctools_bin = p.join(scripts_bin, "pandoctools.exe")
     search_dirs = [env_path, scripts_bin, p.join(env_path, 'Library', 'bin')]
     # Find bash on Windows:
-    win_bash = expandvars(config.get('Default', 'win_bash', fallback=''))
-    if not p.isfile(win_bash):
-        # here we implicitly use the fact that ini from core sh folder
-        # (pandoctools_core) has path to git's bash
+    for win_bash in (expandvars(config.get('Default', 'win_bash', fallback='')),
+                     p.join(env_path, r'Library\bin\bash.exe'),
+                     p.join(env_path, r'Library\usr\bin\bash.exe'),
+                     p.expandvars(r'%PROGRAMFILES%\Git\bin\bash.exe')):
+        if p.isfile(win_bash):
+            break
+    else:
         from ..pandoc_filter_arg import where, PandocFilterArgError
         try:
             win_bash = where('bash')
         except PandocFilterArgError:
-            win_bash = None
+            raise PandotoolsError("Bash was not found neither in the path provided in INI file," +
+                                  " nor in standard locations, nor in the $PATH.")
 else:
     scripts_bin = p.dirname(sys.executable)
     env_path = p.dirname(scripts_bin)
     pandoctools_bin = p.join(scripts_bin, "pandoctools")
     search_dirs = [env_path, scripts_bin]
-    #
-    win_bash = None
-
+    win_bash = ''
 
 # Find python root env:
 root_env = config.get('Default', 'root_env', fallback='')
@@ -176,15 +178,10 @@ root_env = expandvars(root_env)
 root_env = root_env if p.isabs(root_env) and p.isdir(root_env) else guess_root_env(env_path)
 
 
-bash_error = ("\nERROR: Bash was not found neither in the path provided in INI file nor in the $PATH.\n"
-              if (win_bash is None) and (os.name == 'nt')
-              else "")
-
-
 @click.command(help=f"""
 Pandoctools is a Pandoc profile manager that stores CLI filter pipelines.
 (default INPUT_FILE is "untitled").
-{bash_error}
+
 Recommended ways to run Pandoctools are to:\n
 - add it to 'Open With' applications for desired file format,\n
 - drag and drop file over pandoctools shortcut,\n
@@ -244,10 +241,7 @@ def pandoctools(input_file, input_file_stdin, profile, out, read, to, stdout, ye
       * in_ext, out_ext, is_bin_ext_maybe
       * Windows only: PYTHONIOENCODING, LANG
     """
-    if bash_error:
-        raise PandotoolsError(bash_error)
-
-    # Read document and mod input_file if needed:   
+    # Read document and mod input_file if needed:
     if input_file:
         stdin = False
         with open(expandvars(input_file), 'r', encoding="utf-8") as file:
