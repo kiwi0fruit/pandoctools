@@ -69,88 +69,43 @@ Extras:
 
 # Install
 
-## Windows:
+### Via conda
 
-**_Via conda_**:
+```bash
+conda install -c defaults -c conda-forge pandoctools
+pip install pandoctools-ready
+```
+
+Also see how to prepare conda environment:
 
 * Install [Miniconda](https://conda.io/miniconda.html),
-* Install [Git together with Bash](https://git-scm.com/downloads).  
-  Git is needed for writing text conversion profiles in cross-platform bash language,
-* Fresh install preparations (incl. creating "myenv" conda environment):
+* (*on Windows*) Creating "pandoctools" conda environment:
   ```bat
   call activate root
   conda update conda
-  conda create -n myenv python=3 pip setuptools
-
-  call activate myenv
-  conda update python pip setuptools
+  conda create -n pandoctools python=3.6 -c defaults -c conda-forge pandoctools
+  call activate pandoctools
+  pip install pandoctools-ready
   ```
-* Pandoctools installation:
-  ```bat
-  conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" ^
-  click pyyaml notebook jupyter future shutilwhich ^
-  certifi websockets appdirs urllib3 tqdm ^
-  jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters ^
-  pypandoc psutil nbformat pandoc-attributes pywin32
-
-  pip install pandoctools pandoctools-ready
-  ```
-* Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) (compatible with pandoc version) to `<miniconda-path>/envs/myenv/Library/bin`,
-* Tips:
-  - if pip install fails try to change codepage: `chcp 1252`,
-  - If Pandoc errors try downgrade to `"pandoc>=2.0,<2.1"` and pandoc-crossref v0.3.0.1,
-  - Should be `"conda>=4.5.4"` (`conda update conda` should be enough).
-
-
-**_Via pip_**:
-
-* Install [Git together with Bash](https://git-scm.com/downloads).  
-  Git is needed for writing text conversion profiles in cross-platform bash language,
-* :
-  ```
-  pip install pandoctools pandoctools-ready
-  ```
-* Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) (compatible with pandoc version) to virtual environment's `.\Scripts` folder.
-
-
-## Unix:
-
-Via conda:
-
-* Install [Miniconda](https://conda.io/miniconda.html),
-* Fresh install preparations (incl. creating "myenv" conda environment):
+* (*on Unix*) Creating "pandoctools" conda environment:
   ```bash
   source activate root
   conda update conda
-  conda create -n myenv python=3 pip setuptools
-
-  source activate myenv
-  conda update python pip setuptools
+  conda create -n pandoctools -c defaults -c conda-forge python=3.6 pandoctools
+  source activate pandoctools
+  pip install pandoctools-ready
   ```
 
-* Pandoctools installation:
+
+### Via pip
+
+* (*on Windows*) Install [Git together with Bash](https://git-scm.com/downloads),
+* Install [Pandoc](https://pandoc.org/installing.html) (maybe pip would also install it but I'm not sure),
+* Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) (compatible with pandoc version) to the dedicated virtual environment's `.\Scripts` (Windows) or `./bin` (Unix) folder.
+* Install Pandoctools:
   ```bash
-  conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" \
-  click pyyaml notebook jupyter future shutilwhich \
-  certifi websockets appdirs urllib3 tqdm \
-  jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters \
-  pypandoc psutil nbformat pandoc-attributes
-
   pip install pandoctools pandoctools-ready
   ```
-* Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) (compatible with pandoc version) to `<miniconda-path>/envs/myenv/bin`,
-* Tips:
-  - If Pandoc errors try downgrade to `"pandoc>=2.0,<2.1"` and pandoc-crossref v0.3.0.1,
-  - Should be `"conda>=4.5.4"` (`conda update conda` should be enough).
-
-
-Via pip:
-
-* :
-  ```
-  pip install pandoctools pandoctools-ready
-  ```
-* Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) (compatible with pandoc version) to virtual environment's `./bin` folder.
 
 
 # Useful tips (reload imported modules in Hydrogen, R kernel, LyX)

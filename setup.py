@@ -40,7 +40,8 @@ setup(
     install_requires=['click', 'pyyaml', 'notebook', 'jupyter',
                       'panflute>=1.11.2', 'knitty>=0.4.19', 'pyppdf>=0.0.10',
                       'sugartex>=0.1.16', 'shortcutter>=0.1.15'],
-    # conda-forge additionals: pandoc-crossref pandoc>=2.5 pip>=10.0.1 git>=2.20.1
+    # conda-forge additionals:
+    #   conda>=4.5.4 pip>=10.0.1 pandoc-crossref pandoc>=2.5 git>=2.20.1 setuptools
 
     include_package_data=True,
     package_data={
