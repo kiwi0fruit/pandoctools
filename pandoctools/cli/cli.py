@@ -149,9 +149,14 @@ if os.name == 'nt':
     from ..pandoc_filter_arg import where, PandocFilterArgError
 
     env_path = p.dirname(sys.executable)
-    scripts_bin = p.join(env_path, "Scripts")
+    scripts_bin = p.join(env_path, 'Scripts')
     pandoctools_bin = p.join(scripts_bin, "pandoctools.exe")
-    search_dirs = [env_path, scripts_bin, p.join(env_path, 'Library', 'bin')]
+    search_dirs = [env_path,
+                   p.join(env_path, r'Library\mingw-w64\bin'),
+                   p.join(env_path, r'Library\usr\bin'),
+                   p.join(env_path, r'Library\bin'),
+                   p.join(env_path, 'Scripts'),
+                   p.join(env_path, 'bin')]
 
     # Find bash on Windows:
     try:
