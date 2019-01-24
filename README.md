@@ -20,6 +20,7 @@ Pandoctools is a combination of tools that help write reproducible markdown repo
   `from IPython.display import Markdown; Markdown('hello')`.
 * Import pandas, matplotlib and feather helpers from separate modules: [matplotlibhelper](https://github.com/kiwi0fruit/matplotlibhelper), [featherhelper](https://github.com/kiwi0fruit/featherhelper), [tabulatehelper](https://github.com/kiwi0fruit/tabulatehelper),
 * **v1.3.7** is not backward compatible but profiles can be easily fixed. Uninstall Pandoctools before updating. Update your custom bash scripts as names and logic changed. References: [**Default_args**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_args), [**Default**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default) (profile), [**Default_pipe**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_pipe).
+* Since **v1.3.16** bash on Windows cannot be set in the INI. Pandoctools checks $PATH, then common locations.
 
 
 # Contents

@@ -146,24 +146,29 @@ def user_yes_no_query(message: str):
 # Set some vars and env vars. Read from INI config:
 config = read_ini('Defaults', pandoctools_user, pandoctools_core)
 if os.name == 'nt':
+    from ..pandoc_filter_arg import where, PandocFilterArgError
+
     env_path = p.dirname(sys.executable)
     scripts_bin = p.join(env_path, "Scripts")
     pandoctools_bin = p.join(scripts_bin, "pandoctools.exe")
     search_dirs = [env_path, scripts_bin, p.join(env_path, 'Library', 'bin')]
+
     # Find bash on Windows:
-    for win_bash in (expandvars(config.get('Default', 'win_bash', fallback='')),
-                     p.join(env_path, r'Library\bin\bash.exe'),
-                     p.join(env_path, r'Library\usr\bin\bash.exe'),
-                     p.expandvars(r'%PROGRAMFILES%\Git\bin\bash.exe')):
+    try:
+        _win_bash = where('bash')
+    except PandocFilterArgError:
+        _win_bash = ''
+    for win_bash in (
+        _win_bash,
+        p.join(env_path, r'Library\bin\bash.exe'),
+        p.join(env_path, r'Library\usr\bin\bash.exe'),
+        p.expandvars(r'%PROGRAMFILES%\Git\bin\bash.exe')
+    ):
         if p.isfile(win_bash):
             break
     else:
-        from ..pandoc_filter_arg import where, PandocFilterArgError
-        try:
-            win_bash = where('bash')
-        except PandocFilterArgError:
-            raise PandotoolsError("Bash was not found neither in the path provided in INI file," +
-                                  " nor in standard locations, nor in the $PATH.")
+        raise PandotoolsError("Bash was not found neither in the in the $PATH," +
+                              " nor in standard locations.")
 else:
     scripts_bin = p.dirname(sys.executable)
     env_path = p.dirname(scripts_bin)
