@@ -73,10 +73,10 @@ Extras:
 ### Via conda
 
 ```bash
-conda install -c defaults -c conda-forge pandoctools
+conda install -c conda-forge pandoctools
 pip install pandoctools-ready
 ```
-If pandoctools is up to date everything should work fine. If bash wasn't found on Windows try:
+Mind that `-c defaults -c conda-forge` won't work properly. If bash wasn't found on Windows try:
 ```bash
 conda update -c conda-forge git
 ```
