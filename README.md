@@ -13,13 +13,14 @@ Pandoctools is a combination of tools that help write reproducible markdown repo
 
 ## Update instructions
 
-(*Update instructions to v.1.3.7*)
+(*Update instructions to v.1.4.0*)
 
 * Switch to bash profiles as batch profiles are no longer supported (and install bash if needed),
 * `results=pandoc` was a misunderstanding. The right way to output Markdown is to use  
   `from IPython.display import Markdown; Markdown('hello')`.
 * Import pandas, matplotlib and feather helpers from separate modules: [matplotlibhelper](https://github.com/kiwi0fruit/matplotlibhelper), [featherhelper](https://github.com/kiwi0fruit/featherhelper), [tabulatehelper](https://github.com/kiwi0fruit/tabulatehelper),
-* **v1.3.7** is not backward compatible but profiles can be easily fixed. Uninstall Pandoctools before updating. Update your custom bash scripts as names and logic changed. References: [**Default_args**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_args), [**Default**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default) (profile), [**Default_pipe**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_pipe).
+* **v1.4.0** is not backward compatible but profiles can be easily fixed. Uninstall Pandoctools before updating. Update your custom bash scripts as names and logic changed. References: [**Default_args**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_args), [**Default**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default) (profile), [**Default_pipe**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_pipe).
+* Since **v1.3.16** bash on Windows cannot be set in the INI. Pandoctools checks $PATH, then common locations.
 
 
 # Contents
@@ -38,7 +39,7 @@ Pandoctools is a combination of tools that help write reproducible markdown repo
 
 * [**Pandoc**](https://pandoc.org/), [**Jupyter**](http://jupyter.org/), [**pandoc-crossref**](https://github.com/lierdakil/pandoc-crossref) (dependence) - classical tools.
 * [**Pandoctools CLI app**](https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/cli): profile manager of text processing pipelines. It stores short bash scripts - called profiles - that define chain operations over text. They are mostly Pandoc filters but any CLI text filter is OK. Profiles can be used to convert any document of choise in the specified manner.
-* [**Knitty**](https://github.com/kiwi0fruit/knitty) (dependence): Knitty is a Pandoc filter and another CLI for Stitch/Knotr: reproducible report generation tool via Jupyter, Pandoc and Markdown. Insert python code (or other Jupyter kernel code) to the Markdown document and have code's results in the output document. Can even export to Jupyter ipynb notebooks. You can use [vscode-ipynb-py-converter](https://github.com/nojvek/vscode-ipynb-py-converter) to convert .ipynb to .py to use with Knitty.
+* [**Knitty**](https://github.com/kiwi0fruit/knitty) (dependence): Knitty is a Pandoc filter and another CLI for Stitch/Knotr: reproducible report generation tool via Jupyter, Pandoc and Markdown. Insert python code (or other Jupyter kernel code) to the Markdown document and have code's results in the output document. Can even export to Jupyter ipynb notebooks. You can use [ipynb-py-convert](https://github.com/kiwi0fruit/ipynb-py-convert) to convert .ipynb to .py to use with Knitty.
 * [**SugarTeX**](https://github.com/kiwi0fruit/sugartex) (dependence): SugarTeX is a more readable LaTeX language extension and transcompiler to LaTeX.
 * [**Pyppdf**](https://github.com/kiwi0fruit/pyppdf) (dependence): Pyppeteer PDF. Prints html output to pdf via patched Pyppeteer.
 * (*optional*) [**Tabulate Helper**](https://github.com/kiwi0fruit/tabulatehelper) converts tabular data like Pandas dataframe to GitHub Flavored Markdown pipe table.
@@ -64,92 +65,48 @@ Here are [**examples**](https://github.com/kiwi0fruit/pandoctools/blob/master/ex
 Extras:
 
 * If you need to capture Matplotlib plots please see [matplotlibhelper](https://github.com/kiwi0fruit/matplotlibhelper) (the approach showed in examples there can be used with other plot libraries).
+* If you need to autonumber sections see [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref) or [this SE question](https://stackoverflow.com/questions/48434961/how-to-customise-section-headings-to-start-with-letters-in-r-markdown)
 
 
 # Install
 
-## Windows:
+### Via conda
 
-**_Via conda_**:
+```bash
+conda install -c defaults -c conda-forge pandoctools
+pip install pandoctools-ready
+```
+
+Also see how to prepare conda environment:
 
 * Install [Miniconda](https://conda.io/miniconda.html),
-* Install [Git together with Bash](https://git-scm.com/downloads).  
-  Git is needed for writing text conversion profiles in cross-platform bash language,
-* Fresh install preparations (incl. creating "myenv" conda environment):
+* (*on Windows*) Creating "pandoctools" conda environment:
   ```bat
   call activate root
   conda update conda
-  conda create -n myenv python=3 pip setuptools
-
-  call activate myenv
-  conda update python pip setuptools
+  conda create -n pandoctools -c defaults -c conda-forge python=3.6 pandoctools
+  call activate pandoctools
+  pip install pandoctools-ready
   ```
-* Pandoctools installation:
-  ```bat
-  conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" ^
-  click pyyaml notebook jupyter future shutilwhich ^
-  certifi websockets appdirs urllib3 tqdm ^
-  jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters ^
-  pypandoc psutil nbformat pandoc-attributes pywin32
-
-  pip install pandoctools pandoctools-ready
-  ```
-* Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) (compatible with pandoc version) to `<miniconda-path>/envs/myenv/Library/bin`,
-* Tips:
-  - if pip install fails try to change codepage: `chcp 1252`,
-  - If Pandoc errors try downgrade to `"pandoc>=2.0,<2.1"` and pandoc-crossref v0.3.0.1,
-  - Should be `"conda>=4.5.4"` (`conda update conda` should be enough).
-
-
-**_Via pip_**:
-
-* Install [Git together with Bash](https://git-scm.com/downloads).  
-  Git is needed for writing text conversion profiles in cross-platform bash language,
-* :
-  ```
-  pip install pandoctools pandoctools-ready
-  ```
-* Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) (compatible with pandoc version) to virtual environment's `.\Scripts` folder.
-
-
-## Unix:
-
-Via conda:
-
-* Install [Miniconda](https://conda.io/miniconda.html),
-* Fresh install preparations (incl. creating "myenv" conda environment):
+* (*on Unix*) Creating "pandoctools" conda environment:
   ```bash
   source activate root
   conda update conda
-  conda create -n myenv python=3 pip setuptools
-
-  source activate myenv
-  conda update python pip setuptools
+  conda create -n pandoctools -c defaults -c conda-forge python=3.6 pandoctools
+  source activate pandoctools
+  pip install pandoctools-ready
   ```
 
-* Pandoctools installation:
+
+### Via pip
+
+* (*on Windows*) Install [Git together with Bash](https://git-scm.com/downloads),
+* Install [Pandoc](https://pandoc.org/installing.html) (maybe pip would also install it but I'm not sure),
+* Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) (compatible with pandoc version) to the dedicated virtual environment's `.\Scripts` (Windows) or `./bin` (Unix) folder.
+* Install Pandoctools:
   ```bash
-  conda install -c defaults -c conda-forge "pip>=10.0.1" "pandoc>=2.3.1" \
-  click pyyaml notebook jupyter future shutilwhich \
-  certifi websockets appdirs urllib3 tqdm \
-  jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters \
-  pypandoc psutil nbformat pandoc-attributes
-
   pip install pandoctools pandoctools-ready
   ```
-* Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) (compatible with pandoc version) to `<miniconda-path>/envs/myenv/bin`,
-* Tips:
-  - If Pandoc errors try downgrade to `"pandoc>=2.0,<2.1"` and pandoc-crossref v0.3.0.1,
-  - Should be `"conda>=4.5.4"` (`conda update conda` should be enough).
-
-
-Via pip:
-
-* :
-  ```
-  pip install pandoctools pandoctools-ready
-  ```
-* Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) (compatible with pandoc version) to virtual environment's `./bin` folder.
 
 
 # Useful tips (reload imported modules in Hydrogen, R kernel, LyX)

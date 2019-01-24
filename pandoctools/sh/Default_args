@@ -22,7 +22,7 @@
 #                then in `<...>/site-packages/pandoctools/sh` folders)
 #   ${python_to_PATH}    (prepend PATH with python environment)
 
-#   $scripts    (conda or venv environment bin folder)
+#   $scripts    (`bin` on Unix, `Scripts` on Windows)
 #   ${root_env}    (root conda environment folder)
 #   ${env_path}    (conda or venv environment folder)
 

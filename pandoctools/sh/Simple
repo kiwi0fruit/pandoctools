@@ -1,5 +1,5 @@
 #!/bin/bash
-profile="$(basename "${BASH_SOURCE[0]}")"
+profile=Simple
 md_input_only=false
 source "${python_to_PATH}" "${env_path}"
 export PATH="$PATH"

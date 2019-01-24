@@ -166,7 +166,8 @@ See [Default_args](../sh/Default_args) for details. You can easily add your cust
 #!/bin/bash
 profile=Kiwi
 md_input_only=true
-source "${python_to_PATH}" "${root_env}"
+if [[ "${root_env}" != "" ]]; then
+    PATH="${root_env}/${scripts}:$PATH"; fi
 source "$source" activate "${env_path}"
 source "$("$resolve" ${profile}_args --else Default_args)"
 writer_args=(--standalone --self-contained --toc "${writer_args0[@]}")
@@ -179,7 +180,7 @@ source "$source" deactivate
 
 ## Environment variables predefined in Pandoctools CLI application:
 
-* `scripts` - `<python_env>\Scripts` folder on Windows, `<python_env>/bin` on Unix
+* `scripts` - `Scripts` basename on Windows, `bin` basename on Unix
 * `source` - `source` bash script from PATH only (without current working dir)
 * `resolve` - echoes the resolved fullpath to file given. File is searched in the folder in user data first (`%APPDATA%\pandoc\pandoctools` on Windows, `~/.pandoc/pandoctools` on Unix), then in the [folder in python module](../sh)
 * `python_to_PATH` - prepends PATH with all necessary python folders. Argument is the root dir of python installation (root env or created env). Runs only if argument is not empty.

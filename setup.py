@@ -28,7 +28,7 @@ setup(
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Build Tools',
-        'License :: OSI Approved :: MIT License',
+        'License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)',
 
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
@@ -38,16 +38,10 @@ setup(
     packages=find_packages(exclude=['docs', 'tests']),
     python_requires='>=3.6',
     install_requires=['click', 'pyyaml', 'notebook', 'jupyter',
-                      'panflute>=1.11.1', 'knitty>=0.4.14', 'pyppdf>=0.0.8',
-                      'sugartex>=0.1.13', 'shortcutter>=0.1.8'],
-    # pandoctools: "pip>=10.0.1" "pandoc>=2.3.1" click pyyaml notebook jupyter
-    # shortcutter: pywin32 {win}
-    # panflute: future shutilwhich [click pyyaml]
-    # knitty: jupyter_core traitlets ipython jupyter_client nbconvert pandocfilters
-    #         pypandoc psutil nbformat pandoc-attributes [click pyyaml panflute]
-    # pyppdf: certifi [click litereval pyppeteer]
-    # pyppeteer: websockets appdirs urllib3 tqdm [pyee]
-    # pyee: --  # litereval: -- # sugartex: [panflute]
+                      'panflute>=1.11.2', 'knitty>=0.4.19', 'pyppdf>=0.0.10',
+                      'sugartex>=0.1.16', 'shortcutter>=0.1.15'],
+    # conda-forge additionals:
+    #   conda>=4.5.4 pip>=10.0.1 pandoc-crossref pandoc>=2.5 git>=2.20.1 setuptools
 
     include_package_data=True,
     package_data={
