@@ -153,27 +153,19 @@ if os.name == 'nt':
     pandoctools_bin = p.join(scripts_bin, "pandoctools.exe")
     search_dirs = [env_path,
                    p.join(env_path, r'Library\mingw-w64\bin'),
-                   p.join(env_path, r'Library\usr\bin'),
                    p.join(env_path, r'Library\bin'),
+                   p.join(env_path, r'Library\usr\bin'),
                    p.join(env_path, 'Scripts'),
                    p.join(env_path, 'bin')]
 
     # Find bash on Windows:
     try:
-        _win_bash = where('bash')
+        win_bash = where('bash', search_dirs)
     except PandocFilterArgError:
-        _win_bash = ''
-    for win_bash in (
-        _win_bash,
-        p.join(env_path, r'Library\bin\bash.exe'),
-        p.join(env_path, r'Library\usr\bin\bash.exe'),
-        p.expandvars(r'%PROGRAMFILES%\Git\bin\bash.exe')
-    ):
-        if p.isfile(win_bash):
-            break
-    else:
-        raise PandotoolsError("Bash was not found neither in the in the $PATH," +
-                              " nor in standard locations.")
+        win_bash = p.expandvars(r'%PROGRAMFILES%\Git\bin\bash.exe')
+        if not p.isfile(win_bash):
+            raise PandotoolsError("Bash was not found neither in the in the $PATH," +
+                                  " nor in standard locations.")
 else:
     scripts_bin = p.dirname(sys.executable)
     env_path = p.dirname(scripts_bin)
