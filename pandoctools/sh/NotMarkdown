@@ -3,6 +3,7 @@ profile=NotMarkdown
 md_input_only=false
 if [[ "${root_env}" != "" ]]; then
     PATH="${root_env}/${scripts}:$PATH"; fi
+source "${python_to_PATH}" "${env_path}"
 source "$source" activate "${env_path}"
 source "$("$resolve" ${profile}_args --else Default_args)"
 source "$("$resolve" ${profile}_pipe --else Default_pipe)"

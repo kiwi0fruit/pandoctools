@@ -168,6 +168,7 @@ profile=Kiwi
 md_input_only=true
 if [[ "${root_env}" != "" ]]; then
     PATH="${root_env}/${scripts}:$PATH"; fi
+source "${python_to_PATH}" "${env_path}"
 source "$source" activate "${env_path}"
 source "$("$resolve" ${profile}_args --else Default_args)"
 writer_args=(--standalone --self-contained --toc "${writer_args0[@]}")
