@@ -148,13 +148,13 @@ config = read_ini('Defaults', pandoctools_user, pandoctools_core)
 if os.name == 'nt':
     from ..pandoc_filter_arg import where, PandocFilterArgError
 
+    scripts_bin = 'Scripts'
     env_path = p.dirname(sys.executable)
-    scripts_bin = p.join(env_path, 'Scripts')
-    pandoctools_bin = p.join(scripts_bin, "pandoctools.exe")
+    pandoctools_bin = p.join(env_path, r'Scripts\pandoctools.exe')
     search_dirs = [env_path,
                    p.join(env_path, r'Library\mingw-w64\bin'),
-                   p.join(env_path, r'Library\bin'),
                    p.join(env_path, r'Library\usr\bin'),
+                   p.join(env_path, r'Library\bin'),
                    p.join(env_path, 'Scripts'),
                    p.join(env_path, 'bin')]
 
@@ -167,10 +167,10 @@ if os.name == 'nt':
             raise PandotoolsError("Bash was not found neither in the in the $PATH," +
                                   " nor in standard locations.")
 else:
-    scripts_bin = p.dirname(sys.executable)
-    env_path = p.dirname(scripts_bin)
-    pandoctools_bin = p.join(scripts_bin, "pandoctools")
-    search_dirs = [env_path, scripts_bin]
+    scripts_bin = 'bin'
+    env_path = p.dirname(p.dirname(sys.executable))
+    pandoctools_bin = p.join(env_path, 'bin', 'pandoctools')
+    search_dirs = [p.join(env_path, 'bin')]
     win_bash = ''
 
 # Find python root env:
@@ -329,7 +329,7 @@ def pandoctools(input_file, input_file_stdin, profile, out, read, to, stdout, ye
     env_vars = dict(
         source=p.join(p.dirname(pandoctools_core), 'source-from-path'),
         python_to_PATH=p.join(p.dirname(pandoctools_core), 'python-to-path'),
-        resolve=p.join(scripts_bin, 'pandoctools-resolve'),
+        resolve=p.join(env_path, scripts_bin, 'pandoctools-resolve'),
         scripts=scripts_bin,
         env_path=env_path,
         input_file=input_file,
@@ -341,14 +341,15 @@ def pandoctools(input_file, input_file_stdin, profile, out, read, to, stdout, ye
 
     # convert win-paths to unix-paths if needed:
     if os.name == 'nt':
-        vars_ = list(filter(None, ("source", "scripts", "resolve", "python_to_PATH",
-                                   "env_path", "input_file", "output_file", "root_env")))
+        vars_ = [var for var in ("source", "scripts", "resolve", "python_to_PATH", "env_path",
+                                 "input_file", "output_file", "root_env")
+                 if env_vars.get(var)]
 
         def cygpath():
             bash_dir = p.dirname(win_bash)
-            cygpaths = (p.join(p.dirname(bash_dir), 'usr', 'bin', 'cygpath.exe'),
-                        p.join(bash_dir, 'usr', 'bin', 'cygpath.exe'),
-                        p.join(bash_dir, 'cygpath.exe'))
+            cygpaths = (p.join(bash_dir, 'cygpath.exe'),
+                        p.join(p.dirname(bash_dir), 'usr', 'bin', 'cygpath.exe'),
+                        p.join(bash_dir, 'usr', 'bin', 'cygpath.exe'))
             for _path in cygpaths:
                 if p.isfile(_path):
                     return _path

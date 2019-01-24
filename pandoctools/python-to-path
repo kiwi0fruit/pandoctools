@@ -7,7 +7,7 @@
 
 if [[ "$1" != "" ]]; then
     if [[ "$(uname -s)" == MINGW* ]]; then
-        PATH="$1:$1/Scripts:$1/Library/bin:$PATH"
+        PATH="$1:$1/Library/mingw-w64/bin:$1/Library/usr/bin:$1/Library/bin:$1/Scripts:$1/bin:$PATH"
     else
         PATH="$1/bin:$PATH"
     fi

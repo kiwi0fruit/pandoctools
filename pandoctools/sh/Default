@@ -1,7 +1,8 @@
 #!/bin/bash
-profile="$(basename "${BASH_SOURCE[0]}")"
+profile=Default
 md_input_only=true
-source "${python_to_PATH}" "${root_env}"
+if [[ "${root_env}" != "" ]]; then
+    PATH="${root_env}/${scripts}:$PATH"; fi
 source "$source" activate "${env_path}"
 source "$("$resolve" ${profile}_args --else Default_args)"
 source "$("$resolve" ${profile}_pipe --else Default_pipe)"
