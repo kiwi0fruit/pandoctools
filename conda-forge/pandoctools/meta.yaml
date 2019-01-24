@@ -7,10 +7,9 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 94f229ff19e9a5ee1782830f537f6824f2263e34ae148367bf664306d4156cf1
+  sha256: c7eafad4058b6fa7198dbf701f9019538f1ea28165308fd58b0e8968fa4a856f
 
 build:
-  # noarch: python
   number: 0
   entry_points:
     - cat-md = pandoctools.cat_md.cat_md:cli
@@ -40,7 +39,6 @@ requirements:
     - pandoc-crossref
     - pandoc >=2.5
     - posix  # [win]
-    # - git
 
 test:
   imports:
