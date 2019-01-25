@@ -10,8 +10,9 @@ source:
   sha256: 64de3aa13fbdab4188279e9e8197099ad3e3f820d80f0fbe6b6de7d579561f91
 
 build:
-  noarch: python
-  number: 0
+  # noarch: python
+  number: 2
+  skip: True  # [py2k]
   entry_points:
     - cat-md = pandoctools.cat_md.cat_md:cli
     - pandoctools = pandoctools.cli.cli:pandoctools
@@ -21,7 +22,7 @@ build:
 
 requirements:
   host:
-    - python >=3.6
+    - python
     - pip
   run:
     - python >=3.6
@@ -39,7 +40,7 @@ requirements:
     - shortcutter >=0.1.15
     - pandoc-crossref
     - pandoc >=2.5
-    - posix
+    - posix  # [win]
 
 test:
   imports:
