@@ -1,5 +1,6 @@
 from os import path as p
 import os
+import sys
 
 
 class PandotoolsError(Exception):
