@@ -51,7 +51,6 @@ test:
     - pandoctools.shared_vars
   commands:
     - bash --help
-    - cygpath --help
     - cat-md --help
     - pandoctools --help
     - pandoc-filter-arg --help
