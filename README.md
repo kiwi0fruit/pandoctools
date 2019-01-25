@@ -73,7 +73,7 @@ Extras:
 ### Via conda
 
 ```bash
-conda install -c defaults -c conda-forge pandoctools
+conda install -c defaults -c conda-forge "pandoctools>=1.4.1"
 pip install pandoctools-ready
 ```
 
@@ -84,7 +84,7 @@ Also see how to prepare conda environment:
   ```bat
   call activate root
   conda update conda
-  conda create -n pandoctools -c defaults -c conda-forge python=3.6 pandoctools
+  conda create -n pandoctools -c defaults -c conda-forge python=3.6 "pandoctools>=1.4.1"
   call activate pandoctools
   pip install pandoctools-ready
   ```
@@ -92,7 +92,7 @@ Also see how to prepare conda environment:
   ```bash
   source activate root
   conda update conda
-  conda create -n pandoctools -c defaults -c conda-forge python=3.6 pandoctools
+  conda create -n pandoctools -c defaults -c conda-forge python=3.6 "pandoctools>=1.4.1"
   source activate pandoctools
   pip install pandoctools-ready
   ```
