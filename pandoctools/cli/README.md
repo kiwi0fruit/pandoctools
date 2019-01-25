@@ -183,7 +183,6 @@ source "$source" deactivate
 * `scripts` - `Scripts` basename on Windows, `bin` basename on Unix
 * `source` - `source` bash script from PATH only (without current working dir)
 * `resolve` - echoes the resolved fullpath to file given. File is searched in the folder in user data first (`%APPDATA%\pandoc\pandoctools` on Windows, `~/.pandoc/pandoctools` on Unix), then in the [folder in python module](../sh)
-* `python_to_PATH` - prepends PATH with all necessary python folders. Argument is the root dir of python installation (root env or created env). Runs only if argument is not empty.
 * `env_path` - root dir of python installation where pandoctools was installed
 * `input_file` - absolute path to input file (?may be broken when no CWD was specified and python can't resolve relative path)
 * `output_file` - absolute path to output file (?may be broken when no CWD)
@@ -197,3 +196,8 @@ source "$source" deactivate
 * `is_bin_ext_maybe` - Pandoctools nice guess if the `output_file` extension (or `to` if no ext) means that Pandoc needs adding `-o "${output_file}"` option
 * `PYTHONIOENCODING` = `utf-8` (Windows only)
 * `LANG` = `C.UTF-8` (Windows only)
+
+Some of predefined bash scripts: 
+
+* `_root_env_bin_to_PATH` - script that prepends PATH with bin/Scripts dir of the root environment if it was set.
+* `_python_to_PATH` - scripts that prepends PATH with all necessary python folders. Argument is the root dir of python installation (root env or created env). Runs only if argument is not empty.

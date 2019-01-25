@@ -20,7 +20,6 @@
 #   $resolve    (echoes resolved path to a file. Searches in 
 #                `$HOME/.pandoc/pandoctools` or `%APPDATA%\pandoc\pandoctools`
 #                then in `<...>/site-packages/pandoctools/sh` folders)
-#   ${python_to_PATH}    (prepend PATH with python environment)
 
 #   $scripts    (`bin` on Unix, `Scripts` on Windows)
 #   ${root_env}    (root conda environment folder)

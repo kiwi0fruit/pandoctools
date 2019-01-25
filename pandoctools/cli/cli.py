@@ -160,18 +160,18 @@ if os.name == 'nt':
 
     # Find bash on Windows:
     try:
-        win_bash = where('bash', search_dirs)
+        bash = where('bash', search_dirs)
     except PandocFilterArgError:
-        win_bash = p.expandvars(r'%PROGRAMFILES%\Git\bin\bash.exe')
-        if not p.isfile(win_bash):
-            raise PandotoolsError("Bash was not found neither in the in the $PATH," +
-                                  " nor in standard locations.")
+        bash = p.expandvars(r'%PROGRAMFILES%\Git\bin\bash.exe')
+        if not p.isfile(bash):
+            raise PandotoolsError("Bash was not found neither in the python environment, nor in" +
+                                  r" the $PATH, nor in the %PROGRAMFILES%\Git")
 else:
     scripts_bin = 'bin'
     env_path = p.dirname(p.dirname(sys.executable))
     pandoctools_bin = p.join(env_path, 'bin', 'pandoctools')
     search_dirs = [p.join(env_path, 'bin')]
-    win_bash = ''
+    bash = where('bash', search_dirs)
 
 # Find python root env:
 root_env = config.get('Default', 'root_env', fallback='')
@@ -346,7 +346,7 @@ def pandoctools(input_file, input_file_stdin, profile, out, read, to, stdout, ye
                  if env_vars.get(var)]
 
         def cygpath():
-            bash_dir = p.dirname(win_bash)
+            bash_dir = p.dirname(bash)
             cygpaths = (p.join(bash_dir, 'cygpath.exe'),
                         p.join(p.dirname(bash_dir), 'usr', 'bin', 'cygpath.exe'),
                         p.join(bash_dir, 'usr', 'bin', 'cygpath.exe'))
@@ -369,12 +369,11 @@ def pandoctools(input_file, input_file_stdin, profile, out, read, to, stdout, ye
                  'PYTHONIOENCODING', 'LANG']
         for var in vars_:
             print(f'{var}: {env_vars.get(var)}')
-        print('win_bash: ', win_bash, '\n')
+        print('bash: ', bash, '\n')
         print(os.environ["PATH"], '\n')
         print(dict(os.environ))
 
     # run pandoctools:
-    bash = win_bash if (os.name == 'nt') else 'bash'
     bash_cwd = None if cwd else p.dirname(input_file)
     proc = run([bash, profile_path], stdout=PIPE, input=doc,
                encoding='utf-8', cwd=bash_cwd,
