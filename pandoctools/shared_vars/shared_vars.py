@@ -2,7 +2,6 @@ from os import path as p
 import os
 import sys
 from typing import Iterable
-from subprocess import run, PIPE
 
 
 class PandotoolsError(Exception):
@@ -18,6 +17,8 @@ def where(executable: str, search_dirs_: Iterable[str]=None) -> str:
       On Unix: absolute path to the exec that was found in the search_dirs
       or executable arg unchanged.
     """
+    from subprocess import run, PIPE
+
     def exe(_exe): return f'{_exe}.exe' if (os.name == 'nt') else _exe
     def is_exe(_exe): return True if (os.name == 'nt') else os.access(_exe, os.X_OK)
 
@@ -52,16 +53,24 @@ if os.name == 'nt':
                    p.join(env_path, r'Library\bin'),
                    p.join(env_path, 'Scripts'),
                    p.join(env_path, 'bin')]
-    bash = where('bash', search_dirs + [p.expandvars(r'%PROGRAMFILES%\Git\bin'),
-                                        p.expandvars(r'%PROGRAMFILES%\Git\usr\bin')])
-    bash_dir = p.dirname(bash)
-    cygpath = where('cygpath', [bash_dir,
-                                p.join(p.dirname(bash_dir), r'usr\bin'),
-                                p.join(bash_dir, r'usr\bin')])
+
+    def bash_cygpath(*extra_dirs):
+        bash = where('bash', search_dirs + list(extra_dirs) + [
+            p.expandvars(r'%PROGRAMFILES%\Git\bin'),
+            p.expandvars(r'%PROGRAMFILES%\Git\usr\bin')
+        ])
+        bash_dir = p.dirname(bash)
+        cygpath = where('cygpath', [bash_dir,
+                        p.join(p.dirname(bash_dir), r'usr\bin'),
+                        p.join(bash_dir, r'usr\bin')])
+        return bash, cygpath
 else:
     pandoctools_user_data = "$HOME/.pandoc/pandoctools"
     pandoctools_user = p.join(os.environ["HOME"], ".pandoc", "pandoctools")
     env_path = p.dirname(p.dirname(sys.executable))
     search_dirs = [p.join(env_path, 'bin')]
-    bash = where('bash', search_dirs)
-    cygpath = ''
+
+    def bash_cygpath(*extra_dirs):
+        bash = where('bash', list(extra_dirs) + search_dirs)
+        cygpath = ''
+        return bash, cygpath

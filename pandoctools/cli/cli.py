@@ -8,7 +8,7 @@ import configparser
 import io
 from typing import Tuple
 from ..pandoc_filter_arg import pandoc_filter_arg, is_bin_ext_maybe
-from ..shared_vars import (pandoctools_user, pandoctools_user_data, bash, cygpath,
+from ..shared_vars import (pandoctools_user, pandoctools_user_data, bash_cygpath,
                            pandoctools_core, PandotoolsError, env_path, search_dirs)
 from knitty.tools import get, load_yaml
 
@@ -144,16 +144,18 @@ def user_yes_no_query(message: str):
             print("Please respond with one of: 'y', 'yes', 'n', 'no'.")
 
 
-# Set some vars and env vars:
+# Set some vars and env vars. Read from INI config:
+config = read_ini('Defaults', pandoctools_user, pandoctools_core)
 if os.name == 'nt':
     scripts_bin = 'Scripts'
     pandoctools_bin = p.join(env_path, r'Scripts\pandoctools.exe')
+    bash, cygpath = bash_cygpath(expandvars(config.get('Default', 'win_bash', fallback='')))
 else:
     scripts_bin = 'bin'
     pandoctools_bin = p.join(env_path, 'bin', 'pandoctools')
+    bash, cygpath = bash_cygpath()
 
-# Find python root env.  Read from INI config:
-config = read_ini('Defaults', pandoctools_user, pandoctools_core)
+# Find python root env:
 root_env = config.get('Default', 'root_env', fallback='')
 #   Expand environment vars and get abs path:
 root_env = expandvars(root_env)
@@ -217,7 +219,7 @@ def pandoctools(input_file, input_file_stdin, profile, out, read, to, stdout, ye
     """
     Sets environment variables:
       * scripts, source, resolve
-      * env_path, root_env
+      * env_path, root_env, cygpath
       * input_file, output_file, from, to
       * important_from, important_to
       * in_ext, out_ext, is_bin_ext_maybe
@@ -315,6 +317,7 @@ def pandoctools(input_file, input_file_stdin, profile, out, read, to, stdout, ye
         output_file=output_file,
         is_bin_ext_maybe=str(is_bin_ext_maybe(output_file, to, search_dirs=search_dirs)).lower(),
         root_env=root_env,
+        cygpath=cygpath,
         **dic
     )
 
@@ -330,7 +333,7 @@ def pandoctools(input_file, input_file_stdin, profile, out, read, to, stdout, ye
 
     # debug env vars:
     if debug:
-        vars_ = ['scripts', 'source', 'resolve', 'env_path',
+        vars_ = ['scripts', 'source', 'resolve', 'env_path', 'cygpath',
                  'input_file', 'output_file', 'root_env', 'in_ext', 'from', 'out_ext',
                  'to', 'is_bin_ext_maybe', 'important_from', 'important_to',
                  'PYTHONIOENCODING', 'LANG']

@@ -194,6 +194,7 @@ source "$source" deactivate
 * `important_from` - bool: whether `from` was set by user
 * `important_to` - bool: whether `to` was set by user
 * `is_bin_ext_maybe` - Pandoctools nice guess if the `output_file` extension (or `to` if no ext) means that Pandoc needs adding `-o "${output_file}"` option
+* `cygpath` - full path to cygpath (on Windows, otherwise empty string)
 * `PYTHONIOENCODING` = `utf-8` (Windows only)
 * `LANG` = `C.UTF-8` (Windows only)
 
