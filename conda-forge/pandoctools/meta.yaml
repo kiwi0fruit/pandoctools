@@ -1,5 +1,5 @@
 {% set name = "pandoctools" %}
-{% set version = "1.4.0" %}
+{% set version = "1.4.1" %}
 
 package:
   name: {{ name|lower }}
@@ -39,7 +39,7 @@ requirements:
     - shortcutter >=0.1.15
     - pandoc-crossref
     - pandoc >=2.5
-    - bash
+    - posix
 
 test:
   imports:
