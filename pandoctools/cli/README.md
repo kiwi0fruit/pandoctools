@@ -166,8 +166,7 @@ See [Default_args](../sh/Default_args) for details. You can easily add your cust
 #!/bin/bash
 profile=Kiwi
 md_input_only=true
-if [[ "${root_env}" != "" ]]; then
-    PATH="${root_env}/${scripts}:$PATH"; fi
+source "$("$resolve" _root_env_bin_to_PATH)"
 source "${python_to_PATH}" "${env_path}"
 source "$source" activate "${env_path}"
 source "$("$resolve" ${profile}_args --else Default_args)"
