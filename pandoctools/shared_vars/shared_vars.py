@@ -54,7 +54,7 @@ if os.name == 'nt':
                    p.join(env_path, 'Scripts'),
                    p.join(env_path, 'bin')]
 
-    def bash_cygpath(*extra_dirs):
+    def bash_cygpath(bash_from_conf: str):
         bash = where('bash', search_dirs + list(extra_dirs) + [
             p.expandvars(r'%PROGRAMFILES%\Git\bin'),
             p.expandvars(r'%PROGRAMFILES%\Git\usr\bin')
@@ -70,7 +70,7 @@ else:
     env_path = p.dirname(p.dirname(sys.executable))
     search_dirs = [p.join(env_path, 'bin')]
 
-    def bash_cygpath(*extra_dirs):
-        bash = where('bash', list(extra_dirs) + search_dirs)
+    def bash_cygpath(bash_from_conf: str):
+        bash = where('bash', search_dirs)
         cygpath = ''
         return bash, cygpath
