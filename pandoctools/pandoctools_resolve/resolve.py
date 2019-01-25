@@ -3,7 +3,7 @@ import os
 import os.path as p
 import click
 from ..shared_vars import (pandoctools_user, pandoctools_user_data, pandoctools_core,
-                           PandotoolsError, search_dirs, cygpath)
+                           PandotoolsError, cygpath)
 
 
 def main(basename: str, fallback_basename: str=None) -> str:

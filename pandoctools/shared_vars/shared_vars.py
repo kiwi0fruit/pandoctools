@@ -1,7 +1,6 @@
 from os import path as p
 import os
 import sys
-from ..pandoc_filter_arg import where
 from typing import Iterable
 from subprocess import run, PIPE
 
@@ -10,10 +9,10 @@ class PandotoolsError(Exception):
     pass
 
 
-def where(executable: str, search_dirs: Iterable[str]=None) -> str:
+def where(executable: str, search_dirs_: Iterable[str]=None) -> str:
     """
     :param executable: exec name without .exe
-    :param search_dirs: extra dirs to look for executables
+    :param search_dirs_: extra dirs to look for executables
     :return: On Windows: absolute path to the exec that was found
       in the search_dirs or in the $PATH.
       On Unix: absolute path to the exec that was found in the search_dirs
@@ -22,7 +21,7 @@ def where(executable: str, search_dirs: Iterable[str]=None) -> str:
     def exe(_exe): return f'{_exe}.exe' if (os.name == 'nt') else _exe
     def is_exe(_exe): return True if (os.name == 'nt') else os.access(_exe, os.X_OK)
 
-    for _dir in (search_dirs if search_dirs else ()):
+    for _dir in (search_dirs_ if search_dirs_ else ()):
         _exec = p.normpath(p.join(_dir, exe(executable)))
         if p.isfile(_exec):
             if is_exe(_exec):
@@ -37,7 +36,7 @@ def where(executable: str, search_dirs: Iterable[str]=None) -> str:
         if p.isfile(exec_abs):
             return exec_abs
         else:
-            raise PandotoolsError(f"'{executable}' wasn't found in the {search_dirs} and in the $PATH.")
+            raise PandotoolsError(f"'{executable}' wasn't found in the {search_dirs_} and in the $PATH.")
     else:
         return executable
 
@@ -58,7 +57,7 @@ if os.name == 'nt':
     bash_dir = p.dirname(bash)
     cygpath = where('cygpath', [p.join(bash_dir, 'cygpath.exe'),
                                 p.join(p.dirname(bash_dir), 'usr', 'bin', 'cygpath.exe'),
-                                p.join(bash_dir, 'usr', 'bin', 'cygpath.exe'])
+                                p.join(bash_dir, 'usr', 'bin', 'cygpath.exe')])
 else:
     pandoctools_user_data = "$HOME/.pandoc/pandoctools"
     pandoctools_user = p.join(os.environ["HOME"], ".pandoc", "pandoctools")
