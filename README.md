@@ -72,6 +72,7 @@ Extras:
 
 ### Via conda
 
+* (*on Windows*) Install [Git together with Bash](https://git-scm.com/downloads),
 * Install [Miniconda](https://conda.io/miniconda.html),
 * (*on Windows*) Creating "pandoctools" conda environment:
   ```bat
