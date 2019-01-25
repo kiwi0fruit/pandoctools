@@ -55,14 +55,23 @@ if os.name == 'nt':
                    p.join(env_path, 'bin')]
 
     def bash_cygpath(bash_from_conf: str):
-        bash = where('bash', search_dirs + list(extra_dirs) + [
-            p.expandvars(r'%PROGRAMFILES%\Git\bin'),
-            p.expandvars(r'%PROGRAMFILES%\Git\usr\bin')
-        ])
+        try:
+            bash = where('bash', search_dirs)
+        except PandotoolsError:
+            pass
+        if p.isfile(bash_from_conf):
+            bash = bash_from_conf
+        else:
+            git = p.expandvars(r'%PROGRAMFILES%\Git')
+            for bash in (rf'{git}\bin\bash.exe', rf'{git}\usr\bin\bash.exe'):
+                if p.isfile(bash):
+                    break
+            else:
+                raise PandotoolsError("bash wasn't found in: python environment, $PATH, " +
+                                      r"win_bash path in config, %PROGRAMFILES%\Git")
         bash_dir = p.dirname(bash)
-        cygpath = where('cygpath', [bash_dir,
-                                    p.join(p.dirname(bash_dir), r'usr\bin'),
-                                    p.join(bash_dir, r'usr\bin')])
+        cygpath = where('cygpath',
+                        [bash_dir, rf'{p.dirname(bash_dir)}\usr\bin', rf'{bash_dir}\usr\bin'])
         return bash, cygpath
 else:
     pandoctools_user_data = "$HOME/.pandoc/pandoctools"
