@@ -1,0 +1,3 @@
+#!/bin/bash
+if [[ "${root_env}" != "" ]]; then
+    PATH="${root_env}/${scripts}:$PATH"; fi
