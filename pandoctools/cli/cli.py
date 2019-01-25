@@ -328,7 +328,6 @@ def pandoctools(input_file, input_file_stdin, profile, out, read, to, stdout, ye
         dic['LANG'] = 'C.UTF-8'
     env_vars = dict(
         source=p.join(p.dirname(pandoctools_core), 'source-from-path'),
-        python_to_PATH=p.join(p.dirname(pandoctools_core), 'python-to-path'),
         resolve=p.join(env_path, scripts_bin, 'pandoctools-resolve'),
         scripts=scripts_bin,
         env_path=env_path,
@@ -341,7 +340,7 @@ def pandoctools(input_file, input_file_stdin, profile, out, read, to, stdout, ye
 
     # convert win-paths to unix-paths if needed:
     if os.name == 'nt':
-        vars_ = [var for var in ("source", "scripts", "resolve", "python_to_PATH", "env_path",
+        vars_ = [var for var in ("source", "scripts", "resolve", "env_path",
                                  "input_file", "output_file", "root_env")
                  if env_vars.get(var)]
 
@@ -363,7 +362,7 @@ def pandoctools(input_file, input_file_stdin, profile, out, read, to, stdout, ye
 
     # debug env vars:
     if debug:
-        vars_ = ['scripts', 'source', 'python_to_PATH', 'resolve', 'env_path',
+        vars_ = ['scripts', 'source', 'resolve', 'env_path',
                  'input_file', 'output_file', 'root_env', 'in_ext', 'from', 'out_ext',
                  'to', 'is_bin_ext_maybe', 'important_from', 'important_to',
                  'PYTHONIOENCODING', 'LANG']
