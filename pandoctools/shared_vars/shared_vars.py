@@ -36,7 +36,7 @@ def where(executable: str, search_dirs_: Iterable[str]=None) -> str:
         if p.isfile(exec_abs):
             return exec_abs
         else:
-            raise PandotoolsError(f"'{executable}' wasn't found in the {search_dirs_} and in the $PATH.")
+            raise PandotoolsError(f"'{executable}' wasn't found in the [{', '.join(search_dirs_)}] and in the $PATH.")
     else:
         return executable
 
@@ -55,9 +55,9 @@ if os.name == 'nt':
     bash = where('bash', search_dirs + [p.expandvars(r'%PROGRAMFILES%\Git\bin'),
                                         p.expandvars(r'%PROGRAMFILES%\Git\usr\bin')])
     bash_dir = p.dirname(bash)
-    cygpath = where('cygpath', [p.join(bash_dir, 'cygpath.exe'),
-                                p.join(p.dirname(bash_dir), 'usr', 'bin', 'cygpath.exe'),
-                                p.join(bash_dir, 'usr', 'bin', 'cygpath.exe')])
+    cygpath = where('cygpath', [bash_dir,
+                                p.join(p.dirname(bash_dir), r'usr\bin'),
+                                p.join(bash_dir, r'usr\bin')])
 else:
     pandoctools_user_data = "$HOME/.pandoc/pandoctools"
     pandoctools_user = p.join(os.environ["HOME"], ".pandoc", "pandoctools")
