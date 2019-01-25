@@ -61,8 +61,8 @@ if os.name == 'nt':
         ])
         bash_dir = p.dirname(bash)
         cygpath = where('cygpath', [bash_dir,
-                        p.join(p.dirname(bash_dir), r'usr\bin'),
-                        p.join(bash_dir, r'usr\bin')])
+                                    p.join(p.dirname(bash_dir), r'usr\bin'),
+                                    p.join(bash_dir, r'usr\bin')])
         return bash, cygpath
 else:
     pandoctools_user_data = "$HOME/.pandoc/pandoctools"
