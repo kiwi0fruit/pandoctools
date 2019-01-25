@@ -72,13 +72,6 @@ Extras:
 
 ### Via conda
 
-```bash
-conda install -c defaults -c conda-forge "pandoctools>=1.4.1"
-pip install pandoctools-ready
-```
-
-Also see how to prepare conda environment:
-
 * Install [Miniconda](https://conda.io/miniconda.html),
 * (*on Windows*) Creating "pandoctools" conda environment:
   ```bat
@@ -96,6 +89,12 @@ Also see how to prepare conda environment:
   source activate pandoctools
   pip install pandoctools-ready
   ```
+* The significant commands are the following:
+  ```bash
+  conda install -c defaults -c conda-forge "pandoctools>=1.4.1"
+  pip install pandoctools-ready
+  ```
+  But it's recommended to create a dedicated conda environment for the Pandoctools.
 
 
 ### Via pip
