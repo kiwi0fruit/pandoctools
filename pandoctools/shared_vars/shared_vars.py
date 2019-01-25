@@ -31,13 +31,16 @@ def where(executable: str, search_dirs_: Iterable[str]=None) -> str:
     if os.name == 'nt':
         exec_abs = run(
             [p.expandvars(r'%WINDIR%\System32\where.exe'), f'$PATH:{executable}.exe'],
-            stdout=PIPE, encoding='utf-8',
-        ).stdout.split('\n')[0].strip('\r')
-
-        if p.isfile(exec_abs):
-            return exec_abs
+            stdout=PIPE, stderr=PIPE, encoding='utf-8',
+        )
+        if exec_abs.stderr:
+            pass
         else:
-            raise PandotoolsError(f"'{executable}' wasn't found in the [{', '.join(search_dirs_)}] and in the $PATH.")
+            ret = exec_abs.stdout.split('\n')[0].strip('\r')
+            if p.isfile(ret):
+                return ret
+        raise PandotoolsError(
+            f"'{executable}' wasn't found in the [{', '.join(search_dirs_)}] and in the $PATH.")
     else:
         return executable
 
