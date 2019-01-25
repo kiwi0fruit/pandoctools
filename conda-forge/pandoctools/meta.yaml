@@ -10,6 +10,7 @@ source:
   sha256: c7eafad4058b6fa7198dbf701f9019538f1ea28165308fd58b0e8968fa4a856f
 
 build:
+  noarch: python
   number: 0
   entry_points:
     - cat-md = pandoctools.cat_md.cat_md:cli
@@ -38,7 +39,7 @@ requirements:
     - shortcutter >=0.1.15
     - pandoc-crossref
     - pandoc >=2.5
-    - posix  # [win]
+    - bash
 
 test:
   imports:
@@ -49,6 +50,8 @@ test:
     - pandoctools.pandoctools_resolve
     - pandoctools.shared_vars
   commands:
+    - bash --help
+    - cygpath --help
     - cat-md --help
     - pandoctools --help
     - pandoc-filter-arg --help
