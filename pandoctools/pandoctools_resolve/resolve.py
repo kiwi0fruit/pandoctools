@@ -25,7 +25,7 @@ def main(basename: str, fallback_basename: str=None) -> str:
             if os.name == 'nt':
                 from subprocess import run, PIPE
                 cygpath = os.environ.get('cygpath')
-                cygpath = cygpath if cygpath else bash_cygpath()[1]
+                cygpath = bash_cygpath()[1] if not cygpath else cygpath
                 return run([cygpath, abs_path], stdout=PIPE, encoding='utf-8').stdout
             else:
                 return abs_path

@@ -1,7 +1,7 @@
 from os import path as p
 import os
 import sys
-from typing import Iterable
+from typing import Iterable, Tuple
 
 
 class PandotoolsError(Exception):
@@ -53,12 +53,20 @@ if os.name == 'nt':
                    p.join(env_path, r'Library\bin'),
                    p.join(env_path, 'Scripts'),
                    p.join(env_path, 'bin')]
+else:
+    pandoctools_user_data = "$HOME/.pandoc/pandoctools"
+    pandoctools_user = p.join(os.environ["HOME"], ".pandoc", "pandoctools")
+    env_path = p.dirname(p.dirname(sys.executable))
+    search_dirs = [p.join(env_path, 'bin')]
 
-    def bash_cygpath(bash_from_conf: str):
-        try:
-            bash = where('bash', search_dirs)
-        except PandotoolsError:
-            pass
+
+def bash_cygpath(bash_from_conf: str='') -> Tuple[str, str]:
+    """ Returns (bash, cygpath) """
+    if os.name != 'nt':
+        return where('bash', search_dirs), ''
+    try:
+        bash = where('bash', search_dirs)
+    except PandotoolsError:
         if p.isfile(bash_from_conf):
             bash = bash_from_conf
         else:
@@ -67,19 +75,10 @@ if os.name == 'nt':
                 if p.isfile(bash):
                     break
             else:
-                raise PandotoolsError("bash wasn't found in: python environment, $PATH, " +
-                                      r"win_bash path in config, %PROGRAMFILES%\Git")
-        bash_dir = p.dirname(bash)
-        cygpath = where('cygpath',
-                        [bash_dir, rf'{p.dirname(bash_dir)}\usr\bin', rf'{bash_dir}\usr\bin'])
-        return bash, cygpath
-else:
-    pandoctools_user_data = "$HOME/.pandoc/pandoctools"
-    pandoctools_user = p.join(os.environ["HOME"], ".pandoc", "pandoctools")
-    env_path = p.dirname(p.dirname(sys.executable))
-    search_dirs = [p.join(env_path, 'bin')]
-
-    def bash_cygpath(bash_from_conf: str):
-        bash = where('bash', search_dirs)
-        cygpath = ''
-        return bash, cygpath
+                raise PandotoolsError(
+                    "bash wasn't found in: python environment, $PATH, " +
+                    r"win_bash path in config, %PROGRAMFILES%\Git"
+                )
+    bash_dir = p.dirname(bash)
+    return bash, where('cygpath', [bash_dir, rf'{p.dirname(bash_dir)}\usr\bin',
+                                   rf'{bash_dir}\usr\bin'])
