@@ -8,7 +8,7 @@ import configparser
 import io
 from typing import Tuple
 from ..pandoc_filter_arg import pandoc_filter_arg, is_bin_ext_maybe
-from ..shared_vars import (pandoctools_user, pandoctools_user_data,
+from ..shared_vars import (pandoctools_user, pandoctools_user_data, bash, cygpath,
                            pandoctools_core, PandotoolsError, env_path, search_dirs)
 from knitty.tools import get, load_yaml
 
@@ -146,22 +146,11 @@ def user_yes_no_query(message: str):
 
 # Set some vars and env vars:
 if os.name == 'nt':
-    from ..pandoc_filter_arg import where, PandocFilterArgError
-
     scripts_bin = 'Scripts'
     pandoctools_bin = p.join(env_path, r'Scripts\pandoctools.exe')
-    # Find bash on Windows:
-    try:
-        bash = where('bash', search_dirs)
-    except PandocFilterArgError:
-        bash = p.expandvars(r'%PROGRAMFILES%\Git\bin\bash.exe')
-        if not p.isfile(bash):
-            raise PandotoolsError("Bash was not found neither in the python environment, nor in" +
-                                  r" the $PATH, nor in the %PROGRAMFILES%\Git")
 else:
     scripts_bin = 'bin'
     pandoctools_bin = p.join(env_path, 'bin', 'pandoctools')
-    bash = where('bash', search_dirs)
 
 # Find python root env.  Read from INI config:
 config = read_ini('Defaults', pandoctools_user, pandoctools_core)
@@ -334,19 +323,7 @@ def pandoctools(input_file, input_file_stdin, profile, out, read, to, stdout, ye
         vars_ = [var for var in ("source", "scripts", "resolve", "env_path",
                                  "input_file", "output_file", "root_env")
                  if env_vars.get(var)]
-
-        def cygpath():
-            bash_dir = p.dirname(bash)
-            cygpaths = (p.join(bash_dir, 'cygpath.exe'),
-                        p.join(p.dirname(bash_dir), 'usr', 'bin', 'cygpath.exe'),
-                        p.join(bash_dir, 'usr', 'bin', 'cygpath.exe'))
-            for _path in cygpaths:
-                if p.isfile(_path):
-                    return _path
-            else:
-                raise PandotoolsError(f"'cygpath.exe' wasn't found in {cygpaths}")
-
-        posix_paths = run([cygpath()] + [env_vars[var] for var in vars_],
+        posix_paths = run([cygpath] + [env_vars[var] for var in vars_],
                           stdout=PIPE, input=doc, encoding='utf-8').stdout.strip().splitlines()
         for var, pth in zip(vars_, posix_paths):
             env_vars[var] = pth

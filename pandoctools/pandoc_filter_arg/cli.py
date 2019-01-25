@@ -1,15 +1,11 @@
 import os
 import os.path as p
-import subprocess
-from subprocess import PIPE
+from subprocess import run, PIPE
 import re
 import sys
 import click
 from typing import Iterable
-
-
-class PandocFilterArgError(Exception):
-    pass
+from ..shared_vars import where, PandotoolsError
 
 
 def run_err(*args: str, stdin: str) -> str:
@@ -21,39 +17,7 @@ def run_err(*args: str, stdin: str) -> str:
     :param stdin:
     :return: stderr
     """
-    return subprocess.run(args, stderr=PIPE, input=stdin, encoding='utf-8').stderr
-
-
-def where(executable: str, search_dirs: Iterable[str]=None) -> str:
-    """
-    :param executable: exec name without .exe
-    :param search_dirs: extra dirs to look for executables
-    :return: On Windows: absolute path to the exec that was found
-      in the search_dirs or in the $PATH.
-      On Unix: absolute path to the exec that was found in the search_dirs
-      or executable arg unchanged.
-    """
-    def exe(_exe): return f'{_exe}.exe' if (os.name == 'nt') else _exe
-    def is_exe(_exe): return True if (os.name == 'nt') else os.access(_exe, os.X_OK)
-
-    for _dir in (search_dirs if search_dirs else ()):
-        _exec = p.normpath(p.join(_dir, exe(executable)))
-        if p.isfile(_exec):
-            if is_exe(_exec):
-                return p.abspath(_exec)
-
-    if os.name == 'nt':
-        exec_abs = subprocess.run(
-            [p.expandvars(r'%WINDIR%\System32\where.exe'), f'$PATH:{executable}.exe'],
-            stdout=PIPE, encoding='utf-8',
-        ).stdout.split('\n')[0].strip('\r')
-
-        if p.isfile(exec_abs):
-            return exec_abs
-        else:
-            raise PandocFilterArgError(f"'{executable}' wasn't found in the {search_dirs} and in the $PATH.")
-    else:
-        return executable
+    return run(args, stderr=PIPE, input=stdin, encoding='utf-8').stderr
 
 
 doc = '''---
@@ -81,7 +45,7 @@ def pandoc_filter_arg(output: str=None, to: str=None, search_dirs: Iterable[str]
     for match in re.findall(r'(?<=\$\$\$).+?(?=\$\$\$)', err):
         pass
     if match is None:
-        raise PandocFilterArgError(f'stderr output to parse: {err}')
+        raise PandotoolsError(f'stderr output to parse: {err}')
     else:
         return match
 
@@ -108,8 +72,8 @@ def is_bin_ext_maybe(output: str, to: str=None, search_dirs: Iterable[str]=None,
         return True
     else:
         pandoc, panfl = where('pandoc', search_dirs), where('panfl', search_dirs)
-        err = subprocess.run([pandoc, '-f', 'markdown', '--filter', panfl, '-t', ext],
-                             stderr=PIPE, stdout=PIPE, input=doc, encoding='utf-8').stderr
+        err = run([pandoc, '-f', 'markdown', '--filter', panfl, '-t', ext],
+                   stderr=PIPE, stdout=PIPE, input=doc, encoding='utf-8').stderr
         if re.search(r"(Cannot write \w+ output to terminal|specify an output file)", str(err)):
             return True
         else:
