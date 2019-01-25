@@ -2,7 +2,8 @@ import sys
 import os
 import os.path as p
 import click
-from ..shared_vars import pandoctools_user, pandoctools_user_data, pandoctools_core, PandotoolsError
+from ..shared_vars import (pandoctools_user, pandoctools_user_data, pandoctools_core,
+                           PandotoolsError, search_dirs)
 
 
 def main(basename: str, fallback_basename: str=None) -> str:
@@ -24,7 +25,7 @@ def main(basename: str, fallback_basename: str=None) -> str:
             if os.name == 'nt':
                 from ..pandoc_filter_arg import where
                 from subprocess import run, PIPE
-                return run([where('cygpath'), abs_path],
+                return run([where('cygpath', search_dirs), abs_path],
                            stdout=PIPE, encoding='utf-8').stdout
             else:
                 return abs_path
