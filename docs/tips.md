@@ -39,18 +39,13 @@ def something():
 
 # Install R
 
-In order to get R language support you may need to install [**language-r**](https://atom.io/packages/language-r) package for Atom. And actually install R. This is what I did:
+Create conda env (named 'r'):
 
-1. Installed [**R**](https://cran.r-project.org/). For example to `%APPDATA%\R`,
-2. Installed [**RStudio**](https://www.rstudio.com/products/rstudio/download/),
-3. Run `setx -m R_HOME %APPDATA%\R` in command prompt with administrator privileges (I don't remember if it's necessary).
-4. Installed [**IRkernel**](https://irkernel.github.io/installation/) from RStudio that was started in the context of `the_env` python environment. To do so run `call activate the_env` (`. activate the_env` on Unix) and then start `"%PROGRAMFILES%\RStudio\bin\rstudio.exe"` (I assume it's x64 version of RStudio on x64 Windows so `%PROGRAMFILES%` instead of `%PROGRAMFILES(x86)%`).
-
-**Tip**: If on Windows and you didn't add python to `PATH` during installation you can modify `PATH` in console. For example:
-```bat
-set PYTHONPATH=<some path>\Miniconda
-set PATH=%PYTHONPATH%;%PYTHONPATH%\Scripts;%PYTHONPATH%\Library\bin;%PATH%
+```bash
+conda create -n r r-irkernel r-essentials
 ```
+
+Then copy `<root_env>\envs\r\share\jupyter\kernels\ir` folder to the `%APPDATA%\jupyter\kernels` folder. Patch path in `kernel.json` (first `"R"` arg) to `<root_env>/envs/r/Scripts/R.exe`
 
 
 # Install LyX
