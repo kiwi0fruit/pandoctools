@@ -41,9 +41,11 @@ def something():
 
 Create conda env (named 'r'):
 
-```batch
+```bash
 conda create -n r r-essentials
-call activate r
+source activate r
+# on Windows:
+# call activate r
 R
 IRkernel::installspec()
 ```
