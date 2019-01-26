@@ -71,7 +71,7 @@ Copy echoed path. Then continue:
 R
 IRkernel::installspec()
 ```
-Edit `%APPDATA%\jupyter\kernels\ir\kernel.json` and replace path with the echoed one.
+Edit `%APPDATA%\jupyter\kernels\ir\kernel.json` and replace path with the echoed one (with backslashed changed to forward slashes).
 
 
 # Install LyX
