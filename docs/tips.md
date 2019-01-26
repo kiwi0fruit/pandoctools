@@ -39,13 +39,20 @@ def something():
 
 # Install R
 
-Create conda env (named 'r'):
+Create conda env (named "r"):
 
+*on Unix:*
 ```bash
 conda create -n r r-essentials
 source activate r
-# on Windows:
-# call activate r
+R
+IRkernel::installspec()
+```
+
+*on Windows:*
+```bash
+conda create -n r r-essentials
+call activate r
 R
 IRkernel::installspec()
 ```
