@@ -79,7 +79,7 @@ Extras:
   ```bat
   call activate root
   conda update conda
-  conda create -n pandoctools -c defaults -c conda-forge python=3.6 "pandoctools>=1.4.1"
+  conda create -n pandoctools -c defaults -c conda-forge "pandoctools>=1.4.2"
   call activate pandoctools
   pip install pandoctools-ready
   ```
@@ -87,7 +87,7 @@ Extras:
   ```bash
   source activate root
   conda update conda
-  conda create -n pandoctools -c defaults -c conda-forge python=3.6 "pandoctools>=1.4.1"
+  conda create -n pandoctools -c defaults -c conda-forge "pandoctools>=1.4.2"
   source activate pandoctools
   pip install pandoctools-ready
   ```
