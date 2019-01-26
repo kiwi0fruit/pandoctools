@@ -13,14 +13,15 @@ Pandoctools is a combination of tools that help write reproducible markdown repo
 
 ## Update instructions
 
-(*Update instructions to v.1.4.1*)
+(*Update instructions to v.1.4.2*)
 
 * Switch to bash profiles as batch profiles are no longer supported (and install bash if needed),
 * `results=pandoc` was a misunderstanding. The right way to output Markdown is to use  
   `from IPython.display import Markdown; Markdown('hello')`.
 * Import pandas, matplotlib and feather helpers from separate modules: [matplotlibhelper](https://github.com/kiwi0fruit/matplotlibhelper), [featherhelper](https://github.com/kiwi0fruit/featherhelper), [tabulatehelper](https://github.com/kiwi0fruit/tabulatehelper),
-* **v1.4.1** is not backward compatible but profiles can be easily fixed. Uninstall Pandoctools before updating. Update your custom bash scripts as names and logic changed. References: [**Default_args**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_args), [**Default**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default) (profile), [**Default_pipe**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_pipe).
-* Since **v1.3.16** bash on Windows cannot be set in the INI. Pandoctools checks $PATH, then common locations.
+* **v1.4.2** is not backward compatible but profiles can be easily fixed. Uninstall Pandoctools before updating. Update your custom bash scripts as names and logic changed. References: [**Default_args**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_args), [**Default**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default) (profile), [**Default_pipe**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_pipe).
+* Since **v1.4.2** bash on Windows first rearched in the python environment, then in the $PATH, then
+by path from config, then in the `%PROGRAMFILES%\Git`.
 
 
 # Contents
