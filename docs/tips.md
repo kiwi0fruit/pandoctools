@@ -50,6 +50,7 @@ source activate r
 R
 IRkernel::installspec()
 ```
+Do the same as in Windows algorithm below.
 
 ### on Windows
 
