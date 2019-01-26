@@ -57,7 +57,13 @@ Do the same as in Windows algorithm below.
 ```batch
 conda create -n r r-essentials exec-wrappers
 call activate r
-
+R
+```
+```r
+IRkernel::installspec()
+quit()
+```
+```batch
 where python.exe > __tmp__ && set /p pyexe=<__tmp__ && del __tmp__
 set "env=%pyexe:~0,-11%"
 
@@ -65,14 +71,10 @@ where R.exe > __tmp__ && set /p Rexe=<__tmp__ && del __tmp__
 set "Rdir=%Rexe:~0,-6%"
 
 create-wrappers -t conda -b "%Rdir%" -f R -d "%env%\Scripts\wrap" --conda-env-dir "%env%"
-echo "%env%\Scripts\wrap\R.bat"
+python -c "print('%env%\Scripts\wrap\R.bat').replace('\\', '/')" >> %APPDATA%\jupyter\kernels\ir\kernel.json
+. %APPDATA%\jupyter\kernels\ir
 ```
-Copy echoed path. Then continue:
-```batch
-R
-IRkernel::installspec()
-```
-Edit `%APPDATA%\jupyter\kernels\ir\kernel.json` and replace path with the echoed one (with backslashed changed to forward slashes).
+Edit `%APPDATA%\jupyter\kernels\ir\kernel.json`: cut the path at the last line and paste intead of the path.
 
 
 # Install LyX
