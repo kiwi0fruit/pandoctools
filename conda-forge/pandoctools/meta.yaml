@@ -38,6 +38,7 @@ requirements:
     - shortcutter >=0.1.15
     - pandoc-crossref
     - pandoc >=2.5
+    - numpy
 
 test:
   imports:
