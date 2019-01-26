@@ -66,7 +66,7 @@ set "Rdir=%Rexe:~0,-6%"
 create-wrappers -t conda -b "%Rdir%" -f R -d "%env%\Scripts\wrap" --conda-env-dir "%env%"
 echo "%env%\Scripts\wrap\R.bat"
 ```
-Copy echoed path.
+Copy echoed path. Then continue:
 ```batch
 R
 IRkernel::installspec()
