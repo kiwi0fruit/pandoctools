@@ -41,11 +41,12 @@ def something():
 
 Create conda env (named 'r'):
 
-```bash
-conda create -n r r-irkernel r-essentials
+```batch
+conda create -n r r-essentials
+call activate r
+R
+IRkernel::installspec()
 ```
-
-Then copy `<root_env>\envs\r\share\jupyter\kernels\ir` folder to the `%APPDATA%\jupyter\kernels` folder. Patch path in `kernel.json` (first `"R"` arg) to `<root_env>/envs/r/Scripts/R.exe`
 
 
 # Install LyX
