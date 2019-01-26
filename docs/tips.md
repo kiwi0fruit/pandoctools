@@ -44,7 +44,7 @@ Create conda env (named "r"):
 *on Unix:*
 ```bash
 conda create -n r r-essentials
-source activate r
+source conda activate r
 R
 IRkernel::installspec()
 ```
@@ -52,7 +52,7 @@ IRkernel::installspec()
 *on Windows:*
 ```bash
 conda create -n r r-essentials
-call activate r
+call conda activate r
 R
 IRkernel::installspec()
 ```
