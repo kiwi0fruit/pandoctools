@@ -6,4 +6,4 @@ source "$("$resolve" _python_to_PATH)" "${env_path}"
 source "$source" activate "${env_path}"
 source "$("$resolve" ${profile}_args --else Default_args)"
 source "$("$resolve" ${profile}_pipe --else Default_pipe)"
-source "$source" conda deactivate
+source "$source" deactivate 2>/dev/null
