@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 64de3aa13fbdab4188279e9e8197099ad3e3f820d80f0fbe6b6de7d579561f91
+  sha256: e38c3194b5f801b6f6e332c2ede869bb01c769ddad24b307a090dba1941c812e
 
 build:
   noarch: python
@@ -25,7 +25,6 @@ requirements:
     - pip
   run:
     - python >=3.6
-    - conda >=4.5.4
     - pip >=10.0.1
     - setuptools
     - click
