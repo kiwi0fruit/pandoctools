@@ -45,14 +45,14 @@ Create conda env (named "r"):
 ```bash
 conda create -c defaults -c conda-forge -n r r-essentials exec-wrappers
 source activate r
-
+# do the same as in Windows script
 R
 IRkernel::installspec()
 ```
 
 *on Windows:*
 ```batch
-conda create -n r r-essentials
+conda create -n r r-essentials exec-wrappers
 call activate r
 
 where python.exe > __tmp__
