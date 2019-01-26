@@ -1,11 +1,39 @@
-from os import path as p
 import os
+import os.path as p
 import sys
-from typing import Iterable, Tuple
+import yaml
+import re
+from typing import Tuple, Union, Iterable
+
+yaml_regex = re.compile(r'(?:^|\n)---\n(.+?\n)(?:---|\.\.\.)(?:\n|$)', re.DOTALL)
 
 
 class PandotoolsError(Exception):
     pass
+
+
+def load_yaml(string: Union[str, None], del_yaml: bool=False) -> Tuple[str, dict]:
+    """
+    returns (string_without_first_yaml, first_yaml_dict) if del_yaml
+            else (string, first_yaml_dict)
+    """
+    if isinstance(string, str) and string:
+        found = yaml_regex.search(string)
+        if found:
+            yml = yaml.load(found.group(1))
+            if del_yaml:
+                string = yaml_regex.sub('\n\n', string, 1)
+            if not isinstance(yml, dict):
+                yml = {}
+            return string, yml
+        else:
+            return string, {}
+    return '', {}
+
+
+def get(maybe_dict, key: str, default=None):
+    """returns ``default`` if ``maybe_dict`` is not a ``dict``"""
+    return maybe_dict.get(key, default) if isinstance(maybe_dict, dict) else default
 
 
 def where(executable: str, search_dirs_: Iterable[str]=None) -> str:
