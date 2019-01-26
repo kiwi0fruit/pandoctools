@@ -73,8 +73,8 @@ Extras:
 
 ### Via conda
 
-* (*on Windows*) Install [Git together with Bash](https://git-scm.com/downloads),
-* Install [Miniconda](https://conda.io/miniconda.html),
+* (*on Windows*) Install 64-bit [Git together with Bash](https://git-scm.com/downloads),
+* Install 64-bit [Miniconda3](https://conda.io/miniconda.html) (≥3.6),
 * (*on Windows*) Creating "pandoctools" conda environment:
   ```bat
   call activate root
