@@ -46,9 +46,11 @@ Create conda env (named "r"):
 ```bash
 conda create -c defaults -c conda-forge -n r r-essentials exec-wrappers
 source activate r
-# do the same as in Windows script
 R
+```
+```r
 IRkernel::installspec()
+quit()
 ```
 Do the same as in Windows algorithm below.
 
@@ -71,6 +73,7 @@ where R.exe > __tmp__ && set /p Rexe=<__tmp__ && del __tmp__
 set "Rdir=%Rexe:~0,-6%"
 
 create-wrappers -t conda -b "%Rdir%" -f R -d "%env%\Scripts\wrap" --conda-env-dir "%env%"
+
 set "ir=%APPDATA%\jupyter\kernels\ir"
 python -c "print(r'%env%\Scripts\wrap\R.bat'.replace('\\', '/'))" >> "%ir%\kernel.json"
 explorer "%ir%"
