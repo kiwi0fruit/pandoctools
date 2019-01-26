@@ -43,19 +43,35 @@ Create conda env (named "r"):
 
 *on Unix:*
 ```bash
-conda create -n r r-essentials
+conda create -c defaults -c conda-forge -n r r-essentials exec-wrappers
 source activate r
+
 R
 IRkernel::installspec()
 ```
 
 *on Windows:*
-```bash
+```batch
 conda create -n r r-essentials
 call activate r
+
+where python.exe > __tmp__
+set /p pyexe=<__tmp__ && del __temp__
+set "env=%pyexe:~0,-11%"
+
+where R.exe > __tmp__
+set /p Rexe=<__tmp__ && del __temp__
+set "Rdir=%Rexe:~0,-6%"
+
+create-wrappers -t conda -b "%Rdir%" -f R -d "%env%\Scripts\wrap" --conda-env-dir "%env%"
+echo "%env%\Scripts\wrap\R.bat"
+```
+Copy echoed path.
+```batch
 R
 IRkernel::installspec()
 ```
+Edit `%APPDATA%\jupyter\kernels\ir\kernel.json` and replace path with the echoed one.
 
 
 # Install LyX
