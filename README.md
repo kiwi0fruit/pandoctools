@@ -93,7 +93,7 @@ Extras:
   ```
 * The significant commands are the following:
   ```bash
-  conda install -c defaults -c conda-forge "pandoctools>=1.4.1"
+  conda install -c defaults -c conda-forge "pandoctools>=1.4.2"
   pip install pandoctools-ready
   ```
   But it's recommended to create a dedicated conda environment for the Pandoctools.
