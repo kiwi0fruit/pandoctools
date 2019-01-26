@@ -41,7 +41,8 @@ def something():
 
 Create conda env (named "r"):
 
-*on Unix:*
+### on Unix:
+
 ```bash
 conda create -c defaults -c conda-forge -n r r-essentials exec-wrappers
 source activate r
@@ -50,7 +51,8 @@ R
 IRkernel::installspec()
 ```
 
-*on Windows:*
+### on Windows
+
 ```batch
 conda create -n r r-essentials exec-wrappers
 call activate r
