@@ -174,7 +174,7 @@ writer_args=(--standalone --self-contained --toc "${writer_args0[@]}")
 panfl_args=(-t "$t" sugartex.kiwi)
 nbconvert_args=(--to notebook --stdin --stdout)
 source "$("$resolve" ${profile}_pipe --else Default_pipe)"
-source "$source" deactivate
+source "$source" conda deactivate
 ```
 
 
