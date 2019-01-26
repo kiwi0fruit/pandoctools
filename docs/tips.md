@@ -71,8 +71,9 @@ where R.exe > __tmp__ && set /p Rexe=<__tmp__ && del __tmp__
 set "Rdir=%Rexe:~0,-6%"
 
 create-wrappers -t conda -b "%Rdir%" -f R -d "%env%\Scripts\wrap" --conda-env-dir "%env%"
-python -c "print('%env%\Scripts\wrap\R.bat').replace('\\', '/')" >> %APPDATA%\jupyter\kernels\ir\kernel.json
-. %APPDATA%\jupyter\kernels\ir
+set "ir=%APPDATA%\jupyter\kernels\ir"
+python -c "print(r'%env%\Scripts\wrap\R.bat'.replace('\\', '/'))" >> "%ir%\kernel.json"
+explorer "%ir%"
 ```
 Edit `%APPDATA%\jupyter\kernels\ir\kernel.json`: cut the path at the last line and paste intead of the path.
 
