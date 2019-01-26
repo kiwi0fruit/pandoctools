@@ -79,7 +79,7 @@ Extras:
   ```bat
   call activate root
   conda update conda
-  conda create -n pandoctools -c defaults -c conda-forge "pandoctools>=1.4.2"
+  conda create -n pandoctools -c defaults -c conda-forge "pandoctools>=1.4.3"
   call activate pandoctools
   pip install pandoctools-ready
   ```
@@ -87,13 +87,13 @@ Extras:
   ```bash
   source activate root
   conda update conda
-  conda create -n pandoctools -c defaults -c conda-forge "pandoctools>=1.4.2"
+  conda create -n pandoctools -c defaults -c conda-forge "pandoctools>=1.4.3"
   source activate pandoctools
   pip install pandoctools-ready
   ```
 * The significant commands are the following:
   ```bash
-  conda install -c defaults -c conda-forge "pandoctools>=1.4.2"
+  conda install -c defaults -c conda-forge "pandoctools>=1.4.3"
   pip install pandoctools-ready
   ```
   But it's recommended to create a dedicated conda environment for the Pandoctools.
