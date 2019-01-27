@@ -59,7 +59,6 @@ R -e "IRkernel::installspec()" --no-save > NUL
 
 where python.exe > __tmp__ && set /p pyexe=<__tmp__ && del __tmp__
 set "env=%pyexe:~0,-11%"
-
 where R.exe > __tmp__ && set /p Rexe=<__tmp__ && del __tmp__
 set "Rdir=%Rexe:~0,-6%"
 
