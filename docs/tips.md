@@ -46,11 +46,7 @@ Create conda env (named "r"):
 ```bash
 conda create -c defaults -c conda-forge -n r r-essentials exec-wrappers
 source activate r
-R
-```
-```r
-IRkernel::installspec()
-quit()
+R -e "IRkernel::installspec()" --no-save
 ```
 Do the same as in Windows algorithm below.
 
@@ -59,13 +55,8 @@ Do the same as in Windows algorithm below.
 ```batch
 conda create -n r r-essentials exec-wrappers
 call activate r
-R
-```
-```r
-IRkernel::installspec()
-quit()
-```
-```batch
+R -e "IRkernel::installspec()" --no-save > NUL
+
 where python.exe > __tmp__ && set /p pyexe=<__tmp__ && del __tmp__
 set "env=%pyexe:~0,-11%"
 
@@ -74,11 +65,10 @@ set "Rdir=%Rexe:~0,-6%"
 
 create-wrappers -t conda -b "%Rdir%" -f R -d "%env%\Scripts\wrap" --conda-env-dir "%env%"
 
-set "ir=%APPDATA%\jupyter\kernels\ir"
-python -c "print(r'%env%\Scripts\wrap\R.bat'.replace('\\', '/'))" >> "%ir%\kernel.json"
-explorer "%ir%"
+set "ir=%APPDATA%\jupyter\kernels\ir\kernel.json"
+set "Rbat=%env%\Scripts\wrap\R.bat"
+type "%ir%" | python -c "import json; import sys; f = open(r'%ir%', 'w'); dic = json.loads(sys.stdin.read()); dic['argv'][0] = r'%Rbat%'.replace('\\', '/'); json.dump(dic, f); f.close()"
 ```
-Edit `%APPDATA%\jupyter\kernels\ir\kernel.json`: cut the path at the last line and paste intead of the path.
 
 
 # Install LyX
