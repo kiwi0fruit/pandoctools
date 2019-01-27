@@ -73,7 +73,6 @@ dic['argv'][0] = os.environ['Rwrap'].replace(chr(92), '/'); \
 json.dump(dic, f); f.close()"
 
 ```
-Do the same as in Windows algorithm below.
 
 ### on Windows
 
