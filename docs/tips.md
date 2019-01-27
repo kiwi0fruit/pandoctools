@@ -57,15 +57,15 @@ create-wrappers -t conda -b "$Rdir" -f R -d "$Rdir/wrap" --conda-env-dir "$env"
 
 Rwrap="$Rdir/wrap/R"
 if [[ "$OSTYPE" == "msys" ]]; then
-    pref="$(cygpath "$APPDATA")"
+    pref="$(cygpath "$APPDATA")/jupyter"
     Rwrap="$(cygpath -w "$Rwrap").bat"
 elif [[ "$OSTYPE" =~ ^darwin ]]; then
-    pref="~/Library/Jupyter/kernels"
+    pref="~/Library/Jupyter"
 else
-    pref="~/.local/share"
+    pref="~/.local/share/jupyter"
 fi
 export Rwrap="$Rwrap"
-export ir="$pref/jupyter/kernels/ir/kernel.json"
+export ir="$pref/kernels/ir/kernel.json"
 
 cat "$ir" | python -c "import json; import sys; import os; \
 f = open(os.environ['ir'], 'w'); dic = json.loads(sys.stdin.read()); \
