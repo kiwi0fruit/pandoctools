@@ -67,7 +67,10 @@ fi
 export Rwrap="$Rwrap"
 export ir="$pref/kernels/ir/kernel.json"
 
-cat "$ir" | python -c "import json; import sys; import os; f = open(os.environ['ir'], 'w'); dic = json.loads(sys.stdin.read()); dic['argv'][0] = os.environ['Rwrap'].replace(chr(92), '/'); json.dump(dic, f); f.close()"
+cat "$ir" | python -c "import json; import sys; import os; \
+f = open(os.environ['ir'], 'w'); dic = json.loads(sys.stdin.read()); \
+dic['argv'][0] = os.environ['Rwrap'].replace(chr(92), '/'); \
+json.dump(dic, f); f.close()"
 
 ```
 Do the same as in Windows algorithm below.
@@ -91,7 +94,10 @@ create-wrappers -t conda -b "%Rdir%" -f R -d "%Rdir%\wrap" --conda-env-dir "%env
 set "Rwrap=%Rdir%\wrap\R.bat"
 set "ir=%APPDATA%\jupyter\kernels\ir\kernel.json"
 
-type "%ir%" | python -c "import json; import sys; import os; f = open(os.environ['ir'], 'w'); dic = json.loads(sys.stdin.read()); dic['argv'][0] = os.environ['Rwrap'].replace('\\', '/'); json.dump(dic, f); f.close()"
+type "%ir%" | python -c "import json; import sys; import os; ^
+f = open(os.environ['ir'], 'w'); dic = json.loads(sys.stdin.read()); ^
+dic['argv'][0] = os.environ['Rwrap'].replace('\\', '/'); ^
+json.dump(dic, f); f.close()"
 
 ```
 
