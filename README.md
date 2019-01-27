@@ -79,22 +79,22 @@ Extras:
   ```bat
   call activate root
   conda update conda
-  conda create -n pandoctools -c defaults -c conda-forge "pandoctools>=1.4.3"
+  conda create -n pandoctools -c defaults -c conda-forge "pandoctools>=1.4.4"
   call activate pandoctools
-  pip install pandoctools-ready
+  pandoctools-ready
   ```
 * (*on Unix*) Creating "pandoctools" conda environment:
   ```bash
   source activate root
   conda update conda
-  conda create -n pandoctools -c defaults -c conda-forge "pandoctools>=1.4.3"
+  conda create -n pandoctools -c defaults -c conda-forge "pandoctools>=1.4.4"
   source activate pandoctools
-  pip install pandoctools-ready
+  pandoctools-ready
   ```
 * The significant commands are the following:
   ```bash
-  conda install -c defaults -c conda-forge "pandoctools>=1.4.3"
-  pip install pandoctools-ready
+  conda install -c defaults -c conda-forge "pandoctools>=1.4.4"
+  pandoctools-ready
   ```
   But it's recommended to create a dedicated conda environment for the Pandoctools.
 
@@ -106,7 +106,8 @@ Extras:
 * Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) (compatible with pandoc version) to the dedicated virtual environment's `.\Scripts` (Windows) or `./bin` (Unix) folder.
 * Install Pandoctools:
   ```bash
-  pip install pandoctools pandoctools-ready
+  pip install pandoctools
+  pandoctools-ready
   ```
 
 

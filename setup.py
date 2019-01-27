@@ -39,9 +39,7 @@ setup(
     python_requires='>=3.6',
     install_requires=['click', 'pyyaml', 'notebook', 'jupyter',
                       'panflute>=1.11.2', 'knitty>=0.4.19', 'pyppdf>=0.0.10',
-                      'sugartex>=0.1.16', 'shortcutter>=0.1.15'],
-    # conda-forge additionals:
-    #   conda>=4.5.4 pip>=10.0.1 pandoc-crossref pandoc>=2.5 git>=2.20.1 setuptools
+                      'sugartex>=0.1.16', 'shortcutter>=0.1.15', 'numpy'],
 
     include_package_data=True,
     package_data={
@@ -53,6 +51,7 @@ setup(
             'pandoctools=pandoctools.cli.cli:pandoctools',
             'pandoc-filter-arg=pandoctools.pandoc_filter_arg.cli:cli',
             'pandoctools-resolve=pandoctools.pandoctools_resolve.resolve:cli',
+            'pandoctools-ready=pandoctools.pandoctools_ready:ready',
         ],
     },
 )

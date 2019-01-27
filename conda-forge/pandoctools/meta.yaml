@@ -1,5 +1,5 @@
 {% set name = "pandoctools" %}
-{% set version = "1.4.3" %}
+{% set version = "1.4.4" %}
 
 package:
   name: {{ name|lower }}
@@ -17,6 +17,7 @@ build:
     - pandoctools = pandoctools.cli.cli:pandoctools
     - pandoc-filter-arg = pandoctools.pandoc_filter_arg.cli:cli
     - pandoctools-resolve = pandoctools.pandoctools_resolve.resolve:cli
+    - pandoctools-ready = pandoctools.pandoctools_ready:ready
   script: "{{ PYTHON }} -m pip install . --no-deps -vv"
 
 requirements:
