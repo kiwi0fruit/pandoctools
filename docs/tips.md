@@ -60,9 +60,9 @@ if [[ "$OSTYPE" == "msys" ]]; then
     pref="$(cygpath "$APPDATA")/jupyter"
     Rwrap="$(cygpath -w "$Rwrap").bat"
 elif [[ "$OSTYPE" =~ ^darwin ]]; then
-    pref="~/Library/Jupyter"
+    pref="$HOME/Library/Jupyter"
 else
-    pref="~/.local/share/jupyter"
+    pref="$HOME/.local/share/jupyter"
 fi
 export Rwrap="$Rwrap"
 export ir="$pref/kernels/ir/kernel.json"
