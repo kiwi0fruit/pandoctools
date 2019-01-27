@@ -41,12 +41,36 @@ def something():
 
 Create conda env (named "r"):
 
-### on Unix:
+### on Unix or bash in Windows:
 
 ```bash
 conda create -c defaults -c conda-forge -n r r-essentials exec-wrappers
 source activate r
-R -e "IRkernel::installspec()" --no-save
+R -e "IRkernel::installspec()" --no-save >/dev/null
+```
+
+```bash
+Rdir="$(dirname "$(type -p R)")"
+env="$(dirname "$Rdir")"
+
+create-wrappers -t conda -b "$Rdir" -f R -d "$Rdir/wrap" --conda-env-dir "$env"
+
+Rwrap="$Rdir/wrap/R"
+if [[ "$OSTYPE" == "msys" ]]; then
+    pref="$(cygpath "$APPDATA")"
+    Rwrap="$(cygpath -w "$Rwrap").bat"
+elif [[ "$OSTYPE" =~ ^darwin ]]; then
+    pref="~/Library/Jupyter/kernels"
+else
+    pref="~/.local/share"
+fi
+export Rwrap="$Rwrap"
+export ir="$pref/jupyter/kernels/ir/kernel.json"
+
+cat "$ir" | python -c "import json; import sys; import os; \
+f = open(os.environ['ir'], 'w'); dic = json.loads(sys.stdin.read()); \
+dic['argv'][0] = os.environ['Rwrap'].replace('\\', '/'); \
+json.dump(dic, f); f.close()"
 ```
 Do the same as in Windows algorithm below.
 
@@ -56,17 +80,23 @@ Do the same as in Windows algorithm below.
 conda create -n r r-essentials exec-wrappers
 call activate r
 R -e "IRkernel::installspec()" --no-save > NUL
+```
 
-where python.exe > __tmp__ && set /p pyexe=<__tmp__ && del __tmp__
-set "env=%pyexe:~0,-11%"
+```batch
+:: <env>\Scripts\R.exe
 where R.exe > __tmp__ && set /p Rexe=<__tmp__ && del __tmp__
 set "Rdir=%Rexe:~0,-6%"
+set "env=%Rdir:~0,-8%"
 
-create-wrappers -t conda -b "%Rdir%" -f R -d "%env%\Scripts\wrap" --conda-env-dir "%env%"
+create-wrappers -t conda -b "%Rdir%" -f R -d "%Rdir%\wrap" --conda-env-dir "%env%"
 
+set "Rwrap=%Rdir%\wrap\R.bat"
 set "ir=%APPDATA%\jupyter\kernels\ir\kernel.json"
-set "Rbat=%env%\Scripts\wrap\R.bat"
-type "%ir%" | python -c "import json; import sys; f = open(r'%ir%', 'w'); dic = json.loads(sys.stdin.read()); dic['argv'][0] = r'%Rbat%'.replace('\\', '/'); json.dump(dic, f); f.close()"
+
+type "%ir%" | python -c "import json; import sys; import os; ^
+f = open(os.environ['ir'], 'w'); dic = json.loads(sys.stdin.read()); ^
+dic['argv'][0] = os.environ['Rwrap'].replace('\\', '/'); ^
+json.dump(dic, f); f.close()"
 ```
 
 
