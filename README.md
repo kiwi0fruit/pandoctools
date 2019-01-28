@@ -71,6 +71,8 @@ Extras:
 
 # Install
 
+**If you have an antivirus then the first or two runs may fail - there may be errors like "Permission denied" because of the antivirus checking all the components.**
+
 ### Via conda
 
 * (*on Windows*) Install 64-bit [Git together with Bash](https://git-scm.com/downloads),
