@@ -41,6 +41,8 @@ def something():
 
 This is an instruction how to install R via conda. It's a not a standard way of having R so if you stray too far from packages provided by conda you might have [**problems**](https://community.rstudio.com/t/using-r-and-conda/10960).
 
+You can also try creating env and installing packages with `--copy` option so that installing R packages natively won't break too much.
+
 Create conda env (named "r"):
 
 ### on Unix or bash in Windows:
