@@ -76,7 +76,7 @@ json.dump(dic, f); f.close()"
 ### on Windows
 
 ```batch
-conda create -n r r-essentials exec-wrappers
+conda create -c defaults -c conda-forge -n r r-essentials exec-wrappers
 call activate r
 R -e "IRkernel::installspec()" --no-save > NUL
 ```
