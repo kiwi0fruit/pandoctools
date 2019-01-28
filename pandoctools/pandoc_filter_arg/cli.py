@@ -72,8 +72,9 @@ def is_bin_ext_maybe(output: str, to: str=None, search_dirs: Iterable[str]=None,
     else:
         pandoc, panfl = where('pandoc', search_dirs), where('panfl', search_dirs)
         err = run([pandoc, '-f', 'markdown', '--filter', panfl, '-t', ext],
-                  stderr=PIPE, stdout=PIPE, input=doc, encoding='utf-8').stderr
-        if re.search(r"(Cannot write \w+ output to terminal|specify an output file)", str(err)):
+                  stderr=PIPE, stdout=PIPE, input=doc.encode()).stderr
+        err = err.decode() if err else ''
+        if re.search(r"(Cannot write \w+ output to terminal|specify an output file)", err):
             return True
         else:
             return False

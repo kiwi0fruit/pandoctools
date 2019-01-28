@@ -59,12 +59,12 @@ def where(executable: str, search_dirs_: Iterable[str]=None) -> str:
     if os.name == 'nt':
         exec_abs = run(
             [p.expandvars(r'%WINDIR%\System32\where.exe'), f'$PATH:{executable}.exe'],
-            stdout=PIPE, stderr=PIPE, encoding='utf-8',
+            stdout=PIPE, stderr=PIPE
         )
         if exec_abs.stderr:
             pass
         else:
-            ret = exec_abs.stdout.split('\n')[0].strip('\r')
+            ret = exec_abs.stdout.decode().split('\n')[0].strip('\r')
             if p.isfile(ret):
                 return ret
         raise PandotoolsError(
