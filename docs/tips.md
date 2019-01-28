@@ -62,8 +62,7 @@ if [[ "$OSTYPE" == "msys" ]]; then
 elif [[ "$OSTYPE" =~ ^darwin ]]; then
     pref="$HOME/Library/Jupyter"
 else
-    pref="$HOME/.local/share/jupyter"
-fi
+    pref="$HOME/.local/share/jupyter"; fi
 export Rwrap="$Rwrap"
 export ir="$pref/kernels/ir/kernel.json"
 
