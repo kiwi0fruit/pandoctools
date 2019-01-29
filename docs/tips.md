@@ -57,11 +57,11 @@ R -e "IRkernel::installspec()" --no-save >/dev/null
 exec=R
 kernel=ir
 
-# works for <env>/dir/exec
+# works for <env>/bin/exec
 execdir="$(dirname "$(type -p "$exec")")"
 env="$(dirname "$execdir")"
-
 wrap="$execdir/wrap/$exec"
+
 create-wrappers -t conda -b "$execdir" -f "$exec" -d "$(dirname "$wrap")" --conda-env-dir "$env"
 
 if [[ "$OSTYPE" == "msys" ]]; then
@@ -85,9 +85,10 @@ Hint: for python.exe on Windows use:
 exec=python
 kernel=python3
 
-# works for <env>/dir/exec
+# works for <env>/exec
 execdir="$(dirname "$(type -p "$exec")")"
 env="$execdir"
+wrap="$execdir/Scripts/wrap/$exec"
 ```
 
 ### on Windows
