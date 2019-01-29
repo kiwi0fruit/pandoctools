@@ -52,14 +52,15 @@ def pandoc_filter_arg(output: str=None, to: str=None, search_dirs: Iterable[str]
 def is_bin_ext_maybe(output: str, to: str=None, search_dirs: Iterable[str]=None,
                      force_pandoc: bool=False) -> bool:
     """
+    Nice guess if the ``output`` extension (or ``to`` if no ext) means
+    that Pandoc needs adding ``-o "${output_file}"`` option.
+
     :param output: Pandoc writer option
     :param to: Pandoc writer option.
         Used only if output doesn't have an extension
     :param search_dirs: extra dirs to look for executables
     :param force_pandoc: ignore hardcoded logic and always "ask" Pandoc.
         Useful for testing hardcoded logic.
-    :return: argument that is passed by Pandoc to it's filters
-        Uses Pandoc's defaults.
     """
     ext = p.splitext(p.basename(output))[1][1:]
     if not ext:
