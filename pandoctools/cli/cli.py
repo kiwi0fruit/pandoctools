@@ -76,7 +76,9 @@ def get_profile_path(profile: str,
     Find profile path by profile name/profile path.
     In profile name is given (not profile path) then search in user_dir, then in core_dir.
 
-    returns tuple(profile_path, safe_location)
+    returns tuple(profile_path, safe_location).
+
+    ``safe_location`` says if the profile is in the ``user_dir`` / ``core_dir`` or not.
     """
     if p.splitext(p.basename(profile))[0] == profile:
         for dir_ in (user_dir, core_dir):
