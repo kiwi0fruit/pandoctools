@@ -47,14 +47,13 @@ def something():
 Create conda env (named "python3"):
 
 ```bash
-conda create -c defaults -c conda-forge -n python3 "python>=3.6" ipykernel exec-wrappers
-source activate python3
-python -m ipykernel install --user
-# kernale name would be the env name
-
-exec=python
 kernel=python3
 
+conda create -c defaults -c conda-forge -n "$kernel" "python>=3.6" ipykernel exec-wrappers
+source activate "$kernel"
+python -m ipykernel install --user --name "$kernel"
+
+exec=python
 execdir="$(dirname "$(type -p "$exec")")"
 if [[ "$OSTYPE" == "msys" ]]; then
     # works for <env>/exec
