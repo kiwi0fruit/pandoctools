@@ -54,25 +54,27 @@ R -e "IRkernel::installspec()" --no-save >/dev/null
 ```
 
 ```bash
-Rdir="$(dirname "$(type -p R)")"
-env="$(dirname "$Rdir")"
+exec=R
+kernel=ir
 
-create-wrappers -t conda -b "$Rdir" -f R -d "$Rdir/wrap" --conda-env-dir "$env"
+execdir="$(dirname "$(type -p "$exec")")"
+env="$(dirname "$execdir")"
+execwrap="$execdir/wrap/$exec"
+create-wrappers -t conda -b "$execdir" -f "$exec" -d "$(dirname "$execwrap")" --conda-env-dir "$env"
 
-Rwrap="$Rdir/wrap/R"
 if [[ "$OSTYPE" == "msys" ]]; then
     pref="$(cygpath "$APPDATA")/jupyter"
-    Rwrap="$(cygpath -w "$Rwrap").bat"
+    execwrap="$(cygpath -w "$execwrap").bat"
 elif [[ "$OSTYPE" =~ ^darwin ]]; then
     pref="$HOME/Library/Jupyter"
 else
     pref="$HOME/.local/share/jupyter"; fi
-export Rwrap="$Rwrap"
-export ir="$pref/kernels/ir/kernel.json"
+export execwrap="$execwrap"
+export kernelpath="$pref/kernels/$kernel/kernel.json"
 
-cat "$ir" | python -c "import json; import sys; import os; \
-f = open(os.environ['ir'], 'w'); dic = json.loads(sys.stdin.read()); \
-dic['argv'][0] = os.environ['Rwrap'].replace(chr(92), '/'); \
+cat "$kernelpath" | python -c "import json; import sys; import os; \
+f = open(os.environ['kernelpath'], 'w'); dic = json.loads(sys.stdin.read()); \
+dic['argv'][0] = os.environ['execwrap'].replace(chr(92), '/'); \
 json.dump(dic, f); f.close()"
 
 ```
