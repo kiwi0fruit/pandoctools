@@ -8,10 +8,13 @@ from ..shared_vars import (pandoctools_user, pandoctools_user_data, pandoctools_
 
 def main(basename: str, fallback_basename: str=None) -> str:
     """
-    Returns absolute path to the file by its basename (given with extension).
+    Returns Unix style absolute path to the file by its basename (given with extension).
     First searches in $HOME/.pandoc/pandoctools (or %APPDATA%\\pandoc\\pandoctools),
     Then in Pandoctools module directory  (<...>/site-packages/pandoctools/sh).
     Fallback basename is used if the first one wasn't found.
+    
+    On Windows conversion to POSIX paths is done via cygpath that at first is read from
+    $cygpath env var then seached in the $PATH
 
     :param basename:
     :param fallback_basename:
@@ -39,6 +42,9 @@ Inside Pandoctools shell scripts use alias: $resolve
 Resolves and echoes Unix style absolute path to the file by its basename (given with extension).
 First searches in {pandoctools_user_data}, then in Pandoctools module directory:
 {pandoctools_core}
+
+On Windows conversion to POSIX paths is done via cygpath that at first is read from
+$cygpath env var then seached in the $PATH
 """)
 @click.argument('file_basename', type=str)
 @click.option('--else', 'fallback', type=str, default=None,
