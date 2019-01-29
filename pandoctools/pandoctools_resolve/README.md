@@ -11,7 +11,8 @@ Usage: pandoctools-resolve [OPTIONS] FILE_BASENAME
   <...>/site-packages/pandoctools/sh
   
   On Windows conversion to POSIX paths is done via cygpath that at first is
-  read from $cygpath env var then seached in the $PATH
+  read from $cygpath env var then seached in the current python environment,
+  near bash executable, in the $PATH
 
 Options:
   --else TEXT  Fallback file basename that is used if the first one wasn't
