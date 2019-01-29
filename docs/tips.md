@@ -80,6 +80,15 @@ dic['argv'][0] = os.environ['wrap'].replace(chr(92), '/'); \
 json.dump(dic, f); f.close()"
  
 ```
+Hint: for python.exe on Windows use:
+```bash
+exec=python
+kernel=python3
+
+# works for <env>/dir/exec
+execdir="$(dirname "$(type -p "$exec")")"
+env="$execdir"
+```
 
 ### on Windows
 
