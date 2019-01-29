@@ -54,6 +54,7 @@ python -m ipykernel install --user
 
 exec=python
 kernel=python3
+ 
 ```
 
 * On Unix:
@@ -62,6 +63,7 @@ kernel=python3
   execdir="$(dirname "$(type -p "$exec")")"
   env="$(dirname "$execdir")"
   wrap="$execdir/wrap/$exec"
+   
   ```
 * On Windows:
   ```bash
@@ -69,6 +71,7 @@ kernel=python3
   execdir="$(dirname "$(type -p "$exec")")"
   env="$execdir"
   wrap="$execdir/Scripts/wrap/$exec"
+   
   ```
 
 ```
@@ -109,6 +112,7 @@ Create conda env (named "r"):
 conda create -c defaults -c conda-forge -n r r-essentials exec-wrappers
 source activate r
 R -e "IRkernel::installspec()" --no-save >/dev/null
+ 
 ```
 
 ```bash
