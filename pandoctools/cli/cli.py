@@ -99,6 +99,8 @@ def read_ini(ini: str,  dir1: str,  dir2: str):
     """
     Read ini file by ini name/ini path.
     If ini name is given (not ini path) then search in dir1, then in dir2.
+
+    returns ``configparser.ConfigParser().read(str)`` output
     """
     if p.splitext(p.basename(ini))[0] == ini:
         for dir_ in (dir1, dir2):
