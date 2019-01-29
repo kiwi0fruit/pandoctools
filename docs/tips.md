@@ -3,8 +3,7 @@
 * [Reload imported modules in Hydrogen](#reload-imported-modules-in-hydrogen)
 * [Install Python kernel](#install-python-kernel)
 * [Install R](#install-r)
-* [Install LyX](#install-lyx)
-* [Install Typescript](#install-typescript)
+* [Install Typescript kernel](#install-typescript-kernel)
 
 
 # Reload imported modules in Hydrogen
@@ -158,17 +157,7 @@ type "%ir%" | python -c "import json; import sys; import os; f = open(os.environ
 ```
 
 
-# Install LyX
-
-If you are not satisfied with [SugarTeX](sugartex.md) and standard LaTeX you may install [**LyX**](http://www.lyx.org/Download) that among other things is a WYSIWYM ("what you see is what you mean") LaTeX editor (which feels pretty much the same as WYSIWYG ("what you see is what you get")). LyX helps you write LaTeX formulas like in MS Word and then clipboard copy LaTeX code to your markdown text.
-
-* In order to edit inline code again you need to copy the code together with two `$...$` and paste it into LyX inline formula object (**Insert** → **Inline Formula**).
-* In order to edit formulas between `$$...$$` again you need to copy the code with only two `$...$` and paste it into LyX display formula object (**Insert** → **Display Formula**).
-* **LyX** needs [**MiKTeX**](https://miktex.org/download). So you should install it as well (MiKTeX is bundled with one of the LyX installers).
-* Tip: `Ctrl+Enter` creates a new line in LyX.
-
-
-# Install Typescript
+# Install Typescript kernel
 
 * First install [zeromq](https://github.com/zeromq/zeromq.js/). On Windows I used from source installation: 1) [Microsoft Visual C++ Build Tools 2015](http://go.microsoft.com/fwlink/?LinkId=691126) or [Build Tools for Visual Studio 2017](https://www.visualstudio.com/thank-you-downloading-visual-studio/?sku=BuildTools&rel=15) (I don't remember which was installed) - check Windows 8.1 SDK and Windows 10 SDK options, 2) with `npm config set msvs_version 2015` and 3) creating conda environment for python 2: `conda create -n python2 python=2.7`,
 * Then install [itypescript](https://www.npmjs.com/package/itypescript).
