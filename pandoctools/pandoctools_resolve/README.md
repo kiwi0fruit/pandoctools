@@ -9,6 +9,9 @@ Usage: pandoctools-resolve [OPTIONS] FILE_BASENAME
   (given with extension). First searches in %APPDATA%\pandoc\pandoctools
   (or $HOME/.pandoc/pandoctools), then in Pandoctools module directory:
   <...>/site-packages/pandoctools/sh
+  
+  On Windows conversion to POSIX paths is done via cygpath that at first is
+  read from $cygpath env var then seached in the $PATH
 
 Options:
   --else TEXT  Fallback file basename that is used if the first one wasn't
