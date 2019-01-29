@@ -1,6 +1,7 @@
 # Contents
 
 * [Reload imported modules in Hydrogen](#reload-imported-modules-in-hydrogen)
+* [Install Python kernel](#install-python-kernel)
 * [Install R](#install-r)
 * [Install LyX](#install-lyx)
 * [Install Typescript](#install-typescript)
@@ -35,6 +36,61 @@ Module `./the/smth.py`:
 def something():
   pass
 ```
+
+
+# Install Python kernel
+
+### Crossplatform installation:
+
+(If on Windows first install [Git together with Bash](https://git-scm.com/downloads))
+
+Create conda env (named "python3"):
+
+```bash
+conda create -c defaults -c conda-forge -n python3 "python>=3.6" ipykernel exec-wrappers
+source activate python3
+python -m ipykernel install --user
+# kernale name would be the env name
+
+exec=python
+kernel=python3
+```
+
+* On Unix:
+  ```bash
+  # works for <env>/bin/exec
+  execdir="$(dirname "$(type -p "$exec")")"
+  env="$(dirname "$execdir")"
+  wrap="$execdir/wrap/$exec"
+  ```
+* On Windows:
+  ```bash
+  # works for <env>/exec
+  execdir="$(dirname "$(type -p "$exec")")"
+  env="$execdir"
+  wrap="$execdir/Scripts/wrap/$exec"
+  ```
+
+```
+create-wrappers -t conda -b "$execdir" -f "$exec" -d "$(dirname "$wrap")" --conda-env-dir "$env"
+
+if [[ "$OSTYPE" == "msys" ]]; then
+    pref="$(cygpath "$APPDATA")/jupyter"
+    wrap="$(cygpath -w "$wrap").bat"
+elif [[ "$OSTYPE" =~ ^darwin ]]; then
+    pref="$HOME/Library/Jupyter"
+else
+    pref="$HOME/.local/share/jupyter"; fi
+export wrap="$wrap"
+export kernelpath="$pref/kernels/$kernel/kernel.json"
+
+cat "$kernelpath" | python -c "import json; import sys; import os; \
+f = open(os.environ['kernelpath'], 'w'); dic = json.loads(sys.stdin.read()); \
+dic['argv'][0] = os.environ['wrap'].replace(chr(92), '/'); \
+json.dump(dic, f); f.close()"
+ 
+```
+
 
 
 # Install R
@@ -82,17 +138,7 @@ dic['argv'][0] = os.environ['wrap'].replace(chr(92), '/'); \
 json.dump(dic, f); f.close()"
  
 ```
-Hint: for python.exe on Windows use:
-```bash
-exec=python
-kernel=python3
 
-# works for <env>/exec
-execdir="$(dirname "$(type -p "$exec")")"
-env="$execdir"
-wrap="$execdir/Scripts/wrap/$exec"
- 
-```
 
 ### Windows only installation
 
