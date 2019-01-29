@@ -2,7 +2,7 @@
 
 * [Reload imported modules in Hydrogen](#reload-imported-modules-in-hydrogen)
 * [Install Python kernel](#install-python-kernel)
-* [Install R](#install-r)
+* [Install R kernel](#install-r-kernel)
 * [Install Typescript kernel](#install-typescript-kernel)
 
 
@@ -84,7 +84,7 @@ json.dump(dic, f); f.close()"
 
 
 
-# Install R
+# Install R kernel
 
 This is an instruction how to install R via conda. It's a not a standard way of having R so if you stray too far from packages provided by conda you might have [**problems**](https://community.rstudio.com/t/using-r-and-conda/10960).
 
