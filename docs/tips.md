@@ -76,7 +76,7 @@ cat "$kernelpath" | python -c "import json; import sys; import os; \
 f = open(os.environ['kernelpath'], 'w'); dic = json.loads(sys.stdin.read()); \
 dic['argv'][0] = os.environ['wrap'].replace(chr(92), '/'); \
 json.dump(dic, f); f.close()"
-
+ 
 ```
 
 ### on Windows
@@ -99,7 +99,7 @@ set "Rwrap=%Rdir%\wrap\R.bat"
 set "ir=%APPDATA%\jupyter\kernels\ir\kernel.json"
 
 type "%ir%" | python -c "import json; import sys; import os; f = open(os.environ['ir'], 'w'); dic = json.loads(sys.stdin.read()); dic['argv'][0] = os.environ['Rwrap'].replace('\\', '/'); json.dump(dic, f); f.close()"
-
+ 
 ```
 
 
