@@ -54,24 +54,17 @@ python -m ipykernel install --user
 
 exec=python
 kernel=python3
+
 execdir="$(dirname "$(type -p "$exec")")"
- 
-```
+if [[ "$OSTYPE" == "msys" ]]; then
+    # works for <env>/exec
+    env="$execdir"
+    wrap="$execdir/Scripts/wrap/$exec"
+else
+    # works for <env>/bin/exec
+    env="$(dirname "$execdir")"
+    wrap="$execdir/wrap/$exec"; fi
 
-* On Unix (works for `<env>/bin/exec`):
-  ```bash
-  env="$(dirname "$execdir")"
-  wrap="$execdir/wrap/$exec"
-   
-  ```
-* On Windows (works for `<env>/exec`):
-  ```bash
-  env="$execdir"
-  wrap="$execdir/Scripts/wrap/$exec"
-   
-  ```
-
-```
 create-wrappers -t conda -b "$execdir" -f "$exec" -d "$(dirname "$wrap")" --conda-env-dir "$env"
 
 if [[ "$OSTYPE" == "msys" ]]; then
