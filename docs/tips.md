@@ -57,8 +57,10 @@ R -e "IRkernel::installspec()" --no-save >/dev/null
 exec=R
 kernel=ir
 
+# works for <env>/dir/exec
 execdir="$(dirname "$(type -p "$exec")")"
 env="$(dirname "$execdir")"
+
 wrap="$execdir/wrap/$exec"
 create-wrappers -t conda -b "$execdir" -f "$exec" -d "$(dirname "$wrap")" --conda-env-dir "$env"
 
