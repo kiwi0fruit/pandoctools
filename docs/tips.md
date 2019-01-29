@@ -59,22 +59,22 @@ kernel=ir
 
 execdir="$(dirname "$(type -p "$exec")")"
 env="$(dirname "$execdir")"
-execwrap="$execdir/wrap/$exec"
-create-wrappers -t conda -b "$execdir" -f "$exec" -d "$(dirname "$execwrap")" --conda-env-dir "$env"
+wrap="$execdir/wrap/$exec"
+create-wrappers -t conda -b "$execdir" -f "$exec" -d "$(dirname "$wrap")" --conda-env-dir "$env"
 
 if [[ "$OSTYPE" == "msys" ]]; then
     pref="$(cygpath "$APPDATA")/jupyter"
-    execwrap="$(cygpath -w "$execwrap").bat"
+    wrap="$(cygpath -w "$wrap").bat"
 elif [[ "$OSTYPE" =~ ^darwin ]]; then
     pref="$HOME/Library/Jupyter"
 else
     pref="$HOME/.local/share/jupyter"; fi
-export execwrap="$execwrap"
+export wrap="$wrap"
 export kernelpath="$pref/kernels/$kernel/kernel.json"
 
 cat "$kernelpath" | python -c "import json; import sys; import os; \
 f = open(os.environ['kernelpath'], 'w'); dic = json.loads(sys.stdin.read()); \
-dic['argv'][0] = os.environ['execwrap'].replace(chr(92), '/'); \
+dic['argv'][0] = os.environ['wrap'].replace(chr(92), '/'); \
 json.dump(dic, f); f.close()"
 
 ```
