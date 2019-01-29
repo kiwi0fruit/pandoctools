@@ -14,7 +14,8 @@ def main(basename: str, fallback_basename: str=None) -> str:
     Fallback basename is used if the first one wasn't found.
     
     On Windows conversion to POSIX paths is done via cygpath that at first is read from
-    $cygpath env var then seached in the $PATH
+    $cygpath env var then seached in the current python environment, near bash executable,
+    in the $PATH
 
     :param basename:
     :param fallback_basename:
@@ -44,7 +45,8 @@ First searches in {pandoctools_user_data}, then in Pandoctools module directory:
 {pandoctools_core}
 
 On Windows conversion to POSIX paths is done via cygpath that at first is read from
-$cygpath env var then seached in the $PATH
+$cygpath env var then seached in the current python environment, near bash executable,
+in the $PATH
 """)
 @click.argument('file_basename', type=str)
 @click.option('--else', 'fallback', type=str, default=None,
