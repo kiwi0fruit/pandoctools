@@ -58,16 +58,14 @@ execdir="$(dirname "$(type -p "$exec")")"
  
 ```
 
-* On Unix:
+* On Unix (works for `<env>/bin/exec`):
   ```bash
-  # works for <env>/bin/exec
   env="$(dirname "$execdir")"
   wrap="$execdir/wrap/$exec"
    
   ```
-* On Windows:
+* On Windows (`works for <env>/exec`):
   ```bash
-  # works for <env>/exec
   env="$execdir"
   wrap="$execdir/Scripts/wrap/$exec"
    
