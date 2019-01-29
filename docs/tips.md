@@ -45,7 +45,9 @@ You can also try creating env and installing packages with `--copy` option so th
 
 Create conda env (named "r"):
 
-### on Unix or bash in Windows:
+### Crossplatform installation:
+
+(If on Windows first install [Git together with Bash](https://git-scm.com/downloads))
 
 ```bash
 conda create -c defaults -c conda-forge -n r r-essentials exec-wrappers
@@ -92,7 +94,7 @@ wrap="$execdir/Scripts/wrap/$exec"
  
 ```
 
-### on Windows
+### Windows only installation
 
 ```batch
 conda create -c defaults -c conda-forge -n r r-essentials exec-wrappers
