@@ -32,7 +32,7 @@ by path from config, then in the `%PROGRAMFILES%\Git`.
 * [Notable parts of Pandoctools](#notable-parts-of-pandoctools)
 * [Examples](#examples)
 * [Install](#install)
-* [Useful tips (reload imported modules in Hydrogen, R kernel, LyX)](#useful-tips-reload-imported-modules-in-hydrogen-r-kernel-lyx)
+* [Useful tips (reload imported modules in Hydrogen, Python kernel, R kernel, LyX)](#useful-tips-reload-imported-modules-in-hydrogen-python-kernel-r-kernel-lyx)
 * [Alternatives to R Markdown (Markdown-based Literate Programming)](#alternatives-to-r-markdown-markdown-based-literate-programming)
 
 
@@ -113,7 +113,7 @@ Extras:
   ```
 
 
-# Useful tips (reload imported modules in Hydrogen, R kernel, LyX)
+# Useful tips (reload imported modules in Hydrogen, Python kernel, R kernel, LyX)
 
 [Useful tips](https://github.com/kiwi0fruit/pandoctools/blob/master/docs/tips.md)
 
