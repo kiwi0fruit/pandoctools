@@ -1,9 +1,9 @@
 ---
 kernels-map:
   r: ir
-  py: python
+  py: python3
 styles-map:
-  py: python
+  py: python3
 comments-map:
   py: ['#', "'''", "'''", "\"\"\"", "\"\"\""]
   js: ["//", "/*", "*/"]

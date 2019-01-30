@@ -1,11 +1,11 @@
 #!/bin/bash
+# most args are predefined in the Default_args
 export KNITTY=True
 
 _ipynb=()
 if [[ "${out_ext}" == "ipynb" ]]; then
     _ipynb=("--to-ipynb"); fi
 
-cat |
 pre-knitty "${input_file}" --yaml "$metadata" |
 pre-sugartex |
 cat-md stdin "$metadata" "${extra_inputs[@]}" |

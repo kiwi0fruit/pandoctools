@@ -1,5 +1,6 @@
 ---
 kernels-map:
+  r: ir
   py: python
 styles-map:
   py: python
