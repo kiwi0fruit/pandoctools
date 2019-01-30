@@ -10,6 +10,8 @@ or
 pip install pypugjs
 ```
 
+See more: [pypugjs](https://github.com/kakulukia/pypugjs) and [pugjs](https://github.com/pugjs/pug).
+
 Here is a simple example showing how to use Pug in Pandoctools via Knitty:  
 (the code would be highlighted in the VSCode with language of the file set to pug - thanks to the space after <code>src = """ </code>)
 
