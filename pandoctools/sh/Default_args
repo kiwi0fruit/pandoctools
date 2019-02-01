@@ -37,6 +37,7 @@
 #                       metadata, other files)
 #   ${reader_args0}    (format specific part of the pandoc reader args)
 #   ${writer_args0}    (format specific part of the pandoc writer args)
+#   ${panfl_args0}    (format specific part of the panflute args)
 #   ${reader_args}    (all pandoc reader args)
 #   ${writer_args}    (all pandoc writer args)
 
@@ -51,6 +52,7 @@
 extra_inputs=()
 reader_args0=()
 writer_args0=()
+panfl_args0=()
 from0="$from"
 to0="$to"
 tmpdir="$(dirname "${output_file}")/__temp__"
@@ -105,6 +107,7 @@ if [[ "$to" == "html" && "${out_ext}" == "pdf" ]]; then
         --css "$tmpdir/profile.css" \
         --include-in-header "$inheader" \
         --template "$("$resolve" "${profile}.html" --else Default.html)")
+    panfl_args0=("pandoctools.language_prefix")
 
 # custom $to format: "r.ipynb" or "r.ipynb:format"
 elif [[ "${to0:0:7}" == "r.ipynb" ]]; then
@@ -134,7 +137,7 @@ reader_args=(-f "$from" "${reader_args0[@]}")
 writer_args=(--standalone --self-contained -t "$to" "${writer_args0[@]}")
 t="$(pandoc-filter-arg "${writer_args[@]}")"
 
-panfl_args=(-t "$t" sugartex)
+panfl_args=(-t "$t" sugartex "${panfl_args0[@]}")
 nbconvert_args=(--to notebook --execute --stdin --stdout)
 
 export mathjax_url="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js"
