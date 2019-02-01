@@ -31,15 +31,6 @@ $endif$
 $for(css)$
   <link rel="stylesheet" href="$css$" />
 $endfor$
-$if(math)$
-  $math$
-$endif$
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
-$for(header-includes)$
-  $header-includes$
-$endfor$
   <!-- NEW BEGIN -->
   <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -61,9 +52,16 @@ $endfor$
       showMathMenu: true
     });
   </script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js"></script>
-  <script src="__temp__/prism.js"></script>
   <!-- NEW END -->
+$if(math)$
+  $math$
+$endif$
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+$for(header-includes)$
+  $header-includes$
+$endfor$
 </head>
 <body>
 <article class="markdown-body"> <!-- NEW -->
