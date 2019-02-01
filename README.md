@@ -70,6 +70,7 @@ Extras:
 
 * If you need to capture Matplotlib plots please see [matplotlibhelper](https://github.com/kiwi0fruit/matplotlibhelper) (the approach showed in examples there can be used with other plot libraries).
 * If you need to autonumber sections see [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref) or [this SE question](https://stackoverflow.com/questions/48434961/how-to-customise-section-headings-to-start-with-letters-in-r-markdown)
+* If you need criticmarkup support please consider using git repository with [git-time-machine](https://atom.io/packages/git-time-machine) for tracking changes, `<!-- html comments -->` for adding notes, [pigments](https://atom.io/packages/pigments) for highlighting text.
 
 
 # Install
