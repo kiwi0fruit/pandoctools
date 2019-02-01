@@ -5,6 +5,6 @@ source "$("$resolve" _root_env_bin_to_PATH)"
 source "$("$resolve" _python_to_PATH)" "${env_path}"
 source "$source" activate "${env_path}"
 source "$("$resolve" ${profile}_args --else Default_args)"
-panfl_args=(-t "$t" sugartex.kiwi)
+panfl_args=(-t "$t" sugartex.kiwi "${panfl_args0[@]}")
 source "$("$resolve" ${profile}_pipe --else Default_pipe)"
 source "$source" deactivate 2>/dev/null
