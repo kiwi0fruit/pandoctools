@@ -1,5 +1,4 @@
 #!/bin/bash
-# most args are predefined in the Default_args
 export KNITTY=True
 
 _ipynb=()
@@ -23,3 +22,5 @@ elif [[ "${to:0:4}" == "html" ]]; then
     pyppdf-replace-mathjax
 else
     cat; fi
+
+if [[ -d "$tmpdir" ]]; then rm -rf "$tmpdir"; fi

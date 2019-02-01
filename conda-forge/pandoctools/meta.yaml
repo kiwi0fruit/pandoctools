@@ -1,5 +1,5 @@
 {% set name = "pandoctools" %}
-{% set version = "1.4.5" %}
+{% set version = "1.4.6" %}
 
 package:
   name: {{ name|lower }}
@@ -40,6 +40,7 @@ requirements:
     - pandoc-crossref
     - pandoc >=2.5
     - numpy
+    - libsass
 
 test:
   imports:

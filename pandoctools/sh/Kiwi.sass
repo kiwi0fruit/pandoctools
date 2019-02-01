@@ -1,0 +1,60 @@
+// Install https://github.com/kiwi0fruit/open-fonts
+$main-font-size: 19px
+$mono-font-size: 15px
+$main-font-family: 'Libertinus Serif', 'PT Astra Serif', 'Libertinus Math', Tinos, 'STIX Two Math', 'Noto Serif', Symbola, 'Noto Serif CJK TC', serif
+$mono-font-family: 'Open Mono', 'Noto Sans Mono', 'IBM Plex Mono', 'STI0 Two Mat0 monospacified for Robot0 Mono', 'DejaVu Sans Mono', 'Symbola monospacified for DejaVu Sans Mono', 'Noto Sans CJK TC', monospace
+$mjx-undefined-family: 'Libertinus Serif', 'PT Astra Serif', 'Libertinus Math', Tinos, 'STIX Two Math', 'Noto Serif', Symbola, 'Noto Serif CJK TC', serif
+$mjx-mono-font-size: 80%  // MathJax monospace font size (works only with SugarTeX)
+
+$line-height: 1.5
+$code-line-height: 1.7
+
+
+// ----------------------------------
+.markdown-body
+  font-size: $main-font-size
+  line-height: $line-height
+  font-family: $main-font-family
+
+  box-sizing: border-box
+  min-width: 200px
+  max-width: 980px
+  margin: 0 auto
+  padding: 45px
+
+@media (max-width: 767px)
+  .markdown-body
+    padding: 15px
+
+.markdown-body
+  pre, code, pre code, kbd
+    font-size: $mono-font-size
+    font-family: $mono-font-family
+  pre, pre code
+    line-height: $code-line-height
+
+  p, ol, ul
+    text-align: justify
+
+  pre, code, pre code
+    overflow-wrap: break-word
+    white-space: pre-wrap
+
+
+.MJX-BoldItalic, .MJX-BoldItalic *
+  font-family: MathJax_Math-bold-italic, MathJax_Main-bold, MathJax_Math, MathJax_Main, $mjx-undefined-family !important
+  font-weight: bold !important
+  font-style: italic !important
+
+.MJX-TextBoldItalic, .MJX-TextBoldItalic *
+  font-weight: bold !important
+  font-style: italic !important
+
+.MJX-Monospace, .MJX-Monospace *
+  font-family: $mono-font-family !important
+
+.MJX-Monospace
+  font-size: $mjx-mono-font-size
+
+.MJX-Monospace .mo *
+  font-size: 100% !important

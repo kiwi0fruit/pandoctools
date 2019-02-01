@@ -44,6 +44,8 @@
 #   ${nbconvert_args}
 #   ${mathjax_url}
 #   ${replace_mathjax}
+#   $tmpdir    (temp dir in the same folder as ${output_file}
+#               It should be deleted at the end of all pipes)
 
 
 extra_inputs=()
@@ -51,6 +53,8 @@ reader_args0=()
 writer_args0=()
 from0="$from"
 to0="$to"
+tmpdir="$(dirname "${output_file}")/__temp__"
+mkdir -p "$tmpdir"
 
 
 # deal with reader formats:
@@ -89,7 +93,14 @@ elif [[ "${out_ext}" == "pdf" ]]; then
 
 # ........
 if [[ "$to" == "html" && "${out_ext}" == "pdf" ]]; then
-    writer_args0=(--mathjax)
+    cp "$("$resolve" _prism.js)" "$tmpdir"
+    pysassc "$("$resolve" ${profile}.sass --else Default.sass)" "$tmpdir/tmp.css"
+    # temp css and js files require --standalone --self-contained
+    writer_args0=(--mathjax --standalone --self-contained --no-highlight \
+        --css "$("$resolve" _prism.css)" \
+        --css "$("$resolve" _github_markdown.css)" \
+        --css "$tmpdir/tmp.css" \
+        --template "$("$resolve" ${profile}.html --else Default.html)")
 
 # custom $to format: "r.ipynb" or "r.ipynb:format"
 elif [[ "${to0:0:7}" == "r.ipynb" ]]; then
