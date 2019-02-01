@@ -16,7 +16,7 @@ if [[ "${out_ext}" == "ipynb" ]]; then
     post-knitty --to-ipynb |
     jupyter nbconvert "${nbconvert_args[@]}"
 elif [[ "$to" == "html" && "${out_ext}" == "pdf" ]]; then
-    pyppdf-replace-mathjax "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js" |
+    python -c "${replace_mathjax}" |
     pyppdf -o "${output_file}" --goto temp
 elif [[ "${to:0:4}" == "html" ]]; then
     pyppdf-replace-mathjax

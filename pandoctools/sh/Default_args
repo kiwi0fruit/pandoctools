@@ -93,15 +93,17 @@ elif [[ "${out_ext}" == "pdf" ]]; then
 
 # ........
 if [[ "$to" == "html" && "${out_ext}" == "pdf" ]]; then
-    echo '<script type="text/javascript">' > "$tmpdir/prism.html"
-    cat "$("$resolve" "${profile}_prism.js" --else Default_prism.js)" >> "$tmpdir/prism.html"
-    echo '</script>' >> "$tmpdir/prism.html"
+    inheader="$tmpdir/in-header.html"
+    cat "$("$resolve" "${profile}_mathjax.html" --else Default_mathjax.html)" > "$inheader"
+    echo '<script type="text/javascript">' >> "$inheader"
+    cat "$("$resolve" "${profile}_prism.js" --else Default_prism.js)" >> "$inheader"
+    echo '</script>' >> "$inheader"
     pysassc "$("$resolve" "${profile}.sass" --else Default.sass)" "$tmpdir/profile.css"
     writer_args0=(--mathjax --no-highlight \
         --css "$("$resolve" "${profile}_prism.css" --else Default_prism.css)" \
         --css "$("$resolve" _github_markdown.css)" \
         --css "$tmpdir/profile.css" \
-        --include-in-header "$tmpdir/prism.html" \
+        --include-in-header "$inheader" \
         --template "$("$resolve" "${profile}.html" --else Default.html)")
 
 # custom $to format: "r.ipynb" or "r.ipynb:format"
@@ -134,6 +136,15 @@ t="$(pandoc-filter-arg "${writer_args[@]}")"
 
 panfl_args=(-t "$t" sugartex)
 nbconvert_args=(--to notebook --execute --stdin --stdout)
+
+export mathjax_url="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js"
+replace_mathjax='\
+import sys; import re; import os; i = []; \
+rep = lambda m: (i.append(0), "" if len(i) == 1 else \
+"<script type=\"text/javascript\" src=\"{}\"></script>".format(os.environ.get("mathjax_url")))[1]; \
+sys.stdout.write(re.sub( \
+    r"<script type\=\"text/javascript\"[^<]+?[Mm]ath[Jj]ax.+?</script>", rep, \
+    sys.stdin.read(), count=2, flags=re.DOTALL))'
 
 # panfl -t $t sugartex == sugartex $t == sugartex
 # panfl -t $t sugartex.kiwi == sugartex --kiwi

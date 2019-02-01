@@ -31,28 +31,6 @@ $endif$
 $for(css)$
   <link rel="stylesheet" href="$css$" />
 $endfor$
-  <!-- NEW BEGIN -->
-  <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      jax: ["input/TeX", "output/HTML-CSS"],
-      extensions: ["tex2jax.js"],
-      tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-        processEscapes: true
-      },
-      'HTML-CSS': {
-        fonts: ['TeX'],
-        availableFonts: [],
-        webFont: 'TeX',
-        undefinedFamily: "serif",
-        mtextFontInherit: true,
-      },
-      TeX: ['AMSmath.js', 'AMSsymbols.js', 'noErrors.js', 'noUndefined.js'],
-      showMathMenu: true
-    });
-  </script>
-  <!-- NEW END -->
 $if(math)$
   $math$
 $endif$
