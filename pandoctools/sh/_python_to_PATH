@@ -1,9 +1,6 @@
 #!/bin/bash
-# Usage in Pandoctools profiles:
-#   . "${python_to_PATH}" /python/root/dir
-#   (${python_to_PATH} contains absolute path)
-# General usage:
-#   . python-to-path /python/root/dir
+# Usage:
+#   . _python_to_PATH /python/root/dir
 
 if [[ "$1" != "" ]]; then
     if [[ "$OSTYPE" == "msys" ]]; then
