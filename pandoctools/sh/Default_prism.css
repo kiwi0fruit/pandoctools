@@ -73,18 +73,6 @@ pre[class*="language-"] {
 	white-space: normal;
 }
 
-
-:not(pre) > code[class*="language-"]:after,
-pre[class*="language-"]:after {
-	right: 0.75em;
-	left: auto;
-	-webkit-transform: rotate(2deg);
-	-moz-transform: rotate(2deg);
-	-ms-transform: rotate(2deg);
-	-o-transform: rotate(2deg);
-	transform: rotate(2deg);
-}
-
 .token.comment,
 .token.block-comment,
 .token.prolog,
@@ -182,18 +170,6 @@ pre[class*="language-"]:after {
 	color: #e0d7d1;
 }
 
-/* Plugin styles: Line Numbers */
-pre[class*="language-"].line-numbers.line-numbers {
-	padding-left: 0;
-}
-
-pre[class*="language-"].line-numbers.line-numbers code {
-	padding-left: 3.8em;
-}
-
-pre[class*="language-"].line-numbers.line-numbers .line-numbers-rows {
-	left: 0;
-}
 
 /* Plugin styles: Line Highlight */
 pre[class*="language-"][data-line] {
@@ -208,46 +184,3 @@ pre[data-line] code {
 pre .line-highlight {
 	margin-top: 0;
 }
-
-pre[class*="language-"].line-numbers {
-	position: relative;
-	padding-left: 3.8em;
-	counter-reset: linenumber;
-}
-
-pre[class*="language-"].line-numbers > code {
-	position: relative;
-	white-space: inherit;
-}
-
-.line-numbers .line-numbers-rows {
-	position: absolute;
-	pointer-events: none;
-	top: 0;
-	font-size: 100%;
-	left: -3.8em;
-	width: 3em; /* works for line-numbers below 1000 lines */
-	letter-spacing: -1px;
-	border-right: 1px solid #999;
-
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-
-}
-
-	.line-numbers-rows > span {
-		pointer-events: none;
-		display: block;
-		counter-increment: linenumber;
-	}
-
-		.line-numbers-rows > span:before {
-			content: counter(linenumber);
-			color: #999;
-			display: block;
-			padding-right: 0.8em;
-			text-align: right;
-		}
-
