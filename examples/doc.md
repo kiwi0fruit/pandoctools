@@ -2,6 +2,7 @@
 pandoctools:
   profile: Default
   out: "*.ipynb"
+  # out: "*.pdf"
 input: True
 eval: False
 error: raise

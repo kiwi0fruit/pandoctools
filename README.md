@@ -61,10 +61,10 @@ And the best one for it is:
 
 Here are [**examples**](https://github.com/kiwi0fruit/pandoctools/blob/master/examples) that demonstrate converting documents:
 
-* from markdown `.md` with Jupyter python code blocks, SugarTeX math and cross-references to `ipynb` notebook.
-* from Hydrogen/python notebook `.py` with Atom/Hydrogen code cells, Knitty markdown incerts (again with SugarTeX math and cross-references) to `.ipynb` notebook.
+* from markdown `.md` with Jupyter python code blocks, SugarTeX math and cross-references to `.ipynb` notebook and to PDF.
+* from Hydrogen/python notebook `.py` with Atom/Hydrogen code cells, Knitty markdown incerts (again with SugarTeX math and cross-references) to `.ipynb` notebook and to PDF.
 
-**Examples are given for to .ipynb conversion but Pandoctools surely capable of conversion to .html, .pdf, .md.md or any Pandoc output format.**
+**Examples are given for to .ipynb and to .pdf conversion but Pandoctools surely capable of conversion to .html, .md.md or any Pandoc output format.**
 
 Extras:
 
