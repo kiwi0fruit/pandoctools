@@ -6,7 +6,7 @@ if exist "%mathjax%" (
     set "script=%script_dir%echo-mathjax-path"
     echo @echo %mathjax% > "%script%.bat"
     echo #!/bin/bash > "%script%"
-    echo cygpath "%mathjax%" >> "%script%"
+    echo cygpath "%mathjax:\=/%" >> "%script%"
 ) else (
     echo Error: %mathjax% file was not found 1>&2
     exit 1
