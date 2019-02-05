@@ -7,9 +7,10 @@ package:
 
 source:
   # url: https://github.com/mathjax/MathJax/archive/{{ version }}.tar.gz
+  # url: file:///C:/Users/User/Downloads/MathJax-2.7.5.tar.gz
   # sha256: a25e5736553eef7b05ba00df133ad36d8f7b3b967f1e32d2f7505ac77427946f
   url: file:///C:/Users/User/Downloads/MathJax-2.7.5.zip
-  sha256: 0436a775c020bde86bb0af4b1c93fb43fb662e22eca22777d6637cdf3f801725
+  sha256: df4f33569b5244fe21e45043e3d8c2ea4c2cfc4e2dd9691a48d467d4c2a07adb
 
 build:
    number: 0
@@ -22,7 +23,7 @@ about:
   home: https://github.com/mathjax/MathJax
   license: "Apache License 2.0"
   license_family: Apache
-  license_file: "{{ environ['SRC_DIR'] }}/LICENSE"
+  license_file: LICENSE
   summary: "Beautiful math in all browsers. MathJax is an open-source JavaScript display engine for LaTeX, MathML, and AsciiMath notation that works in all browsers. (use echo-mathjax-path)"
   doc_url: https://github.com/mathjax/MathJax
   dev_url: https://github.com/mathjax/MathJax
