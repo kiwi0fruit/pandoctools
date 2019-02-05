@@ -17,7 +17,7 @@ build:
 
 test:
   commands:
-    - echo-mathjax-path
+    - mathjax-path
 
 about:
   home: https://github.com/mathjax/MathJax

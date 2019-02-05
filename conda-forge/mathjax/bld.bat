@@ -1,5 +1,5 @@
 set "mathjax=%LIBRARY_LIB%\mathjax"
-if not exist "%mathjax%" mkdir "%mathjax%" || exit 1
+mkdir "%mathjax%" || exit 1
 
 move config "%mathjax%\" || exit 1
 move docs "%mathjax%\" || exit 1
