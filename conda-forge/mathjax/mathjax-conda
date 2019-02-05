@@ -1,0 +1,16 @@
+#!/bin/bash
+_script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+if [ "$OSTYPE" = "msys" ]; then
+    _mathjax="$(dirname "${_script_dir}")/Library/lib/mathjax/MathJax.js"
+else
+    _mathjax="$(dirname "${_script_dir}")/lib/mathjax/MathJax.js"
+fi
+_script_dir=""
+if [ -f "${_mathjax}" ]; then
+    echo "${_mathjax}"
+    _mathjax=""
+else
+    echo -e "Error: file '${_mathjax}' was not found."
+    _mathjax=""
+    exit 1
+fi
