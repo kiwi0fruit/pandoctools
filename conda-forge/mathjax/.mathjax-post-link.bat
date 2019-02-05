@@ -1,6 +1,6 @@
 @echo off
 set "script_dir=%~dp0"
-REM   == <envroot>\Scripts\
+REM   == envroot\Scripts\
 set "mathjax=%script_dir:~0,-9%\Library\lib\mathjax\MathJax.js"
 if exist "%mathjax%" (
     set "script=%script_dir%echo-mathjax-path"
