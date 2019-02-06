@@ -12,7 +12,7 @@ def replace_mathjax():
             return ""
         return '<script type="text/javascript" src="{}"></script>'.format(sys.argv[2])
     sys.stdout.write(re.sub(
-        r"<script type\=\"text/javascript\"[^<]+?[Mm]ath[Jj]ax.+?</script>",
+        r'<script type="text/javascript"[^<]+?[Mm]ath[Jj]ax.+?</script>',
         rep, sys.stdin.read(), count=2, flags=re.DOTALL))
 
 
