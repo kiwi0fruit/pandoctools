@@ -2,6 +2,7 @@ import sys
 
 
 def replace_mathjax():
+    """Assumes Default_mathjax.html structure and --mathjax option."""
     import re
     import os
     i = []
