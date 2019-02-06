@@ -138,7 +138,7 @@ writer_args=(--standalone --self-contained -t "$to" "${writer_args0[@]}")
 t="$(pandoc-filter-arg "${writer_args[@]}")"
 
 panfl_args=(-t "$t" sugartex "${panfl_args0[@]}")
-nbconvert_args=(--to notebook --execute --stdin --stdout)
+nbconvert_args=(--to notebook --stdin --stdout)
 
 export mathjax_url="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js"
 replace_mathjax='\

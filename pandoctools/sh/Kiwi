@@ -6,5 +6,6 @@ source "$("$resolve" _python_to_PATH)" "${env_path}"
 source "$source" activate "${env_path}"
 source "$("$resolve" ${profile}_args --else Default_args)"
 panfl_args=(-t "$t" sugartex.kiwi "${panfl_args0[@]}")
+nbconvert_args=(--to notebook --execute --stdin --stdout)
 source "$("$resolve" ${profile}_pipe --else Default_pipe)"
 source "$source" deactivate 2>/dev/null
