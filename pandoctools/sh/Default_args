@@ -44,7 +44,7 @@
 #   ${panfl_args}
 #   ${nbconvert_args}
 #   ${mathjax_url}
-#   ${replace_mathjax}
+#   $pytools
 #   $tmpdir    (temp dir in the same folder as ${output_file}
 #               It should be deleted at the end of all pipes)
 
@@ -140,14 +140,8 @@ t="$(pandoc-filter-arg "${writer_args[@]}")"
 panfl_args=(-t "$t" sugartex "${panfl_args0[@]}")
 nbconvert_args=(--to notebook --stdin --stdout)
 
-export mathjax_url="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js"
-replace_mathjax='\
-import sys; import re; import os; i = []; \
-rep = lambda m: (i.append(0), "" if len(i) == 1 else \
-"<script type=\"text/javascript\" src=\"{}\"></script>".format(os.environ.get("mathjax_url")))[1]; \
-sys.stdout.write(re.sub( \
-    r"<script type\=\"text/javascript\"[^<]+?[Mm]ath[Jj]ax.+?</script>", rep, \
-    sys.stdin.read(), count=2, flags=re.DOTALL))'
+pytools="$("$resolve" "$profile.py" --else Default.py)"
+mathjax_url="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js"
 
 # panfl -t $t sugartex == sugartex $t == sugartex
 # panfl -t $t sugartex.kiwi == sugartex --kiwi
