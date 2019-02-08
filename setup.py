@@ -22,7 +22,7 @@ setup(
     author='Peter Zagubisalo',
     author_email='peter.zagubisalo@gmail.com',
 
-    license='MIT',
+    license='GPLv2+',
 
     classifiers=[
         'Development Status :: 3 - Alpha',
