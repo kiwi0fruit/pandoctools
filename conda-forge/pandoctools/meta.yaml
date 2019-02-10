@@ -41,6 +41,7 @@ requirements:
     - pandoc >=2.5
     - numpy
     - libsass
+    - py-mathjax
 
 test:
   imports:
