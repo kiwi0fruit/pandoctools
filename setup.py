@@ -39,7 +39,7 @@ setup(
     python_requires='>=3.6',
     install_requires=['click', 'pyyaml', 'notebook', 'jupyter', 'libsass',
                       'panflute>=1.11.2', 'knitty>=0.4.19', 'pyppdf>=0.0.10',
-                      'sugartex>=0.1.16', 'shortcutter>=0.1.15', 'numpy'],
+                      'sugartex>=0.1.16', 'shortcutter>=0.1.15', 'numpy', 'py-mathjax'],
 
     include_package_data=True,
     package_data={
