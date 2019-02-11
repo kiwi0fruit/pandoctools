@@ -141,7 +141,7 @@ panfl_args=(-t "$t" sugartex "${panfl_args0[@]}")
 nbconvert_args=(--to notebook --stdin --stdout)
 
 pytools="$("$resolve" "$profile.py" --else Default.py)"
-mathjax_url="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js"
+mathjax_url="$(py-mathjax-path --url)"
 
 # panfl -t $t sugartex == sugartex $t == sugartex
 # panfl -t $t sugartex.kiwi == sugartex --kiwi
