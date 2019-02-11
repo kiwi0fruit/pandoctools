@@ -1,5 +1,5 @@
 {% set name = "pandoctools" %}
-{% set version = "1.4.7" %}
+{% set version = "1.4.8" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: fa9995cc27d4a45a76b9886b5f460df4f659822c7f1d3c47cd60549ebb208092
+  sha256: 86dc08c59804d94407d41f9d9033763507cbf5a238249cb1b9f6059e3a3219a1
 
 build:
   noarch: python
@@ -37,8 +37,8 @@ requirements:
     - pyppdf >=0.0.10
     - sugartex >=0.1.16
     - shortcutter >=0.1.15
-    - pandoc-crossref
-    - pandoc >=2.5
+    - py-pandoc-crossref
+    - py-pandoc >=2.5
     - numpy
     - libsass
     - py-mathjax
