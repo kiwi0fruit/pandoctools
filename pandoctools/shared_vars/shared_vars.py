@@ -84,7 +84,7 @@ def where(executable: str, search_dirs_: Iterable[str]=None, exe_only: bool=True
         if exe:
             return exe
     raise PandotoolsError(
-        f"'{executable}' (without extension) wasn't found in the [{', '.join(search_dirs_)}] and in the $PATH.")
+        f"'{executable}' (should be without extension) wasn't found in the [{', '.join(search_dirs_)}] and in the $PATH.")
 
 
 pandoctools_core = p.join(p.dirname(p.dirname(p.abspath(__file__))), 'sh')
