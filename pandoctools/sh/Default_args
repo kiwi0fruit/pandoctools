@@ -140,7 +140,7 @@ t="$(pandoc-filter-arg "${writer_args[@]}")"
 panfl_args=(-t "$t" sugartex "${panfl_args0[@]}")
 nbconvert_args=(--to notebook --stdin --stdout)
 
-pytools="$("$resolve" "$profile.py" --else Default.py)"
+mathjax="$("$resolve" "${profile}_mathjax.py" --else Default_mathjax.py)"
 mathjax_url="$(py-mathjax-path --url)"
 
 # panfl -t $t sugartex == sugartex $t == sugartex
