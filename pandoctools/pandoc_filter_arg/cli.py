@@ -27,9 +27,11 @@ def pandoc_filter_arg(output: str=None, to: str=None, search_dirs: Iterable[str]
     if to:
         args += ['-t', to]
 
-    match = None
     # Run subprocess that would definitely give error and get stderr:
-    err = run(args, stderr=PIPE, input=doc, encoding='utf-8').stderr
+    err = run(args, stderr=PIPE, input=doc.encode()).stderr
+    err = err.decode() if err else ''
+
+    match = None
     for match in re.findall(r'(?<=\$\$\$).+?(?=\$\$\$)', err):
         pass
     if match is None:
