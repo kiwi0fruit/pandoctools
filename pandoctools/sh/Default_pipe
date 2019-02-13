@@ -18,7 +18,7 @@ if [[ "${out_ext}" == "ipynb" ]]; then
     post-knitty --to-ipynb |
     jupyter nbconvert "${nbconvert_args[@]}"
 elif [[ "$to" == "html" && "${out_ext}" == "pdf" ]]; then
-    python $pytools replace_mathjax ${mathjax_url} |
+    python "$pytools" replace_mathjax "${mathjax_url}" |
     pyppdf -o "${output_file}" --goto temp
 elif [[ "${to:0:4}" == "html" ]]; then
     pyppdf-replace-mathjax
