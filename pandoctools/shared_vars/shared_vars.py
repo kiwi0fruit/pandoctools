@@ -69,16 +69,15 @@ def where(executable: str, search_dirs_: Iterable[str]=None, exe_only: bool=True
     if os.name == 'nt':
         from subprocess import run, PIPE
         for ext in extensions:
-            exe = run([p.expandvars(r'%WINDIR%\System32\where.exe'),
-                       f'$PATH:{executable}{ext}'],
-                      stdout=PIPE, stderr=PIPE)
-            if not exe.stderr:
-                exe = list(filter(
-                    lambda s: s.lower().endswith(f'{executable}{ext}'.lower()),
-                    exe.stdout.decode().splitlines()
-                ))[0]
-                if p.isfile(exe):
-                    return exe
+            exe = f'{executable}{ext}'.lower()
+            exe_abs = run([p.expandvars(r'%WINDIR%\System32\where.exe'), f'$PATH:{exe}'],
+                          stdout=PIPE, stderr=PIPE)
+            if not exe_abs.stderr:
+                execs = list(filter(lambda s: s.endswith(exe),
+                                    exe_abs.stdout.decode().lower().splitlines()))
+                if execs:
+                    if p.isfile(execs[0]):
+                        return execs[0]
     else:
         from shutil import which
         exe = which(executable)
