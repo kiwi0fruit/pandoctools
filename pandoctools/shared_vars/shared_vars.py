@@ -36,41 +36,57 @@ def get(maybe_dict, key: str, default=None):
     return maybe_dict.get(key, default) if isinstance(maybe_dict, dict) else default
 
 
-def where(executable: str, search_dirs_: Iterable[str]=None) -> str:
+def where(executable: str, search_dirs_: Iterable[str]=None, exe_only: bool=True) -> str:
     """
-    :param executable: exec name without .exe
+    :param executable: exec name without .exe, .bat or .cmd
     :param search_dirs_: extra dirs to look for executables
+    :param exe_only: on Windows search for executable.exe only.
+      If False then search for .exe .bat .cmd (in this order).
     :return: On Windows: absolute path to the exec that was found
       in the search_dirs or in the $PATH.
       On Unix: absolute path to the exec that was found in the search_dirs
-      or executable arg unchanged.
+      or shutil.which('executable') if it is not None.
+      If wasn't found raises PandotoolsError.
     """
     from subprocess import run, PIPE
+    from shutil import which
 
-    def exe(_exe): return f'{_exe}.exe' if (os.name == 'nt') else _exe
-    def is_exe(_exe): return True if (os.name == 'nt') else os.access(_exe, os.X_OK)
+    if not (os.name == 'nt'):
+        extensions = ('',)
+    elif exe_only:
+        extensions = ('.exe',)
+    else:
+        extensions = ('.exe', '.bat', '.cmd')
+    if not search_dirs_:
+        search_dirs_ = ()
 
-    for _dir in (search_dirs_ if search_dirs_ else ()):
-        _exec = p.normpath(p.join(_dir, exe(executable)))
-        if p.isfile(_exec):
-            if is_exe(_exec):
-                return p.abspath(_exec)
+    for _dir in search_dirs_:
+        for ext in extensions:
+            exe = p.abspath(p.normpath(p.join(_dir, f'{executable}{ext}')))
+            if p.isfile(exe):
+                if os.name == 'nt':
+                    return exe
+                elif os.access(exe, os.X_OK):
+                    return exe
 
     if os.name == 'nt':
-        exec_abs = run(
-            [p.expandvars(r'%WINDIR%\System32\where.exe'), f'$PATH:{executable}.exe'],
-            stdout=PIPE, stderr=PIPE
-        )
-        if exec_abs.stderr:
-            pass
-        else:
-            ret = exec_abs.stdout.decode().split('\n')[0].strip('\r')
-            if p.isfile(ret):
-                return ret
-        raise PandotoolsError(
-            f"'{executable}' wasn't found in the [{', '.join(search_dirs_)}] and in the $PATH.")
+        for ext in extensions:
+            exe = run([p.expandvars(r'%WINDIR%\System32\where.exe'),
+                       f'$PATH:{executable}{ext}'],
+                      stdout=PIPE, stderr=PIPE)
+            if not exe.stderr:
+                exe = list(filter(
+                    lambda s: s.lower().endswith(f'{executable}{ext}'.lower()),
+                    exe.stdout.decode().splitlines()
+                ))[0]
+                if p.isfile(exe):
+                    return exe
     else:
-        return executable
+        exe = which(executable)
+        if exe:
+            return exe
+    raise PandotoolsError(
+        f"'{executable}' (without extension) wasn't found in the [{', '.join(search_dirs_)}] and in the $PATH.")
 
 
 pandoctools_core = p.join(p.dirname(p.dirname(p.abspath(__file__))), 'sh')
