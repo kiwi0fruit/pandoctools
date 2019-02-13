@@ -48,9 +48,6 @@ def where(executable: str, search_dirs_: Iterable[str]=None, exe_only: bool=True
       or shutil.which('executable') if it is not None.
       If wasn't found raises PandotoolsError.
     """
-    from subprocess import run, PIPE
-    from shutil import which
-
     if not (os.name == 'nt'):
         extensions = ('',)
     elif exe_only:
@@ -70,6 +67,7 @@ def where(executable: str, search_dirs_: Iterable[str]=None, exe_only: bool=True
                     return exe
 
     if os.name == 'nt':
+        from subprocess import run, PIPE
         for ext in extensions:
             exe = run([p.expandvars(r'%WINDIR%\System32\where.exe'),
                        f'$PATH:{executable}{ext}'],
@@ -82,6 +80,7 @@ def where(executable: str, search_dirs_: Iterable[str]=None, exe_only: bool=True
                 if p.isfile(exe):
                     return exe
     else:
+        from shutil import which
         exe = which(executable)
         if exe:
             return exe
