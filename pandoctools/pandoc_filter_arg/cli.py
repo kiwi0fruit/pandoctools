@@ -7,18 +7,6 @@ from typing import Iterable
 from ..shared_vars import where, PandotoolsError
 
 
-def run_err(*args: str, stdin: str) -> str:
-    """
-    Run subprocess that would definitely give error
-    and get stderr.
-
-    :param args: CLI args
-    :param stdin:
-    :return: stderr
-    """
-    return run(args, stderr=PIPE, input=stdin, encoding='utf-8').stderr
-
-
 doc = '''---
 panflute-filters: {}
 ...
@@ -40,7 +28,8 @@ def pandoc_filter_arg(output: str=None, to: str=None, search_dirs: Iterable[str]
         args += ['-t', to]
 
     match = None
-    err = run_err(*args, stdin=doc)
+    # Run subprocess that would definitely give error and get stderr:
+    err = run(args, stderr=PIPE, input=doc, encoding='utf-8').stderr
     for match in re.findall(r'(?<=\$\$\$).+?(?=\$\$\$)', err):
         pass
     if match is None:
