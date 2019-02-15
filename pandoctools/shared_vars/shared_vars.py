@@ -1,7 +1,7 @@
 import os
 import os.path as p
 import sys
-from typing import Tuple
+from typing import Tuple, Iterable
 from knitty.tools import where
 
 
@@ -49,3 +49,39 @@ def bash_cygpath(bash_from_conf: str='') -> Tuple[str, str]:
     bash_dir = p.dirname(bash)
     return bash, where('cygpath', [bash_dir, rf'{p.dirname(bash_dir)}\usr\bin',
                                    rf'{bash_dir}\usr\bin'])
+
+
+def is_bin_ext_maybe(output: str, to: str=None, search_dirs: Iterable[str]=None,
+                     force_pandoc: bool=False) -> bool:
+    """
+    Nice guess if the ``output`` extension (or ``to`` if no ext) means
+    that Pandoc needs adding ``-o "${output_file}"`` option.
+
+    :param output: Pandoc writer option
+    :param to: Pandoc writer option.
+        Used only if output doesn't have an extension
+    :param search_dirs: extra dirs to look for executables
+    :param force_pandoc: ignore hardcoded logic and always "ask" Pandoc.
+        Useful for testing hardcoded logic.
+    """
+    ext = p.splitext(p.basename(output))[1][1:]
+    if not ext:
+        ext = to
+
+    if not ext:
+        return False
+    elif ext in ('pdf', 'docx', 'epub', 'odt') and (not force_pandoc):  # TODO add more
+        return True
+    else:
+        import re
+        from subprocess import run, PIPE
+        from knitty.pandoc_filter_arg import doc
+
+        pandoc, panfl = where('pandoc', search_dirs), where('panfl', search_dirs)
+        err = run([pandoc, '-f', 'markdown', '--filter', panfl, '-t', ext],
+                  stderr=PIPE, stdout=PIPE, input=doc.encode()).stderr
+        err = err.decode() if err else ''
+        if re.search(r"(Cannot write \w+ output to terminal|specify an output file)", err):
+            return True
+        else:
+            return False

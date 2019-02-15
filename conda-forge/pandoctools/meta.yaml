@@ -1,5 +1,5 @@
 {% set name = "pandoctools" %}
-{% set version = "1.4.8" %}
+{% set version = "2.6" %}
 
 package:
   name: {{ name|lower }}
@@ -15,7 +15,6 @@ build:
   entry_points:
     - cat-md = pandoctools.cat_md.cat_md:cli
     - pandoctools = pandoctools.cli.cli:pandoctools
-    - pandoc-filter-arg = pandoctools.pandoc_filter_arg.cli:cli
     - pandoctools-resolve = pandoctools.pandoctools_resolve.resolve:cli
     - pandoctools-ready = pandoctools.ready.ready:ready
   script: "{{ PYTHON }} -m pip install . --no-deps -vv"
@@ -33,12 +32,12 @@ requirements:
     - notebook
     - jupyter
     - panflute >=1.11.2
-    - knitty >=0.4.19
+    - knitty >=0.5.0
     - pyppdf >=0.0.10
     - sugartex >=0.1.16
     - shortcutter >=0.1.15
     - py-pandoc-crossref
-    - py-pandoc >=2.5
+    - py-pandoc >=2.6
     - numpy
     - libsass
     - py-mathjax

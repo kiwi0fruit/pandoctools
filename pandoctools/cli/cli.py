@@ -7,9 +7,10 @@ from subprocess import run, PIPE
 import configparser
 import io
 from typing import Tuple
-from ..pandoc_filter_arg import pandoc_filter_arg, is_bin_ext_maybe
+from knitty.pandoc_filter_arg import pandoc_filter_arg
 from ..shared_vars import (pandoctools_user, pandoctools_user_data, bash_cygpath,
-                           pandoctools_core, env_path, search_dirs, get, load_yaml)
+                           pandoctools_core, env_path, search_dirs, get, load_yaml,
+                           is_bin_ext_maybe)
 
 PROFILE = 'Default'
 OUT = '*.*.md'
