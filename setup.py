@@ -40,7 +40,7 @@ setup(
     install_requires=['click', 'pyyaml', 'notebook', 'jupyter', 'libsass',
                       'panflute>=1.11.2', 'knitty>=0.5.0', 'pyppdf>=0.0.10',
                       'sugartex>=0.1.16', 'shortcutter>=0.1.15', 'numpy',
-                      'py-pandoc>=2.6', 'py-pandoc-crossref', 'py-mathjax'],
+                      'py-pandoc>=2.6', 'py-pandoc-crossref>=0.3.4.0.2.6', 'py-mathjax'],
 
     include_package_data=True,
     entry_points={

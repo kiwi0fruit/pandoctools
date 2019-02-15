@@ -36,7 +36,7 @@ requirements:
     - pyppdf >=0.0.10
     - sugartex >=0.1.16
     - shortcutter >=0.1.15
-    - py-pandoc-crossref
+    - py-pandoc-crossref >=0.3.4.0.2.6
     - py-pandoc >=2.6
     - numpy
     - libsass
