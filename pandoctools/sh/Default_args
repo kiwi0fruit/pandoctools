@@ -113,7 +113,6 @@ if [[ "$to" == "html" && "${out_ext}" == "pdf" ]]; then
 # custom $to format: "r.ipynb" or "r.ipynb+format"
 elif [[ "${to:0:7}" == "r.ipynb" ]]; then
     extra_inputs=("${_meta_ipynb_R}")
-    panfl_args0=("knitty.self_contained_raw_html_img")
     if [[ "${to:7}" != "" ]]; then
         to="${to:2}"
     else
@@ -121,7 +120,6 @@ elif [[ "${to:0:7}" == "r.ipynb" ]]; then
 
 elif [[ "${to:0:5}" == "ipynb" ]]; then
     extra_inputs=("${_meta_ipynb_py3}")
-    panfl_args0=("knitty.self_contained_raw_html_img")
 
 elif [[ "${to:0:4}" == "html" ]]; then
     writer_args0=(--mathjax)
