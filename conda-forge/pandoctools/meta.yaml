@@ -45,6 +45,7 @@ requirements:
 test:
   imports:
     - pandoctools
+    - pandoctools-ready
 
 about:
   home: https://github.com/kiwi0fruit/pandoctools
