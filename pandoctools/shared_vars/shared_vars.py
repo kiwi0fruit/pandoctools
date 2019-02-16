@@ -2,7 +2,7 @@ import os
 import os.path as p
 import sys
 from typing import Tuple, Iterable
-from knitty.tools import where
+from knitty.tools import where, KnittyError
 
 
 class PandotoolsError(Exception):
@@ -33,7 +33,7 @@ def bash_cygpath(bash_from_conf: str='') -> Tuple[str, str]:
         return where('bash', search_dirs), ''
     try:
         bash = where('bash', search_dirs)
-    except PandotoolsError:
+    except KnittyError:
         if p.isfile(bash_from_conf):
             bash = bash_from_conf
         else:
