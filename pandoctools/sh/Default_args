@@ -70,7 +70,7 @@ elif [[ "${md_input_only}" == "true" ]]; then
 
 # deal with writer formats:
 # ---------------------------
-_jupymd="markdown-bracketed_spans-fenced_divs-link_attributes\
+_jupymd="ipynb-bracketed_spans-fenced_divs-link_attributes\
 -simple_tables-multiline_tables-grid_tables-pipe_tables\
 -fenced_code_attributes-markdown_in_html_blocks-table_captions-smart"
 _meta_ipynb_R="$("$resolve" "${profile}_ipynb_R.yml" --else Default_ipynb_R.yml)"
@@ -84,6 +84,7 @@ _templ_docx="$("$resolve" "$profile.docx" --else Default.docx)"
 if [[ "${important_to}" == "true" ]]; then
     :;
 
+# override ipynb Markdown flavor when only output extension was specified:
 elif [[ "${out_ext}" == "ipynb" ]]; then
     to="${_jupymd}"
 
@@ -109,19 +110,21 @@ if [[ "$to" == "html" && "${out_ext}" == "pdf" ]]; then
         --template "$("$resolve" "${profile}.html" --else Default.html)")
     panfl_args0=("pandoctools.language_prefix")
 
-# custom $to format: "r.ipynb" or "r.ipynb:format"
-elif [[ "${to0:0:7}" == "r.ipynb" ]]; then
+# custom $to format: "r.ipynb" or "r.ipynb+format"
+elif [[ "${to:0:7}" == "r.ipynb" ]]; then
     extra_inputs=("${_meta_ipynb_R}")
-    if [[ "${to0:8}" != "" ]]; then
-        to="${to0:8}"
+    panfl_args0=("knitty.self_contained_raw_html_img")
+    if [[ "${to:7}" != "" ]]; then
+        to="${to:2}"
     else
         to="${_jupymd}"; fi
 
-elif [[ "${to0:0:4}" == "html" ]]; then
-    writer_args0=(--mathjax)
-
-elif [[ "${out_ext}" == "ipynb" ]]; then
+elif [[ "${to:0:5}" == "ipynb" ]]; then
     extra_inputs=("${_meta_ipynb_py3}")
+    panfl_args0=("knitty.self_contained_raw_html_img")
+
+elif [[ "${to:0:4}" == "html" ]]; then
+    writer_args0=(--mathjax)
 
 elif [[ "${out_ext}" == "docx" ]]; then
     writer_args0=(--reference-doc "${_templ_docx}" -o "${output_file}")

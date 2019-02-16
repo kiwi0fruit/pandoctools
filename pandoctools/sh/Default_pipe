@@ -1,21 +1,15 @@
 #!/bin/bash
 export KNITTY=True
 
-_ipynb=()
-if [[ "${out_ext}" == "ipynb" ]]; then
-    _ipynb=("--to-ipynb"); fi
-
-cat |
 pre-knitty "${input_file}" --yaml "$metadata" |
 pre-sugartex |
 cat-md stdin "$metadata" "${extra_inputs[@]}" |
 pandoc "${reader_args[@]}" -t json |
-knitty "${input_file}" "${reader_args[@]}" "${writer_args[@]}" "${_ipynb[@]}" |
+knitty "$t" "${input_file}" "${reader_args[@]}" "${writer_args[@]}" |
 panfl "${panfl_args[@]}" |
 pandoc-crossref "$t" |
 pandoc -f json "${writer_args[@]}" |
-if [[ "${out_ext}" == "ipynb" ]]; then
-    post-knitty --to-ipynb |
+if [[ "${to:0:5}" == "ipynb" ]]; then
     jupyter nbconvert "${nbconvert_args[@]}"
 elif [[ "$to" == "html" && "${out_ext}" == "pdf" ]]; then
     python "$mathjax" sub_pdf "${mathjax_url}" |
