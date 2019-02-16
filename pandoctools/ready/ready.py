@@ -6,7 +6,7 @@ import sys
 from shortcutter import ShortCutter
 from pyppdf.patch_pyppeteer import patch_pyppeteer
 from pyppeteer.command import install as install_chromium
-from .shared_vars import pandoctools_user, pandoctools_core
+from ..shared_vars import pandoctools_user, pandoctools_core
 
 DEFAULTS_INI = {'profile': 'Default',
                 'out': '*.*.md',
