@@ -19,7 +19,15 @@ def ready():
 
     # Create shortcuts:
     sc.create_desktop_shortcut('pandoctools')
-    pandoctools_bin = sc.create_menu_shortcut('pandoctools')[1]
+    sc.create_menu_shortcut('pandoctools')
+    _bin = sc.find_target('pandoctools')
+    if not _bin:
+        _bin = sc.find_target(p.join(sc.bin_folder_shcut, 'pandoctools'))
+        if not _bin:
+            _bin = sc.find_target(p.join(sc.bin_folder_pyexe, 'pandoctools'))
+            if not _bin:
+                print("'pandoctools' was not found neither in the $PATH nor in the env.", file=sys.stderr)
+                _bin = ''
 
     sc.makedirs(pandoctools_user)
     sc.create_desktop_shortcut(pandoctools_user, 'Pandoctools User Data')
@@ -36,7 +44,7 @@ def ready():
             default_sect.update(dict(d))
         except configparser.NoSectionError:
             pass
-    default_sect['pandoctools'] = pandoctools_bin
+    default_sect['pandoctools'] = _bin
 
     config['Default'] = default_sect
     with io.StringIO() as file:
