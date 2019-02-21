@@ -6,7 +6,7 @@ import io
 def main(markdown_files: Iterable[str], input_stream: io.StringIO=sys.stdin) -> str:
     """
     :param markdown_files: list of markdown files paths.
-        If path is 'stdin' then reads it from input_stream
+        If path is 'stdin' or '-' then reads it from input_stream
         (can use the same input_stream text several times).
         If markdown_files is empty then default is ['stdin']
     :param input_stream:
@@ -14,7 +14,7 @@ def main(markdown_files: Iterable[str], input_stream: io.StringIO=sys.stdin) -> 
     """
     sources_list, _stdin = [], None
     for file in markdown_files:
-        if file == 'stdin':
+        if file in ('stdin', '-'):
             if _stdin is None:
                 _stdin = input_stream.read()
             sources_list.append(_stdin)
@@ -32,8 +32,8 @@ def cli():
     Usage: cat-md [OPTIONS] [INPUT_FILES]
 
       Joins markdown files with "\\n\\n" separator and writes
-      to stdout. If one of the files is "stdin" then reads it from stdin
-      (can use the same stdin text several times).
+      to stdout. If one of the files is "stdin" or "-" then reads
+      it from stdin (can use the same stdin text several times).
       If no markdown files provided then default is 'stdin'.
 
     Options:

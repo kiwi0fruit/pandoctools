@@ -122,7 +122,8 @@ Pandoctools stores some settings in [`Defaults.ini`](../sh/Defaults.ini) file. T
 
 * you can set `root_env` var there if you installed current environment to special location instead or default `<root_env>/envs/my_env`
 * `pandoctools` var stores the path to the pandoctools executable. It is set by pandoctools installer when it writes `Defaults.ini` to the folder in user data. You can specify it yourself too.
-* `win_bash` var stores the path to bash on Windows. Default is `%PROGRAMFILES%\Git\bin\bash.exe` but you can set it yourself.
+* `win_bash` var stores the path to bash on Windows. Default is `%PROGRAMFILES%\Git\bin\bash.exe` but you can set it yourself. Bash on Windows first is searched in the python environment, then in the $PATH, then
+by `win_bash` path from `Defaults.ini`, then in the `%PROGRAMFILES%\Git\bin\bash.exe` and `%PROGRAMFILES%\Git\usr\bin\bash.exe`.
 
 
 ## New CLI apps
@@ -131,7 +132,7 @@ Pandoctools comes with convenience CLI apps:
 
 * [**panfl**](../../docs/panfl.md) allows [Panflute](https://github.com/sergiocorreia/panflute) to be run as a command line script so it can be used in Pandoctools shell scripts.
 * [**cat-md**](../cat_md) is a simple CLI tool that concatenates input files with stdin input (joins them with double new lines) and prints to stdout.
-* [**pandoc-filter-arg**](../pandoc_filter_arg) is a CLI interface that prints argument that is passed by Pandoc to it's filters.
+* [**pandoc-filter-arg**](https://github.com/kiwi0fruit/knitty/tree/master/knitty/pandoc_filter_arg) is a CLI interface that prints argument that is passed by Pandoc to it's filters.
 * [**pandoctools-resolve**](../pandoctools_resolve) is a CLI tool that resolves and echoes absolute path to the file by its basename by searching in two Pandoctools folders.
 
 
@@ -150,7 +151,7 @@ Nothing special.
 
 ### Extra output extensions
 
-* `.ipynb` (sets special Markdown output dialect and concatenates `_ipynb_py3.yml`)
+Nothing special.
 
 ### Extra from formats
 
@@ -158,23 +159,22 @@ Nothing special.
 
 ### Extra to formats
 
-* `r.ipynb` or `r.ipynb:format` (sets special Markdown output dialect and concatenates `_ipynb_R.yml`). Where `format` should be valid Pandoc `to`/`write` option.
+* `r.ipynb` or `r.ipynb+xx-yy` (sets special Markdown output dialect by default and concatenates `_ipynb_R.yml`). Where `+xx-yy` should be valid Pandoc Markdown dialect given by extensions.
 
-See [Default_args](../sh/Default_args) for details. You can easily add your custom formats to the bash script by re-setting appropriate vars from `Default_args`. Example of the `$HOME/.pandoc/pandoctools/Kiwi2` custom profile that overrides some vars:
+See [Default_args](../sh/Default_args) for details. You can easily add your custom formats to the bash script by re-setting appropriate vars from `Default_args`. Example of the `$HOME/.pandoc/pandoctools/Kiwi2` custom profile that overrides some vars (it by purpose has `profile=Kiwi` to extend `Kiwi profile`):
 
 ```bash
 #!/bin/bash
 profile=Kiwi
 md_input_only=true
-source "$("$resolve" _root_env_bin_to_PATH)"
-source "${python_to_PATH}" "${env_path}"
+source "$("$resolve" _bin_to_PATH)" "${root_env}"
+source "$("$resolve" _env_to_PATH)" "${env_path}"
 source "$source" activate "${env_path}"
 source "$("$resolve" ${profile}_args --else Default_args)"
-writer_args=(--standalone --self-contained --toc "${writer_args0[@]}")
-panfl_args=(-t "$t" sugartex.kiwi)
-nbconvert_args=(--to notebook --stdin --stdout)
+writer_args=(--standalone --self-contained --toc -t "$to" "${writer_args0[@]}")
+panfl_args=(-t "$t" sugartex.kiwi "${panfl_args0[@]}")
+nbconvert_args=(--to notebook --execute --stdin --stdout)
 source "$("$resolve" ${profile}_pipe --else Default_pipe)"
-source "$source" deactivate 2>/dev/null
 ```
 
 
@@ -197,8 +197,3 @@ source "$source" deactivate 2>/dev/null
 * `cygpath` - full path to cygpath (on Windows, otherwise empty string)
 * `PYTHONIOENCODING` = `utf-8` (Windows only)
 * `LANG` = `C.UTF-8` (Windows only)
-
-Some of predefined bash scripts: 
-
-* `_root_env_bin_to_PATH` - script that prepends PATH with bin/Scripts dir of the root environment if it was set.
-* `_python_to_PATH` - scripts that prepends PATH with all necessary python folders. Argument is the root dir of python installation (root env or created env). Runs only if argument is not empty.

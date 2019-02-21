@@ -13,17 +13,9 @@ Pandoctools is a combination of tools that help write reproducible markdown repo
 
 ## Update instructions
 
-IMPORTANT: at the moment pandoctools should be installed with `"knitty<0.5"`
+(*Update instructions to v.2.6*)
 
-(*Update instructions to v.1.4.2*)
-
-* Switch to bash profiles as batch profiles are no longer supported (and install bash if needed),
-* `results=pandoc` was a misunderstanding. The right way to output Markdown is to use  
-  `from IPython.display import Markdown; Markdown('hello')`.
-* Import pandas, matplotlib and feather helpers from separate modules: [matplotlibhelper](https://github.com/kiwi0fruit/matplotlibhelper), [featherhelper](https://github.com/kiwi0fruit/featherhelper), [tabulatehelper](https://github.com/kiwi0fruit/tabulatehelper),
-* **v1.4.2** is not backward compatible but profiles can be easily fixed. Uninstall Pandoctools before updating. Update your custom bash scripts as names and logic changed. References: [**Default_args**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_args), [**Default**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default) (profile), [**Default_pipe**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_pipe).
-* Since **v1.4.2** bash on Windows first rearched in the python environment, then in the $PATH, then
-by path from config, then in the `%PROGRAMFILES%\Git`.
+* **v2.6** is not backward compatible but profiles can be easily fixed. Uninstall Pandoctools before updating. Update your custom bash scripts as names and logic changed. References: [**Default_args**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_args), [**Default**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default) (profile), [**Default_pipe**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_pipe).
 
 
 # Contents
@@ -42,7 +34,7 @@ by path from config, then in the `%PROGRAMFILES%\Git`.
 
 * [**Pandoc**](https://pandoc.org/), [**Jupyter**](http://jupyter.org/), [**pandoc-crossref**](https://github.com/lierdakil/pandoc-crossref) (dependence) - classical tools.
 * [**Pandoctools CLI app**](https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/cli): profile manager of text processing pipelines. It stores short bash scripts - called profiles - that define chain operations over text. They are mostly Pandoc filters but any CLI text filter is OK. Profiles can be used to convert any document of choise in the specified manner.
-* [**Knitty**](https://github.com/kiwi0fruit/knitty) (dependence): Knitty is a Pandoc filter and another CLI for Stitch/Knotr: reproducible report generation tool via Jupyter, Pandoc and Markdown. Insert python code (or other Jupyter kernel code) to the Markdown document and have code's results in the output document. Can even export to Jupyter ipynb notebooks. You can use [ipynb-py-convert](https://github.com/kiwi0fruit/ipynb-py-convert) to convert .ipynb to .py to use with Knitty.
+* [**Knitty**](https://github.com/kiwi0fruit/knitty) (dependence): Knitty is a Pandoc filter and another CLI for Stitch/Knotr: reproducible report generation tool via Jupyter, Pandoc and Markdown. Insert python code (or other Jupyter kernel code) to the Markdown document and have code's results in the output document. Can even export to .html, .pdf, [Jupyter .ipynb notebooks](https://pandoc.org/MANUAL.html#creating-jupyter-notebooks-with-pandoc) and any other [Pandoc output formats](https://pandoc.org/MANUAL.html#general-options). You can use [ipynb-py-convert](https://github.com/kiwi0fruit/ipynb-py-convert) to convert .ipynb to .py to use with Knitty.
 * [**SugarTeX**](https://github.com/kiwi0fruit/sugartex) (dependence): SugarTeX is a more readable LaTeX language extension and transcompiler to LaTeX.
 * [**Pyppdf**](https://github.com/kiwi0fruit/pyppdf) (dependence): Pyppeteer PDF. Prints html output to pdf via patched Pyppeteer.
 * [**Prism.js**](https://github.com/PrismJS/prism) and [**github-markdown-css**](https://github.com/sindresorhus/github-markdown-css) (integrated): used for default to PDF conversion (but with borrowing from [Default_args](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_args) to custom profile you can use them with to HTML conversion too).
@@ -66,7 +58,7 @@ Here are [**examples**](https://github.com/kiwi0fruit/pandoctools/blob/master/ex
 * from markdown `.md` with Jupyter python code blocks, SugarTeX math and cross-references to `.ipynb` notebook and to PDF.
 * from Hydrogen/python notebook `.py` with Atom/Hydrogen code cells, Knitty markdown incerts (again with SugarTeX math and cross-references) to `.ipynb` notebook and to PDF.
 
-**Examples are given for to .ipynb and to .pdf conversion but Pandoctools surely capable of conversion to .html, .md.md or any Pandoc output format.**
+**Examples are given for [to .ipynb](https://pandoc.org/MANUAL.html#creating-jupyter-notebooks-with-pandoc) and to .pdf conversion but Pandoctools surely capable of conversion to .html, .md.md or any [Pandoc output format](https://pandoc.org/MANUAL.html#general-options).**
 
 Extras:
 
@@ -81,13 +73,13 @@ Extras:
 
 ### Via conda
 
-* (*on Windows*) Install 64-bit [Git together with Bash](https://git-scm.com/downloads),
 * Install 64-bit [Miniconda3](https://conda.io/miniconda.html) (≥3.6),
+* (*on Windows*) Install 64-bit [Git together with Bash](https://git-scm.com/downloads). You can also **install Bash into conda environment with Pandoctools** and it would use this local Bash by priority.
 * (*on Windows*) Creating "pandoctools" conda environment:
   ```bat
   call activate root
   conda update conda
-  conda create -n pandoctools -c defaults -c conda-forge pandoctools "knitty<0.5"
+  conda create -n pandoctools -c defaults -c conda-forge pandoctools
   call activate pandoctools
   pandoctools-ready
   ```
@@ -95,13 +87,13 @@ Extras:
   ```bash
   source activate root
   conda update conda
-  conda create -n pandoctools -c defaults -c conda-forge pandoctools "knitty<0.5"
+  conda create -n pandoctools -c defaults -c conda-forge pandoctools
   source activate pandoctools
   pandoctools-ready
   ```
 * The significant commands are the following:
   ```bash
-  conda install -c defaults -c conda-forge pandoctools "knitty<0.5"
+  conda install -c defaults -c conda-forge pandoctools
   pandoctools-ready
   ```
   But it's recommended to create a dedicated conda environment for the Pandoctools.
@@ -110,8 +102,6 @@ Extras:
 ### Via pip
 
 * (*on Windows*) Install [Git together with Bash](https://git-scm.com/downloads),
-* Install [Pandoc](https://pandoc.org/installing.html) (maybe pip would also install it but I'm not sure),
-* Install latest stable [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) (compatible with pandoc version) to the dedicated virtual environment's `.\Scripts` (Windows) or `./bin` (Unix) folder.
 * Install Pandoctools:
   ```bash
   pip install pandoctools
