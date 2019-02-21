@@ -45,7 +45,7 @@ def ready():
     try:
         with open(config_file, 'w') as file:
             config.write(file)
-    except:
+    except Exception:
         print(f'{traceback.format_exc()}\n'+
               'WARNING: Failed to create ini file:\n'+
               f'{config_file}\n\n{config_str}',
