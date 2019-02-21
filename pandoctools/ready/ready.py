@@ -20,16 +20,18 @@ def ready():
     # Create shortcuts:
     sc.create_desktop_shortcut('pandoctools')
     sc.create_menu_shortcut('pandoctools')
+
+    sc.makedirs(pandoctools_user)
+    sc.create_desktop_shortcut(pandoctools_user, 'Pandoctools User Data')
+    sc.create_shortcut(pandoctools_core, pandoctools_user, 'Pandoctools Core Data')
+
+    # Find Pandoctools exec:
     _bin = sc.find_target('pandoctools')
     if not _bin:
         _bin = sc.find_target(p.join(sc.bin_folder_shcut, 'pandoctools'))
         if not _bin:
             print("'pandoctools' was not found neither in the $PATH nor in the env.", file=sys.stderr)
             _bin = ''
-
-    sc.makedirs(pandoctools_user)
-    sc.create_desktop_shortcut(pandoctools_user, 'Pandoctools User Data')
-    sc.create_shortcut(pandoctools_core, pandoctools_user, 'Pandoctools Core Data')
 
     # Write INI:
     config_file = p.join(pandoctools_user, 'Defaults.ini')
