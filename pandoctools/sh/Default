@@ -1,8 +1,8 @@
 #!/bin/bash
 profile=Default
 md_input_only=true
-source "$("$resolve" _root_env_bin_to_PATH)"
-source "$("$resolve" _python_to_PATH)" "${env_path}"
+source "$("$resolve" _bin_to_PATH)" "${root_env}"
+source "$("$resolve" _env_to_PATH)" "${env_path}"
 source "$source" activate "${env_path}"
 source "$("$resolve" ${profile}_args --else Default_args)"
 source "$("$resolve" ${profile}_pipe --else Default_pipe)"

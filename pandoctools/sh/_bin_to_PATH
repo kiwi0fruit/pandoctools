@@ -1,0 +1,11 @@
+#!/bin/bash
+# Usage:
+#   source _bin_to_PATH path/to/python/dir
+
+if [[ "$1" != "" ]]; then
+    if [[ "$OSTYPE" == "msys" ]]; then
+        PATH="$1/condabin:$1/Scripts:$PATH"
+    else
+        PATH="$1/condabin:$1/bin:$PATH"
+    fi
+fi
