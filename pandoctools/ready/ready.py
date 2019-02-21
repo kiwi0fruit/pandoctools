@@ -26,12 +26,13 @@ def ready():
     sc.create_shortcut(pandoctools_core, pandoctools_user, 'Pandoctools Core Data')
 
     # Find Pandoctools exec:
-    _bin = sc.find_target('pandoctools')
-    if not _bin:
-        _bin = sc.find_target(p.join(sc.bin_folder_shcut, 'pandoctools'))
-        if not _bin:
-            print("'pandoctools' was not found neither in the $PATH nor in the env.", file=sys.stderr)
-            _bin = ''
+    for target in ('pandoctools', sc.exe(p.join(sc.bin_folder_shcut, 'pandoctools'))):
+        _bin = sc.find_target(target)
+        if _bin:
+            break
+    else:
+        _bin = ''
+        print("'pandoctools' was not found neither in the $PATH nor in the env.", file=sys.stderr)
 
     # Write INI:
     config_file = p.join(pandoctools_user, 'Defaults.ini')
