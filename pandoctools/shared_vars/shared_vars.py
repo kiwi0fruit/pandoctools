@@ -50,7 +50,7 @@ def bash_cygpath(bash_from_conf: str='') -> Tuple[str, str]:
 
     ret = run([bash, '-c', 'cygpath -w $(which cygpath)'], stderr=PIPE, stdout=PIPE)
     cygpath = None
-    if ret.stdout and not ret.stderr:
+    if ret.stdout and (ret.returncode == 0) and not ret.stderr:
         cygpath = ret.stdout.decode().strip().splitlines()[0]
         if not p.isfile(cygpath):
             cygpath = None
