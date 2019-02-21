@@ -107,7 +107,7 @@ Extras:
   pip install pandoctools
   pandoctools-ready
   ```
-  But it's recommended to use conda as Jupyter notebooks are buggy in pip.
+  In contrast with conda instllation Jupyter notebooks in pip do not support [activated python kernels](https://github.com/kiwi0fruit/pandoctools/blob/master/docs/tips.md#install-python-kernel) (there is a strange bug...).
 
 # Useful tips (reload imported modules in Hydrogen, Python kernel, R kernel, Typescript kernel)
 
