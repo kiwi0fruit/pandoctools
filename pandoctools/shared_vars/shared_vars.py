@@ -3,6 +3,7 @@ import os.path as p
 import sys
 from typing import Tuple, Iterable
 from knitty.tools import where, KnittyError
+from subprocess import run, PIPE
 
 
 class PandotoolsError(Exception):
@@ -32,7 +33,7 @@ def bash_cygpath(bash_from_conf: str='') -> Tuple[str, str]:
     if os.name != 'nt':
         return where('bash', search_dirs), ''
     try:
-        bash = where('bash', search_dirs)
+        bash = where('bash', search_dirs, exe_only=False)
     except KnittyError:
         if p.isfile(bash_from_conf):
             bash = bash_from_conf
@@ -46,9 +47,18 @@ def bash_cygpath(bash_from_conf: str='') -> Tuple[str, str]:
                     "bash wasn't found in: python environment, $PATH, " +
                     r"win_bash path in config, %PROGRAMFILES%\Git"
                 )
-    bash_dir = p.dirname(bash)
-    return bash, where('cygpath', [bash_dir, rf'{p.dirname(bash_dir)}\usr\bin',
-                                   rf'{bash_dir}\usr\bin'])
+
+    ret = run([bash, '-c', 'cygpath -w $(which cygpath)'], stderr=PIPE, stdout=PIPE)
+    cygpath = None
+    if ret.stdout and not ret.stderr:
+        cygpath = ret.stdout.decode().strip().splitlines()[0]
+        if not p.isfile(cygpath):
+            cygpath = None
+    if not cygpath:
+        bash_dir = p.dirname(bash)
+        cygpath = where('cygpath', [bash_dir, rf'{p.dirname(bash_dir)}\usr\bin',
+                        rf'{bash_dir}\usr\bin'])
+    return bash, cygpath
 
 
 def is_bin_ext_maybe(output: str, to: str=None, search_dirs: Iterable[str]=None,
@@ -74,7 +84,6 @@ def is_bin_ext_maybe(output: str, to: str=None, search_dirs: Iterable[str]=None,
         return True
     else:
         import re
-        from subprocess import run, PIPE
         from knitty.pandoc_filter_arg import doc
 
         pandoc, panfl = where('pandoc', search_dirs), where('panfl', search_dirs)
