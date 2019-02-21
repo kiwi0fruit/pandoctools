@@ -31,6 +31,7 @@ requirements:
     - pyyaml
     - notebook
     - jupyter
+    - numpy
     - panflute >=1.11.2
     - knitty >=0.5.0
     - pyppdf >=0.0.10
@@ -38,7 +39,6 @@ requirements:
     - shortcutter >=0.1.19
     - py-pandoc-crossref >=0.3.4.0.3
     - py-pandoc >=2.6
-    - numpy
     - libsass
     - py-mathjax
 
