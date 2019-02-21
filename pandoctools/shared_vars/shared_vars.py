@@ -14,7 +14,13 @@ pandoctools_core = p.join(p.dirname(p.dirname(p.abspath(__file__))), 'sh')
 if os.name == 'nt':
     pandoctools_user_data = r"%APPDATA%\pandoc\pandoctools"
     pandoctools_user = p.join(os.environ["APPDATA"], "pandoc", "pandoctools")
-    env_path = p.dirname(sys.executable)
+    python_dir = p.dirname(sys.executable)
+    if p.isdir(p.join(python_dir, 'conda-meta')) and p.isdir(p.join(python_dir, 'Scripts')):
+        env_path = python_dir
+    elif p.basename(python_dir) == 'Scripts':
+        env_path = p.dirname(python_dir)
+    else:
+        env_path = python_dir
     search_dirs = [env_path,
                    p.join(env_path, r'Library\mingw-w64\bin'),
                    p.join(env_path, r'Library\usr\bin'),
