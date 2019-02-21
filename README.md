@@ -107,7 +107,7 @@ Extras:
   pip install pandoctools
   pandoctools-ready
   ```
-
+  But it's recommended to use conda as Jupyter notebooks are buggy in pip.
 
 # Useful tips (reload imported modules in Hydrogen, Python kernel, R kernel, Typescript kernel)
 

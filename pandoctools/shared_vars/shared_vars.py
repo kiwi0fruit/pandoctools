@@ -17,7 +17,7 @@ if os.name == 'nt':
     python_dir = p.dirname(sys.executable)
     if p.isdir(p.join(python_dir, 'conda-meta')) and p.isdir(p.join(python_dir, 'Scripts')):
         env_path = python_dir
-    elif p.basename(python_dir) == 'Scripts':
+    elif p.basename(python_dir).lower() == 'scripts':
         env_path = p.dirname(python_dir)
     else:
         env_path = python_dir
