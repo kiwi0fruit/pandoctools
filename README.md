@@ -71,43 +71,78 @@ Extras:
 
 **If you have an antivirus then the first or two runs may fail - there may be errors like "Permission denied" because of the antivirus checking all the components.**
 
-### Via conda
 
-* Install 64-bit [Miniconda3](https://conda.io/miniconda.html) (≥3.6),
-* (*on Windows*) Install 64-bit [Git together with Bash](https://git-scm.com/downloads). You can also **install Bash into conda environment with Pandoctools** and it would use this local Bash by priority.
-* (*on Windows*) Creating "pandoctools" conda environment:
-  ```bat
-  call activate root
-  conda update conda
-  conda create -n pandoctools -c defaults -c conda-forge pandoctools
-  call activate pandoctools
+### Short instructions:
+
+* (*on Windows*) install 64-bit [Git Bash](https://git-scm.com/downloads)
+* **either** install 64-bit [Miniconda3](https://conda.io/miniconda.html) and:
+  ```bash
+  conda install -c defaults -c conda-forge pandoctools
+  ```
+* **or** install 64-bit Python and:
+  ```bash
+  pip install pandoctools
+  ```
+* then:
+  ```bash
   pandoctools-ready
   ```
-* (*on Unix*) Creating "pandoctools" conda environment:
+* But it's recommended to create a dedicated environment for the Pandoctools. See below.
+
+
+### Via conda
+
+* Create "pandoctools" conda environment (do not set custom prefix unless you want to set `root_env` in the [config](https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/cli#defaultsini)):
+  (*on Unix*):
   ```bash
-  source activate root
+  cd $root_miniconda_prefix
+  source ./bin/activate base
+  conda config --add channels conda-forge
+  conda config --add channels defaults
   conda update conda
-  conda create -n pandoctools -c defaults -c conda-forge pandoctools
+
+  conda create -n pandoctools pandoctools
   source activate pandoctools
   pandoctools-ready
   ```
-* The significant commands are the following:
-  ```bash
-  conda install -c defaults -c conda-forge pandoctools
+  (*on Windows*):
+  ```bat
+  cd /d %root_miniconda_prefix%
+  call .\Scripts\activate base
+  conda config --add channels conda-forge
+  conda config --add channels defaults
+  conda update conda
+
+  conda create -n pandoctools pandoctools
+  call activate pandoctools
   pandoctools-ready
   ```
-  But it's recommended to create a dedicated conda environment for the Pandoctools.
+* You can also **install Bash into conda environment with Pandoctools** and it would use this local Bash by priority.
 
 
 ### Via pip
 
-* (*on Windows*) Install [Git together with Bash](https://git-scm.com/downloads),
-* Install Pandoctools:
+* Create pandoctools venv environment:
+  (*on Unix*):
   ```bash
+  cd $root_python_prefix
+  ./bin/python -m venv ./envs/pandoctools
+  source ./envs/pandoctools/bin/activate
+
   pip install pandoctools
   pandoctools-ready
   ```
-  In contrast with conda instllation Jupyter notebooks in pip do not support [activated python kernels](https://github.com/kiwi0fruit/pandoctools/blob/master/docs/tips.md#install-python-kernel) (there is a strange bug...).
+  (*on Windows*):
+  ```bat
+  cd /d %root_python_prefix%
+  .\python -m venv .\envs\pandoctools
+  call .\envs\pandoctools\Scripts\activate
+
+  pip install pandoctools
+  pandoctools-ready
+  ```
+* In contrast with conda installation Jupyter notebooks in pip do not support [activated python kernels](https://github.com/kiwi0fruit/pandoctools/blob/master/docs/tips.md#install-python-kernel) (there is a strange bug).
+
 
 # Useful tips (reload imported modules in Hydrogen, Python kernel, R kernel, Typescript kernel)
 
