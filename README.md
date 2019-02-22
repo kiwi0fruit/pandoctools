@@ -83,7 +83,7 @@ Extras:
   ```bash
   pip install pandoctools
   ```
-* then:
+* **then**:
   ```bash
   pandoctools-ready
   ```
@@ -92,7 +92,7 @@ Extras:
 
 ### Via conda
 
-* Create "pandoctools" conda environment (do not set custom prefix unless you want to set `root_env` in the [config](https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/cli#defaultsini)):
+* Create "pandoctools" conda environment (do not set custom prefix unless you want to set `root_env` in the [config](https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/cli#defaultsini)):  
   (*on Unix*):
   ```bash
   cd $root_miniconda_prefix
@@ -122,7 +122,7 @@ Extras:
 
 ### Via pip
 
-* Create pandoctools venv environment:
+* Create pandoctools venv environment:  
   (*on Unix*):
   ```bash
   cd $root_python_prefix
