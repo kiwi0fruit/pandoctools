@@ -143,21 +143,18 @@ def read_ini(ini: str,  dir1: str,  dir2: str):
 
 # noinspection PyShadowingNames
 def guess_root_env() -> str:
-    """
-    Checks if python root env in default location:
-    sys.prefix =? "<...>/root_python/envs/env_name"
-    """
+    if sys.prefix != sys.base_prefix:
+        return sys.base_prefix
+    if hasattr(sys, 'real_prefix'):
+        return sys.real_prefix
+    # Check if root_python env is in the default location:
+    # sys.prefix == "<...>/root_python/envs/env_name"
     up1 = p.dirname(sys.prefix)
     up2 = p.dirname(up1)
     python_bin = p.join(up2, 'python.exe' if (os.name == 'nt') else 'bin/python')
     if (p.basename(up1) == 'envs') and p.isfile(python_bin):
         return up2
-    elif sys.prefix != sys.base_prefix:
-        return sys.base_prefix
-    elif hasattr(sys, 'real_prefix'):
-        return sys.real_prefix
-    else:
-        return ""
+    return ""
 
 
 def user_yes_no_query(message: str):
