@@ -9,11 +9,34 @@ import io
 from typing import Tuple
 from knitty.pandoc_filter_arg import pandoc_filter_arg
 from ..shared_vars import (pandoctools_user, pandoctools_user_data, bash_cygpath,
-                           pandoctools_core, env_path, search_dirs, get, load_yaml,
-                           is_bin_ext_maybe)
+                           pandoctools_core, search_dirs, get, load_yaml,
+                           is_bin_ext_maybe, scripts_bin, PandotoolsError)
 
 PROFILE = 'Default'
 OUT = '*.*.md'
+exe = '.exe' if os.name == 'nt' else ''
+
+
+def get_pandoctools_bin():
+    try:
+        pdt = p.abspath(sys.argv[0])
+        if p.basename(pdt).lower() in ('pandoctools', 'pandoctools' + exe):
+            if p.isfile(pdt + exe):
+                return pdt + exe
+            elif p.isfile(pdt):
+                return pdt
+    except IndexError:
+        pass
+    pdt = p.abspath(p.join(sys.path[0], 'pandoctools' + exe))
+    if p.isfile(pdt):
+        return pdt
+    pdt = p.join(sys.prefix, scripts_bin, 'pandoctools' + exe)
+    if p.isfile(pdt):
+        return pdt
+    raise PandotoolsError("Pandoctools executable wasn't found.")
+
+
+pandoctools_bin = get_pandoctools_bin()
 
 
 def expandvars(file_path):
@@ -119,16 +142,20 @@ def read_ini(ini: str,  dir1: str,  dir2: str):
 
 
 # noinspection PyShadowingNames
-def guess_root_env(env_path_: str):
+def guess_root_env() -> str:
     """
     Checks if python root env in default location:
-    env_path_ =? "<...>/root_python/envs/env_name"
+    sys.prefix =? "<...>/root_python/envs/env_name"
     """
-    up1 = p.dirname(env_path_)
+    up1 = p.dirname(sys.prefix)
     up2 = p.dirname(up1)
     python_bin = p.join(up2, 'python.exe' if (os.name == 'nt') else 'bin/python')
     if (p.basename(up1) == 'envs') and p.isfile(python_bin):
         return up2
+    elif sys.prefix != sys.base_prefix:
+        return sys.base_prefix
+    elif hasattr(sys, 'real_prefix'):
+        return sys.real_prefix
     else:
         return ""
 
@@ -149,20 +176,14 @@ def user_yes_no_query(message: str):
 
 # Set some vars and env vars. Read from INI config:
 config = read_ini('Defaults', pandoctools_user, pandoctools_core)
-if os.name == 'nt':
-    scripts_bin = 'Scripts'
-    pandoctools_bin = p.join(env_path, r'Scripts\pandoctools.exe')
-    bash, cygpath = bash_cygpath(expandvars(config.get('Default', 'win_bash', fallback='')))
-else:
-    scripts_bin = 'bin'
-    pandoctools_bin = p.join(env_path, 'bin', 'pandoctools')
-    bash, cygpath = bash_cygpath()
+bash, cygpath = bash_cygpath(
+    expandvars(config.get('Default', 'win_bash', fallback=''))
+    if os.name == 'nt' else '')
 
 # Find python root env:
 root_env = config.get('Default', 'root_env', fallback='')
-#   Expand environment vars and get abs path:
 root_env = expandvars(root_env)
-root_env = root_env if p.isabs(root_env) and p.isdir(root_env) else guess_root_env(env_path)
+root_env = root_env if p.isabs(root_env) and p.isdir(root_env) else guess_root_env()
 
 
 @click.command(help=f"""
@@ -313,9 +334,9 @@ def pandoctools(input_file, input_file_stdin, profile, out, read, to, stdout, ye
         dic['LANG'] = 'C.UTF-8'
     env_vars = dict(
         source=p.join(p.dirname(pandoctools_core), 'source-from-path'),
-        resolve=p.join(env_path, scripts_bin, 'pandoctools-resolve'),
+        resolve=p.join(p.dirname(pandoctools_bin), 'pandoctools-resolve' + exe),
         scripts=scripts_bin,
-        env_path=env_path,
+        env_path=sys.prefix,
         input_file=input_file,
         output_file=output_file,
         is_bin_ext_maybe=str(is_bin_ext_maybe(output_file, to, search_dirs=search_dirs)).lower(),

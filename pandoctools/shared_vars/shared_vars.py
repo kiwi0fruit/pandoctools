@@ -11,27 +11,22 @@ class PandotoolsError(Exception):
 
 
 pandoctools_core = p.join(p.dirname(p.dirname(p.abspath(__file__))), 'sh')
+env_path = prefix = sys.prefix
 if os.name == 'nt':
+    scripts_bin = 'Scripts'
     pandoctools_user_data = r"%APPDATA%\pandoc\pandoctools"
     pandoctools_user = p.join(os.environ["APPDATA"], "pandoc", "pandoctools")
-    python_dir = p.dirname(sys.executable)
-    if p.isdir(p.join(python_dir, 'conda-meta')) and p.isdir(p.join(python_dir, 'Scripts')):
-        env_path = python_dir
-    elif p.basename(python_dir).lower() == 'scripts':
-        env_path = p.dirname(python_dir)
-    else:
-        env_path = python_dir
-    search_dirs = [env_path,
-                   p.join(env_path, r'Library\mingw-w64\bin'),
-                   p.join(env_path, r'Library\usr\bin'),
-                   p.join(env_path, r'Library\bin'),
-                   p.join(env_path, 'Scripts'),
-                   p.join(env_path, 'bin')]
+    search_dirs = [prefix,
+                   p.join(prefix, r'Library\mingw-w64\bin'),
+                   p.join(prefix, r'Library\usr\bin'),
+                   p.join(prefix, r'Library\bin'),
+                   p.join(prefix, 'Scripts'),
+                   p.join(prefix, 'bin')]
 else:
+    scripts_bin = 'bin'
     pandoctools_user_data = "$HOME/.pandoc/pandoctools"
     pandoctools_user = p.join(os.environ["HOME"], ".pandoc", "pandoctools")
-    env_path = p.dirname(p.dirname(sys.executable))
-    search_dirs = [p.join(env_path, 'bin')]
+    search_dirs = [p.join(prefix, 'bin')]
 
 
 def bash_cygpath(bash_from_conf: str='') -> Tuple[str, str]:
