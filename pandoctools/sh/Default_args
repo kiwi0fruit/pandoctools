@@ -44,7 +44,7 @@
 #   ${panfl_args}
 #   ${nbconvert_args}
 #   ${mathjax_url}
-#   $pytools
+#   $mathjax
 #   $tmpdir    (temp dir in the same folder as ${output_file}
 #               It should be deleted at the end of all pipes)
 
