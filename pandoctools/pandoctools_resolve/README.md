@@ -20,7 +20,9 @@ Options:
   --help       Show this message and exit.
 ```
 
-Usage examples:
+Usage example:
 
-* `yml="$($resolve Profile.yml --else Default.yml)"`
-* `source "$($resolve Profile --else Default)"`
+```bash
+yml="$("$resolve" Profile.yml --else Default.yml)"
+source "$("$resolve" Profile --else Default)"
+```
