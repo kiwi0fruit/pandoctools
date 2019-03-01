@@ -16,7 +16,7 @@
 #                           (or $to if no ext) means that pandoc needs adding 
 #                           `-o "${output_file}"` option)
 
-#   $source    (source bash script from PATH but not CWD)
+#   $source    (TO BE DEPRECATED: source bash script from PATH but not CWD)
 #   $resolve    (echoes resolved path to a file. Searches in 
 #                `$HOME/.pandoc/pandoctools` or `%APPDATA%\pandoc\pandoctools`
 #                then in `<...>/site-packages/pandoctools/sh` folders)
