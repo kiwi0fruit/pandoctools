@@ -169,7 +169,7 @@ profile=Kiwi
 md_input_only=true
 source "$("$resolve" _bin_to_PATH)" "${root_env}"
 source "$("$resolve" _env_to_PATH)" "${env_path}"
-source "$source" activate "${env_path}"
+source "$(type -p activate)" "${env_path}"
 source "$("$resolve" ${profile}_args --else Default_args)"
 writer_args=(--standalone --self-contained --toc -t "$to" "${writer_args0[@]}")
 panfl_args=(-t "$t" sugartex.kiwi "${panfl_args0[@]}")
