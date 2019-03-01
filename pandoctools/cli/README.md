@@ -181,7 +181,7 @@ source "$("$resolve" ${profile}_pipe --else Default_pipe)"
 ## Environment variables predefined in Pandoctools CLI application:
 
 * `scripts` - `Scripts` basename on Windows, `bin` basename on Unix
-* `source` - `source` bash script from PATH only (without current working dir)
+* `source` - TO BE DEPRECATED: `source` bash script from PATH only (without current working dir)
 * `resolve` - echoes the resolved fullpath to file given. File is searched in the folder in user data first (`%APPDATA%\pandoc\pandoctools` on Windows, `~/.pandoc/pandoctools` on Unix), then in the [folder in python module](../sh)
 * `env_path` - root dir of python installation where pandoctools was installed
 * `input_file` - absolute path to input file (?may be broken when no CWD was specified and python can't resolve relative path)
