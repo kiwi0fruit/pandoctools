@@ -8,8 +8,9 @@ import configparser
 import io
 from typing import Tuple
 from knitty.pandoc_filter_arg import pandoc_filter_arg
+from knitty.tools import load_yaml, get
 from ..shared_vars import (pandoctools_user, pandoctools_user_data, bash_cygpath,
-                           pandoctools_core, search_dirs, get, load_yaml,
+                           pandoctools_core, search_dirs,
                            is_bin_ext_maybe, scripts_bin, PandotoolsError)
 
 PROFILE = 'Default'
