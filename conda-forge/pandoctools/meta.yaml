@@ -1,5 +1,5 @@
 {% set name = "pandoctools" %}
-{% set version = "2.6.0.3" %}
+{% set version = "2.6.0.6" %}
 
 package:
   name: {{ name|lower }}
@@ -41,6 +41,7 @@ requirements:
     - py-pandoc >=2.6
     - libsass
     - py-mathjax
+    - shutilwhich-cwdpatch >=0.1.0
 
 test:
   imports:
