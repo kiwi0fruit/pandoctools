@@ -74,7 +74,7 @@ Extras:
 
 ### Short instructions:
 
-* **Either** 1.1) install 64-bit [Miniconda3](https://conda.io/miniconda.html) and:
+* **Either** (1.1) install 64-bit [Miniconda3](https://conda.io/miniconda.html) and:  
   (*on Unix:*)
   ```bash
   conda install -c defaults -c conda-forge pandoctools
@@ -84,12 +84,12 @@ Extras:
   conda install -c defaults -c conda-forge pandoctools git-bash
   ```
   (or install 64-bit [Git Bash](https://git-scm.com/downloads) instead of the conda package)
-* **or** 1.2) install 64-bit Python and:
+* **Or** (1.2) install 64-bit Python and:
   ```bash
   pip install pandoctools
   ```
-  (also install 64-bit [Git Bash](https://git-scm.com/downloads) on Windows)
-* **Then** 2):
+  (if on Windows install 64-bit [Git Bash](https://git-scm.com/downloads))
+* **Then** (2):
   ```bash
   pandoctools-ready
   ```
@@ -123,7 +123,7 @@ Extras:
   call activate pandoctools
   pandoctools-ready
   ```
-  (or install 64-bit [Git Bash](https://git-scm.com/downloads) instead of the conda package. Local Bash in the environment has priority)
+  (or install 64-bit [Git Bash](https://git-scm.com/downloads) instead of the conda package; local Bash in the environment has priority)
 * Just in case: the right way to remove conda environment 'myenv' is to run:
   ```bash
   conda remove -n myenv --all
@@ -153,7 +153,7 @@ Extras:
   pip install pandoctools
   pandoctools-ready
   ```
-  (also install 64-bit [Git Bash](https://git-scm.com/downloads) on Windows)
+  (then install 64-bit [Git Bash](https://git-scm.com/downloads))
 * In contrast with conda installation Jupyter notebooks in pip do not support [activated python kernels](https://github.com/kiwi0fruit/pandoctools/blob/master/docs/tips.md#install-python-kernel) (there is a strange bug).
 
 
