@@ -16,14 +16,13 @@
 #                           (or $to if no ext) means that pandoc needs adding 
 #                           `-o "${output_file}"` option)
 
-#   $source    (TO BE DEPRECATED: source bash script from PATH but not CWD)
 #   $resolve    (echoes resolved path to a file. Searches in 
 #                `$HOME/.pandoc/pandoctools` or `%APPDATA%\pandoc\pandoctools`
 #                then in `<...>/site-packages/pandoctools/sh` folders)
-
-#   $scripts    (`bin` on Unix, `Scripts` on Windows)
 #   ${root_env}    (root conda environment folder)
 #   ${env_path}    (conda or venv environment folder)
+#   $source    (TO BE DEPRECATED: source bash script from PATH but not CWD)
+#   $scripts    (TO BE DEPRECATED: `bin` on Unix, `Scripts` on Windows)
 
 # Exports vars:
 #   $from0    (original $from)
@@ -32,7 +31,7 @@
 #   $to    (pandoc writer format without custom formats)
 #   $t    (argument for pandoc filters)
 
-#   $metadata    (profile metadata file)
+#   $metadata    (profile metadata file abs path)
 #   ${extra_inputs}    (format specific part of the middle inputs -
 #                       metadata, other files)
 #   ${reader_args0}    (format specific part of the pandoc reader args)
@@ -40,11 +39,11 @@
 #   ${panfl_args0}    (format specific part of the panflute args)
 #   ${reader_args}    (all pandoc reader args)
 #   ${writer_args}    (all pandoc writer args)
+#   ${panfl_args}     (all panflute args)
 
-#   ${panfl_args}
 #   ${nbconvert_args}
 #   ${mathjax_url}
-#   $mathjax
+#   $mathjax   (python file abs path)
 #   $tmpdir    (temp dir in the same folder as ${output_file}
 #               It should be deleted at the end of all pipes)
 
