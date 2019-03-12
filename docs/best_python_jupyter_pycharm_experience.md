@@ -6,7 +6,7 @@ I'm going to share with you my favourite way of using Python and Jupyter for res
 
 * Write code in [PyCharm](https://www.jetbrains.com/pycharm/) - best python IDE with code [completion](https://www.jetbrains.com/help/pycharm/auto-completing-code.html), [inspection](https://www.jetbrains.com/help/pycharm/code-inspection.html), quick documentation pop ups (Ctrl+Q, Alt+MouseButton2), quick navigation to declaration (Mouse Button2),
 * [Atom editor](https://atom.io/) + [hydrogen](https://atom.io/packages/hydrogen) + [MagicPython](https://atom.io/packages/MagicPython) for interactive code execution and instanty seeing plots, dataframes and more,
-* Sync Atom with PyCharm via [file-watcher](https://atom.io/packages/file-watcher) (but first [disable PyCharm safe write](https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom.md#useful-atom-packages)),
+* Sync Atom with PyCharm via [file-watcher](https://atom.io/packages/file-watcher) (but first disable PyCharm safe write: Settings → Appearance and Behavior → System Settings → Synchronization → Use "safe write"),
 * With this combo you also may need to [reload imported custom external modules in Hydrogen](https://github.com/kiwi0fruit/pandoctools/blob/master/docs/tips.md#reload-imported-modules-in-hydrogen),
 * Write Unicode fast in Atom via [sugartex-completions](https://atom.io/packages/sugartex-completions),
 * Export Hydrogen document to static Markdown document or Jupyter notebook or docx via [Pandoctools](https://github.com/kiwi0fruit/pandoctools) based on [Pandoc](https://pandoc.org/) (or export to PDF but this unfortunately needs tuning...),
