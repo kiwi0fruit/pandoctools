@@ -1,5 +1,7 @@
 # Best Python/Jupyter/PyCharm experience + report generation with Pandoc filters
 
+(*backup of [the reddit post](https://www.reddit.com/r/datascience/comments/9pj8k9/best_pythonjupyterpycharm_experience_report/)*)
+
 I'm going to share with you my favourite way of using Python and Jupyter for research and reports. And it's not simply using Jupyter. I want to write code in PyCharm and use Pandoc filters for reports.
 
 * Write code in [PyCharm](https://www.jetbrains.com/pycharm/) - best python IDE with code [completion](https://www.jetbrains.com/help/pycharm/auto-completing-code.html), [inspection](https://www.jetbrains.com/help/pycharm/code-inspection.html), quick documentation pop ups (Ctrl+Q, Alt+MouseButton2), quick navigation to declaration (Mouse Button2),
