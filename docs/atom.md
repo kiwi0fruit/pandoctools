@@ -18,6 +18,10 @@
 
 Highly recommended to install [Atom editor](https://atom.io/) as it's the best for markdown. Atom is perfect for Unicode rich texts. But you need to install some fonts and set font fall-back chains first. See [this instruction](https://github.com/kiwi0fruit/sugartex#atom-editor-with-full-unicode-support) in SugarTeX docs.
 
+See [Open fonts](https://github.com/kiwi0fruit/open-fonts) for [serif](https://github.com/kiwi0fruit/open-fonts#best-serif) and [sans serif](https://github.com/kiwi0fruit/open-fonts#best-sans-serif) fonts.
+
+PS: If you are interested in beautiful fonts and on Windows take a look at [MacType](https://github.com/kiwi0fruit/open-fonts#mactype) font rendering engine.
+
 
 # Atom packages for right Pandoctools experience 
 
@@ -56,25 +60,18 @@ And in my opinion the best tool for this is Markdown Peview Plus Atom package.
 ### Installation
 
 * First install [Markdown Peview Plus](https://atom.io/packages/markdown-preview-plus) (>=3.3.1)
-* Then patch MPP by copying files from [MPP patch](https://github.com/kiwi0fruit/misc/tree/master/src/mpp) to `%USERPROFILE%\.atom\packages\markdown-preview-plus\styles` folder (`%USERPROFILE%\.atom` is `~/.atom` on Linux). The patch overrides default css theme. It has `custom-fonts.less` file - tune it to change fonts of the theme.
 * Make sure MPP settings are set to:
     * **Settings** (root) > **Renderer backend** is pandoc
     * **Math Options** > **Enable Math Rendering By Default** is checked
     * **Math Options** > **Math Renderer** is `HTML-CSS`
     * **Math Options** > **MathJax TeX Extensions** are `AMSmath.js, AMSsymbols.js, noErrors.js, noUndefined.js, HTML.js`
-    * **Math Options** > **MathJax 'undefinedFamily' (font family)** is `'Libertinus Serif', 'PT Astra Serif', 'Libertinus Math', Tinos, 'STIX Two Math', 'Noto Serif', Symbola, 'Noto Serif CJK TC', serif`
+    * **Math Options** > **MathJax 'undefinedFamily' (font family)** should be the main fonts fallback chain used in the document.
     * **Pandoc settings** > **Path to Pandoc executable** set to pandoc exec that wasinstalled by conda/Miniconda: take path to pandoctools executable (from desktop shortcut for example) and replace `pandoctools` with `pandoc`
     * **Pandoc settings** > **Filters** set to empty string
     * **Pandoc settings** > **Commandline Arguments** set to empty string
     * **Pandoc settings** > **Markdown Flavor** set to simply `markdown`
     * **Pandoc settings** > **Citations** is unchecked (if you need it you can add it in Pandoctools more explicit CLI)
     * **Save to PDF options** > **Render background** turned ON
-
-The MPP patch needs installed [serif](https://github.com/kiwi0fruit/open-fonts#best-serif) and [monospace](https://github.com/kiwi0fruit/open-fonts#best-monospace) fallback fonts chains from [Open fonts](https://github.com/kiwi0fruit/open-fonts). You can switch from serif to [sans serif](https://github.com/kiwi0fruit/open-fonts#best-sans-serif) if you want.
-
-The patched CSS (less actually) theme is not ideal and still buggy but a lot better that default MMP theme. Suggestions and pull requests are welcomed.
-
-PS: If you are interested in beautiful fonts and on Windows take a look at [MacType](https://github.com/kiwi0fruit/open-fonts#mactype) font rendering engine.
 
 
 # Recommended Atom options
