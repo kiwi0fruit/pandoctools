@@ -13,9 +13,9 @@ I'm going to share with you my favourite way of using Python and Jupyter for res
 * During export via Pandoctools use any pandoc or text filter like [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref) (so you can have cross-references for equations, figures and tables), [SugarTeX](https://github.com/kiwi0fruit/sugartex) LaTeX transpiler or a custom filter via [panflute](https://github.com/sergiocorreia/panflute),
 * Pandoctools stores [reusable profiles](https://github.com/kiwi0fruit/pandoctools/tree/master/pandoctools/cli) that define text conversion (written as cross-platform bash pipeline with CLI text filters),
 * Preview static Markdown in Atom via [markdown-preview-plus](https://atom.io/packages/markdown-preview-plus),
-* Run Pandoctools from Atom via cross-platform [unix-filter](https://atom.io/packages/unix-filter) ([setup pandoctools in unix filter](https://github.com/kiwi0fruit/pandoctools/blob/master/atom.md#unix-filter)),
+* Run Pandoctools from Atom via cross-platform [unix-filter](https://atom.io/packages/unix-filter) ([setup pandoctools in unix filter](https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom.md#unix-filter)),
 * ...
-* more details about tuning [Atom packages](https://github.com/kiwi0fruit/pandoctools/blob/master/atom.md) and [using Pandoctools](https://github.com/kiwi0fruit/pandoctools).
+* more details about tuning [Atom packages](https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom.md) and [using Pandoctools](https://github.com/kiwi0fruit/pandoctools).
 
 ### Example
 
