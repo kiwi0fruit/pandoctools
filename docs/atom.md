@@ -20,7 +20,7 @@ Highly recommended to install [Atom editor](https://atom.io/) as it's the best f
 
 See [Open fonts](https://github.com/kiwi0fruit/open-fonts) for [serif](https://github.com/kiwi0fruit/open-fonts#best-serif) and [sans serif](https://github.com/kiwi0fruit/open-fonts#best-sans-serif) fonts.
 
-PS: If you are interested in beautiful fonts and on Windows take a look at [MacType](https://github.com/kiwi0fruit/open-fonts#mactype) font rendering engine.
+If you are interested in beautiful fonts and on Windows take a look at [MacType](https://github.com/kiwi0fruit/open-fonts#mactype) font rendering engine.
 
 
 # Atom packages for right Pandoctools experience 
