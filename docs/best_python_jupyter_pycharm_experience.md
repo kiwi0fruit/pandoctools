@@ -27,7 +27,7 @@ Or you can use VS Code instead of PyCharm. Everything seems to work out of the b
 
 ### Atom
 
-Or you can do everything in Atom Editor. For this you need to install [ide-python](https://atom.io/packages/ide-python) (+ enable pylint there), install [python-tools](https://atom.io/packages/python-tools), install `pylint` to each working Python environment and tune it globally: edit or create `~/.pylintrc` file:
+Or you can do everything in Atom Editor. For this you need to install [ide-python](https://atom.io/packages/ide-python) (+ enable pylint there), install [python-tools](https://atom.io/packages/python-tools), install `python-language-server` to each working Python environment and tune `pylint` globally: edit or create `~/.pylintrc` file:
 
 ```ini
 [MESSAGES CONTROL]
