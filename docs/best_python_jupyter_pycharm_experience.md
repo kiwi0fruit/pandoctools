@@ -1,4 +1,4 @@
-# Best Python/Jupyter/PyCharm experience + report generation with Pandoc filters
+# Best Python/Jupyter/PyCharm/VSCode experience + report generation with Pandoc filters
 
 (*__backup of__ [__the reddit post__](https://www.reddit.com/r/datascience/comments/9pj8k9/best_pythonjupyterpycharm_experience_report/)*)
 
