@@ -23,7 +23,7 @@ There is an [**example**](https://github.com/kiwi0fruit/pandoctools/blob/master/
 
 ### VS Code
 
-Or you can use VS Code instead of PyCharm. Everything seems to work out of the box except you need to install `pylint` to **each** Python env you are going to use.
+Or you can use VS Code instead of PyCharm. Everything seems to work out of the box except you need to install `pylint` to **each** Python env you are going to use. If you would run Jupyter in Atom/Hydrogen then you can disable Jupyter functionality in VS Code: "**Data Sciense: Enabled**" (this would hide annoying "run cell" inserts). 
 
 ### Atom
 
