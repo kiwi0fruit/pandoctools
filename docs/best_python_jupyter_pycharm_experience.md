@@ -1,4 +1,4 @@
-# Best Python/Jupyter/PyCharm/VSCode experience + report generation with Pandoc filters
+# Best Python/Jupyter/PyCharm/VSCode/Atom experience + report generation with Pandoc filters
 
 (*__backup of__ [__the reddit post__](https://www.reddit.com/r/datascience/comments/9pj8k9/best_pythonjupyterpycharm_experience_report/)*)
 
@@ -24,3 +24,14 @@ There is an [**example**](https://github.com/kiwi0fruit/pandoctools/blob/master/
 ### VS Code
 
 Or you can use VS Code instead of PyCharm. Everything seems to work out of the box except you need to install `pylint` to **each** Python env you are going to use.
+
+### Atom
+
+Or you can do everything in Atom Editor. For this you need to install [ide-python](https://atom.io/packages/ide-python), install `pylint` to working Python environment, tune `pylint`: edit `~/.pylintrc` file:
+
+```ini
+[MESSAGES CONTROL]
+disable=bad-continuation,missing-docstring,pointless-string-statement,invalid-name,too-many-locals,too-many-arguments
+[FORMAT]
+max-line-length=119
+```
