@@ -4,7 +4,7 @@ Pandoctools is a combination of tools that help write reproducible markdown repo
 
 **Introduction articles**:
 
-* [**Best Python/Jupyter/PyCharm experience + report generation with Pandoc filters**](https://github.com/kiwi0fruit/pandoctools/blob/master/docs/best_python_jupyter_pycharm_experience.md).
+* [**Best Python/Jupyter/PyCharm/VSCode experience + report generation with Pandoc filters**](https://github.com/kiwi0fruit/pandoctools/blob/master/docs/best_python_jupyter_pycharm_experience.md).
 * [**Convenient and easily tweakable Atom+Markdown+Pandoc+Jupyter experience (can export to ipynb)**](https://github.com/kiwi0fruit/pandoctools/blob/master/docs/atom_jupyter_pandoc_markdown.md).  
 
 
