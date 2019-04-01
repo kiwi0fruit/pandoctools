@@ -20,3 +20,7 @@ I'm going to share with you my favourite way of using Python and Jupyter for res
 ### Example
 
 There is an [**example**](https://github.com/kiwi0fruit/pandoctools/blob/master/examples/notebook.py) (from [here](https://github.com/kiwi0fruit/pandoctools/tree/master/examples)) that can be edited in PyCharm, interactively run in Atom+Hydrogen and exported via Pandoctools.
+
+### VS Code
+
+Or you can use VS Code instead of PyCharm. Everything seems to work out of the box except you need to install `pylint` to the Python env you are going to use.
