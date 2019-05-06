@@ -16,7 +16,7 @@ Hydrogen `./document.py`:
 from importlib import reload
 import the
 reload(the)
-from the import something
+from the import something  # noqa E402
 ```
 
 Module `./the/__init__.py`:
