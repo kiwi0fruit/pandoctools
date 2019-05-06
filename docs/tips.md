@@ -26,7 +26,7 @@ from importlib import reload
 from . import smth
 reload(smth); del smth
 
-from .smth import something
+from .smth import something  # noqa E402
 ```
 
 Module `./the/smth.py`:
