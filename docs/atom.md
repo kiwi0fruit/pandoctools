@@ -53,6 +53,8 @@ See the [short instruction](https://github.com/kiwi0fruit/knitty/blob/master/doc
 
 ## Markdown Preview Plus
 
+*Note that if don't really need MPP then not installing it would save you some annoying Atom startup time. I myself haven't used and updated MPP tweaks for a long while.*
+
 Running Pandoctools can be slow since it uses Knitty (and hence starts and stops Jupyter every time) so the best approach when writing document with Pandoctools is to convert from enchanced Markdown to standard Pandoc Markdown (Knitty and all Pandoc filters run here). Then preview html/print pdf it with standard tool and plain Pandoc without filters.
 
 And in my opinion the best tool for this is Markdown Peview Plus Atom package.
