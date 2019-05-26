@@ -43,7 +43,7 @@ def something():
 
 (If on Windows first install [Git together with Bash](https://git-scm.com/downloads))
 
-Create conda env (named "python3"):
+Create conda env (for example named "python3". Set another value to the `$kernel` environment variable if you need to):
 
 ```bash
 kernel=python3
