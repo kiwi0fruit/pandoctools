@@ -3,7 +3,7 @@ export KNITTY=True
 
 pre-knitty "${input_file}" --yaml "$metadata" |
 pre-sugartex |
-cat-md stdin "$metadata" "${extra_inputs[@]}" |
+cat-md "${pandoc_inputs[@]}" |
 pandoc "${reader_args[@]}" -t json |
 knitty "$t" "${input_file}" "${reader_args[@]}" "${writer_args[@]}" |
 panfl "${panfl_args[@]}" |
