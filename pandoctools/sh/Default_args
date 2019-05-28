@@ -35,6 +35,7 @@
 #   ${extra_inputs}    (format specific part of the middle inputs - metadata,
 #                       other files. Multiple files can be joined via this var. 
 #                       But the first document to join is always the main one)
+#   ${extra_inputs0}    (same as ${extra_inputs})
 #   ${reader_args0}    (format specific part of the Pandoc reader args)
 #   ${writer_args0}    (format specific part of the Pandoc writer args)
 #   ${panfl_args0}    (format specific part of the Panflute args)
@@ -49,17 +50,21 @@
 #               It should be deleted at the end of all pipes)
 
 
-extra_inputs=()
+extra_inputs0=()
 reader_args0=()
 writer_args0=()
 panfl_args0=()
 from0="$from"
 to0="$to"
+
 tmpdir="$(dirname "${output_file}")/__temp__"
 mkdir -p "$tmpdir"
+_jupymd="ipynb-bracketed_spans-fenced_divs-link_attributes\
+-simple_tables-multiline_tables-grid_tables-pipe_tables\
+-fenced_code_attributes-markdown_in_html_blocks-table_captions-smart"
 
 
-# deal with reader formats:
+# Deal with reader formats:
 # ---------------------------
 # mod $from only if it was autoset by pandoctools
 if [[ "${important_from}" == "true" ]]; then
@@ -68,18 +73,9 @@ elif [[ "${md_input_only}" == "true" ]]; then
     from=markdown; fi
 
 
-# deal with writer formats:
+# Deal with writer formats:
 # ---------------------------
-_jupymd="ipynb-bracketed_spans-fenced_divs-link_attributes\
--simple_tables-multiline_tables-grid_tables-pipe_tables\
--fenced_code_attributes-markdown_in_html_blocks-table_captions-smart"
-_meta_ipynb_R="$("$resolve" "${profile}_ipynb_R.yml" --else Default_ipynb_R.yml)"
-_meta_ipynb_py3="$("$resolve" "${profile}_ipynb_py3.yml" --else Default_ipynb_py3.yml)"
-_templ_docx="$("$resolve" "$profile.docx" --else Default.docx)"
-
-
-# ........
-# mod $to only if it was autoset by pandoctools
+# mod $to only if it was autoset by Pandoctools
 # (keep $to set by user):
 if [[ "${important_to}" == "true" ]]; then
     :;
@@ -88,13 +84,13 @@ if [[ "${important_to}" == "true" ]]; then
 elif [[ "${out_ext}" == "ipynb" ]]; then
     to="${_jupymd}"
 
-# pandoctools overrides `pandoc -t html -o doc.pdf` combination:
-# (use `pandoc -t html5 -o doc.pdf` for default pandoc behaviour)
+# Pandoctools overrides `pandoc -t html -o doc.pdf` combination:
+# (use `pandoc -t html5 -o doc.pdf` for default Pandoc behaviour)
 elif [[ "${out_ext}" == "pdf" ]]; then
     to="html"; fi
 
 
-# ........
+# --------
 if [[ "$to" == "html" && "${out_ext}" == "pdf" ]]; then
     inheader="$tmpdir/in-header.html"
     cat "$("$resolve" "${profile}_mathjax.html" --else Default_mathjax.html)" > "$inheader"
@@ -112,26 +108,28 @@ if [[ "$to" == "html" && "${out_ext}" == "pdf" ]]; then
 
 # custom $to format: "r.ipynb" or "r.ipynb+format"
 elif [[ "${to:0:7}" == "r.ipynb" ]]; then
-    extra_inputs=("${_meta_ipynb_R}")
+    extra_inputs0=("$("$resolve" "${profile}_ipynb_R.yml" --else Default_ipynb_R.yml)")
+    # if "+format" was set:
     if [[ "${to:7}" != "" ]]; then
+        # strip "r.":
         to="${to:2}"
     else
         to="${_jupymd}"; fi
 
 elif [[ "${to:0:5}" == "ipynb" ]]; then
-    extra_inputs=("${_meta_ipynb_py3}")
+    extra_inputs0=("$("$resolve" "${profile}_ipynb_py3.yml" --else Default_ipynb_py3.yml)")
 
 elif [[ "${to:0:4}" == "html" ]]; then
     writer_args0=(--mathjax)
 
 elif [[ "${out_ext}" == "docx" ]]; then
-    writer_args0=(--reference-doc "${_templ_docx}" -o "${output_file}")
+    writer_args0=(--reference-doc "$("$resolve" "$profile.docx" --else Default.docx)" -o "${output_file}")
 
 elif [[ "${is_bin_ext_maybe}" == "true" ]]; then
     writer_args0=(-o "${output_file}"); fi
 
 
-# set other defaults:
+# Set other defaults:
 # ---------------------
 metadata="$("$resolve" "$profile.yml" --else Default.yml)"
 reader_args=(-f "$from" "${reader_args0[@]}")
@@ -140,9 +138,11 @@ t="$(pandoc-filter-arg "${writer_args[@]}")"
 
 panfl_args=(-t "$t" sugartex "${panfl_args0[@]}")
 nbconvert_args=(--to notebook --stdin --stdout)
+extra_inputs=("${extra_inputs0[@]}")
 
 mathjax="$("$resolve" "${profile}_mathjax.py" --else Default_mathjax.py)"
 mathjax_url="$(py-mathjax-path --url)"
+
 
 # panfl -t $t sugartex == sugartex $t == sugartex
 # panfl -t $t sugartex.kiwi == sugartex --kiwi
