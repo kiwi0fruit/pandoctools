@@ -32,10 +32,9 @@
 #   $t    (argument for Pandoc filters)
 
 #   $metadata    (profile metadata file absolute path)
-#   ${extra_inputs}    (format specific part of the middle inputs - metadata,
+#   ${extra_inputs0}    (format specific part of the middle inputs - metadata,
 #                       other files. Multiple files can be joined via this var. 
 #                       But the first document to join is always the main one)
-#   ${extra_inputs0}    (same as ${extra_inputs})
 #   ${reader_args0}    (format specific part of the Pandoc reader args)
 #   ${writer_args0}    (format specific part of the Pandoc writer args)
 #   ${panfl_args0}    (format specific part of the Panflute args)
@@ -48,6 +47,7 @@
 #   $mathjax   (MathJax replacer Python script file absolute path)
 #   $tmpdir    (temp dir in the same folder as ${output_file}
 #               It should be deleted at the end of all pipes)
+#   ${extra_inputs}    (TO BE DEPRECATED: same as ${extra_inputs0})
 
 
 extra_inputs0=()
@@ -132,17 +132,21 @@ elif [[ "${is_bin_ext_maybe}" == "true" ]]; then
 # Set other defaults:
 # ---------------------
 metadata="$("$resolve" "$profile.yml" --else Default.yml)"
+#   (pre-knitty also uses $metadata)
 reader_args=(-f "$from" "${reader_args0[@]}")
 writer_args=(--standalone --self-contained -t "$to" "${writer_args0[@]}")
 t="$(pandoc-filter-arg "${writer_args[@]}")"
 
+pandoc_inputs=(stdin "$metadata" "${extra_inputs0[@]}")
 panfl_args=(-t "$t" sugartex "${panfl_args0[@]}")
 nbconvert_args=(--to notebook --stdin --stdout)
-extra_inputs=("${extra_inputs0[@]}")
 
 mathjax="$("$resolve" "${profile}_mathjax.py" --else Default_mathjax.py)"
 mathjax_url="$(py-mathjax-path --url)"
 
+
+# TO BE DEPRECATED:
+extra_inputs=("${extra_inputs0[@]}")
 
 # panfl -t $t sugartex == sugartex $t == sugartex
 # panfl -t $t sugartex.kiwi == sugartex --kiwi
