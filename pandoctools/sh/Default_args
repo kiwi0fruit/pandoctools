@@ -1,49 +1,50 @@
 #!/bin/bash
 # May use variables predefined in the profile:
-#   $profile (profile name)
-#   ${md_input_only}
+#   $profile    (profile name)
+#   ${md_input_only}    (whether main document should be Markdown/Knitty only)
 
-# May use variables predefined in pandoctools:
+# May use variables predefined in Pandoctools:
 #   ${in_ext}    (input file extension like "md")
 #   ${out_ext}    (output file extension like "md")
 #   ${input_file}    (input file path with extension)
 #   ${output_file}    (output file path with extension)
-#   $from    (always lowercase. pandoc reader format + custom pandoctools formats)
-#   $to    (always lowercase. pandoc writer format + custom pandoctools formats)
+#   $from    (always lowercase. Pandoc reader format + custom Pandoctools formats)
+#   $to    (always lowercase. Pandoc writer format + custom Pandoctools formats)
 #   ${important_from}    (bool: "true" "false". Whether `$from` was set by user)
 #   ${important_to}    (bool: "true" "false". Whether `$to` was set by user)
-#   ${is_bin_ext_maybe}    (pandoctools nice guess if the ${output_file} extension
-#                           (or $to if no ext) means that pandoc needs adding 
+#   ${is_bin_ext_maybe}    (Pandoctools nice guess if the ${output_file} extension
+#                           (or $to if no ext) means that Pandoc needs adding 
 #                           `-o "${output_file}"` option)
 
 #   $resolve    (echoes resolved path to a file. Searches in 
 #                `$HOME/.pandoc/pandoctools` or `%APPDATA%\pandoc\pandoctools`
 #                then in `<...>/site-packages/pandoctools/sh` folders)
-#   ${root_env}    (root conda environment folder)
-#   ${env_path}    (conda or venv environment folder)
+#   ${root_env}    (root Conda environment folder)
+#   ${env_path}    (Conda or venv environment folder)
 #   $source    (TO BE DEPRECATED: source bash script from PATH but not CWD)
 #   $scripts    (TO BE DEPRECATED: `bin` on Unix, `Scripts` on Windows)
 
 # Exports vars:
 #   $from0    (original $from)
 #   $to0    (original $to)
-#   $from    (pandoc reader format without custom formats)
-#   $to    (pandoc writer format without custom formats)
-#   $t    (argument for pandoc filters)
+#   $from    (Pandoc reader format without custom formats)
+#   $to    (Pandoc writer format without custom formats)
+#   $t    (argument for Pandoc filters)
 
-#   $metadata    (profile metadata file abs path)
-#   ${extra_inputs}    (format specific part of the middle inputs -
-#                       metadata, other files)
-#   ${reader_args0}    (format specific part of the pandoc reader args)
-#   ${writer_args0}    (format specific part of the pandoc writer args)
-#   ${panfl_args0}    (format specific part of the panflute args)
+#   $metadata    (profile metadata file absolute path)
+#   ${extra_inputs}    (format specific part of the middle inputs - metadata,
+#                       other files. Multiple files can be joined via this var. 
+#                       But the first document to join is always the main one)
+#   ${reader_args0}    (format specific part of the Pandoc reader args)
+#   ${writer_args0}    (format specific part of the Pandoc writer args)
+#   ${panfl_args0}    (format specific part of the Panflute args)
 #   ${reader_args}    (all pandoc reader args)
 #   ${writer_args}    (all pandoc writer args)
 #   ${panfl_args}     (all panflute args)
 
-#   ${nbconvert_args}
-#   ${mathjax_url}
-#   $mathjax   (python file abs path)
+#   ${nbconvert_args}    (arguments for nbconvert)
+#   ${mathjax_url}    (MathaJax Javascript file URL)
+#   $mathjax   (MathJax replacer Python script file absolute path)
 #   $tmpdir    (temp dir in the same folder as ${output_file}
 #               It should be deleted at the end of all pipes)
 
