@@ -34,9 +34,8 @@
 #   $to    (Pandoc writer format without custom formats)
 #   $t    (argument for Pandoc filters)
 
-#   ${extra_inputs0}    (format specific part of the middle inputs - metadata,
-#                       other files. Multiple files can be joined via this var. 
-#                       But the first document to join is always the main one)
+#   ${extra_inputs0}    (format specific part of the middle inputs - extra metadata,
+#                       other files. Multiple files can be joined via this var)
 #   ${reader_args0}    (format specific part of the Pandoc reader args)
 #   ${writer_args0}    (format specific part of the Pandoc writer args)
 #   ${panfl_args0}    (format specific part of the Panflute args)
