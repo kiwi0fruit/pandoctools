@@ -13,6 +13,8 @@ Pandoctools is a combination of tools that help write reproducible markdown repo
 
 ## Update instructions
 
+**NEW: Pandoctools doesn't support pandoc 2.8+**
+
 (*Update instructions to v.2.6*)
 
 * **v2.6** is not backward compatible but profiles can be easily fixed. Uninstall Pandoctools before updating. Update your custom bash scripts as names and logic changed. References: [**Default_args**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_args), [**Default**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default) (profile), [**Default_pipe**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_pipe).
