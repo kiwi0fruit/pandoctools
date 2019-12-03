@@ -65,10 +65,10 @@ install:
 
 # Run test
 script:
-  - pandoctools ./examples/doc.md
-  - pandoctools ./examples/doc.md -o "*.pdf"
-  - pandoctools ./examples/notebook.py
-  - pandoctools ./examples/notebook.py -o "*.pdf"
+  - pandoctools --yes ./examples/doc.md
+  - pandoctools --yes ./examples/doc.md -o "*.pdf"
+  - pandoctools --yes ./examples/notebook.py
+  - pandoctools --yes ./examples/notebook.py -o "*.pdf"
   - /bin/cp ./examples/doc.pdf ./pandoctools-ci
   - /bin/cp ./examples/doc.ipynb ./pandoctools-ci
   - /bin/cp ./examples/notebook.pdf ./pandoctools-ci
