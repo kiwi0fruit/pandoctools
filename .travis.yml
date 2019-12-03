@@ -47,8 +47,8 @@ install:
     libsass "shutilwhich-cwdpatch>=0.1.0" "panflute>=1.12.3" "knitty>=0.5.0" "pyppdf>=0.0.10" py-mathjax \
     "sugartex>=0.1.16" "shortcutter>=0.1.19" "numpy" "py-pandoc>=2.8.0.1" "py-pandoc-crossref>=0.3.5.0.1"
   - git clone https://github.com/kiwi0fruit/pyappshare
-  - ./pyappshare/other_envs/python3/install
-  - ./pyappshare/other_envs/r/install
+  - bash ./pyappshare/other_envs/python3/install
+  - bash ./pyappshare/other_envs/r/install
   - git clone https://github.com/back0up/pandoctools-ci
   - git config --global user.email "travis@travis-ci.org"
   - git config --global user.name "Travis-CI"
