@@ -69,10 +69,11 @@ script:
   - pandoctools --yes ./examples/doc.md -o "*.pdf"
   - pandoctools --yes ./examples/notebook.py
   - pandoctools --yes ./examples/notebook.py -o "*.pdf"
-  - /bin/cp ./examples/doc.pdf ./pandoctools-ci
-  - /bin/cp ./examples/doc.ipynb ./pandoctools-ci
-  - /bin/cp ./examples/notebook.pdf ./pandoctools-ci
-  - /bin/cp ./examples/notebook.ipynb ./pandoctools-ci
+  - mkdir -p ./pandoctools-ci/$TRAVIS_OS_NAME
+  - /bin/cp ./examples/doc.pdf ./pandoctools-ci/$TRAVIS_OS_NAME
+  - /bin/cp ./examples/doc.ipynb ./pandoctools-ci/$TRAVIS_OS_NAME
+  - /bin/cp ./examples/notebook.pdf ./pandoctools-ci/$TRAVIS_OS_NAME
+  - /bin/cp ./examples/notebook.ipynb ./pandoctools-ci/$TRAVIS_OS_NAME
   - cd ./pandoctools-ci
   - git add .
   - git commit --message "Travis $TRAVIS_BUILD_NUMBER"
