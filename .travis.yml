@@ -74,3 +74,5 @@ script:
   - cd ./pandoctools-ci
   - git add .
   - git commit --message "Travis $TRAVIS_BUILD_NUMBER"
+  - git push "https://${back0up_PAT}@github.com/back0up/pandoctools-ci.git" master > /dev/null 2>&1
+  
