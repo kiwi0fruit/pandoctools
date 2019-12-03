@@ -1,4 +1,4 @@
-# Only build tags
+# Only build tags:
 # if: tag IS present
 
 os:
