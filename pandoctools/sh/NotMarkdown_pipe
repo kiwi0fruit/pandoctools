@@ -6,7 +6,7 @@ cat-md "${pandoc_inputs[@]}" |
 pandoc -f markdown -t json |
 knitty "$t" "${input_file}" "${reader_args[@]}" "${writer_args[@]}" |
 panfl "${panfl_args[@]}" |
-pandoc-crossref "$t" |
+pandoc-crossref --pipe "$t" |
 if [[ "${to:0:5}" == "ipynb" ]]; then
     panfl -t "$t" knitty.self_contained_raw_html_img
 else

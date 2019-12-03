@@ -2,8 +2,8 @@
 ---
 pandoctools:
   profile: Kiwi
-  # out: "*.ipynb"
-  out: "*.pdf"
+  out: "*.ipynb"
+  # out: "*.pdf"
 input: False
 eval: True
 echo: False
