@@ -14,7 +14,7 @@ Pandoctools is a combination of tools that help write reproducible markdown repo
 ## NEW:
 
 * **Pandoctools doesn't support `"pandoc>=2.8"`. It only supports `"pandoc<=2.7.3"`**
-* **Pandoctools doesn't support `"pandoc-crossref>=0.3.5.0"`. It only supports `"pandoc-crossref<=0.3.4.1"`**
+* **Pandoctools doesn't support `"pandoc-crossref>=0.3.5.0"`. It only supports `"pandoc-crossref<=0.3.4.2"`**
 
 
 ## Update instructions
