@@ -49,6 +49,9 @@ install:
   - git clone https://github.com/kiwi0fruit/pyappshare
   - ./pyappshare/other_envs/python3/install
   - ./pyappshare/other_envs/r/install
+  - git clone https://github.com/back0up/pandoctools-ci
+  - git config --global user.email "travis@travis-ci.org"
+  - git config --global user.name "Travis-CI"
   - source activate test-pandoctools
   - jupyter kernelspec list
   - pip install -e .
