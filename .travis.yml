@@ -1,5 +1,5 @@
 # Only build tags:
-if: tag IS present
+# if: tag IS present
 
 os:
   - windows
@@ -69,11 +69,13 @@ script:
   - pandoctools --yes ./examples/doc.md -o "*.pdf"
   - pandoctools --yes ./examples/notebook.py
   - pandoctools --yes ./examples/notebook.py -o "*.pdf"
-  - mkdir -p ./pandoctools-ci/$TRAVIS_OS_NAME
-  - /bin/cp ./examples/doc.pdf ./pandoctools-ci/$TRAVIS_OS_NAME
-  - /bin/cp ./examples/doc.ipynb ./pandoctools-ci/$TRAVIS_OS_NAME
-  - /bin/cp ./examples/notebook.pdf ./pandoctools-ci/$TRAVIS_OS_NAME
-  - /bin/cp ./examples/notebook.ipynb ./pandoctools-ci/$TRAVIS_OS_NAME
+  - outdir="./pandoctools-ci/$TRAVIS_OS_NAME"
+  - rm -rf "$outdir"
+  - mkdir -p "$outdir"
+  - /bin/cp ./examples/doc.pdf "$outdir"
+  - /bin/cp ./examples/doc.ipynb "$outdir"
+  - /bin/cp ./examples/notebook.pdf "$outdir"
+  - /bin/cp ./examples/notebook.ipynb "$outdir"
   - cd ./pandoctools-ci
   - git add .
   - git commit --message "Travis $TRAVIS_BUILD_NUMBER"
