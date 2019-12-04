@@ -49,9 +49,10 @@ install:
     libsass "shutilwhich-cwdpatch>=0.1.0" "panflute>=1.12.3" "knitty>=0.5.0" "pyppdf>=0.0.10" py-mathjax \
     "sugartex>=0.1.16" "shortcutter>=0.1.19" "numpy" "py-pandoc>=2.8.0.1" "py-pandoc-crossref>=0.3.5.0.1"
   - git clone https://github.com/kiwi0fruit/pyappshare
+  - git clone https://github.com/back0up/pandoctools-ci
+  - git clone https://github.com/kiwi0fruit/sugartex
   - bash ./pyappshare/other_envs/python3/install "${_pref}"
   - bash ./pyappshare/other_envs/r/install "${_pref}"
-  - git clone https://github.com/back0up/pandoctools-ci
   - git config --global user.email "travis@travis-ci.org"
   - git config --global user.name "Travis-CI"
   - source activate test-pandoctools
@@ -62,6 +63,7 @@ install:
   - rm ./examples/doc.pdf
   - rm ./examples/notebook.ipynb
   - rm ./examples/notebook.pdf
+  - rm ./sugartex/examples/examples.pdf
 
 # Run test
 script:
@@ -69,6 +71,8 @@ script:
   - pandoctools --yes ./examples/doc.md -o "*.pdf"
   - pandoctools --yes ./examples/notebook.py
   - pandoctools --yes ./examples/notebook.py -o "*.pdf"
+  - pandoctools --yes ./sugartex/examples/examples.md -o "*.ipynb"
+  - pandoctools --yes ./sugartex/examples/examples.md -o "*.pdf"
   - outdir="./pandoctools-ci/$TRAVIS_OS_NAME"
   - rm -rf "$outdir"
   - mkdir -p "$outdir"
@@ -76,6 +80,8 @@ script:
   - /bin/cp ./examples/doc.ipynb "$outdir"
   - /bin/cp ./examples/notebook.pdf "$outdir"
   - /bin/cp ./examples/notebook.ipynb "$outdir"
+  - /bin/cp ./sugartex/examples/examples.pdf "$outdir"
+  - /bin/cp ./sugartex/examples/examples.ipynb "$outdir"
   - cd ./pandoctools-ci
   - git add .
   - git commit --message "Travis $TRAVIS_BUILD_NUMBER"
