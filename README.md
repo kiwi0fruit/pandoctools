@@ -1,7 +1,7 @@
 # Pandoctools
 
 [![Build Status](https://travis-ci.org/kiwi0fruit/pandoctools.svg?branch=master)](https://travis-ci.org/kiwi0fruit/pandoctools)
-
+[CI Artifacts](https://github.com/back0up/pandoctools-ci)
 
 Pandoctools is a combination of tools that help write reproducible markdown reports. They rely on Pandoc and Jupyter kernels.
 
