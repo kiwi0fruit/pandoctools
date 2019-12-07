@@ -82,7 +82,14 @@ Extras:
 
 # Install
 
-**If you have an antivirus then the first or two runs may fail - there may be errors like "Permission denied" because of the antivirus checking all the components.**
+**Windows notice!** If you have an antivirus then the first or two runs may fail - there may be errors like "Permission denied" because of the antivirus checking all the components.
+
+**Linux notice!** If on Ubuntu additionally install atk bridge 2 and gtk 3:
+
+```bash
+sudo apt-get update
+sudo apt-get install -y libatk-bridge2.0-0 libgtk-3.0
+```
 
 
 ### Short instructions:
