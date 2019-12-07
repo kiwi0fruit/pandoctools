@@ -1,5 +1,5 @@
 {% set name = "pandoctools" %}
-{% set version = "2.6.0.6" %}
+{% set version = "2.8.0.1" %}
 
 package:
   name: {{ name|lower }}
@@ -32,18 +32,19 @@ requirements:
     - notebook
     - jupyter
     - numpy
-    - panflute >=1.11.2
+    - panflute >=1.12.3
     - knitty >=0.5.0
     - pyppdf >=0.0.10
     - sugartex >=0.1.16
     - shortcutter >=0.1.19
-    - py-pandoc-crossref >=0.3.4.0.3
-    - py-pandoc >=2.6
+    - py-pandoc-crossref >=0.3.5.0.1
+    - py-pandoc >=2.8.0.1
     - libsass
-    - py-mathjax
+    - py-mathjax <3.0
     - shutilwhich-cwdpatch >=0.1.0
     - prompt_toolkit >=3.0.2
     - jupyter_console >=6.0.0
+    - py-open-fonts
 
 test:
   imports:
