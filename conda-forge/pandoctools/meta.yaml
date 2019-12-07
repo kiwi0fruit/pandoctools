@@ -42,7 +42,6 @@ requirements:
     - libsass
     - py-mathjax <3.0
     - shutilwhich-cwdpatch >=0.1.0
-    - prompt_toolkit >=3.0.2
     - jupyter_console >=6.0.0
     - py-open-fonts
 
