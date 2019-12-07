@@ -1,5 +1,5 @@
 # Only build tags:
-# if: tag IS present
+if: tag IS present
 
 os:
   - windows
@@ -48,7 +48,7 @@ install:
     conda create -y -n test-pandoctools "python=$_py_ver" "pip>=10.0.1" click pyyaml notebook jupyter \
     libsass "shutilwhich-cwdpatch>=0.1.0" "panflute>=1.12.3" "knitty>=0.5.0" "pyppdf>=0.0.10" "py-mathjax<3.0" \
     "sugartex>=0.1.16" "shortcutter>=0.1.19" "numpy" "py-pandoc>=2.8.0.1" "py-pandoc-crossref>=0.3.5.0.1" \
-    "prompt_toolkit>=3.0.2,<3.1.0"
+    "prompt_toolkit>=3.0.2"
   - git clone https://github.com/kiwi0fruit/pyappshare
   - git clone https://github.com/kiwi0fruit/sugartex
   - git clone https://github.com/back0up/pandoctools-ci
