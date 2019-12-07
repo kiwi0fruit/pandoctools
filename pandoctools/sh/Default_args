@@ -103,7 +103,9 @@ if [[ "$to" == "html" && "${out_ext}" == "pdf" ]]; then
     cat "$("$resolve" "${profile}_prism.js" --else Default_prism.js)" >> "$inheader"
     echo '</script>' >> "$inheader"
     pysassc "$("$resolve" "${profile}.sass" --else Default.sass)" "$tmpdir/profile.css"
+    open-fonts-css -o "$tmpdir/fonts.css"
     writer_args0=(--mathjax --no-highlight \
+        --css "$tmpdir/fonts.css" \
         --css "$("$resolve" "${profile}_prism.css" --else Default_prism.css)" \
         --css "$("$resolve" _github_markdown.css)" \
         --css "$tmpdir/profile.css" \
