@@ -46,6 +46,7 @@ Pandoctools is a combination of tools that help write reproducible markdown repo
 * [**Pyppdf**](https://github.com/kiwi0fruit/pyppdf) (dependence): Pyppeteer PDF. Prints html output to pdf via patched Pyppeteer.
 * [**Prism.js**](https://github.com/PrismJS/prism) and [**github-markdown-css**](https://github.com/sindresorhus/github-markdown-css) (integrated): used for default to PDF conversion (but with borrowing from [Default_args](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_args) to custom profile you can use them with to HTML conversion too).
 * [**libsass-python**](https://github.com/sass/libsass-python): tweak and write css with more convenient sass or scss (see [Default.sass](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default.sass)). 
+* [**Open Fonts**](https://github.com/kiwi0fruit/open-fonts) (dependence): A collection of beautiful free and open source fonts + Unicode fallback chains. With it you can use all fonts listed there in your CSS (except CJK) out of the box and without installing those fonts into OS.
 * (*optional*) [**Tabulate Helper**](https://github.com/kiwi0fruit/tabulatehelper) converts tabular data like Pandas dataframe to GitHub Flavored Markdown pipe table.
 * (*optional*) [**Matplotlib Helper**](https://github.com/kiwi0fruit/matplotlibhelper): custom helper to tune Matplotlib experience in Atom/Hydrogen and Pandoctools/Knitty.
 * (*optional*) [**Feather Helper**](https://github.com/kiwi0fruit/featherhelper): concise interface to cache numpy arrays and pandas dataframes.
