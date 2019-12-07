@@ -41,7 +41,7 @@ setup(
                       'panflute>=1.12.3', 'knitty>=0.5.0', 'pyppdf>=0.0.10',
                       'sugartex>=0.1.16', 'shortcutter>=0.1.19', 'numpy', 'py-open-fonts',
                       'py-pandoc>=2.8.0.1', 'py-pandoc-crossref>=0.3.5.0.1', 'py-mathjax<3.0',
-                      'prompt-toolkit>=3.0.2'],
+                      'prompt-toolkit>=3.0.2', 'jupyter_console>=6.0.0'],
     # click pyyaml notebook jupyter libsass "shutilwhich-cwdpatch>=0.1.0" "panflute>=1.12.3" "knitty>=0.5.0" "pyppdf>=0.0.10" "sugartex>=0.1.16" "shortcutter>=0.1.19" "numpy" "py-pandoc>=2.8.0.1" "py-pandoc-crossref>=0.3.5.0.1" "py-mathjax<3.0" py-open-fonts
 
     include_package_data=True,
