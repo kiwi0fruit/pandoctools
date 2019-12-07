@@ -32,9 +32,9 @@ requirements:
     - notebook
     - jupyter
     - numpy
-    - panflute >=1.12.3
+    - panflute >=1.12.4
     - knitty >=0.5.0
-    - pyppdf >=0.0.10
+    - pyppdf >=0.0.11
     - sugartex >=0.1.16
     - shortcutter >=0.1.19
     - py-pandoc-crossref >=0.3.5.0.1
