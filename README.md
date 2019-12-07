@@ -14,12 +14,6 @@ Pandoctools is a combination of tools that help write reproducible markdown repo
 “Glueing” part of pandoctools is a profile manager of text processing pipelines. It stores short crossplatform bash scripts that define chain operations over text. They are mostly Pandoc filters but any CLI text filter is OK.
 
 
-## NEW:
-
-* **Pandoctools doesn't support `"py-pandoc>=2.8"`. It only supports `"py-pandoc<=2.7.3"`**
-* **Pandoctools doesn't support `"py-pandoc-crossref>=0.3.5.0"`. It only supports `"py-pandoc-crossref<=0.3.4.2"`**
-
-
 ## Update instructions
 
 (*Update instructions to v.2.8.0.1*)
