@@ -58,7 +58,7 @@ install:
   - git config --global user.email "travis@travis-ci.org"
   - git config --global user.name "Travis-CI"
   - source activate test-pandoctools
-  - pip install py-open-fonts
+  - pip install "py-open-fonts>=0.4.9"
   - jupyter kernelspec list
   - pip install -e .
   - pandoctools-ready

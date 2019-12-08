@@ -44,7 +44,7 @@ requirements:
     - py-mathjax <3.0
     - shutilwhich-cwdpatch >=0.1.0
     - jupyter_console >=6.0.0
-    - py-open-fonts
+    - py-open-fonts >=0.4.9
 
 test:
   imports:
