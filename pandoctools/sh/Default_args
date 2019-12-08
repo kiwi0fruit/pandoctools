@@ -52,8 +52,6 @@
 #   $tmpdir    (temp dir in the same folder as ${output_file}
 #               It should be deleted at the end of all pipes)
 
-#   ${extra_inputs}    (TO BE DEPRECATED: same as $extra_inputs0)
-
 # Exports functions:
 # --------------------------------------------------------
 #   fonts_after_head
@@ -169,10 +167,6 @@ sub_mathjax_html () {
 sub_mathjax_pdf () {
     regex-replace -p 'src="[^"\s]*"></script><!-- py-mathjax-path -->' -t "src=\"$(py-mathjax-path --url)\"></script>"
 }
-
-
-# TO BE DEPRECATED:
-extra_inputs=("${extra_inputs0[@]}")
 
 # panfl -t $t sugartex == sugartex $t == sugartex
 # panfl -t $t sugartex.kiwi == sugartex --kiwi
