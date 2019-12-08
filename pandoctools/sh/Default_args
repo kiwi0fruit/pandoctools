@@ -153,9 +153,11 @@ mathjax="$("$resolve" "${profile}_mathjax.py" --else Default_mathjax.py)"
 mathjax_url="$(py-mathjax-path --url)"
 
 
-_fontspy="$("$resolve" "${profile}_fonts.py" --else Default_fonts.py)"
 fonts_after_head () {
-  python "${_fontspy}" "$tmpdir/fonts.css"
+    if [[ -f "$tmpdir/fonts.css" ]]; then
+        regex-replace -p "<head>" -t "<head><style>{}</style>" -f "$tmpdir/fonts.css"
+    else
+        cat; fi
 }
 
 
