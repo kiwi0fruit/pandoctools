@@ -15,7 +15,17 @@ $if(keywords)$
 $endif$
   <title>$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$</title>
   <style>
-    $styles.html()$
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    $if(quotes)$
+    q { quotes: "“" "”" "‘" "’"; }
+    $endif$
+    $if(highlighting-css)$
+    $highlighting-css$
+    $endif$
   </style>
 $for(css)$
   <link rel="stylesheet" href="$css$" />
