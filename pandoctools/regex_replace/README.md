@@ -5,15 +5,15 @@ Usage: regex-replace [OPTIONS]
 
   Reads from stdin. Writes to stdout:
 
-  re.sub(pattern, repl_template.format(*repls), stdin, flags=re.DOTALL)
+  re.sub(pattern, repl_template.format(*strings), stdin, flags=re.DOTALL)
 
-  Where repls is a List[str] got from multiple options: either --string
-  directly or read from --filepath. Like: -s xxx -s yyy
+  Where strings is a List[str] got from multiple --filepath options. Like:
+  -f xx -f yy (if no filepaths were provided then no formatting is
+  attemtpted).
 
 Options:
   -p, --pattern TEXT        [required]
   -t, --repl-template TEXT
-  -s, --string TEXT
   -f, --filepath TEXT
   --help                    Show this message and exit.
 ```
