@@ -54,10 +54,12 @@ test:
     - pandoctools.pandoctools_resolve
     - pandoctools.cli
     - pandoctools.cat_md
+    - pandoctools.regex_replace
   commands:
     - pandoctools --help
     - pandoctools-ready
     - pandoctools-resolve Default
+    - regex-replace --help
     - |
       echo hello | cat-md - -
 
