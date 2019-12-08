@@ -17,11 +17,12 @@ pandoc -f json "${writer_args[@]}" |
 if [[ "${to:0:5}" == "ipynb" ]]; then
     jupyter nbconvert "${nbconvert_args[@]}"
 elif [[ "$to" == "html" && "${out_ext}" == "pdf" ]]; then
-    python "$mathjax" sub_pdf "${mathjax_url}" |
+    sub_mathjax_html |
+    sub_mathjax_pdf |
     fonts_after_head |
     pyppdf -o "${output_file}" --goto temp
 elif [[ "${to:0:4}" == "html" ]]; then
-    python "$mathjax" sub |
+    sub_mathjax_html |
     fonts_after_head
 else
     cat
