@@ -51,6 +51,7 @@ setup(
             'pandoctools=pandoctools.cli.cli:pandoctools',
             'pandoctools-resolve=pandoctools.pandoctools_resolve.resolve:cli',
             'pandoctools-ready=pandoctools.ready.ready:ready',
+            'regex-replace=pandoctools.regex_replace.cli:cli',
         ],
     },
 )
