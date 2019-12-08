@@ -26,7 +26,8 @@ def regex_replace(text: str, pattern: str, repl_template: str, strings: Tuple[st
 
 re.sub(pattern, repl_template.format(*repls), stdin, flags=re.DOTALL)
 
-Where repls is a List[str] got from multiple options: either --string directly or read from --filepath.""")
+Where repls is a List[str] got from multiple options: either --string directly or read from --filepath.
+Like: -s xxx -s yyy""")
 @click.option('-p', '--pattern', type=str, required=True)
 @click.option('-t', '--repl-template', 'repl_template', type=str, default='')
 @click.option('-s', '--string', 'strings', multiple=True)

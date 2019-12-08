@@ -131,9 +131,10 @@ by `win_bash` path from `Defaults.ini`, then in the `%PROGRAMFILES%\Git\bin\bash
 Pandoctools comes with convenience CLI apps:
 
 * [**panfl**](../../docs/panfl.md) allows [Panflute](https://github.com/sergiocorreia/panflute) to be run as a command line script so it can be used in Pandoctools shell scripts.
-* [**cat-md**](../cat_md) is a simple CLI tool that concatenates input files with stdin input (joins them with double new lines) and prints to stdout.
+* [**cat-md**](../cat_md/README.md) is a simple CLI tool that concatenates input files with stdin input (joins them with double new lines) and prints to stdout.
 * [**pandoc-filter-arg**](https://github.com/kiwi0fruit/knitty/tree/master/knitty/pandoc_filter_arg) is a CLI interface that prints argument that is passed by Pandoc to it's filters.
-* [**pandoctools-resolve**](../pandoctools_resolve) is a CLI tool that resolves and echoes absolute path to the file by its basename by searching in two Pandoctools folders.
+* [**pandoctools-resolve**](../pandoctools_resolve/README.md) is a CLI tool that resolves and echoes absolute path to the file by its basename by searching in two Pandoctools folders.
+* [**regex-replace**](../regex_replace/README.md) is a CLI tools for convenient regex replacement.
 
 
 ## Predefined Pandoctools profiles and custom formats
