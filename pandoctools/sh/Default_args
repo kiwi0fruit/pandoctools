@@ -154,7 +154,9 @@ mathjax_url="$(py-mathjax-path --url)"
 
 
 _fontspy="$("$resolve" "${profile}_fonts.py" --else Default_fonts.py)"
-fonts_after_head () { python "${_fontspy}" "$tmpdir/fonts.css" }
+fonts_after_head () {
+  python "${_fontspy}" "$tmpdir/fonts.css"
+}
 
 
 # TO BE DEPRECATED:
