@@ -131,7 +131,7 @@ elif [[ "${to:0:5}" == "ipynb" ]]; then
     extra_inputs0=("$("$resolve" "${profile}_ipynb_py3.yml" --else Default_ipynb_py3.yml)")
 
 elif [[ "${to:0:4}" == "html" ]]; then
-    writer_args0=(--mathjax)
+    writer_args0=(--mathjax --template "$("$resolve" "${profile}.html" --else Default.html)")
 
 elif [[ "${out_ext}" == "docx" ]]; then
     writer_args0=(--reference-doc "$("$resolve" "$profile.docx" --else Default.docx)" -o "${output_file}")
@@ -163,7 +163,7 @@ fonts_after_head () {
         cat; fi
 }
 sub_mathjax_html () {
-    regex-replace -p '<script type="text/javascript"[^<]+?[Mm]ath[Jj]ax.+?</script>' -t "" |
+    regex-replace -p '<script type="text/javascript".+?[Mm]ath[Jj]ax.+?</script>' -t "" |
     regex-replace -p '<!-- before css -->' -t "<!-- before css -->{}" -f "$mathjax"
 }
 sub_mathjax_pdf () {

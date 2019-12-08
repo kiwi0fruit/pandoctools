@@ -22,8 +22,7 @@ elif [[ "$to" == "html" && "${out_ext}" == "pdf" ]]; then
     fonts_after_head |
     pyppdf "${pyppdf_args[@]}"
 elif [[ "${to:0:4}" == "html" ]]; then
-    sub_mathjax_html |
-    fonts_after_head
+    sub_mathjax_html
 else
     cat
 fi
