@@ -52,6 +52,8 @@
 #   $tmpdir    (temp dir in the same folder as ${output_file}
 #               It should be deleted at the end of all pipes)
 
+#   ${fonts_after_head}
+
 #   ${extra_inputs}    (TO BE DEPRECATED: same as $extra_inputs0)
 
 
@@ -105,7 +107,6 @@ if [[ "$to" == "html" && "${out_ext}" == "pdf" ]]; then
     pysassc "$("$resolve" "${profile}.sass" --else Default.sass)" "$tmpdir/profile.css"
     open-fonts-css -o "$tmpdir/fonts.css"
     writer_args0=(--mathjax --no-highlight \
-        --css "$tmpdir/fonts.css" \
         --css "$("$resolve" "${profile}_prism.css" --else Default_prism.css)" \
         --css "$("$resolve" _github_markdown.css)" \
         --css "$tmpdir/profile.css" \
@@ -150,6 +151,10 @@ nbconvert_args=(--to notebook --stdin --stdout)
 
 mathjax="$("$resolve" "${profile}_mathjax.py" --else Default_mathjax.py)"
 mathjax_url="$(py-mathjax-path --url)"
+
+
+_fontspy="$("$resolve" "${profile}_fonts.py" --else Default_fonts.py)"
+fonts_after_head () { python "${_fontspy}" "$tmpdir/fonts.css" }
 
 
 # TO BE DEPRECATED:
