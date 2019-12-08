@@ -19,7 +19,7 @@ elif [[ "$to" == "html" && "${out_ext}" == "pdf" ]]; then
     sub_mathjax_html |
     sub_mathjax_pdf |
     fonts_after_head |
-    pyppdf -o "${output_file}" --goto temp
+    pyppdf "${pyppdf_args[@]}"
 elif [[ "${to:0:4}" == "html" ]]; then
     sub_mathjax_html |
     fonts_after_head

@@ -47,15 +47,18 @@
 #   ${pandoc_inputs}    (joined "stdin" special arg, $metadata, $extra_inputs0)
 
 #   ${nbconvert_args}    (arguments for nbconvert)
+#   ${pyppdf_args}
 #   $mathjax   (MathJax settings .html file path)
 #   $tmpdir    (temp dir in the same folder as ${output_file}
 #               It should be deleted at the end of all pipes)
 
-#   ${fonts_after_head}
-#   ${sub_mathjax_html}
-#   ${sub_mathjax_pdf}
-
 #   ${extra_inputs}    (TO BE DEPRECATED: same as $extra_inputs0)
+
+# Exports functions:
+# --------------------------------------------------------
+#   fonts_after_head
+#   sub_mathjax_html
+#   sub_mathjax_pdf
 
 
 extra_inputs0=()
@@ -148,9 +151,11 @@ pandoc_inputs=(stdin "$metadata" "${extra_inputs0[@]}")
 #   (pre-knitty also uses $metadata)
 panfl_args=(-t "$t" sugartex "${panfl_args0[@]}")
 nbconvert_args=(--to notebook --stdin --stdout)
-
+pyppdf_args=(-o "${output_file}" --goto temp)
 
 mathjax="$("$resolve" "${profile}_mathjax.html" --else Default_mathjax.html)"
+
+
 fonts_after_head () {
     if [[ -f "$tmpdir/fonts.css" ]]; then
         regex-replace -p "<head>" -t "<head><style>{}</style>" -f "$tmpdir/fonts.css"
