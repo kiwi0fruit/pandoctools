@@ -58,6 +58,8 @@ And the best one for it is:
 
 # Examples
 
+**NEW:** see automatically generated examples documents (by Travis CI) of the latest Pandoctools version in [CI Artifacts](https://github.com/back0up/pandoctools-ci/blob/master/README.md) (generated on Windows, macOS and Ubuntu).
+
 Here are [**examples**](https://github.com/kiwi0fruit/pandoctools/blob/master/examples) that demonstrate converting documents:
 
 * from markdown `.md` with Jupyter python code blocks, SugarTeX math and cross-references to `.ipynb` notebook and to PDF.
