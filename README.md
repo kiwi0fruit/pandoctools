@@ -86,22 +86,16 @@ sudo apt-get install -y libatk-bridge2.0-0 libgtk-3.0
 
 ### Short instructions:
 
-* **Either** (1.1) install 64-bit [Miniconda3](https://conda.io/miniconda.html) and:  
-  (*on Unix:*)
+* **Either** install 64-bit [Miniconda3](https://conda.io/miniconda.html) and:  
   ```bash
   conda install -c defaults -c conda-forge pandoctools
   ```
-  (*on Windows:*)
-  ```batch
-  conda install -c defaults -c conda-forge pandoctools git-bash
-  ```
-  (or install 64-bit [Git Bash](https://git-scm.com/downloads) instead of the conda package)
-* **Or** (1.2) install 64-bit Python and:
+* **Or** install 64-bit Python and:
   ```bash
   pip install pandoctools
   ```
-  (if on Windows install 64-bit [Git Bash](https://git-scm.com/downloads))
-* **Then** (2):
+* **If on Windows** install 64-bit [Git Bash](https://git-scm.com/downloads) or [git-bash conda package](https://anaconda.org/conda-forge/git-bash) (currently outdated).
+* **Then**:
   ```bash
   pandoctools-ready
   ```
