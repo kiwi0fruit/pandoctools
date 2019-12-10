@@ -31,9 +31,12 @@ $endif$
 $for(css)$
   <link rel="stylesheet" href="$css$" />
 $endfor$
+  <!-- after css --> <!-- NEW -->
+  <!-- before math --> <!-- NEW -->
 $if(math)$
   $math$
 $endif$
+  <!-- after math --> <!-- NEW -->
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->

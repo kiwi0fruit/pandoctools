@@ -161,7 +161,7 @@ fonts_after_head () {
         cat; fi
 }
 sub_mathjax_html () {
-    regex-replace -p '<script type="text/javascript".+?[Mm]ath[Jj]ax.+?</script>' -t "" |
+    regex-replace -p '<!-- before math -->.*<!-- after math -->' -t "" |
     regex-replace -p '<!-- before css -->' -t "<!-- before css -->{}" -f "$mathjax"
 }
 sub_mathjax_pdf () {

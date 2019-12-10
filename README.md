@@ -16,10 +16,12 @@ Pandoctools is a combination of tools that help write reproducible markdown repo
 
 ## Update instructions
 
-(*Update instructions to v.2.8.0.1*)
+(*Update instructions to v.2.8.0.2*)
 
-* fix custom pipes: add `--pipe` arg to pandoc-crossref (see [this](https://github.com/lierdakil/pandoc-crossref/releases/tag/v0.3.5.0) for details).
-* **v2.8.0.1** is not backward compatible (`$mathjax` var changed meaning, `${mathjax_url}` and `${extra_inputs}` were removed) but profiles can be easily fixed. Uninstall Pandoctools before updating. Update your custom bash scripts as names and logic changed. References: [**Default_args**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_args), [**Default**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default) (profile), [**Default_pipe**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_pipe).
+* **v2.8.0.2** is not backward compatible,
+* [**Default.html**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default.html) was changed and [**Default_args**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_args) depends on this new changes (see custom bash functions).
+* `$mathjax` var changed meaning, `${mathjax_url}` and `${extra_inputs}` were removed. But profiles can be easily fixed. Uninstall Pandoctools before updating. Update your custom bash scripts as names and logic changed. References: [**Default_args**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_args), [**Default**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default) (profile), [**Default_pipe**](https://github.com/kiwi0fruit/pandoctools/blob/master/pandoctools/sh/Default_pipe),
+* fix custom pipes: add `--pipe` arg to pandoc-crossref (see [this](https://github.com/lierdakil/pandoc-crossref/releases/tag/v0.3.5.0) for details),
 
 
 # Contents
