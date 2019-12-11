@@ -102,7 +102,6 @@ Extras:
   ```bash
   pip install pandoctools
   ```
-* **If on Windows** install 64-bit [Git Bash](https://git-scm.com/downloads) or [git-bash conda package](https://anaconda.org/conda-forge/git-bash).
 * **Then**:
   ```bash
   pandoctools-ready
@@ -133,11 +132,10 @@ Extras:
   conda config --add channels defaults
   conda update conda
 
-  conda create -n pandoctools pandoctools git-bash
+  conda create -n pandoctools pandoctools
   call activate pandoctools
   pandoctools-ready
   ```
-  (or install 64-bit [Git Bash](https://git-scm.com/downloads) instead of the conda package; local Bash in the environment has priority)
 * Just in case: the right way to remove conda environment 'myenv' is to run:
   ```bash
   conda remove -n myenv --all
@@ -167,7 +165,6 @@ Extras:
   pip install pandoctools
   pandoctools-ready
   ```
-  (then install 64-bit [Git Bash](https://git-scm.com/downloads))
 * In contrast with conda installation Jupyter notebooks in pip do not support [activated python kernels](https://github.com/kiwi0fruit/pandoctools/blob/master/docs/tips.md#install-python-kernel) (there is a strange bug).
 
 
