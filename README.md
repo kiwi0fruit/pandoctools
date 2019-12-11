@@ -98,7 +98,7 @@ sudo apt-get install -y libatk-bridge2.0-0 libgtk-3.0
   ```bash
   pip install pandoctools
   ```
-* **If on Windows** install 64-bit [Git Bash](https://git-scm.com/downloads) or [git-bash conda package](https://anaconda.org/conda-forge/git-bash) (currently outdated).
+* **If on Windows** install 64-bit [Git Bash](https://git-scm.com/downloads) or [git-bash conda package](https://anaconda.org/conda-forge/git-bash).
 * **Then**:
   ```bash
   pandoctools-ready
