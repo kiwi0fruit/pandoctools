@@ -78,14 +78,18 @@ Extras:
 
 # Install
 
-**Windows notice!** If you have an antivirus then the first or two runs may fail - there may be errors like "Permission denied" because of the antivirus checking all the components.
+**Windows notice!**
 
-**Linux notice!** If on Ubuntu additionally install atk bridge 2 and gtk 3:
+* Install 64-bit [Git Bash](https://git-scm.com/downloads). Main installer there would work out of the box and is a recommended option. Portable installer would require seting `win_bash` value in the `%APPDATA%\pandoc\pandoctools\Defaults.ini` (after it was autocreated by `pandoctools-ready`). You can also install conda packages with bash to the environment with pandoctools: either `conda-forge::git` or `pkgs/msys2::posix`.
+* If you have an antivirus then the first or two runs may fail - there may be errors like "Permission denied" because of the antivirus checking all the components.
 
-```bash
-sudo apt-get update
-sudo apt-get install -y libatk-bridge2.0-0 libgtk-3.0
-```
+**Linux notice!**
+
+* If on Ubuntu additionally install atk bridge 2 and gtk 3:
+  ```bash
+  sudo apt-get update
+  sudo apt-get install -y libatk-bridge2.0-0 libgtk-3.0
+  ```
 
 
 ### Short instructions:
