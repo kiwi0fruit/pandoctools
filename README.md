@@ -80,7 +80,8 @@ Extras:
 
 **Windows notice!**
 
-* Install 64-bit [Git Bash](https://git-scm.com/downloads). Main installer there would work out of the box and is a recommended option. Portable installer would require seting `win_bash` value in the `%APPDATA%\pandoc\pandoctools\Defaults.ini` (after it was autocreated by `pandoctools-ready`). You can also install conda packages with bash to the environment with pandoctools: either `conda-forge::git` or `pkgs/msys2::posix`.
+* Install 64-bit [Git Bash](https://git-scm.com/downloads). Main installer there would work out of the box and is a recommended option.
+  * Portable installer would require seting `win_bash` value in the `%APPDATA%\pandoc\pandoctools\Defaults.ini` (after it was autocreated by `pandoctools-ready`). You can also install conda packages with bash to the environment with pandoctools: either `conda-forge::git` or `pkgs/msys2::posix`.
 * If you have an antivirus then the first or two runs may fail - there may be errors like "Permission denied" because of the antivirus checking all the components.
 
 **Linux notice!**
