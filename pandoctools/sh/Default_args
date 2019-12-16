@@ -145,7 +145,7 @@ reader_args=(-f "$from" "${reader_args0[@]}")
 writer_args=(--standalone --self-contained -t "$to" "${writer_args0[@]}")
 t="$(pandoc-filter-arg "${writer_args[@]}")"
 
-pandoc_inputs=(stdin "$metadata" "${extra_inputs0[@]}")
+pandoc_inputs=("${extra_inputs0[@]}" "$metadata" stdin)
 #   (pre-knitty also uses $metadata)
 panfl_args=(-t "$t" sugartex "${panfl_args0[@]}")
 nbconvert_args=(--to notebook --stdin --stdout)
