@@ -132,31 +132,6 @@ json.dump(dic, f); f.close()"
 ```
 
 
-### Windows only installation
-
-```batch
-conda create -c defaults -c conda-forge -n r r-essentials exec-wrappers
-call activate r
-R -e "IRkernel::installspec()" --no-save > NUL
-
-```
-
-```batch
-:: <env>\Scripts\R.exe
-where R.exe > __tmp__ && set /p Rexe=<__tmp__ && del __tmp__
-set "Rdir=%Rexe:~0,-6%"
-set "env=%Rdir:~0,-8%"
-
-create-wrappers -t conda -b "%Rdir%" -f R -d "%Rdir%\wrap" --conda-env-dir "%env%"
-
-set "Rwrap=%Rdir%\wrap\R.bat"
-set "ir=%APPDATA%\jupyter\kernels\ir\kernel.json"
-
-type "%ir%" | python -c "import json; import sys; import os; f = open(os.environ['ir'], 'w'); dic = json.loads(sys.stdin.read()); dic['argv'][0] = os.environ['Rwrap'].replace('\\', '/'); json.dump(dic, f); f.close()"
- 
-```
-
-
 # Install Typescript kernel
 
 * First install [zeromq](https://github.com/zeromq/zeromq.js/). On Windows I used from source installation: 1) [Microsoft Visual C++ Build Tools 2015](http://go.microsoft.com/fwlink/?LinkId=691126) or [Build Tools for Visual Studio 2017](https://www.visualstudio.com/thank-you-downloading-visual-studio/?sku=BuildTools&rel=15) (I don't remember which was installed) - check Windows 8.1 SDK and Windows 10 SDK options, 2) with `npm config set msvs_version 2015` and 3) creating conda environment for python 2: `conda create -n python2 python=2.7`,
