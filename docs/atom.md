@@ -7,7 +7,7 @@
     * [SugarTeX Completions](#sugartex-completions)
     * [Unix Filter](#unix-filter)
     * [Hydrogen](#hydrogen)
-      * [Reload imported modules in Hydrogen](#reload-imported-modules-in-hydrogen)
+    * [Reload imported modules in Hydrogen](#reload-imported-modules-in-hydrogen)
     * [Markdown Preview Plus](#markdown-preview-plus)
 * [Recommended Atom options](#recommended-atom-options)
 * [Enable Atom spell checking](#enable-atom-spell-checking)
@@ -46,34 +46,9 @@ Install [Hydrogen](https://atom.io/packages/hydrogen) (by nteract) Atom package 
 See the [short instruction](https://github.com/kiwi0fruit/knitty/blob/master/docs/hydrogen.md) how to use and set up Hydrogen.
 
 
-### Reload imported modules in Hydrogen
+## Reload imported modules in Hydrogen
 
 [Reload imported modules in Hydrogen](https://github.com/kiwi0fruit/pandoctools/blob/master/tips.md#reload-imported-modules-in-hydrogen)
-
-
-## Markdown Preview Plus
-
-*Note that if don't really need MPP then not installing it would save you some annoying Atom startup time. I myself haven't used and updated MPP tweaks for a long while.*
-
-Running Pandoctools can be slow since it uses Knitty (and hence starts and stops Jupyter every time) so the best approach when writing document with Pandoctools is to convert from enchanced Markdown to standard Pandoc Markdown (Knitty and all Pandoc filters run here). Then preview html/print pdf it with standard tool and plain Pandoc without filters.
-
-And in my opinion the best tool for this is Markdown Peview Plus Atom package.
-
-### Installation
-
-* First install [Markdown Peview Plus](https://atom.io/packages/markdown-preview-plus) (>=3.3.1)
-* Make sure MPP settings are set to:
-    * **Settings** (root) > **Renderer backend** is pandoc
-    * **Math Options** > **Enable Math Rendering By Default** is checked
-    * **Math Options** > **Math Renderer** is `HTML-CSS`
-    * **Math Options** > **MathJax TeX Extensions** are `AMSmath.js, AMSsymbols.js, noErrors.js, noUndefined.js, HTML.js`
-    * **Math Options** > **MathJax 'undefinedFamily' (font family)** should be the main fonts fallback chain used in the document.
-    * **Pandoc settings** > **Path to Pandoc executable** set to pandoc exec that wasinstalled by conda/Miniconda: take path to pandoctools executable (from desktop shortcut for example) and replace `pandoctools` with `pandoc`
-    * **Pandoc settings** > **Filters** set to empty string
-    * **Pandoc settings** > **Commandline Arguments** set to empty string
-    * **Pandoc settings** > **Markdown Flavor** set to simply `markdown`
-    * **Pandoc settings** > **Citations** is unchecked (if you need it you can add it in Pandoctools more explicit CLI)
-    * **Save to PDF options** > **Render background** turned ON
 
 
 # Recommended Atom options
@@ -102,3 +77,25 @@ Optionally install some Atom packages useful for Markdown and Hydrogen:
 * [**file-watcher**](https://atom.io/packages/file-watcher) (by *lwblackledge*): helps simultaneously open and edit files in two editors. To use it with PyCharm you should disable PyCharm "safe write" (**Settings → Appearance and Behavior → System Settings → Synchronization → Use "safe write"**).
 * [**git-time-machine**](https://atom.io/packages/git-time-machine) (by *littlebee*): see difference with any older Git commit (if you add markdown document to the Git repository). This can be useful for authoring edits (7zip the whole repository and send).
 * [**highlight-bad-chars-bl**](https://atom.io/packages/highlight-bad-chars-bl) (by *ohanhi* and *kiw0fruit*): highlights some Unicode characters that can be confused with standard ANSI (like no-break spaces). The package might be buggy so you may need to periodically edit the file to make the package work.
+* [**github-atom-light-syntax**](https://atom.io/themes/github-atom-light-syntax) (by *primer*): light syntax theme. Worth adding some tweaks to `styles.less` to make it work better with SugarTeX and Knitty:
+  ```less
+  .syntax--comment {
+    font-style: italic;
+    color: #999 !important;
+  
+    .syntax--markup.syntax--link {
+      font-style: italic;
+      color: #069;
+    }
+  }
+  
+  .syntax--comment.syntax--block {
+    font-style: normal;
+    color: #666 !important;
+  }
+  
+  .syntax--string {
+    font-style: normal !important;
+    color: #069 !important;
+  }
+  ```
