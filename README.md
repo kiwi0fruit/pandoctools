@@ -18,7 +18,7 @@ Pandoctools is a combination of tools that help write reproducible markdown repo
 
 ### Troubleshooting
 
-Pip installation currently works on "pip<20" only. Conda installation works OK.
+Pip installation currently works on `pip<20` only. Conda installation works OK.
 
 ### Update
 
