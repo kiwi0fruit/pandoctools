@@ -59,15 +59,14 @@ install:
   - git clone https://github.com/kiwi0fruit/pyappshare
   - git clone https://github.com/kiwi0fruit/sugartex
   - git clone https://github.com/back0up/pandoctools-ci
-  - bash ./pyappshare/other_envs/python3/install "${_pref}"
-  - bash ./pyappshare/other_envs/r/install "${_pref}"
   - git config --global user.email "travis@travis-ci.org"
   - git config --global user.name "Travis-CI"
   - source activate test-pandoctools
-  # - pip install "py-open-fonts>=0.4.9"
-  - jupyter kernelspec list
   - pip install -e .
   - pandoctools-ready
+  - bash ./pyappshare/other_envs/python3/install "${_pref}"
+  - bash ./pyappshare/other_envs/r/install "${_pref}"
+  - jupyter kernelspec list
   - rm ./examples/doc.ipynb
   - rm ./examples/doc.pdf
   - rm ./examples/notebook.ipynb
