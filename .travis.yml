@@ -1,5 +1,5 @@
 # Only build tags:
-if: tag IS present
+# if: tag IS present
 
 os:
   - windows
@@ -19,8 +19,8 @@ git:
 # Install packages
 install:
   - _py_ver="3.8"
-  # - _full_pip="true"
-  - _full_pip="false"
+  - _full_pip="true"
+  # - _full_pip="false"
   - |
     if [ "$TRAVIS_OS_NAME" = 'windows' ]; then
         choco install miniconda3
