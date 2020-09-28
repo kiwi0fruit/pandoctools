@@ -63,6 +63,15 @@ install:
   - git config --global user.name "Travis-CI"
   - source activate test-pandoctools
   - pip install -e .
+  - |
+    if [ "$TRAVIS_OS_NAME" = 'windows' ]; then
+        echo windows
+    elif [ "$TRAVIS_OS_NAME" = 'osx' ]; then
+        echo osx
+    else
+        mkdir -p ~/Desktop
+        mkdir -p ~/.local/share/applications
+    fi
   - pandoctools-ready
   - bash ./pyappshare/other_envs/python3/install "${_pref}"
   - bash ./pyappshare/other_envs/r/install "${_pref}"
