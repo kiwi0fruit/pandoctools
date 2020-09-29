@@ -16,12 +16,6 @@ Pandoctools is a combination of tools that help write reproducible markdown repo
 
 ## Update instructions
 
-### Troubleshooting
-
-Pip installation currently works with python 3.6 and 3.7 only.
-
-### Update
-
 (*Update instructions to v.2.8.0.2*)
 
 * **v2.8.0.2** is not backward compatible,
