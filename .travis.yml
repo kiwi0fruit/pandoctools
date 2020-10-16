@@ -73,8 +73,8 @@ install:
         mkdir -p ~/.local/share/applications
     fi
   - pandoctools-ready
-  - bash ./pyappshare/other_envs/python3/install "${_pref}"
-  - bash ./pyappshare/other_envs/r/install "${_pref}"
+  - bash ./pyappshare/simple_envs/python3/install "${_pref}"
+  - bash ./pyappshare/simple_envs/r/install "${_pref}"
   - jupyter kernelspec list
   - rm ./examples/doc.ipynb
   - rm ./examples/doc.pdf
