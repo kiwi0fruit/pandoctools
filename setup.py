@@ -31,12 +31,12 @@ setup(
         'License :: OSI Approved :: MIT License',
 
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.8',
     ],
 
     # keywords='sample setuptools development',
     packages=find_packages(exclude=['docs', 'tests']),
-    python_requires='>=3.6',
+    python_requires='>=3.8',
     install_requires=['click', 'pyyaml', 'notebook', 'jupyter', 'libsass', 'shutilwhich-cwdpatch>=0.1.0',
                       'panflute>=1.12.4', 'knitty>=0.5.0', 'pyppdf>=0.0.11',
                       'sugartex>=0.1.16', 'shortcutter>=0.1.19', 'numpy', 'py-open-fonts>=0.7.0',
