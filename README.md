@@ -94,7 +94,7 @@ Extras:
 
 **macOS notice!**
 
-If on macOS 10.13 you should use `"py-pandoc-crossref<0.3.6.3"`. You can modify CLI command into `pandoctools "py-pandoc-crossref<0.3.6.3"` or istall additionally after the main installation (`conda install xxx` or `pip install xxx`). That is the latest version that supports both panflute and macOS 10.13.
+If on macOS 10.13 you should use `"py-pandoc-crossref<0.3.6.3"`. You can modify CLI command into `pandoctools "py-pandoc-crossref<0.3.6.3"` or istall additionally after the main installation (`conda install -c defaults -c conda-forge xxx` or `pip install xxx`). That is the latest version that supports both panflute and macOS 10.13.
 
 
 ### Short instructions:
