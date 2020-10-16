@@ -39,7 +39,7 @@ setup(
     python_requires='>=3.6',
     install_requires=['click', 'pyyaml', 'notebook', 'jupyter', 'libsass', 'shutilwhich-cwdpatch>=0.1.0',
                       'panflute>=1.12.4', 'knitty>=0.5.0', 'pyppdf>=0.0.11',
-                      'sugartex>=0.1.16', 'shortcutter>=0.1.19', 'numpy', 'py-open-fonts>=0.4.9',
+                      'sugartex>=0.1.16', 'shortcutter>=0.1.19', 'numpy', 'py-open-fonts>=0.7.0',
                       'py-pandoc>=2.8.0.1', 'py-pandoc-crossref>=0.3.5.0.1', 'py-mathjax<3.0',
                       'jupyter_console>=6.0.0'],
     # conda create -n pandoctools -c defaults -c conda-forge "python=3.7" click pyyaml notebook jupyter libsass "shutilwhich-cwdpatch>=0.1.0" "panflute>=1.12.4" "knitty>=0.5.0" "pyppdf>=0.0.11" "sugartex>=0.1.16" "shortcutter>=0.1.19" "numpy" "py-pandoc>=2.8.0.1" "py-pandoc-crossref>=0.3.5.0.1" "py-mathjax<3.0" "py-open-fonts>=0.4.9" "jupyter_console>=6.0.0"
