@@ -1,5 +1,5 @@
 # Only build tags:
-if: type = pull_request
+# if: type = pull_request
 
 os:
   - windows
@@ -89,13 +89,14 @@ script:
   - pandoctools --yes ./examples/doc.md -o "*.pdf"
   - pandoctools --yes ./examples/notebook.py
   - pandoctools --yes ./examples/notebook.py -o "*.pdf"
-  - pandoctools --yes ./sugartex/examples/examples.md -o "*.ipynb"
+  - xx="./sugartex/examples/examples"
+  - pandoctools --yes "$xx.md" -o "*.ipynb"
   - |
-    pandoctools --yes ./sugartex/examples/examples.md -o "*.pdf" ||
-    pandoctools --yes ./sugartex/examples/examples.md -o "*.pdf" ||
-    pandoctools --yes ./sugartex/examples/examples.md -o "*.pdf" ||
-    pandoctools --yes ./sugartex/examples/examples.md -o "*.pdf" ||
-    pandoctools --yes ./sugartex/examples/examples.md -o "*.pdf"
+    pandoctools --yes "$xx.md" -o "*.pdf" && [ -f "$xx.pdf" ] ||
+    pandoctools --yes "$xx.md" -o "*.pdf" && [ -f "$xx.pdf" ] ||
+    pandoctools --yes "$xx.md" -o "*.pdf" && [ -f "$xx.pdf" ] ||
+    pandoctools --yes "$xx.md" -o "*.pdf" && [ -f "$xx.pdf" ] ||
+    pandoctools --yes "$xx.md" -o "*.pdf"
   - cd ./pandoctools-ci
   - git pull
   - git pull
