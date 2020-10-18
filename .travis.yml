@@ -1,5 +1,5 @@
 # Only build tags:
-# if: tag IS present
+if: type = pull_request
 
 os:
   - windows
