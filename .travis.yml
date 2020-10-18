@@ -62,7 +62,7 @@ install:
   - git config --global user.email "travis@travis-ci.org"
   - git config --global user.name "Travis-CI"
   - source activate test-pandoctools
-  - pip install git+https://github.com/kiwi0fruit/pyppdf.git
+  # - pip install git+https://github.com/kiwi0fruit/pyppdf.git
   - pip install -e .
   - |
     if [ "$TRAVIS_OS_NAME" = 'windows' ]; then
@@ -90,7 +90,12 @@ script:
   - pandoctools --yes ./examples/notebook.py
   - pandoctools --yes ./examples/notebook.py -o "*.pdf"
   - pandoctools --yes ./sugartex/examples/examples.md -o "*.ipynb"
-  - pandoctools --yes ./sugartex/examples/examples.md -o "*.pdf"
+  - |
+    pandoctools --yes ./sugartex/examples/examples.md -o "*.pdf" ||
+    pandoctools --yes ./sugartex/examples/examples.md -o "*.pdf" ||
+    pandoctools --yes ./sugartex/examples/examples.md -o "*.pdf" ||
+    pandoctools --yes ./sugartex/examples/examples.md -o "*.pdf" ||
+    pandoctools --yes ./sugartex/examples/examples.md -o "*.pdf"
   - cd ./pandoctools-ci
   - git pull
   - git pull
