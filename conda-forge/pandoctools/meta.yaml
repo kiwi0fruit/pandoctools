@@ -34,7 +34,7 @@ requirements:
     - jupyter
     - numpy
     - panflute >=1.12.4
-    - knitty >=0.5.0
+    - knitty >=0.6.1
     - pyppdf >=0.1.1
     - sugartex >=0.1.16
     - shortcutter >=0.1.19
