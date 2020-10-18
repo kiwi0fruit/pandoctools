@@ -1,5 +1,5 @@
 # Only build tags:
-if: type = pull_request
+# if: type = pull_request
 
 os:
   - windows
@@ -62,6 +62,7 @@ install:
   - git config --global user.email "travis@travis-ci.org"
   - git config --global user.name "Travis-CI"
   - source activate test-pandoctools
+  - pip install git+https://github.com/kiwi0fruit/pyppdf.git
   - pip install -e .
   - |
     if [ "$TRAVIS_OS_NAME" = 'windows' ]; then
