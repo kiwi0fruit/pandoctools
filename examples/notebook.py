@@ -21,14 +21,14 @@ See [PDF of this source](https://github.com/kiwi0fruit/sugartex/raw/master/sugar
 
 
 ˎˎ
-˱∇ × [ ⃗B] - 1∕c ∂[ ⃗E]∕∂t ˳= 4π∕c [ ⃗j] ¦#
-               ∇ ⋅ [ ⃗E]\ ˳= 4πρ       ¦
- ∇ × [ ⃗E] + 1∕c ∂[ ⃗B]∕∂t ˳= [ ⃗0]      ¦
-               ∇ ⋅ [ ⃗B]\ ˳= 0         ˲
+˱∇ × [⠘B] - 1∕c ∂[⠘E]∕∂t ˳= 4π∕c [⠘j] ¦#
+               ∇ ⋅ [⠘E]\ ˳= 4πρ       ¦
+ ∇ × [⠘E] + 1∕c ∂[⠘B]∕∂t ˳= [⠘0]      ¦
+               ∇ ⋅ [⠘B]\ ˳= 0         ˲
 ,ˎˎ{#eq:max}
 
-where ˎ[ ⃗B], [ ⃗E], [ ⃗j]: ℝ⁴ → ℝ³ˎ – vector functions of the form
-ˎ(t,x,y,z) ↦ [ ⃗f](t,x,y,z), [ ⃗f] = (f_˹x˺, f_˹y˺, f_˹z˺)ˎ.
+where ˎ[⠘B], [⠘E], [⠘j]: ℝ⁴ → ℝ³ˎ – vector functions of the form
+ˎ(t,x,y,z) ↦ [⠘f](t,x,y,z), [⠘f] = (f_˹x˺, f_˹y˺, f_˹z˺)ˎ.
 
 
 ![Sample image with cross-references.](https://avatars3.githubusercontent.com/u/19735117?s=460&v=4){#fig:img}
