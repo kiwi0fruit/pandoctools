@@ -9,19 +9,22 @@
 
 
 # Python Ecosystem
-
+* [Zen-knit](https://github.com/Zen-Reportz/zen_knit)  
+    > Zen-Knit is a formal (PDF), informal (HTML) report generator for data analyst and data scientist who wants to use python. RMarkdown Alternative for Python.
 * [Pandoctools](https://github.com/kiwi0fruit/pandoctools)
     > Profile manager of text processing pipelines (uses Pandoc filters and any text CLI filters). Convenient and easily tweakable Atom+Markdown+Pandoc+Jupyter experience (can export to ipynb).
-* [Pweave](https://github.com/mpastell/Pweave)  
-    > Pweave is a scientific report generator and a literate programming tool for Python. It can capture the results and plots from data analysis and works well with numpy, scipy and matplotlib.
+* [Pandoctools](https://github.com/kiwi0fruit/pandoctools)
+    > Profile manager of text processing pipelines (uses Pandoc filters and any text CLI filters). Convenient and easily tweakable Atom+Markdown+Pandoc+Jupyter experience (can export to ipynb).
+* [Pweave, Not actively manage](https://github.com/mpastell/Pweave)  
+    > Pweave is a scientific report generator and a literate programming tool for Python. It can capture the results and plots from data analysis and works well with numpy, scipy and matplotlib. 
 * [podoc](https://github.com/podoc/podoc)  
     > pandoc-compatible, Jupyter-aware document conversion library in Python
 * [notedown](https://github.com/aaren/notedown)
     > Markdown <=> IPython Notebook
     * https://bl.ocks.org/ramnathv/9334834
-* [knitpy](https://github.com/janschulz/knitpy)
+* [knitpy, Not actively manage](https://github.com/janschulz/knitpy)
     > Elegant, flexible and fast dynamic report generation with python 
-* [stitch/knotr](https://github.com/pystitch/stitch)
+* [stitch/knotr, Not actively manage](https://github.com/pystitch/stitch)
     > Write reproducible reports in Markdown
 * [knitty](https://github.com/kiwi0fruit/knitty)
     > Inrterface wrapper for Stitch/Knotr: reproducible report generation tool via Jupyter, Pandoc and Markdown. Export to Jupyter notebook via Notedown.
