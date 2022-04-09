@@ -78,6 +78,12 @@ Extras:
 
 # Install
 
+### UPD: I haven't maintained Pandotools for a long time. I continue to use this fixed environment (specified in [pandoctools_env.yaml](./docs/pandoctools_env.yaml)):
+
+```
+conda env create --file pandoctools_env.yaml
+```
+
 **Windows notice!**
 
 * Install 64-bit [Git Bash](https://git-scm.com/downloads). Main installer there would work out of the box and is a recommended option.
